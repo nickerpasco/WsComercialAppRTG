@@ -41,7 +41,7 @@ namespace WsComercialApp.Controllers
             RepositorioCO_Pedido co_pedido = new RepositorioCO_Pedido();
             List<Model_CO_DocumentoDetalle> resultlist = co_pedido.getDataDetalle(bean);
             return resultlist;
-        }
+        }  
 
 
 
