@@ -1,0 +1,305 @@
+<?xml version="1.0" encoding ="utf-8" ?>
+<sql-query>
+ 
+
+<Usuario.GetAllParameters>
+
+
+	select     per.Busqueda, per.Telefono as Telefono   ,  per.Documento as Documento, per.FechaNacimiento as FechaNacimiento, em.CompaniaSocio as CompaniaSocio, em.Sucursal as Sucursal, em.UnidadNegocioAsignada ,
+	per.Persona as Persona , per.Direccion, vende.VentaEquipo,
+	Usuario as Usuario , u.Clave, u.Nombre, u.UsuarioPerfil, u.Estado, per.Nombres as PrimerNombre , em.CompaniaSocio
+	,(select count(*) as PuedeFacturar from SeguridadAutorizaciones where AplicacionCodigo='CO' and Grupo='SYSTEM' and Concepto='FACAPP' and  Usuario=@UserName) as PuedeFacturar,
+	(select count(1) as PuedeCambiarPrecio from SeguridadAutorizaciones where AplicacionCodigo='CO' and Grupo='SYSTEM' and Concepto='EDITPE' and  Usuario=@UserName) as PuedeCambiarPrecio,
+	(select count(1) as PuedeHacerDescuento from SeguridadAutorizaciones where AplicacionCodigo='CO' and Grupo='SYSTEM' and Concepto='DESESC' and  Usuario=@UserName) as PuedeHacerDescuento
+	from Usuario u
+	inner join EmpleadoMast em on u.Usuario = em.CodigoUsuario
+	inner join PersonaMast per on per.Persona = em.Empleado
+	inner join CO_Vendedor vende on per.Persona = vende.Vendedor
+	where u.Usuario = @UserName AND em.FechaCese IS NULL
+
+
+</Usuario.GetAllParameters>
+
+
+	<Usuario.getMontoDashBorad>
+
+
+
+
+		SELECT sum(MontoTotal) as MontoTotal, 'Enero' as Mes FROM CO_Documento where Vendedor = @Vendedor and YEAR(FechaDocumento) = YEAR(GETDATE()) and MONTH(FechaDocumento) = '01'
+		union all SELECT sum(MontoTotal) as MontoTotal, 'Febrero' as Mes FROM CO_Documento where Vendedor = @Vendedor and YEAR(FechaDocumento) = YEAR(GETDATE()) and MONTH(FechaDocumento) = '02'
+		union all SELECT sum(MontoTotal) as MontoTotal, 'Marzo' as Mes FROM CO_Documento where Vendedor = @Vendedor and YEAR(FechaDocumento) = YEAR(GETDATE()) and MONTH(FechaDocumento) = '03'
+		union all SELECT sum(MontoTotal) as MontoTotal, 'Abril' as Mes FROM CO_Documento where Vendedor = @Vendedor and YEAR(FechaDocumento) = YEAR(GETDATE()) and MONTH(FechaDocumento) = '04'
+		union all SELECT sum(MontoTotal) as MontoTotal, 'Mayo' as Mes FROM CO_Documento where Vendedor = @Vendedor and YEAR(FechaDocumento) = YEAR(GETDATE()) and MONTH(FechaDocumento) = '05'
+		union all SELECT sum(MontoTotal) as MontoTotal, 'Junio' as Mes FROM CO_Documento where Vendedor = @Vendedor and YEAR(FechaDocumento) = YEAR(GETDATE()) and MONTH(FechaDocumento) = '06'
+		union all SELECT sum(MontoTotal) as MontoTotal, 'Julio' as Mes FROM CO_Documento where Vendedor = @Vendedor and YEAR(FechaDocumento) = YEAR(GETDATE()) and MONTH(FechaDocumento) = '07'
+		union all SELECT sum(MontoTotal) as MontoTotal, 'Agosto' as Mes FROM CO_Documento where Vendedor = @Vendedor and YEAR(FechaDocumento) = YEAR(GETDATE()) and MONTH(FechaDocumento) = '08'
+		union all SELECT sum(MontoTotal) as MontoTotal, 'Septiembre' as Mes FROM CO_Documento where Vendedor = @Vendedor and YEAR(FechaDocumento) = YEAR(GETDATE()) and MONTH(FechaDocumento) = '09'
+		union all SELECT sum(MontoTotal) as MontoTotal, 'Octubre' as Mes FROM CO_Documento where Vendedor = @Vendedor and YEAR(FechaDocumento) = YEAR(GETDATE()) and MONTH(FechaDocumento) = '10'
+		union all SELECT sum(MontoTotal) as MontoTotal, 'Noviembre' as Mes FROM CO_Documento where Vendedor = @Vendedor and YEAR(FechaDocumento) = YEAR(GETDATE()) and MONTH(FechaDocumento) = '11'
+		union all SELECT sum(MontoTotal) as MontoTotal, 'Diciembre' as Mes FROM CO_Documento where Vendedor = @Vendedor and YEAR(FechaDocumento) = YEAR(GETDATE()) and MONTH(FechaDocumento) = '12'
+
+
+
+	</Usuario.getMontoDashBorad>
+
+
+
+
+
+	<Usuario.GetAllParametersSeguridad>
+
+
+		select AplicacionCodigo,Grupo,Concepto,Descripcion,imagen from SeguridadConcepto where Grupo =@Grupo and AplicacionCodigo = @AplicacionCodigo
+		and Concepto in ( select Concepto from SeguridadAutorizaciones
+		where Estado= 'A' and Usuario in	  (SELECT Perfil FROM seguridadperfilusuario WHERE USUARIO =@Usuario and Estado = 'A'))
+
+
+	</Usuario.GetAllParametersSeguridad>	
+	
+	<Usuario.getParametrosSistema>
+
+
+		<!--select CompaniaCodigo,AplicacionCodigo,RTRIM(ParametroClave) AS ParametroClave,TipodeDatoFlag,Numero,Texto,Fecha,Texto1,Texto2,DescripcionParametro, Estado,Explicacion   from ParametrosMast   where FlagMovil = 'S'
+		union select '','','TIPOVENTA','T',0, tipoventa as Texto,null,null,null,null,null,null from CO_Vendedor where Vendedor=@Persona
+		union select '','','SUCURSAL','T',0, Sucursal as Texto,null,null,null,null,null,null from EmpleadoMast where empleado=@Persona
+		union select '','','UNIDADNEGOCIO','T',0, UnidadNegocioAsignada as Texto,null,null,null,null,null,null from EmpleadoMast where empleado=@Persona-->
+
+		select CompaniaCodigo,AplicacionCodigo,RTRIM(ParametroClave) AS ParametroClave,TipodeDatoFlag,Numero,Texto,Fecha,Texto1,Texto2,DescripcionParametro, Estado,Explicacion   from ParametrosMast   where FlagMovil = 'S'
+		union  select CompaniaCodigo,AplicacionCodigo,RTRIM(ParametroClave) AS ParametroClave,TipodeDatoFlag,Numero,Texto,Fecha,Texto1,Texto2,DescripcionParametro, Estado,Explicacion   from ParametrosMast  where AplicacionCodigo='CO' and ParametroClave='CURRENCY' and CompaniaCodigo='999999'
+		union  select CompaniaCodigo,AplicacionCodigo,RTRIM(ParametroClave) AS ParametroClave,TipodeDatoFlag,Numero,Texto,Fecha,Texto1,Texto2,DescripcionParametro, Estado,Explicacion   from ParametrosMast  where AplicacionCodigo='CO' and ParametroClave='VNTRPD-FPA' and CompaniaCodigo='999999'
+		union  select CompaniaCodigo,AplicacionCodigo,RTRIM(ParametroClave) AS ParametroClave,TipodeDatoFlag,Numero,Texto,Fecha,Texto1,Texto2,DescripcionParametro, Estado,Explicacion   from ParametrosMast  where AplicacionCodigo='CO' and ParametroClave='RECOJODEF' and CompaniaCodigo=@Compania
+		union select '','','TIPOVENTA','T',0, tipoventa as Texto,null,null,null,null,null,null from CO_Vendedor where Vendedor=@Persona
+		union select '','','SUCURSAL','T',0, Sucursal as Texto,null,null,null,null,null,null from EmpleadoMast where empleado=@Persona
+		union select '','','UNIDADNEGOCIO','T',0, UnidadNegocioAsignada as Texto,null,null,null,null,null,null from EmpleadoMast where empleado=@Persona
+		union select '','','PREFERENCIA','T',0, ValorString as Texto,null,TRIM(Preference) as Texto1,null,null,null,null from SY_Preferences where usuario=@Usuario
+
+	</Usuario.getParametrosSistema>
+
+	<Usuario.getMiscelaneos>
+
+		select 'TIPOPAGO' as CodigoTabla , TRIM(TipoPago) as CodigoElemento , DescripcionLocal as DescripcionLocal , 1  AS ValorDecimal ,'' as ValorCadena , '' AS ValorCadena2    from CO_TipoPago where  Estado = 'A'
+		UNION   select 'TIPODOCUMENTOS' as CodigoTabla , TRIM(TipoDocumento) as CodigoElemento , DescripcionLocal as DescripcionLocal , 1  AS ValorDecimal , '' as ValorCadena , '' AS ValorCadena2    from CO_TipoDocumento where  Estado = 'A'
+		UNION   SELECT 'FORMAPAGO' AS CodigoTabla, TRIM(FormadePago) as CodigoElemento , Descripcion as DescripcionLocal , 1  AS ValorDecimal ,CreditoFlag as ValorCadena , '' AS ValorCadena2  FROM MA_FormadePago
+		UNION SELECT 'IGVVALOR' AS CodigoTabla , 'CODE' AS CodigoElemento , IMPUESTOS.Descripcion as DescripcionLocal , IMPUESTOS.FactorPorcentaje   AS ValorDecimal ,ParametrosMast.Texto as ValorCadena , '' AS ValorCadena2  FROM ParametrosMast INNER JOIN IMPUESTOS ON ParametrosMast.Texto =   IMPUESTOS.Impuesto WHERE ParametrosMast.ParametroClave = 'IGVCODE' AND ParametrosMast.AplicacionCodigo='CO'
+		--UNION	 select 'DEPARTAMENTOS' AS CodigoTabla, TRIM(Departamento) as CodigoElemento,RTRIM(DescripcionCorta) as DescripcionLocal  , 1  AS ValorDecimal , '404' as ValorCadena , '' AS ValorCadena2  from Departamento
+		--UNION select 'PROVINCIAS' AS CodigoTabla, TRIM(Departamento) as CodigoElemento,RTRIM(DescripcionCorta) as DescripcionLocal ,1  AS ValorDecimal ,RTRIM(Provincia)  AS ValorCadena , '' AS ValorCadena2  from Provincia --where Departamento = '24'
+		--UNION select 'ZONASPOSTALES' AS CodigoTabla, TRIM(Departamento) as CodigoElemento,RTRIM(DescripcionCorta) as DescripcionLocal ,1  AS ValorDecimal ,RTRIM(Provincia)  AS ValorCadena , RTRIM(CodigoPostal)  AS ValorCadena2 from ZonaPostal --where Departamento = '02' and Provincia = '14'
+		UNION select 'TIPOCLIENTE' as CodigoTabla , TRIM(TipoCliente) as CodigoElemento , DescripcionLocal as DescripcionLocal , 1  AS ValorDecimal ,'' as ValorCadena , '' AS ValorCadena2    from CO_TipoCliente where  Estado = 'A'
+		UNION select 'ALMACEN' as CodigoTabla , TRIM(AlmacenCodigo) as CodigoElemento , DescripcionLocal as DescripcionLocal , 1  AS ValorDecimal ,'' as ValorCadena , '' AS ValorCadena2
+		from WH_AlmacenMast
+		where Estado = 'A' and AlmacenVentaFlag='S' and AlmacenCodigo
+		in
+		(select Concepto as AlmacenCodigo from SY_SeguridadAutorizaciones where AplicacionCodigo='SY' and Grupo='ALMACEN' and usuario=@Usuario)
+	</Usuario.getMiscelaneos>
+
+ 
+
+	<Usuario.getvalidaUsuario>
+
+
+		select
+		Usuario as Usuario, u.Clave, u.Estado, u.SesionFlag
+		from Usuario u
+
+		where u.Usuario = @UserName
+
+
+	</Usuario.getvalidaUsuario>
+
+	 
+
+
+	<Usuario.UpdateSession>
+
+
+		update Usuario set SesionFlag=@SesionFlag  where Usuario=@Usuario
+	</Usuario.UpdateSession>
+
+
+
+	<Usuario.getDirrecionEMpleado>
+
+
+		select AlmacenCodigo,Persona,Secuencia,Direccion,RutaDespacho from Direccion where Persona = @Persona
+	</Usuario.getDirrecionEMpleado>
+
+	<Usuario.DireccionByClienteAll>
+
+		select Persona,Secuencia, rTRIM(Direccion) AS Direccion,ReferenciasDireccion , RutaDespacho ,  Latitud,Longitud,
+
+		depa.DescripcionCorta as Departamento ,  prov.DescripcionCorta as Provincia,   isnull(zona.DescripcionCorta,'') as CodigoPostal ,
+		e.Departamento as DepartamentoCod,e.Distrito as CodigoPostalCod,e.Provincia as ProvinciaCod
+		from Direccion e
+		LEFT join Departamento depa on e.Departamento = depa.Departamento
+		LEFT join Provincia prov on   prov.Departamento = e.Departamento and prov.Provincia = e.Provincia
+		LEFT join ZonaPostal zona on   zona.Departamento = e.Departamento and zona.Provincia = e.Provincia and zona.CodigoPostal = e.CodigoPostal
+	</Usuario.DireccionByClienteAll>
+
+
+
+		<!--PERSONASQUERY-->
+
+	<Personas.getPersonasOnnline>
+
+
+		select Telefono, CorreoElectronico, Persona, TRIM(Busqueda) as Busqueda , TRIM(PersonaMast.Departamento) as Departamento,TRIM(PersonaMast.Provincia) as Provincia,TRIM(PersonaMast.CodigoPostal) as CodigoPostal,TRIM(TipoPersona) as TipoPersona,TRIM(EsCliente) as EsCliente,TRIM(EsProveedor) as EsProveedor,TRIM(EsEmpleado) as EsEmpleado,
+		TRIM(PersonaMast.TipoDocumento) as TipoDocumentoPersona,TRIM(cli.TipoDocumento) as TipoDocumento,TRIM(cli.TipoCliente) as TipoCliente, TRIM(cli.CentroCosto) as CentroCosto , TRIM(cli.TipoFacturacion) as TipoFacturacion, TRIM(cli.FormadePago) as FormadePago ,
+		TRIM(cli.FormaFacturacion) as FormaFacturacion,  cli.Vendedor as Vendedor, TRIM(cli.ConceptoFacturacion) as ConceptoFacturacion,
+		TRIM(Documento) as Documento,TRIM(Direccion) as Direccion,TRIM(PersonaAnt) as PersonaAnt,TRIM(DocumentoFiscal) as DocumentoFiscal,TRIM(DocumentoIdentidad) as DocumentoIdentidad,TRIM(Estado)  as Estado , isnull(cli.BloquearVendedor,'N') as BloquearVendedor
+		from PersonaMast
+		inner join ClienteMast cli on PersonaMast.Persona= cli.Cliente
+		where EsCliente='S' and Estado = 'A' and
+		(@Persona is null or @Persona='' or Persona = @Persona)
+		AND (@Busqueda is null or @Busqueda='' or UPPER(CONVERT(VARCHAR ,Persona)+Busqueda+Documento)like '%'+upper(@Busqueda)+'%')
+		order by Persona desc
+		OFFSET (@Index -1)* @PageSize  ROWS
+		FETCH NEXT @PageSize ROWS ONLY
+	</Personas.getPersonasOnnline>
+
+	
+	<Personas.DireccionByClienteAll>
+		select Persona,Secuencia,Direccion,ReferenciasDireccion , RutaDespacho from Direccion
+	</Personas.DireccionByClienteAll>
+
+	<Personas.getPersonasOnlineCount>
+
+
+
+		select
+		COUNT(1)
+		from PersonaMast
+		inner join ClienteMast cli on PersonaMast.Persona= cli.Cliente
+		where EsCliente='S' and Estado = 'A' and
+		(@Persona is null or @Persona='' or Persona = @Persona)
+		AND (@Busqueda is null or @Busqueda='' or UPPER(CONVERT(VARCHAR ,Persona)+Busqueda+Documento)like '%'+upper(@Busqueda)+'%')
+	</Personas.getPersonasOnlineCount>
+
+	<PersonaMast.GetIdByUser>
+		select Empleado as Persona from EmpleadoMast where CodigoUsuario= @Usuario
+	</PersonaMast.GetIdByUser> 
+
+	<PersonaMast.getCentroCostosUser>
+		select CentroCosto from ClienteMast where cliente=@Persona
+	</PersonaMast.getCentroCostosUser>
+
+	<PersonaMast.getDataEmpleado>
+		select Sucursal , UnidadNegocioAsignada as UnidadNegocio from EmpleadoMast where empleado=@Empleado
+	</PersonaMast.getDataEmpleado>
+
+	<Configuracion.getParametroTextto>
+		select texto from ParametrosMast with(nolock)  where AplicacionCodigo='CO' and ParametroClave=@ParametroClave and CompaniaCodigo=@Compania
+	</Configuracion.getParametroTextto>
+	
+	<Configuracion.getParametroNumero>
+		select numero from ParametrosMast with(nolock)  where AplicacionCodigo='CO' and ParametroClave=@ParametroClave and CompaniaCodigo=@Compania
+	</Configuracion.getParametroNumero>
+
+
+
+	<Usuario.getLineaCreditoCabecera>
+
+		<![CDATA[
+	 
+	
+	
+	SELECT PersonaMast.Persona,
+	PersonaMast.Busqueda,
+	PersonaMast.DocumentoFiscal,
+	cASE WHEN ClienteMast.Clasificacion='B' then 'Bueno' when ClienteMast.Clasificacion='R' then 'Regular'
+	when ClienteMast.Clasificacion='M' then 'Malo' else 'Otro' end Clasificacion,
+	MA_FormadePago.Descripcion FormaPago,
+	Case when CO_LineaCredito.Moneda='LO' then 'Soles' else 'Dólares' end Moneda,
+	CO_LineaCredito.Monto,
+	CO_LineaCredito.FechaVigenciaDesde,
+	CO_LineaCredito.FechaVigenciaHasta
+	FROM ClienteMast, PersonaMast, SY_CampoCalculado, CO_LineaCredito, MA_FormadePago
+	WHERE (CO_LineaCredito.CompaniaSocio = @CompaniaSocio) and
+	( PersonaMast.Persona = ClienteMast.Cliente ) and
+	( CO_LineaCredito.ClienteNumero = ClienteMast.Cliente ) and
+	( CO_LineaCredito.FormadePago = MA_FormadePago.FormadePago) and
+	( ( ClienteMast.Cliente = @Persona ) ) AND -- Depende del cliente que seleccionen
+	CO_LineaCredito.Estado = 'A'
+	
+		
+		]]>
+
+	</Usuario.getLineaCreditoCabecera>
+
+
+	<Usuario.getLineaCreditoMonto>
+
+		<![CDATA[
+	
+	 
+		
+		
+		SELECT
+'Linea Credito' as Tipo,
+Case when CO_LineaCredito.Moneda='LO' then CO_LineaCredito.Monto else CO_LineaCredito.Monto*@TipoCambio end MontoLocal ,
+Case When CO_LineaCredito.Moneda='EX' then CO_LineaCredito.Monto else CO_LineaCredito.Monto/@TipoCambio end MontoDolares
+FROM ClienteMast, PersonaMast, SY_CampoCalculado, CO_LineaCredito
+WHERE (CO_LineaCredito.CompaniaSocio = @CompaniaSocio) and
+( PersonaMast.Persona = ClienteMast.Cliente ) and
+( CO_LineaCredito.ClienteNumero = ClienteMast.Cliente ) and
+( ( ClienteMast.Cliente = @Persona ) ) AND
+CO_LineaCredito.Estado = 'A'
+UNION
+SELECT
+'MontoUtilizado'  as Tipo,
+sum(Case when CO_Documento.MonedaDocumento='LO' then CO_Documento.MontoTotal-CO_Documento.MontoPagado else (CO_Documento.MontoTotal-CO_Documento.MontoPagado)*@TipoCambio end) MontoLocal,
+sum(Case when CO_Documento.MonedaDocumento='EX' then CO_Documento.MontoTotal-CO_Documento.MontoPagado else (CO_Documento.MontoTotal-CO_Documento.MontoPagado)/@TipoCambio end) MontoDolares
+FROM {oj CO_Documento LEFT OUTER JOIN MA_FormadePago ON CO_Documento.FormadePago = MA_FormadePago.FormadePago}, CO_TipoDocumento, ClienteMast, CO_TipoVenta
+WHERE ( CO_Documento.TipoDocumento = CO_TipoDocumento.TipoDocumento ) and
+( CO_Documento.ClienteNumero = ClienteMast.Cliente ) and
+( CO_Documento.TipoVenta = CO_TipoVenta.TipoVenta ) and
+( CO_Documento.CompaniaSocio = @CompaniaSocio ) AND
+( CO_Documento.ClienteNumero = @Persona ) AND
+(CO_Documento.Estado = 'PR' AND CO_Documento.TipoDocumento <> 'PE') AND
+(CO_Documento.TipoDocumento <> 'PK' AND CO_Documento.MontoTotal <> 0 ) AND
+MA_FormadePago.CreditoFlag = 'S'
+		
+		
+		
+		]]>
+
+	</Usuario.getLineaCreditoMonto>
+
+
+	<Usuario.getDetalleFacturasLinea>
+
+		<![CDATA[
+	
+	 
+		 
+SELECT CO_Documento.TipoDocumento+CO_Documento.NumeroDocumento as NumeroDocumento, 
+CASE CO_Documento.MonedaDocumento
+		When 'LO' Then 'S/ ' +  FORMAT(CO_Documento.MontoTotal, '#,##0.00')
+		When 'EX' Then '$ ' +FORMAT(CO_Documento.MontoTotal, '#,##0.00')
+		ELSE 'XX ' + FORMAT(CO_Documento.MontoTotal, '#,##0.00')  end AS MontoTotal,
+CASE CO_Documento.MonedaDocumento
+		When 'LO' Then 'S/ ' +  FORMAT(CO_Documento.MontoTotal-CO_Documento.MontoPagado, '#,##0.00')
+		When 'EX' Then '$ ' +FORMAT(CO_Documento.MontoTotal-CO_Documento.MontoPagado, '#,##0.00')
+		ELSE 'XX ' + FORMAT(CO_Documento.MontoTotal-CO_Documento.MontoPagado, '#,##0.00')  end AS MontoPendiente,  
+convert(varchar(20),CO_Documento.FechaDocumento,103)   as FechaDocumento,
+convert(varchar(20),CO_Documento.FechaVencimiento,103)   as FechaVencimiento,
+DATEDIFF(DAY,CO_Documento.FechaVencimiento,GETDATE()) DiasVencido
+FROM {oj CO_Documento LEFT OUTER JOIN MA_FormadePago ON CO_Documento.FormadePago = MA_FormadePago.FormadePago}, CO_TipoDocumento, ClienteMast, CO_TipoVenta
+WHERE ( CO_Documento.TipoDocumento = CO_TipoDocumento.TipoDocumento ) and
+( CO_Documento.ClienteNumero = ClienteMast.Cliente ) and
+( CO_Documento.TipoVenta = CO_TipoVenta.TipoVenta ) and
+( CO_Documento.CompaniaSocio = @CompaniaSocio ) AND
+( CO_Documento.ClienteNumero = @Persona ) AND -- Depende del cliente que seleccionen
+( CO_Documento.Estado = 'PR') AND
+( CO_Documento.TipoDocumento <> 'PE') AND
+( CO_Documento.TipoDocumento <> 'PK' AND CO_Documento.MontoTotal <> 0 ) AND
+MA_FormadePago.CreditoFlag = 'S'
+		
+		
+		
+		]]>
+
+	</Usuario.getDetalleFacturasLinea>
+
+</sql-query>
+

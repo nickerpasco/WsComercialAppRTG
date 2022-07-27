@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://microsoft.com/webservices/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://microsoft.com/webservices/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://microsoft.com/webservices/Imports">
+      <xsd:import schemaLocation="http://20.232.214.132/ServicesWCF/Service.svc?xsd=xsd0" namespace="http://microsoft.com/webservices/" />
+      <xsd:import schemaLocation="http://20.232.214.132/ServicesWCF/Service.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import schemaLocation="http://20.232.214.132/ServicesWCF/Service.svc?xsd=xsd2" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+      <xsd:import schemaLocation="http://20.232.214.132/ServicesWCF/Service.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/ServicesWCF.Class" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="IService_ConsutarRUC_InputMessage">
+    <wsdl:part name="parameters" element="tns:ConsutarRUC" />
+  </wsdl:message>
+  <wsdl:message name="IService_ConsutarRUC_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ConsutarRUCResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_ConexionSunat_InputMessage">
+    <wsdl:part name="parameters" element="tns:ConexionSunat" />
+  </wsdl:message>
+  <wsdl:message name="IService_ConexionSunat_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ConexionSunatResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_EnviarMail_InputMessage">
+    <wsdl:part name="parameters" element="tns:EnviarMail" />
+  </wsdl:message>
+  <wsdl:message name="IService_EnviarMail_OutputMessage">
+    <wsdl:part name="parameters" element="tns:EnviarMailResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_Base64Encode_InputMessage">
+    <wsdl:part name="parameters" element="tns:Base64Encode" />
+  </wsdl:message>
+  <wsdl:message name="IService_Base64Encode_OutputMessage">
+    <wsdl:part name="parameters" element="tns:Base64EncodeResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_Test_InputMessage">
+    <wsdl:part name="parameters" element="tns:Test" />
+  </wsdl:message>
+  <wsdl:message name="IService_Test_OutputMessage">
+    <wsdl:part name="parameters" element="tns:TestResponse" />
+  </wsdl:message>
+  <wsdl:portType name="IService">
+    <wsdl:operation name="ConsutarRUC">
+      <wsdl:input wsaw:Action="http://microsoft.com/webservices/IService/ConsutarRUC" message="tns:IService_ConsutarRUC_InputMessage" />
+      <wsdl:output wsaw:Action="http://microsoft.com/webservices/IService/ConsutarRUCResponse" message="tns:IService_ConsutarRUC_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ConexionSunat">
+      <wsdl:input wsaw:Action="http://microsoft.com/webservices/IService/ConexionSunat" message="tns:IService_ConexionSunat_InputMessage" />
+      <wsdl:output wsaw:Action="http://microsoft.com/webservices/IService/ConexionSunatResponse" message="tns:IService_ConexionSunat_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="EnviarMail">
+      <wsdl:input wsaw:Action="http://microsoft.com/webservices/IService/EnviarMail" message="tns:IService_EnviarMail_InputMessage" />
+      <wsdl:output wsaw:Action="http://microsoft.com/webservices/IService/EnviarMailResponse" message="tns:IService_EnviarMail_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Base64Encode">
+      <wsdl:input wsaw:Action="http://microsoft.com/webservices/IService/Base64Encode" message="tns:IService_Base64Encode_InputMessage" />
+      <wsdl:output wsaw:Action="http://microsoft.com/webservices/IService/Base64EncodeResponse" message="tns:IService_Base64Encode_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Test">
+      <wsdl:input wsaw:Action="http://microsoft.com/webservices/IService/Test" message="tns:IService_Test_InputMessage" />
+      <wsdl:output wsaw:Action="http://microsoft.com/webservices/IService/TestResponse" message="tns:IService_Test_OutputMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+</wsdl:definitions>

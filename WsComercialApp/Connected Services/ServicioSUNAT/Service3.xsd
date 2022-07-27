@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://microsoft.com/webservices/" elementFormDefault="qualified" targetNamespace="http://microsoft.com/webservices/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://20.232.214.132/ServicesWCF/Service.svc?xsd=xsd2" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+  <xs:import schemaLocation="http://20.232.214.132/ServicesWCF/Service.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/ServicesWCF.Class" />
+  <xs:element name="ConsutarRUC">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="numeroRUC" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ConsutarRUCResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="ConsutarRUCResult" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ConexionSunat">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="urlToken" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="urlConsulta" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="clientId" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="clientKey" nillable="true" type="xs:string" />
+        <xs:element xmlns:q1="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="jsonValue" nillable="true" type="q1:ArrayOfstring" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ConexionSunatResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/ServicesWCF.Class" minOccurs="0" name="ConexionSunatResult" nillable="true" type="q2:APIResponse" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="EnviarMail">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="XML" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="EnviarMailResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="EnviarMailResult" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Base64Encode">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="plainText" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Base64EncodeResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="Base64EncodeResult" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Test">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="Text" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="TestResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="TestResult" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

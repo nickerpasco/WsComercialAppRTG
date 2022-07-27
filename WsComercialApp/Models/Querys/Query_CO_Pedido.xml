@@ -1,0 +1,451 @@
+<?xml version="1.0" encoding ="utf-8" ?>
+<sql-query>
+
+ 
+	
+	
+		<Co_Documento.Cabecera>
+
+			select
+			CASE pedido.MonedaDocumento
+			When 'LO' Then 'S/ ' +  FORMAT(pedido.MontoTotal, '#,##0.00')
+			When 'EX' Then '$ ' +FORMAT(pedido.MontoTotal, '#,##0.00')
+			ELSE 'XX ' + FORMAT(pedido.MontoTotal, '#,##0.00')  end AS MonedaString,
+			CASE pedido.Estado
+			When 'PR' Then 'En Preparación'
+			When 'CO' Then 'Cobrado'
+			When 'AP' Then 'Aprobado'
+			When 'AN' Then 'Anulado'
+			When 'FA' Then 'Facturado'
+			When 'CM' Then 'Completado'
+			When 'A' Then 'Activo'
+			When 'I' Then 'Inactivo'
+			When 'LI' Then 'Liberado'
+			When 'CE' Then 'Cerrado'
+			When 'RV' Then 'Revisado'
+			ELSE 'Sin Estado en App'  end AS EstadoString,
+			CASE pedido.Estado
+			When 'FA' Then '#10c105'
+			When 'PR' Then '#f3aa1e'
+			When 'AN' Then '#e01609'
+			ELSE '#23416d'  end AS ColorEstado,
+			pedido.Estado as PedidoEstadoCodigo,
+			CASE DATEDIFF(day, pedido.FechaDocumento, GETDATE())
+			When -1 Then 'Mañana'
+			When 1 Then 'Ayer'
+			When 0 Then 'Hoy'
+			ELSE  convert(varchar(20),pedido.FechaDocumento,103) end AS LabelMes,
+			FORMAT(pedido.FechaDocumento,'hh:mm tt')  AS LabelHora,
+			pedido.CodigoQR,
+			pedido.TipoVenta, cliente.TipoDocumento as TipoDocumentoPedidoCLiente,
+			pedido.Vendedor ,pedido.CompaniaSocio, pedido.TipoDocumento , pedido.NumeroDocumento , ClienteNumero, ClienteRUC, TRIM(ClienteNombre) AS ClienteNombre ,
+			pedido.EstablecimientoCodigo,	convert(varchar(20),pedido.FechaDocumento,103)  +' '+convert(varchar(20),pedido.FechaDocumento,108) as FechaDocumento, MontoTotal,MontoAfecto,MontoNoAfecto,pedido.MontoFlete,MontoImpuestos,MontoImpuestoVentas,
+			ClienteDireccion,pedido.Vendedor,pedido.ClienteDireccionDespacho,ClienteReferencia , TipodeCambio, pedido.TipoFacturacion, ISNULL(formapago.CreditoFlag,'N')  as CreditoFlag  , formapago.Descripcion as FormaPagoDescripcion  , tdoc.DescripcionLocal as TipoDocumentoDescripcion,
+			pedido.FormadePago as FormadePago, MonedaDocumento,pedido.FormaFacturacion,pedido.ConceptoFacturacion,cliente.TipoCliente, RecojoFlag, ruta.Descripcion as RutaDespachoDescripcion ,
+			CanalVenta,convert(varchar(20),pedido.ComercialPedidoFechaRequerida,103)  +' '+convert(varchar(20),pedido.ComercialPedidoFechaRequerida,108) as ComercialPedidoFechaRequeridaString  , pedido.Estado , convert(varchar(20),pedido.FechaVencimiento,103)  as   FechaVencimiento, MontoDescuentos, pedido.RutaDespacho , pedido.TipoDocumento , cotipo.DescripcionLocal as TipoDocumentoVentaDescripcion  ,
+			cli.ApellidoPaterno ,cli.ApellidoMaterno, convert(varchar(20), cli.FechaNacimiento,103)  +' '+convert(varchar(20), cli.FechaNacimiento,108) as FechaNacimiento  ,cli.Telefono,cli.Direccion,cli.DireccionReferencia,cli.DocumentoFiscal,cli.Documento,cli.Nombres, cli.CorreoElectronico,
+			contacto.ApellidoPaterno as ApellidoPaternoContacto  ,contacto.ApellidoMaterno ApellidoMaternoContacto, contacto.Nombres NombreContacto , ISNULL(contacto.Telefono, contacto.Celular)   as TelefonoContacto ,   contacto.TipoDocumento as TipoDocumentoPersona,
+			contacto.Direccion as DireccionContacto , contacto.Busqueda as NombresCompletoContacto , convert(varchar(20), contacto.FechaNacimiento,103)  +' '+convert(varchar(20), contacto.FechaNacimiento,108) as FechaNacimientoContacto     , contacto.DocumentoFiscal as DocumentoFiscalContacto
+			,pedido.Comentarios as Comentarios , pedido.MontoPercepcion , pedido.PercepcionPorcentaje , depa.DescripcionCorta as Departamento ,  prov.DescripcionCorta as Provincia,  zona.DescripcionCorta as CodigoPostal , pedido.Cadena , pedido.UnidadNegocio,
+			e.Departamento as DepartamentoCod,e.Distrito as CodigoPostalCod,e.Provincia as ProvinciaCod , pedido.Sucursal, pedido.ComercialPedidoNumero , pedido.NumeroInterno  , CONVERT(char(10),pedido.FechaDocumento,126) as FechaDocParaQR , pedido.FEHashCode , ISNULL(com.AfectoPercepcionIGVFlag,'N') AfectoPercepcionIGVFlag , ISNULL(com.AfectoPercepcionIGVFlag,'N') FlagImpresionPercepcionCampo from CO_Documento pedido
+			LEFT join Co_TipoDOcumento cotipo WITH(NOLOCK) on cotipo.TipoDocumento=pedido.TipoDocumento
+			LEFT join MA_FormadePago formapago WITH(NOLOCK) on formapago.FormadePago=pedido.FormadePago
+			LEFT join CO_TipoDocumento tdoc on pedido.TipoDocumento = tdoc.TipoDocumento
+			left join PersonaMast cli WITH(NOLOCK) on pedido.ClienteCobrarA = cli.Persona
+			LEFT join CO_RutaDespacho  ruta WITH(NOLOCK) on ruta.RutaDespacho=pedido.RutaDespacho
+			left join PersonaMast contacto WITH(NOLOCK) on pedido.ClienteNumero = contacto.Persona
+			left join ClienteMast cliente WITH(NOLOCK) on pedido.ClienteNumero = cliente.Cliente
+			LEFT JOIN Direccion e WITH(NOLOCK) ON pedido.ClienteNumero = e.Persona AND pedido.clientedirecciondespacho = e.Secuencia
+			LEFT join Departamento depa on e.Departamento = depa.Departamento
+			LEFT join Provincia prov on   prov.Departamento = e.Departamento and prov.Provincia = e.Provincia
+			LEFT join ZonaPostal zona on   zona.Departamento = e.Departamento and zona.Provincia = e.Provincia and zona.CodigoPostal = e.CodigoPostal
+			LEFT join CompaniaMast com on com.CompaniaCodigo = SUBSTRING(pedido.CompaniaSocio,1,6)
+			LEFT join CO_TipoDocumento on pedido.TipoDocumento=CO_TipoDocumento.TipoDocumento
+
+		</Co_Documento.Cabecera>
+
+
+	<Co_Documento.CabeceraComprobante>
+
+		select
+		CASE pedido.MonedaDocumento
+		When 'LO' Then 'S/ ' +  FORMAT(pedido.MontoTotal, '#,##0.00')
+		When 'EX' Then '$ ' +FORMAT(pedido.MontoTotal, '#,##0.00')
+		ELSE 'XX ' + FORMAT(pedido.MontoTotal, '#,##0.00')  end AS MonedaString,
+		CASE pedido.Estado
+		When 'PR' Then 'Pendiente'
+		When 'CO' Then 'Cobrado'
+		When 'AN' Then 'Anulado'
+		When 'CA' Then 'Canjeado'
+
+		ELSE 'Sin Estado en App'  end AS EstadoString,
+		CASE pedido.Estado
+		When 'CO' Then '#10c105'
+		When 'PR' Then '#f3aa1e'
+		When 'AN' Then '#e01609'
+		When 'CA' Then '#ff00b2'
+		ELSE '#23416d'  end AS ColorEstado,
+		pedido.Estado as PedidoEstadoCodigo,
+		CASE DATEDIFF(day, pedido.FechaDocumento, GETDATE())
+		When -1 Then 'Mañana'
+		When 1 Then 'Ayer'
+		When 0 Then 'Hoy'
+		ELSE  convert(varchar(20),pedido.FechaDocumento,103) end AS LabelMes,
+		FORMAT(pedido.FechaDocumento,'hh:mm tt')  AS LabelHora,
+		pedido.CodigoQR,
+		pedido.TipoVenta, cliente.TipoDocumento as TipoDocumentoPedidoCLiente,
+		pedido.Vendedor ,pedido.CompaniaSocio, pedido.TipoDocumento , pedido.NumeroDocumento , ClienteNumero, ClienteRUC, TRIM(ClienteNombre) AS ClienteNombre ,
+		pedido.EstablecimientoCodigo,	convert(varchar(20),pedido.FechaDocumento,103)  +' '+convert(varchar(20),pedido.FechaDocumento,108) as FechaDocumento, MontoTotal,MontoAfecto,MontoNoAfecto,pedido.MontoFlete,MontoImpuestos,MontoImpuestoVentas,
+		ClienteDireccion,pedido.Vendedor,pedido.ClienteDireccionDespacho,ClienteReferencia , TipodeCambio, pedido.TipoFacturacion, ISNULL(formapago.CreditoFlag,'N')  as CreditoFlag  , formapago.Descripcion as FormaPagoDescripcion  , tdoc.DescripcionLocal as TipoDocumentoDescripcion,
+		pedido.FormadePago as FormadePago, MonedaDocumento,pedido.FormaFacturacion,pedido.ConceptoFacturacion,cliente.TipoCliente, RecojoFlag, ruta.Descripcion as RutaDespachoDescripcion ,
+		CanalVenta,convert(varchar(20),pedido.ComercialPedidoFechaRequerida,103)  +' '+convert(varchar(20),pedido.ComercialPedidoFechaRequerida,108) as ComercialPedidoFechaRequeridaString  , pedido.Estado , convert(varchar(20),pedido.FechaVencimiento,103)  as   FechaVencimiento, MontoDescuentos, pedido.RutaDespacho , pedido.TipoDocumento , cotipo.DescripcionLocal as TipoDocumentoVentaDescripcion  ,
+		cli.ApellidoPaterno ,cli.ApellidoMaterno, convert(varchar(20), cli.FechaNacimiento,103)  +' '+convert(varchar(20), cli.FechaNacimiento,108) as FechaNacimiento  ,cli.Telefono,cli.Direccion,cli.DireccionReferencia,cli.DocumentoFiscal,cli.Documento,cli.Nombres, cli.CorreoElectronico,
+		contacto.ApellidoPaterno as ApellidoPaternoContacto  ,contacto.ApellidoMaterno ApellidoMaternoContacto, contacto.Nombres NombreContacto , ISNULL(contacto.Telefono, contacto.Celular)   as TelefonoContacto ,   contacto.TipoDocumento as TipoDocumentoPersona,
+		contacto.Direccion as DireccionContacto , contacto.Busqueda as NombresCompletoContacto , convert(varchar(20), contacto.FechaNacimiento,103)  +' '+convert(varchar(20), contacto.FechaNacimiento,108) as FechaNacimientoContacto     , contacto.DocumentoFiscal as DocumentoFiscalContacto
+		,pedido.Comentarios as Comentarios , pedido.MontoPercepcion , pedido.PercepcionPorcentaje , depa.DescripcionCorta as Departamento ,  prov.DescripcionCorta as Provincia,  zona.DescripcionCorta as CodigoPostal , pedido.Cadena , pedido.UnidadNegocio,
+		e.Departamento as DepartamentoCod,e.Distrito as CodigoPostalCod,e.Provincia as ProvinciaCod , pedido.Sucursal, pedido.ComercialPedidoNumero , pedido.NumeroInterno  , CONVERT(char(10),pedido.FechaDocumento,126) as FechaDocParaQR , pedido.FEHashCode , ISNULL(com.AfectoPercepcionIGVFlag,'N') AfectoPercepcionIGVFlag , ISNULL(com.AfectoPercepcionIGVFlag,'N') FlagImpresionPercepcionCampo from CO_Documento pedido
+		LEFT join Co_TipoDOcumento cotipo WITH(NOLOCK) on cotipo.TipoDocumento=pedido.TipoDocumento
+		LEFT join MA_FormadePago formapago WITH(NOLOCK) on formapago.FormadePago=pedido.FormadePago
+		LEFT join CO_TipoDocumento tdoc on pedido.TipoDocumento = tdoc.TipoDocumento
+		left join PersonaMast cli WITH(NOLOCK) on pedido.ClienteCobrarA = cli.Persona
+		LEFT join CO_RutaDespacho  ruta WITH(NOLOCK) on ruta.RutaDespacho=pedido.RutaDespacho
+		left join PersonaMast contacto WITH(NOLOCK) on pedido.ClienteNumero = contacto.Persona
+		left join ClienteMast cliente WITH(NOLOCK) on pedido.ClienteNumero = cliente.Cliente
+		LEFT JOIN Direccion e WITH(NOLOCK) ON pedido.ClienteNumero = e.Persona AND pedido.clientedirecciondespacho = e.Secuencia
+		LEFT join Departamento depa on e.Departamento = depa.Departamento
+		LEFT join Provincia prov on   prov.Departamento = e.Departamento and prov.Provincia = e.Provincia
+		LEFT join ZonaPostal zona on   zona.Departamento = e.Departamento and zona.Provincia = e.Provincia and zona.CodigoPostal = e.CodigoPostal
+		LEFT join CompaniaMast com on com.CompaniaCodigo = SUBSTRING(pedido.CompaniaSocio,1,6)
+		LEFT join CO_TipoDocumento on pedido.TipoDocumento=CO_TipoDocumento.TipoDocumento
+
+	</Co_Documento.CabeceraComprobante>
+
+
+	<Co_Documento.CabeceraCount>
+
+
+
+		select COUNT(1) from CO_Documento pedido
+		LEFT join Co_TipoDOcumento cotipo WITH(NOLOCK) on cotipo.TipoDocumento=pedido.TipoDocumento
+		LEFT join MA_FormadePago formapago WITH(NOLOCK) on formapago.FormadePago=pedido.FormadePago
+		LEFT join CO_TipoDocumento tdoc on pedido.TipoDocumento = tdoc.TipoDocumento
+		left join PersonaMast cli WITH(NOLOCK) on pedido.ClienteCobrarA = cli.Persona
+		LEFT join CO_RutaDespacho  ruta WITH(NOLOCK) on ruta.RutaDespacho=pedido.RutaDespacho
+		left join PersonaMast contacto WITH(NOLOCK) on pedido.ClienteNumero = contacto.Persona
+		LEFT JOIN Direccion e WITH(NOLOCK) ON pedido.ClienteNumero = e.Persona AND pedido.clientedirecciondespacho = e.Secuencia
+		LEFT join Departamento depa on e.Departamento = depa.Departamento
+		LEFT join Provincia prov on   prov.Departamento = e.Departamento and prov.Provincia = e.Provincia
+		LEFT join ZonaPostal zona on   zona.Departamento = e.Departamento and zona.Provincia = e.Provincia and zona.CodigoPostal = e.CodigoPostal
+		LEFT join CompaniaMast com on com.CompaniaCodigo = SUBSTRING(pedido.CompaniaSocio,1,6)
+		LEFT join CO_TipoDocumento on pedido.TipoDocumento=CO_TipoDocumento.TipoDocumento
+
+
+	</Co_Documento.CabeceraCount>
+
+	<Co_Documento.getReporte>
+
+
+
+		select
+		CO_DocumentoDetalle.Linea as Linea,
+		CompaniaMast.LogoFile as LogoCompania,
+		CompaniaMast.DescripcionLarga as Nombre,
+		'RUC'+'-'+CompaniaMast.DocumentoFiscal as RUC,
+		dbo.MostrarTituloReporte(RTRIM(CompaniaMast.DireccionComun) + '-' + RTRIM(CompaniaMast.DireccionAdicional))  as Direccion, CompaniaMast.Telefono1 as Telefono, CompaniaMast.Telefono2 as Celular, CompaniaMast.paginaweb as Email, RTRIM(CO_Documento.NumeroDocumento)+'-'+CONVERT(char(10),YEAR(GETDATE())) as NumeroCotizacion,
+		CO_Documento.ClienteNombre as Cliente,
+		convert(varchar(20),FechaDocumento,103)  +' '+convert(varchar(20),FechaDocumento,108)  as Fecha,
+		Case CO_Documento.MonedaDocumento when 'LO' then 'SOLES' else 'DOLARES' end as Moneda,
+		CO_Documento.ClienteDireccion as DireccionCliente,
+		convert(varchar(20),CO_Documento.ComercialPedidoFechaRequerida,103)  +' '+convert(varchar(20),CO_Documento.ComercialPedidoFechaRequerida,108)  as Entrega,
+
+		Cliente.Telefono as TelefonoCliente,
+		FORMAT(CO_Documento.ValidezOferta, '#,##0.00')as Validez,
+		CO_Documento.ClienteReferencia as Referencia, CO_DocumentoDetalle.ItemCodigo as Item,
+		CO_DocumentoDetalle.Descripcion as Descripcion,
+		FORMAT(sum(CO_DocumentoDetalle.CantidadPedida) , '#,##0.00')as Cantidad,
+		FORMAT(sum(CO_DocumentoDetalle.PrecioUnitario) , '#,##0.00')as PrecioUnitario,
+		FORMAT(round(sum(CO_DocumentoDetalle.CantidadPedida*CO_DocumentoDetalle.PrecioUnitario),2) , '#,##0.00')as Total,
+		FORMAT(sum(CO_DocumentoDetalle.PrecioUnitarioOriginal) , '#,##0.00')as ValorUnitario,
+		FORMAT(round(sum(((CO_DocumentoDetalle.CantidadPedida *CO_DocumentoDetalle.PrecioUnitarioOriginal) * CO_DocumentoDetalle.PorcentajeDescuento01) / 100.00 ),2)  , '#,##0.00')as Descuento,
+		FORMAT(sum(CO_Documento.MontoAfecto)+sum(CO_Documento.MontoNoAfecto) , '#,##0.00')as SubTotal,
+		FORMAT(CO_Documento.MontoImpuestoVentas, '#,##0.00')as IGV,
+		FORMAT(CO_Documento.MontoTotal, '#,##0.00')as TotalPagar,
+		A.Explicacion CondicionEntrega,
+		B.Explicacion CondicionGarantia,
+		MA_FormadePago.Descripcion as Condicion,
+		CO_Documento.Comentarios as Observacion,
+		'Equipo Ventas ' + CompaniaMast.DescripcionCorta As EquipoVenta,
+		CompaniaMast.PaginaWeb as SitioWeb,
+		UsuarioCotizacion.NombreCompleto AS Usuario,
+		UsuarioCotizacion.CorreoElectronico AS UsuarioCorreo
+		from CO_Documento inner join CO_DocumentoDetalle on CO_Documento.CompaniaSocio=CO_DocumentoDetalle.CompaniaSocio and
+		CO_Documento.TipoDocumento=CO_DocumentoDetalle.TipoDocumento and
+		CO_Documento.NumeroDocumento=CO_DocumentoDetalle.NumeroDocumento
+		inner join companyowner on CO_Documento.CompaniaSocio=companyowner.companyowner
+		inner join CompaniaMast on CompaniaMast.CompaniaCodigo=companyowner.company
+		inner join PersonaMast Cliente on CO_Documento.ClienteNumero=Cliente.Persona
+		inner join MA_FormadePago on MA_FormadePago.FormadePago = CO_Documento.FormadePago
+		left join WH_ItemMast on CO_DocumentoDetalle.ItemCodigo=WH_ItemMast.Item
+		left join CO_ServicioClasificacion on CO_DocumentoDetalle.ItemCodigo=CO_ServicioClasificacion.ServicioClasificacion
+		inner join Direccion on CO_Documento.ClienteDireccionDespacho=Direccion.Secuencia and CO_Documento.ClienteNumero=Direccion.Persona
+		inner join CO_TipoDocumento on CO_TipoDocumento.TipoDocumento=CO_Documento.TipoDocumento
+		full join ParametrosMast A on A.CompaniaCodigo = '999999' and A.ParametroClave = 'COTCONDENT' and A.AplicacionCodigo = 'CO'
+		full join ParametrosMast B on B.CompaniaCodigo = '999999' and B.ParametroClave = 'COTGARANTI' and B.AplicacionCodigo = 'CO'
+		full join ParametrosMast C on C.CompaniaCodigo = '999999' and C.ParametroClave = 'COTCONDICI' and C.AplicacionCodigo = 'CO'
+		full join PersonaMast UsuarioCotizacion on UsuarioCotizacion.Persona = -1
+		where CO_Documento.CompaniaSocio =@CompaniaSocio and CO_Documento.TipoDocumento= @TipoDocumento and CO_Documento.NumeroDocumento =@NumeroDocumento
+		group by
+		CO_DocumentoDetalle.Linea,
+		CompaniaMast.LogoFile,
+		CompaniaMast.DescripcionLarga,
+		'RUC'+'-'+CompaniaMast.DocumentoFiscal,
+		dbo.MostrarTituloReporte(RTRIM(CompaniaMast.DireccionComun) + '-' + RTRIM(CompaniaMast.DireccionAdicional))  ,
+		CompaniaMast.Telefono1,
+		CompaniaMast.Telefono2,
+		CompaniaMast.paginaweb,
+		RTRIM(CO_Documento.NumeroDocumento)+'-'+CONVERT(char(10),YEAR(GETDATE())),
+		CO_Documento.ClienteNombre,
+		CO_Documento.FechaDocumento,
+		Case CO_Documento.MonedaDocumento when 'LO' then 'SOLES' else 'DOLARES' end,
+		CO_Documento.ClienteDireccion,
+		CO_Documento.ComercialPedidoFechaRequerida,
+		Cliente.Telefono,
+		CO_Documento.ValidezOferta,
+		CO_Documento.ClienteReferencia,
+		CO_DocumentoDetalle.ItemCodigo,
+		CO_DocumentoDetalle.Descripcion,
+		CO_DocumentoDetalle.PrecioUnitario,
+		CO_Documento.MontoImpuestoVentas,
+		CO_Documento.MontoTotal, A.Explicacion, B.Explicacion , C.Explicacion,
+		CO_DocumentoDetalle.PrecioUnitarioOriginal,
+		CO_DocumentoDetalle.PorcentajeDescuento01,
+		MA_FormadePago.Descripcion,
+		CO_Documento.Comentarios,
+		CompaniaMast.PaginaWeb,
+		UsuarioCotizacion.NombreCompleto,
+		UsuarioCotizacion.CorreoElectronico,
+		CompaniaMast.DescripcionCorta
+
+
+
+
+	</Co_Documento.getReporte>
+
+
+	<Co_Documento.getPdfComprobanteDocumento>
+
+
+
+		SELECT
+		Case CO_Documento.MonedaDocumento when 'LO' then 'SOLES' else 'DOLARES' end as MonedaDescripcion,
+		Case CO_Documento.TipoDocumento when 'FC' then 'FACTURA ELECTRÓNICA' else 'BOLETA ELECTRÓNICA' end as DocumentoDescripcion,
+		CompaniaMast.DescripcionLarga as EmpresaNombre,
+		'RUC: '+CompaniaMast.DocumentoFiscal AS DocumentoFiscal, CompaniaMast.DireccionComun, CompaniaMast.LogoFile, CompaniaMast.Telefono1, CO_Documento.CompaniaSocio,
+		CO_Documento.TipoDocumento, CO_Documento.NumeroDocumento, CO_Documento.FechaDocumento, CO_Documento.FechaVencimiento, CO_Documento.ClienteNumero,
+		CO_Documento.ClienteRUC, CO_Documento.ClienteNombre, CO_Documento.ClienteDireccion,
+		CO_Documento.MonedaDocumento,
+		MA_FormadePago.Descripcion as FormaPagoDescripcion,
+		convert(varchar(20),CO_Documento.FechaDocumento,103)  +' '+convert(varchar(20),CO_Documento.FechaDocumento,108)  as FechaEmision,
+		FORMAT(CO_Documento.MontoAfecto, '#,##0.00')as OPgravada,
+		FORMAT(CO_Documento.MontoNoAfecto, '#,##0.00')as OPInafecta ,
+		FORMAT(CO_Documento.MontoNoAfecto, '#,##0.00')as MontoNoAfecto,
+		FORMAT(CO_Documento.MontoImpuestoVentas, '#,##0.00')as MontoImpuestoVentas,
+		FORMAT(CO_Documento.MontoImpuestos, '#,##0.00')as MontoImpuestos,
+		FORMAT(CO_Documento.MontoDescuentos, '#,##0.00')as OPDescuentoGlobal,
+		FORMAT(CO_Documento.MontoTotal, '#,##0.00')as ImporteTotal,
+		'0.00' as OPExonerada,
+		'0.00' as OPExportación ,
+		CompaniaMast.Telefono2, CompaniaMast.Telefono3, CompaniaMast.Fax1, CompaniaMast.Fax2, CO_Documento.ClienteReferencia, CO_Documento.Comentarios,
+		CompaniaMast.paginaweb, CO_FiscalEstablecimiento.Direccion, PersonaMast.Direccion as DireccionCLiente, CO_Documento.TipoVenta, CO_Documento.FormadePago,
+		CO_Documento.Vendedor, PersonaMast.Telefono, PersonaMast.CorreoElectronico, PersonaMast.TipoDocumento as TipoDocumentoPersona, (SELECT correoelectronico
+		FROM personamast WHERE personamast.persona = (SELECT persona FROM companiamast WHERE substring( CO_Documento.CompaniaSocio,1,6) =
+		CompaniaMast.CompaniaCodigo)) AS CorreoEmisor, IsNull((SELECT Upper(DescripcionCorta) FROM ZonaPostal WITH (NOLOCK) WHERE departamento =
+		PersonaMast.Departamento AND CodigoPostal = PersonaMast.CodigoPostal AND Provincia = PersonaMast.Provincia AND pais = PersonaMast.pais), '')
+		AS Distrito, IsNull((SELECT UPPER(DescripcionCorta) FROM Provincia WITH (NOLOCK) WHERE departamento = PersonaMast.Departamento AND
+		Provincia = PersonaMast.Provincia AND pais= PersonaMast.pais),'') As Provincia, IsNull((SELECT Upper(DescripcionCorta) FROM Departamento
+		WITH (NOLOCK) WHERE departamento = PersonaMast.Departamento AND pais = PersonaMast.pais), '') AS Departamento, ISNULL(CO_Documento.FEHAshCode,'')
+		as FEHAshCode, ISNULL(CO_FiscalEstablecimiento.CodEstableSunat,'') as CodEstableSunat, CompaniaMast.DescripcionCorta,
+		CompaniaMast.DescripcionLarga, CompaniaMast.Direccionadicional, CO_Documento.NotaCreditoDocumento, CO_Documento.tipofacturacion,
+		CO_DocumentoDetalle.Linea,
+		CO_DocumentoDetalle.ItemCodigo, CO_DocumentoDetalle.Descripcion, CO_DocumentoDetalle.UnidadCodigo,
+		FORMAT(CO_DocumentoDetalle.CantidadPedida, '#,##0.00')as CantidadPedida,
+		FORMAT(CO_DocumentoDetalle.porcentajedescuento01, '#,##0.00')as porcentajedescuento01,
+		FORMAT(CO_DocumentoDetalle.PrecioUnitario, '#,##0.00')as PrecioUnitario,
+		FORMAT(CO_DocumentoDetalle.preciounitariooriginal, '#,##0.00')as preciounitariooriginal,
+		FORMAT(CO_DocumentoDetalle.MontoFinal, '#,##0.00')as preciounitariogratuito,
+		CO_DocumentoDetalle.igvexoneradoflag, CO_DocumentoDetalle.transferenciagratuitaflag,
+		CO_Documento.CodigoQR,
+		FORMAT(SUM(CO_DocumentoDetalle.preciounitariogratuito * CO_DocumentoDetalle.CantidadPedida) , '#,##0.00')as MontoGratuito,
+		FORMAT(CO_Documento.MontoImpuestoVentas, '#,##0.00')as IGV,
+		dbo.[CantidadConLetra](CO_Documento.MontoTotal,'LO') as MontoLetra
+
+		FROM
+		CompaniaMast, CO_Documento INNER JOIN CO_DocumentoDetalle ON ( CO_DocumentoDetalle.CompaniaSocio = CO_Documento.CompaniaSocio ) AND
+		( CO_DocumentoDetalle.TipoDocumento = CO_Documento.TipoDocumento )	AND ( CO_DocumentoDetalle.NumeroDocumento = CO_Documento.NumeroDocumento )
+		INNER JOIN PersonaMast ON ( PersonaMast.Persona = CO_Documento.ClienteNumero ) INNER JOIN CO_FiscalEstablecimiento ON
+		( CO_FiscalEstablecimiento.EstablecimientoCodigo = CO_Documento.EstablecimientoCodigo ) AND ( CO_FiscalEstablecimiento.CompaniaSocio =
+		CO_Documento.CompaniaSocio )
+		inner join MA_FormadePago on MA_FormadePago.FormadePago = CO_Documento.FormadePago
+
+		WHERE ( ( CO_Documento.CompaniaSocio = @CompaniaSocio ) AND ( CO_Documento.TipoDocumento = @TipoDocumento ) AND
+		( CO_Documento.NumeroDocumento = @NumeroDocumento ) AND ( substring( CO_Documento.CompaniaSocio,1,6) = CompaniaMast.CompaniaCodigo ) )
+
+
+
+		GROUP BY CompaniaMast.DocumentoFiscal, CompaniaMast.DireccionComun, CompaniaMast.LogoFile, CompaniaMast.Telefono1, CO_Documento.CompaniaSocio,
+		CO_Documento.TipoDocumento, CO_Documento.NumeroDocumento, CO_Documento.FechaDocumento, CO_Documento.FechaVencimiento,
+		CO_Documento.ClienteNumero, CO_Documento.ClienteRUC, CO_Documento.ClienteNombre, CO_Documento.ClienteDireccion, CO_Documento.MonedaDocumento,
+		MA_FormadePago.Descripcion,
+		CO_Documento.MontoAfecto ,
+		CO_Documento.MontoNoAfecto,
+		CO_Documento.MontoImpuestoVentas,
+		CO_Documento.MontoImpuestos,
+		CO_Documento.MontoDescuentos,
+		CO_Documento.MontoTotal,
+		CompaniaMast.Telefono2, CompaniaMast.Telefono3, CompaniaMast.Fax1, CompaniaMast.Fax2, CO_Documento.ClienteReferencia,
+		CO_Documento.Comentarios, CompaniaMast.paginaweb, CO_FiscalEstablecimiento.Direccion, PersonaMast.Direccion, CO_Documento.TipoVenta,
+		CO_Documento.FormadePago, CO_Documento.Vendedor, PersonaMast.Telefono, PersonaMast.CorreoElectronico, PersonaMast.TipoDocumento,
+		PersonaMast.Departamento,PersonaMast.CodigoPostal,PersonaMast.Provincia,PersonaMast.Pais, CO_Documento.FEHAshCode,
+		CO_FiscalEstablecimiento.CodEstableSunat, CompaniaMast.DescripcionCorta, CompaniaMast.DescripcionLarga, CompaniaMast.Direccionadicional,
+		CO_Documento.NotaCreditoDocumento, CO_Documento.tipofacturacion,CO_DocumentoDetalle.Linea, CO_DocumentoDetalle.ItemCodigo, CO_DocumentoDetalle.Descripcion,
+		CO_DocumentoDetalle.UnidadCodigo, CO_DocumentoDetalle.CantidadPedida, CO_DocumentoDetalle.porcentajedescuento01,
+		CO_DocumentoDetalle.PrecioUnitario, CO_DocumentoDetalle.preciounitariooriginal, CO_DocumentoDetalle.MontoFinal,
+		CO_DocumentoDetalle.igvexoneradoflag, CO_DocumentoDetalle.transferenciagratuitaflag, CO_Documento.CodigoQR
+	</Co_Documento.getPdfComprobanteDocumento>
+
+
+	<Co_Documento.StoreActualiza_Costos_Margenes>
+
+		SP_CO_Actualiza_Costos_Margenes @CompaniaSocio, @TipoDocumento, @NumeroDocumento
+
+
+	</Co_Documento.StoreActualiza_Costos_Margenes>
+	
+		
+	<Co_Documento.getDescuentosItem>
+		
+			<![CDATA[
+		
+			select top 1 PorcentajeDescuento , VW_CO_DescuentoEscalaVigente.tipodescuento as TipoDescuento from VW_CO_DescuentoEscalaVigente where ( VW_CO_DescuentoEscalaVigente.tipodescuento ='M' ) and
+( VW_CO_DescuentoEscalaVigente.compania =@CompaniaSocio ) and -- Según la compañía del usuario en las preferencias
+( VW_CO_DescuentoEscalaVigente.tipocliente ='$$' or VW_CO_DescuentoEscalaVigente.tipocliente =@TipoCliente ) -- Según el tipo de cliente seleccionado
+and ( VW_CO_DescuentoEscalaVigente.cliente =- 1 Or VW_CO_DescuentoEscalaVigente.cliente =@NumeroCLiente ) and -- Según el cliente seleccionado
+( VW_CO_DescuentoEscalaVigente.sucursal ='$$' or VW_CO_DescuentoEscalaVigente.Sucursal =@Sucursal ) and -- Según la sucursal relacionado al almacen (select sucursal from WH_AlmacenMast where AlmacenCodigo='')
+( VW_CO_DescuentoEscalaVigente.VentaEquipo ='$$' or VW_CO_DescuentoEscalaVigente.VentaEquipo =@VentaEquipo ) and -- Según el Equipo de Venta del Vendedor (select VentaEquipo from CO_Vendedor where vendedor=)
+( ( VW_CO_DescuentoEscalaVigente.TipoRecojoFlag ='S' ) or ( VW_CO_DescuentoEscalaVigente.TipoRecojoFlag ='N' and VW_CO_DescuentoEscalaVigente.TipoRecojo =@TipoRecojo ) ) -- Según el Recojo
+and ( VW_CO_DescuentoEscalaVigente.item =@ItemCodigo ) -- Según el ítem seleccionado
+and ( VW_CO_DescuentoEscalaVigente.almacen ='$$' or VW_CO_DescuentoEscalaVigente.almacen =@AlmacenCodigo )-- Según el almacén donde se obtuvo el producto
+and ( VW_CO_DescuentoEscalaVigente.monto <= @Monto and VW_CO_DescuentoEscalaVigente.montohasta >= @Monto ) -- Según la cantidad ingresada del ítem
+
+union all
+
+	select top 1 PorcentajeDescuento , VW_CO_DescuentoEscalaVigente.tipodescuento as TipoDescuento from VW_CO_DescuentoEscalaVigente where ( VW_CO_DescuentoEscalaVigente.tipodescuento ='C' ) and
+( VW_CO_DescuentoEscalaVigente.compania =@CompaniaSocio ) and -- Según la compañía del usuario en las preferencias
+( VW_CO_DescuentoEscalaVigente.tipocliente ='$$' or VW_CO_DescuentoEscalaVigente.tipocliente =@TipoCliente ) -- Según el tipo de cliente seleccionado
+and ( VW_CO_DescuentoEscalaVigente.cliente =- 1 Or VW_CO_DescuentoEscalaVigente.cliente =@NumeroCLiente ) and -- Según el cliente seleccionado
+( VW_CO_DescuentoEscalaVigente.sucursal ='$$' or VW_CO_DescuentoEscalaVigente.Sucursal =@Sucursal ) and -- Según la sucursal relacionado al almacen (select sucursal from WH_AlmacenMast where AlmacenCodigo='')
+( VW_CO_DescuentoEscalaVigente.VentaEquipo ='$$' or VW_CO_DescuentoEscalaVigente.VentaEquipo =@VentaEquipo ) and -- Según el Equipo de Venta del Vendedor (select VentaEquipo from CO_Vendedor where vendedor=)
+( ( VW_CO_DescuentoEscalaVigente.TipoRecojoFlag ='S' ) or ( VW_CO_DescuentoEscalaVigente.TipoRecojoFlag ='N' and VW_CO_DescuentoEscalaVigente.TipoRecojo =@TipoRecojo ) ) -- Según el Recojo
+and ( VW_CO_DescuentoEscalaVigente.item =@ItemCodigo ) -- Según el ítem seleccionado
+and ( VW_CO_DescuentoEscalaVigente.almacen ='$$' or VW_CO_DescuentoEscalaVigente.almacen =@AlmacenCodigo )-- Según el almacén donde se obtuvo el producto
+and ( VW_CO_DescuentoEscalaVigente.monto <= @Cantidad and VW_CO_DescuentoEscalaVigente.montohasta >= @Cantidad ) -- Según la cantidad ingresada del ítem
+
+		
+		
+		
+		]]>
+
+
+
+
+	</Co_Documento.getDescuentosItem>
+
+
+	<Co_Documento.getDescuentosItemRegla>
+		
+			<![CDATA[
+		
+	 select top 1 VW_CO_DescuentoEscalaVigente.tipodescuento as TipoDescuento , PorcentajeDescuento as PorcentajeDescuento , VW_CO_DescuentoEscalaVigente.monto as Desde , VW_CO_DescuentoEscalaVigente.montohasta as Hasta  from VW_CO_DescuentoEscalaVigente  where (VW_CO_DescuentoEscalaVigente .Compania = @Compania) and  (VW_CO_DescuentoEscalaVigente.TipoCliente = '$$' or VW_CO_DescuentoEscalaVigente.TipoCliente =@TipoCliente) and (
+    VW_CO_DescuentoEscalaVigente.Cliente = -1 or VW_CO_DescuentoEscalaVigente.Cliente = @Cliente) and (VW_CO_DescuentoEscalaVigente.VentaEquipo = '$$' or VW_CO_DescuentoEscalaVigente.VentaEquipo =@VentaEquipo) and (VW_CO_DescuentoEscalaVigente.Sucursal = '$$' or 
+  VW_CO_DescuentoEscalaVigente.Sucursal = @Sucursal) and ((VW_CO_DescuentoEscalaVigente.TipoRecojoFlag = 'S') or (VW_CO_DescuentoEscalaVigente.TipoRecojoFlag = 'N' and VW_CO_DescuentoEscalaVigente.TipoRecojo = @Recojo)) and (VW_CO_DescuentoEscalaVigente.Item = @Item) and (VW_CO_DescuentoEscalaVigente.Almacen = '$$' or VW_CO_DescuentoEscalaVigente.Almacen = @Almacen)
+		
+		
+		]]> 
+
+	</Co_Documento.getDescuentosItemRegla>
+
+
+
+
+
+
+	<Miscelaneos.getTipoCambios>
+
+	
+		select 'TIPOCAMBIO'    as CodigoTabla , MonedaCodigo as CodigoElemento , MonedaCambioCodigo as DescripcionLocal , CAST(FactorVenta AS decimal(38, 4))      AS ValorDecimal , convert(varchar(20),FechaCambio,103) as ValorCadena , '' AS ValorCadena2
+		from TipoCambioMast where
+		FechaCambioString =   convert(varchar, getdate(), 112) and Estado = 'A'
+
+
+	</Miscelaneos.getTipoCambios>
+
+	<Co_Documento.Detalle>
+
+		select   ISNULL(item.AfectoPercepcionIGVFlag,'N') AS AfectoPercepcionIGVFlag,  documento.PrecioNumeroRegistro, documento.PorcentajeDescuento01, documento.MontoDescuento, ISNULL(documento.TransferenciaGratuitaFlag,'N') as TransferenciaGratuitaFlag,
+		documento.CompaniaSocio,TipoDocumento,NumeroDocumento,documento.Linea,TipoDetalle, ItemCodigo, Lote, Descripcion, documento.UnidadCodigo,
+		CantidadPedida, CantidadEntregada, PrecioUnitario, PrecioUnitarioOriginal, PrecioUnitarioFinal , Monto, MontoFinal , AlmacenCodigo , documento.FlujodeCaja, documento.Estado,
+		PrecioUnitarioFlete, PrecioUnitarioFleteOriginal, MontoFlete , ClienteDireccionDespacho, RutaDespacho , item.AfectoImpuesto2Flag , item.AfectoImpuestoVentasFlag , item.ImageFile ,
+		documento.PromocionNumero,documento.PrecioNumeroRegistro ,
+		item.CodigoPrecio as CodigoPrecio ,
+		item.LotedeCompraKG as LotedeCompraKGp
+		from CO_DocumentoDetalle documento
+		left join WH_ItemMast item on documento.ItemCodigo = item.Item
+
+
+	</Co_Documento.Detalle>
+
+	<Co_Documento.getAgencias>
+
+		SELECT FT_Vehiculo.IdTransportista, FT_Vehiculo.TransportistaDescripcion FROM FT_Vehiculo WHERE FT_Vehiculo.Estado = 'A'
+		AND (@Busqueda is null or @Busqueda='' or UPPER(CONVERT(VARCHAR ,IdTransportista)+TransportistaDescripcion)like '%'+upper(@Busqueda)+'%')
+		order by IdTransportista desc
+		OFFSET (@Index -1)* @PageSize  ROWS
+		FETCH NEXT @PageSize ROWS ONLY
+
+
+	</Co_Documento.getAgencias>
+
+
+	<Co_Documento.getAgenciasCount>
+
+		SELECT count(1) FROM FT_Vehiculo WHERE FT_Vehiculo.Estado = 'A'
+		AND (@Busqueda is null or @Busqueda='' or UPPER(CONVERT(VARCHAR ,IdTransportista)+TransportistaDescripcion)like '%'+upper(@Busqueda)+'%')
+
+
+
+	</Co_Documento.getAgenciasCount>
+
+
+	<Co_Documento.MotoActualizaComprometido>
+
+
+		update WH_ItemAlmacenLote
+		set StockComprometido=@Cantidad --Según la cantidad que se pidió
+		where
+		item=@Item -- Según el item que está en el detalle del pedido
+		and Condicion='0' -- Tomar siempre '0'
+		and AlmacenCodigo=@Almacen -- Tomar del almacén que se selecciono para el producto CO_DocumentoDetalle.AlmacenCodigo
+		and Lote=@Lote -- Si se consulta el ítem: Si WH_ItemMast.ManejoxLoteFlag='N' entonces tomar el lote 00
+		-- Si WH_ItemMast.ManejoxLoteFlag='S' entonces tomar el que tiene la menor fecha de ingreso WH_ItemAlmacenLote.FechaIngreso
+		-- y si el stock no alcanza entonces tomar el lote de la siguiente Fecha de Ingreso.
+
+	</Co_Documento.MotoActualizaComprometido>
+
+
+
+
+	
+
+
+</sql-query>
+

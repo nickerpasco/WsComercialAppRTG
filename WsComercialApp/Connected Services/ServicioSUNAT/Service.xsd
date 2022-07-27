@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/ServicesWCF.Class" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/ServicesWCF.Class" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:complexType name="APIResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Observaciones" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="condDomiRuc" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="errorCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="estadoCp" type="xs:int" />
+      <xs:element minOccurs="0" name="estadoRuc" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="message" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="success" type="xs:boolean" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="APIResponse" nillable="true" type="tns:APIResponse" />
+</xs:schema>
