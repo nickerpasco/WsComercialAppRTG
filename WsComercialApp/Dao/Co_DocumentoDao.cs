@@ -435,7 +435,7 @@ namespace WsComercialApp.Dao
               
                 //Otabla.ComercialPedidoFechaRequerida = c.FechaDocumento;
                 Otabla.TipoMotivo = c.TipoMotivo;
-                Otabla.AlmacenCodigo = UtilsDAO.getValuString("select ValorString from SY_Preferences where usuario='ROYAL' and Preference='ALMACEN'", null); ;
+                Otabla.AlmacenCodigo = UtilsDAO.getValuString("select ValorString from SY_Preferences where usuario='"+c.UltimoUsuario+"' and Preference='ALMACEN'", null); ;
                 Otabla.ReferenciaTipoPago = UtilsDAO.getValuString("select texto from ParametrosMast where CompaniaCodigo='999999' and ParametroClave='TIPAGAPP' and AplicacionCodigo='CO'", null); ;
                 Otabla.ImpresionPendienteFlag = "S";
                 Otabla.DocumentoMoraFlag = "N";
