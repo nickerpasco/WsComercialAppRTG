@@ -17,7 +17,7 @@ namespace WsComercialApp.Controllers
         {
             RepositorioUsuario usuario = new RepositorioUsuario();
             var resultlist = usuario.GetAllByID(bean);
-            return resultlist;
+            return null;
 
         }
 
