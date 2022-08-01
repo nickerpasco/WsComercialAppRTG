@@ -30,6 +30,10 @@ namespace WsComercialApp.Models
         public String ComprobantesElectronicos{ get; set; }
         public String AfiliadoPLEDesde{ get; set; }
         public String Padrones{ get; set; }
+        public string Nombres { get; internal set; }
+        public string ApellidoPaterno { get; internal set; }
+        public string ApellidoMaterno { get; internal set; }
+
         public List<ErrorObj> lstErrores = new List<ErrorObj>();
     }
 }

@@ -515,8 +515,9 @@ namespace WsComercialApp.Dao
                 {
                     Otabla.Estado = "PR";
                     Otabla.TipoMotivo = "97";
-                } 
+                }
 
+                Otabla.ClienteDireccionSecuencia = Otabla.ClienteDireccionDespacho;
 
 
                 context.CO_Documento.Add(Otabla);

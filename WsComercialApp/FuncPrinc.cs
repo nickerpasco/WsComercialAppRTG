@@ -181,6 +181,150 @@ namespace WsComercialApp
             return response[response.Length - 1] == ruc[ruc.Length - 1];
         }
 
+        internal static ModelTransacPersona GetObjetoPersona(string Texto)
+        {
+            ModelTransacPersona returnData = new ModelTransacPersona();
+
+            string[] LstApellidos = Texto.Split('@');
+
+            returnData.ApellidoPaterno = LstApellidos[0];
+            returnData.ApellidoMaterno = LstApellidos[1];
+
+            int vueltas = 1; 
+
+            foreach(var data in LstApellidos)
+            { 
+                 
+
+                if (vueltas >= 3)
+                {
+                    returnData.Nombres += " "+ data;
+                } 
+                vueltas++;
+            }  
+            return returnData;
+        }
+
+        
+
+        public static string SepararApellidosCompuestos(String rng)
+        {
+            string SEPARARAPELLIDOSRet = default;
+
+            string[] nombreArr;
+            var nuevaCadena = default(string);
+            int i;
+
+            // Dvidir el nombre por palabras en un arreglo
+            //nombreArr = Microsoft.VisualBasic.Strings.Split(Microsoft.VisualBasic.Strings.Trim(rng.Value));
+
+            nombreArr = Microsoft.VisualBasic.Strings.Split(Microsoft.VisualBasic.Strings.Trim(rng));
+
+            // Analizar cada palabra dentro del arreglo 
+
+            var loopTo = Microsoft.VisualBasic.Information.UBound(nombreArr);
+            for (i = 0; i <= loopTo; i++)
+            {
+                switch (Microsoft.VisualBasic.Strings.LCase(nombreArr[i]) ?? "")
+                {
+
+                    // Palabras que forman parte de un apellido compuesto
+                    // Agregar nuevas palabras separadas por una coma
+                    case "de":
+                    case "del":
+                    case "la":
+                    case "las":
+                    case "los":
+                    case "san":
+                    case "de la":
+                    case "de las":
+                    case "y":
+                        {
+                            // Insertar espacio en blanco
+                            nuevaCadena = nuevaCadena + nombreArr[i] + " ";
+                            break;
+                        }
+
+                    default:
+                        {
+                            // Insertar caracter delimitador
+                            nuevaCadena = nuevaCadena + nombreArr[i] + "@";
+                            break;
+                        }
+
+                }
+            }
+
+            // Remover el último caracter delimitador de la cadena
+            if (Microsoft.VisualBasic.Strings.Right(nuevaCadena, 1) == "@")
+            {
+                nuevaCadena = Microsoft.VisualBasic.Strings.Left(nuevaCadena, Microsoft.VisualBasic.Strings.Len(nuevaCadena) - 1);
+            }
+
+            SEPARARAPELLIDOSRet = nuevaCadena;
+            return SEPARARAPELLIDOSRet;
+
+        }
+
+        public static string Right(string original, int numberCharacters)
+        {
+            return original.Substring(original.Length - numberCharacters);
+        }
+
+
+        //public string SEPARARAPELLIDOS(String rng)
+        //{
+        //    string SEPARARAPELLIDOSRet = default;
+
+        //    string[] nombreArr;
+        //    var nuevaCadena = default(string);
+        //    int i;
+
+        //    // Dvidir el nombre por palabras en un arreglo
+        //    nombreArr = Strings.Split(Strings.Trim(rng));
+
+        //    // Analizar cada palabra dentro del arreglo
+        //    var loopTo = Information.UBound(nombreArr);
+        //    for (i = 0; i <= loopTo; i++)
+        //    {
+        //        switch (Strings.LCase(nombreArr[i]) ?? "")
+        //        {
+
+        //            // Palabras que forman parte de un apellido compuesto
+        //            // Agregar nuevas palabras separadas por una coma
+        //            case "de":
+        //            case "del":
+        //            case "la":
+        //            case "las":
+        //            case "los":
+        //            case "san":
+        //                {
+        //                    // Insertar espacio en blanco
+        //                    nuevaCadena = nuevaCadena + nombreArr[i] + " ";
+        //                    break;
+        //                }
+
+        //            default:
+        //                {
+        //                    // Insertar caracter delimitador
+        //                    nuevaCadena = nuevaCadena + nombreArr[i] + "@";
+        //                    break;
+        //                }
+
+        //        }
+        //    }
+
+        //    // Remover el último caracter delimitador de la cadena
+        //    if (String.Right(nuevaCadena, 1) == "@")
+        //    {
+        //        nuevaCadena = Strings.Left(nuevaCadena, Strings.Len(nuevaCadena) - 1);
+        //    }
+
+        //    SEPARARAPELLIDOSRet = nuevaCadena;
+        //    return SEPARARAPELLIDOSRet;
+
+        //}
+
         public static String[] getRucPrefixes()
         {
             return new String[] { "10", "15", "17", "20" };

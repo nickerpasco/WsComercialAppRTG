@@ -17,7 +17,7 @@ namespace WsComercialApp.Controllers
         {
             RepositorioUsuario usuario = new RepositorioUsuario();
             var resultlist = usuario.GetAllByID(bean);
-            return null;
+            return resultlist;
 
         }
 
@@ -93,14 +93,8 @@ namespace WsComercialApp.Controllers
         public ModelTransacPersona SavePersona([FromBody] ModelTransacPersona persona)
         {
             RepositorioUsuario repositorio = new RepositorioUsuario();
-
-
             var response = repositorio.InsertPersona(persona); // 
-
             return response;
-
-
-
         }
 
 
@@ -126,12 +120,8 @@ namespace WsComercialApp.Controllers
         [Route("api/Usuario/getDetalleFacturasLinea")]
         public List<DetalleFacturasLinea> getDetalleFacturasLinea([FromBody] ModelUsuario bean)
         {
-            RepositorioUsuario usuario = new RepositorioUsuario();
-             
-
+            RepositorioUsuario usuario = new RepositorioUsuario();      
             List<DetalleFacturasLinea> resultlist = usuario.getDetalleFacturasLinea(bean); 
-            
-
             return resultlist;
 
         }
@@ -160,6 +150,13 @@ namespace WsComercialApp.Controllers
                 String Texto = dataConvertida.RazonSocial;
                 string[] lsttexto = Texto.Split('-');
                 dataConvertida.RazonSocial = lsttexto[1].Trim() ;
+
+                String dataNombre = FuncPrinc.SepararApellidosCompuestos(dataConvertida.RazonSocial);
+                ModelTransacPersona personaData = FuncPrinc.GetObjetoPersona(dataNombre);
+
+                dataConvertida.Nombres = personaData.Nombres;
+                dataConvertida.ApellidoPaterno = personaData.ApellidoPaterno;
+                dataConvertida.ApellidoMaterno = personaData.ApellidoMaterno;
 
 
 
