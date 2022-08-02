@@ -430,14 +430,12 @@ and ( VW_CO_DescuentoEscalaVigente.monto <= @Cantidad and VW_CO_DescuentoEscalaV
 
 
 		update WH_ItemAlmacenLote
-		set StockComprometido=@Cantidad --Según la cantidad que se pidió
+		set StockComprometido=@Cantidad  
 		where
-		item=@Item -- Según el item que está en el detalle del pedido
-		and Condicion='0' -- Tomar siempre '0'
-		and AlmacenCodigo=@Almacen -- Tomar del almacén que se selecciono para el producto CO_DocumentoDetalle.AlmacenCodigo
-		and Lote=@Lote -- Si se consulta el ítem: Si WH_ItemMast.ManejoxLoteFlag='N' entonces tomar el lote 00
-		-- Si WH_ItemMast.ManejoxLoteFlag='S' entonces tomar el que tiene la menor fecha de ingreso WH_ItemAlmacenLote.FechaIngreso
-		-- y si el stock no alcanza entonces tomar el lote de la siguiente Fecha de Ingreso.
+		item=@Item  
+		and Condicion='0'  
+		and AlmacenCodigo=@Almacen  
+		and Lote=@Lote  
 
 	</Co_Documento.MotoActualizaComprometido>
 

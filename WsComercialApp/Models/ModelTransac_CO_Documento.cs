@@ -226,5 +226,12 @@ namespace WsComercialApp.Models
         public List<ErrorObj> lstErrores = new List<ErrorObj>();
 
         public List<Model_CoDocumentoImpuesto> DetalleImpuestos { get; set; }
+
+
+
+        public string FormadePagoAntigua { get; set; }
+        public string FormadePagoAntiguaFlagCedito { get; set; }
+        public string FormadePagoNuevaFlagCedito { get; set; }
+        public string FormadePagoNueva { get; set; }
     }
 }

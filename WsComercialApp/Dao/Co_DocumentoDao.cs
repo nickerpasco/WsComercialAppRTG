@@ -128,7 +128,7 @@ namespace WsComercialApp.Dao
                 return "00";
             }
 
-            String realQuery = "select Lote,StockActual from WH_ItemAlmacenLote  where  and AlmacenCodigo = '" + almacen + "' AND Item = '" + itemCodigo + "' order by FechaIngreso asc";
+            String realQuery = "select Lote,StockActual from WH_ItemAlmacenLote  where  AlmacenCodigo = '" + almacen + "' AND Item = '" + itemCodigo + "' order by FechaIngreso asc";
             var resultado = UtilsDAO.getDataByQuery<Model_Stock_Query>(realQuery);
 
             foreach(var item in resultado)
@@ -436,6 +436,7 @@ namespace WsComercialApp.Dao
                 //Otabla.ComercialPedidoFechaRequerida = c.FechaDocumento;
                 Otabla.TipoMotivo = c.TipoMotivo;
                 Otabla.AlmacenCodigo = UtilsDAO.getValuString("select ValorString from SY_Preferences where usuario='"+c.UltimoUsuario+"' and Preference='ALMACEN'", null); ;
+                c.AlmacenCodigo = Otabla.AlmacenCodigo;
                 Otabla.ReferenciaTipoPago = UtilsDAO.getValuString("select texto from ParametrosMast where CompaniaCodigo='999999' and ParametroClave='TIPAGAPP' and AplicacionCodigo='CO'", null); ;
                 Otabla.ImpresionPendienteFlag = "S";
                 Otabla.DocumentoMoraFlag = "N";
@@ -516,6 +517,21 @@ namespace WsComercialApp.Dao
                     Otabla.Estado = "PR";
                     Otabla.TipoMotivo = "97";
                 }
+
+                if(c.FormadePagoNuevaFlagCedito =="S" && c.FormadePagoAntiguaFlagCedito == "S")
+                {
+
+                    var DiasCreditoAntigua =  UtilsDAO.getValueIntOnly("select MAX(MA_FormadePagoDetalle.NumeroDias) from MA_FormadePago,MA_FormadePagoDetalle where MA_FormadePago.FormadePago=MA_FormadePagoDetalle.FormadePago and MA_FormadePago.FormadePago='"+c.FormadePagoAntigua+"' "); ;
+                    var DiasCreditoNueva =  UtilsDAO.getValueIntOnly("select MAX(MA_FormadePagoDetalle.NumeroDias) from MA_FormadePago,MA_FormadePagoDetalle where MA_FormadePago.FormadePago=MA_FormadePagoDetalle.FormadePago and MA_FormadePago.FormadePago='"+c.FormadePagoNueva+"' "); ;
+
+                    if(DiasCreditoNueva> DiasCreditoAntigua)
+                    {
+                        Otabla.Estado = "PR";
+                        Otabla.TipoMotivo = "99";
+                    }
+
+                }
+
 
                 Otabla.ClienteDireccionSecuencia = Otabla.ClienteDireccionDespacho;
 

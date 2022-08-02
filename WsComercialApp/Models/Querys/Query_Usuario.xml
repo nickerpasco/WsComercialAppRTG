@@ -6,15 +6,17 @@
 
 
 	select     per.Busqueda, per.Telefono as Telefono   ,  per.Documento as Documento, per.FechaNacimiento as FechaNacimiento, em.CompaniaSocio as CompaniaSocio, em.Sucursal as Sucursal, em.UnidadNegocioAsignada ,
-	per.Persona as Persona , per.Direccion, vende.VentaEquipo,
+	per.Persona as Persona , per.Direccion, vende.VentaEquipo, cli.IdTransportista,ftvehi.TransportistaDescripcion,
 	Usuario as Usuario , u.Clave, u.Nombre, u.UsuarioPerfil, u.Estado, per.Nombres as PrimerNombre , em.CompaniaSocio
 	,(select count(*) as PuedeFacturar from SeguridadAutorizaciones where AplicacionCodigo='CO' and Grupo='SYSTEM' and Concepto='FACAPP' and  Usuario=@UserName) as PuedeFacturar,
 	(select count(1) as PuedeCambiarPrecio from SeguridadAutorizaciones where AplicacionCodigo='CO' and Grupo='SYSTEM' and Concepto='EDITPE' and  Usuario=@UserName) as PuedeCambiarPrecio,
 	(select count(1) as PuedeHacerDescuento from SeguridadAutorizaciones where AplicacionCodigo='CO' and Grupo='SYSTEM' and Concepto='DESESC' and  Usuario=@UserName) as PuedeHacerDescuento
 	from Usuario u
 	inner join EmpleadoMast em on u.Usuario = em.CodigoUsuario
+	inner join ClienteMast cli on cli.Cliente = em.Empleado
 	inner join PersonaMast per on per.Persona = em.Empleado
-	inner join CO_Vendedor vende on per.Persona = vende.Vendedor
+	left join FT_Vehiculo ftvehi on  cli.IdTransportista = ftvehi.IdTransportista
+	inner join CO_Vendedor vende on per.Persona = vende.Vendedor 
 	where u.Usuario = @UserName AND em.FechaCese IS NULL
 
 

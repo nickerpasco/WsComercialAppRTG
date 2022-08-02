@@ -82,8 +82,12 @@ namespace WsComercialApp.Models
         public List<ErrorObj> lstErrores = new List<ErrorObj>();
 		public List<ModelParametros> lstparametros = new List<ModelParametros>();
 		public List<ModelMiscelaneos> lstmiscelaneos = new List<ModelMiscelaneos>();
-        //public List<SY_PreferencesModel> lstPreferencias = new List<SY_PreferencesModel>();
+		//public List<SY_PreferencesModel> lstPreferencias = new List<SY_PreferencesModel>();
 
-        //public PaginacionGenerico paginacion = new PaginacionGenerico();
+		//public PaginacionGenerico paginacion = new PaginacionGenerico();
+
+		//public string TransportistaDescripcion { get;  set; }
+		//public int? IdTransportista { get; set; }
+		 
     }
 }
