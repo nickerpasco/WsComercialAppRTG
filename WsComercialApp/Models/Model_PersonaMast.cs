@@ -46,5 +46,8 @@ namespace WsComercialApp.Models
 
 
         public string TipoVenta { get; set; }
+
+        public string TransportistaDescripcion { get; set; }
+        public int? IdTransportista { get; set; }
     }
 }

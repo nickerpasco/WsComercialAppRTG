@@ -6,17 +6,15 @@
 
 
 	select     per.Busqueda, per.Telefono as Telefono   ,  per.Documento as Documento, per.FechaNacimiento as FechaNacimiento, em.CompaniaSocio as CompaniaSocio, em.Sucursal as Sucursal, em.UnidadNegocioAsignada ,
-	per.Persona as Persona , per.Direccion, vende.VentaEquipo, cli.IdTransportista,ftvehi.TransportistaDescripcion,
+	per.Persona as Persona , per.Direccion, vende.VentaEquipo,
 	Usuario as Usuario , u.Clave, u.Nombre, u.UsuarioPerfil, u.Estado, per.Nombres as PrimerNombre , em.CompaniaSocio
 	,(select count(*) as PuedeFacturar from SeguridadAutorizaciones where AplicacionCodigo='CO' and Grupo='SYSTEM' and Concepto='FACAPP' and  Usuario=@UserName) as PuedeFacturar,
 	(select count(1) as PuedeCambiarPrecio from SeguridadAutorizaciones where AplicacionCodigo='CO' and Grupo='SYSTEM' and Concepto='EDITPE' and  Usuario=@UserName) as PuedeCambiarPrecio,
 	(select count(1) as PuedeHacerDescuento from SeguridadAutorizaciones where AplicacionCodigo='CO' and Grupo='SYSTEM' and Concepto='DESESC' and  Usuario=@UserName) as PuedeHacerDescuento
 	from Usuario u
 	inner join EmpleadoMast em on u.Usuario = em.CodigoUsuario
-	inner join ClienteMast cli on cli.Cliente = em.Empleado
 	inner join PersonaMast per on per.Persona = em.Empleado
-	left join FT_Vehiculo ftvehi on  cli.IdTransportista = ftvehi.IdTransportista
-	inner join CO_Vendedor vende on per.Persona = vende.Vendedor 
+	inner join CO_Vendedor vende on per.Persona = vende.Vendedor
 	where u.Usuario = @UserName AND em.FechaCese IS NULL
 
 
@@ -145,14 +143,17 @@
 	<Personas.getPersonasOnnline>
 
 
+
 		select Telefono, CorreoElectronico, Persona, TRIM(Busqueda) as Busqueda , TRIM(PersonaMast.Departamento) as Departamento,TRIM(PersonaMast.Provincia) as Provincia,TRIM(PersonaMast.CodigoPostal) as CodigoPostal,TRIM(TipoPersona) as TipoPersona,TRIM(EsCliente) as EsCliente,TRIM(EsProveedor) as EsProveedor,TRIM(EsEmpleado) as EsEmpleado,
 		TRIM(PersonaMast.TipoDocumento) as TipoDocumentoPersona,TRIM(cli.TipoDocumento) as TipoDocumento,TRIM(cli.TipoCliente) as TipoCliente, TRIM(cli.CentroCosto) as CentroCosto , TRIM(cli.TipoFacturacion) as TipoFacturacion,
 		isnull((select formadepago from CO_LineaCredito where ClienteNumero=cli.Cliente and estado='A'),cli.FormadePago) as FormadePago,
 		TRIM(cli.FormaFacturacion) as FormaFacturacion,  cli.Vendedor as Vendedor, TRIM(cli.ConceptoFacturacion) as ConceptoFacturacion,
-		TRIM(Documento) as Documento,TRIM(Direccion) as Direccion,TRIM(PersonaAnt) as PersonaAnt,TRIM(DocumentoFiscal) as DocumentoFiscal,TRIM(DocumentoIdentidad) as DocumentoIdentidad,TRIM(Estado)  as Estado , isnull(cli.BloquearVendedor,'N') as BloquearVendedor
-		from PersonaMast
-		inner join ClienteMast cli on PersonaMast.Persona= cli.Cliente
-		where EsCliente='S' and Estado = 'A' and
+		TRIM(Documento) as Documento,TRIM(Direccion) as Direccion,TRIM(PersonaAnt) as PersonaAnt,TRIM(DocumentoFiscal) as DocumentoFiscal,TRIM(DocumentoIdentidad) as DocumentoIdentidad,TRIM(PersonaMast.Estado)  as Estado , isnull(cli.BloquearVendedor,'N') as BloquearVendedor
+		,cli.IdTransportista,ftvehi.TransportistaDescripcion
+		from PersonaMast with(nolock)
+		inner join ClienteMast cli with(nolock) on PersonaMast.Persona= cli.Cliente
+		left join FT_Vehiculo ftvehi on  cli.IdTransportista = ftvehi.IdTransportista
+		where EsCliente='S' and PersonaMast.Estado = 'A' and
 		(@Persona is null or @Persona='' or Persona = @Persona)
 		AND (@Busqueda is null or @Busqueda='' or UPPER(CONVERT(VARCHAR ,Persona)+Busqueda+Documento)like '%'+upper(@Busqueda)+'%')
 		order by Persona desc
@@ -173,7 +174,8 @@
 		COUNT(1)
 		from PersonaMast
 		inner join ClienteMast cli on PersonaMast.Persona= cli.Cliente
-		where EsCliente='S' and Estado = 'A' and
+		left join FT_Vehiculo ftvehi on  cli.IdTransportista = ftvehi.IdTransportista
+		where EsCliente='S' and PersonaMast.Estado = 'A' and
 		(@Persona is null or @Persona='' or Persona = @Persona)
 		AND (@Busqueda is null or @Busqueda='' or UPPER(CONVERT(VARCHAR ,Persona)+Busqueda+Documento)like '%'+upper(@Busqueda)+'%')
 	</Personas.getPersonasOnlineCount>
