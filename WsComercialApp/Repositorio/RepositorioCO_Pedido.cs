@@ -213,6 +213,17 @@ namespace WsComercialApp.Repositorio
 
         }
 
+        internal List<ModelItemAlmacen> getItemAlmacen(FiltroGenerico documento)
+        {
+            List<SqlParameter> parametros = new List<SqlParameter>();  
+            parametros.Add(new SqlParameter("@ItemCodigo", documento.BusquedaAvanzada)); 
+
+            var sqlString = UtilsGlobal.ConvertLinesSqlXml("Query_CO_Pedido", "Co_Documento.getItemAlmacen"); 
+            var resultado = UtilsDAO.getDataByQueryWithParameters<ModelItemAlmacen>(sqlString, parametros);
+
+            return resultado;
+        }
+
         internal PaginacionGenerico getAgencias(FiltroGenerico request)
         {
             List<SqlParameter> parametros = new List<SqlParameter>();

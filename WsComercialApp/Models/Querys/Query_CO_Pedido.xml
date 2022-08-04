@@ -440,8 +440,19 @@ and ( VW_CO_DescuentoEscalaVigente.monto <= @Cantidad and VW_CO_DescuentoEscalaV
 	</Co_Documento.MotoActualizaComprometido>
 
 
+<Co_Documento.getItemAlmacen>
 
 
+		 select (StockActual) - (StockComprometido) as Stock, lote.AlmacenCodigo,almacen.DescripcionLocal as AlmacenDescripcion, lote.Item, item.DescripcionLocal as ItemDescripcion   from WH_ItemAlmacenLote lote with(nolock)
+		 left join Wh_AlmacenMast almacen with(nolock) on lote.AlmacenCodigo = almacen.AlmacenCodigo
+		 left join Wh_ItemMast item with(nolock) on  item.Item = lote.Item
+		 where lote.Item = @ItemCodigo
+
+</Co_Documento.getItemAlmacen>
+
+
+
+	
 	
 
 

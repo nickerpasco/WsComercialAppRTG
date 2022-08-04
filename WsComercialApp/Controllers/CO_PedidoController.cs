@@ -143,6 +143,15 @@ namespace WsComercialApp.Controllers
             return response;
         }
 
+        [HttpPost]
+        [Route("api/getItemAlmacen")]
+        public List<ModelItemAlmacen> getItemAlmacen([FromBody] FiltroGenerico documento)
+        {
+            RepositorioCO_Pedido repositorio = new RepositorioCO_Pedido();
+            var response = repositorio.getItemAlmacen(documento); // 
+            return response;
+        }
+
     }
 }
 

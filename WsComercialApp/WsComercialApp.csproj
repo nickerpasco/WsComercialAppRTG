@@ -261,6 +261,7 @@
     <Compile Include="Models\DetalleFacturasLinea.cs" />
     <Compile Include="Models\InfoCliente_LCredito.cs" />
     <Compile Include="Models\ModelDireccion.cs" />
+    <Compile Include="Models\ModelItemAlmacen.cs" />
     <Compile Include="Models\ModelMiscelaneos.cs" />
     <Compile Include="Models\ModelParametros.cs" />
     <Compile Include="Models\ModelSeguridadConcepto.cs" />

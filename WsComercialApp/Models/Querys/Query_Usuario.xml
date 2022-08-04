@@ -252,8 +252,8 @@ CO_LineaCredito.Estado = 'A'
 UNION
 SELECT
 'MontoUtilizado'  as Tipo,
-sum(Case when CO_Documento.MonedaDocumento='LO' then CO_Documento.MontoTotal-CO_Documento.MontoPagado else (CO_Documento.MontoTotal-CO_Documento.MontoPagado)*@TipoCambio end) MontoLocal,
-sum(Case when CO_Documento.MonedaDocumento='EX' then CO_Documento.MontoTotal-CO_Documento.MontoPagado else (CO_Documento.MontoTotal-CO_Documento.MontoPagado)/@TipoCambio end) MontoDolares
+sum(Case when CO_Documento.MonedaDocumento='LO' then CO_Documento.MontoTotal-CO_Documento.MontoPagado else (CO_Documento.MontoTotal-CO_Documento.MontoPagado)*CO_Documento.TipodeCambio end) MontoLocal,
+sum(Case when CO_Documento.MonedaDocumento='EX' then CO_Documento.MontoTotal-CO_Documento.MontoPagado else (CO_Documento.MontoTotal-CO_Documento.MontoPagado)/CO_Documento.TipodeCambio end) MontoDolares
 FROM {oj CO_Documento LEFT OUTER JOIN MA_FormadePago ON CO_Documento.FormadePago = MA_FormadePago.FormadePago}, CO_TipoDocumento, ClienteMast, CO_TipoVenta
 WHERE ( CO_Documento.TipoDocumento = CO_TipoDocumento.TipoDocumento ) and
 ( CO_Documento.ClienteNumero = ClienteMast.Cliente ) and
