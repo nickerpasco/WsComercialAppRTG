@@ -230,7 +230,6 @@ namespace WsComercialApp.Controllers
                         }
                         else
                         {
-
                             if (bean.Clave != bean.ConfirmarClave)
                             {
                                 error.CodigoError = 500;
@@ -239,7 +238,6 @@ namespace WsComercialApp.Controllers
                                 dbContextTransaction.Rollback();
                                 return response;
                             }
-
                             DataUsuario.Clave = FuncPrinc.springEncriptar(bean.Clave);
                             context.Entry(DataUsuario).State = System.Data.Entity.EntityState.Modified;
                             context.SaveChanges();
