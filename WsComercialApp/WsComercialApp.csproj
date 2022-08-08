@@ -276,6 +276,7 @@
     <Compile Include="Models\Model_CO_Documento.cs" />
     <Compile Include="Models\Model_CO_DocumentoDetalle.cs" />
     <Compile Include="Models\Model_Dashboard.cs" />
+    <Compile Include="Models\Model_LetrasCabecera.cs" />
     <Compile Include="Models\Model_MontosLineaCredito.cs" />
     <Compile Include="Models\Model_PersonaMast.cs" />
     <Compile Include="Models\Model_SpringUsuario.cs" />

@@ -450,10 +450,57 @@ and ( VW_CO_DescuentoEscalaVigente.monto <= @Cantidad and VW_CO_DescuentoEscalaV
 
 </Co_Documento.getItemAlmacen>
 
+	<Co_Documento.getLetrasCabecera>
 
 
+		select
+		CASE CO_OperacionCanje.Estado
+		When 'CO' Then 'Provisionado'
+		When 'GE' Then 'Generado'
+		When 'AN' Then 'Anulado'
+		When 'PR' Then 'Pendiente'
+		ELSE 'Sin Estado en App'  end AS EstadoString,
+		CASE CO_OperacionCanje.Estado
+		When 'CO' Then '#10c105'
+		When 'GE' Then '#f3aa1e'
+		When 'AN' Then '#e01609'
+		When 'PR' Then '#ff00b2'
+		ELSE '#23416d'  end AS ColorEstado,
+		CO_OperacionCanje.Estado as PedidoEstadoCodigo,
+		CASE DATEDIFF(day, FechaPreparacion, GETDATE())
+		When -1 Then 'Mañana'
+		When 1 Then 'Ayer'
+		When 0 Then 'Hoy'
+		ELSE  convert(varchar(20),FechaPreparacion,103) end AS LabelMes,
+		FORMAT(FechaPreparacion,'hh:mm tt')  AS LabelHora,
+		Cliente.Persona as IdPersona,
+		Cliente.NombreCompleto,
+		CO_OperacionCanje.OperacionCanjeNumero,
+		CO_OperacionCanje.Vendedor,
+		CO_OperacionCanje.Comentarios,
+		Direccion.Direccion,
+		CONVERT(varchar,CO_OperacionCanje.LetrasCantidad) + ' Letras' as LetrasCantidad
+		from CO_OperacionCanje inner join PersonaMast Cliente on CO_OperacionCanje.Cliente=Cliente.Persona
+		left join Direccion on CO_OperacionCanje.Cliente=Direccion.Persona and
+		CO_OperacionCanje.ClienteDireccionSecuencia=Direccion.Secuencia
+
+	</Co_Documento.getLetrasCabecera>
+
+
+	<Co_Documento.getLetrasCabeceraCount>
+
+
+		select
+		count(1)
+		from CO_OperacionCanje inner join PersonaMast Cliente on CO_OperacionCanje.Cliente=Cliente.Persona
+		left join Direccion on CO_OperacionCanje.Cliente=Direccion.Persona and
+		CO_OperacionCanje.ClienteDireccionSecuencia=Direccion.Secuencia
+
+
+	</Co_Documento.getLetrasCabeceraCount>
+
 	
-	
+
 
 
 </sql-query>

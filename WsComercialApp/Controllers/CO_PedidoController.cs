@@ -152,6 +152,16 @@ namespace WsComercialApp.Controllers
             return response;
         }
 
+        [HttpPost]
+        [Route("api/getLetrasCabecera")]
+        public PaginacionGenerico getLetrasCabecera([FromBody] FiltroGenerico documento)
+        {
+            RepositorioCO_Pedido repositorio = new RepositorioCO_Pedido();
+            var response = repositorio.getLetrasCabecera(documento); // 
+            return response;
+        }
+
+
     }
 }
 

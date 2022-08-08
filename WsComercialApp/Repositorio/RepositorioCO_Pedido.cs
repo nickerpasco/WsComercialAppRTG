@@ -255,6 +255,33 @@ namespace WsComercialApp.Repositorio
             return p;
              
 
+        }  
+        internal PaginacionGenerico getLetrasCabecera(FiltroGenerico request)
+        {
+           
+
+            PaginacionGenerico p = new PaginacionGenerico(); 
+
+            var sqlString = UtilsGlobal.ConvertLinesSqlXml("Query_CO_Pedido", "Co_Documento.getLetrasCabecera");
+            var sqlStringcount = UtilsGlobal.ConvertLinesSqlXml("Query_CO_Pedido", "Co_Documento.getLetrasCabeceraCount");
+
+
+            String queryArmado = sqlString + RetornoQueryLetras(request);
+            String queryArmadoCount = sqlStringcount + RetornoQueryLetrasCount(request); 
+
+            var resultado = UtilsDAO.getDataByQuery<Model_LetrasCabecera>(queryArmado);
+            var Resultado = UtilsDAO.getValueIntOnly(queryArmadoCount);
+
+
+
+            p.countBD = Resultado;
+            p.page = request.paginacion.page;
+            p.limit = request.paginacion.limit;
+            p.lstLetrasCabecera = resultado; 
+
+            return p;
+             
+
         }
 
         public void BorrarFile(String rutita)
@@ -477,6 +504,35 @@ namespace WsComercialApp.Repositorio
             }
 
          
+        }
+
+        private string RetornoQueryLetras(FiltroGenerico bean)
+        {
+          String query = " where CO_OperacionCanje.Vendedor = " + bean.Vendedor + " and  CO_OperacionCanje.CompaniaSocio = '" + bean.CompaniaSocio + "'  " +
+      " and ('" + bean.FechaInicio + "' IS NULL OR CO_OperacionCanje.FechaPreparacion >= '" + bean.FechaInicio + "') " +
+      " AND('" + bean.FechaFin + "' IS NULL OR CO_OperacionCanje.FechaPreparacion < DATEADD(DAY, 1, '" + bean.FechaFin + "')) " +
+       " AND ('" + bean.BusquedaAvanzada + "' is null or '" + bean.BusquedaAvanzada + "' ='' or UPPER(Cliente.Busqueda+convert(varchar,CO_OperacionCanje.OperacionCanjeNumero))like '%'+upper('" + bean.BusquedaAvanzada + "' )+'%') " +
+        " AND ('" + bean.Estado + "' is null or '" + bean.Estado + "' ='' or UPPER(CO_OperacionCanje.Estado)like '%'+upper('" + bean.Estado + "' )+'%') " +
+      " order by  CO_OperacionCanje.OperacionCanjeNumero desc " +
+      " OFFSET(" + bean.paginacion.page + " - 1) * " + bean.paginacion.limit + "  ROWS " +
+      " FETCH NEXT " + bean.paginacion.limit + " ROWS ONLY";
+
+            return query;
+
+
+        }
+
+        private string RetornoQueryLetrasCount(FiltroGenerico bean)
+        {
+            String query = " where CO_OperacionCanje.Vendedor = " + bean.Vendedor + " and  CO_OperacionCanje.CompaniaSocio = '" + bean.CompaniaSocio + "'  " +
+        " and ('" + bean.FechaInicio + "' IS NULL OR CO_OperacionCanje.FechaPreparacion >= '" + bean.FechaInicio + "') " +
+        " AND('" + bean.FechaFin + "' IS NULL OR CO_OperacionCanje.FechaPreparacion < DATEADD(DAY, 1, '" + bean.FechaFin + "')) " +
+         " AND ('" + bean.BusquedaAvanzada + "' is null or '" + bean.BusquedaAvanzada + "' ='' or UPPER(Cliente.Busqueda+convert(varchar,CO_OperacionCanje.OperacionCanjeNumero))like '%'+upper('" + bean.BusquedaAvanzada + "' )+'%') " +
+          " AND ('" + bean.Estado + "' is null or '" + bean.Estado + "' ='' or UPPER(CO_OperacionCanje.Estado)like '%'+upper('" + bean.Estado + "' )+'%') ";
+
+            return query;
+
+
         }
 
         public ModelTransac_CO_Documento InsertCo_Documento(ModelTransac_CO_Documento c)

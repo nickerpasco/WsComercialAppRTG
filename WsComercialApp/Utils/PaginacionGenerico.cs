@@ -16,6 +16,7 @@ namespace WsComercialApp.Utils
         public List<Model_CO_Documento> lstCabeceraPedidos = new List<Model_CO_Documento>();
         public List<Model_PersonaMast> lstPersonas = new List<Model_PersonaMast>();
         public List<AgenciasModel> lstAgencias = new List<AgenciasModel>();
+        public List<Model_LetrasCabecera> lstLetrasCabecera = new List<Model_LetrasCabecera>();
         
     }
 }
