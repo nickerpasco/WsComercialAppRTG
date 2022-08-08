@@ -132,7 +132,7 @@ namespace WsComercialApp.Controllers
             RepositorioCO_Pedido repositorio = new RepositorioCO_Pedido();
             var response = repositorio.getDescuentosReglas(documento); // 
             return response;
-        }
+        } 
 
         [HttpPost]
         [Route("api/getAgencias")]
