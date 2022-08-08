@@ -326,11 +326,16 @@
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
-    <Content Include="ImgF\0301000003.png" />
-    <Content Include="ImgF\0302000002.jpg" />
-    <Content Include="ImgF\0303000001.jpg" />
-    <Content Include="ImgF\0304000002.png" />
-    <Content Include="ImgF\0401000001.jpg" />
+    <Content Include="ImgF\0000000008.jpg" />
+    <Content Include="ImgF\0000000018.jpg" />
+    <Content Include="ImgF\0000000021.jpg" />
+    <Content Include="ImgF\0000000022.jpg" />
+    <Content Include="ImgF\0000000023.jpg" />
+    <Content Include="ImgF\0000000024.jpg" />
+    <Content Include="ImgF\0000000031.jpg" />
+    <Content Include="ImgF\0000000032.jpg" />
+    <Content Include="ImgF\0000000033.jpg" />
+    <Content Include="ImgF\0000000034.jpg" />
     <Content Include="ImgF\ic_404.png" />
     <Content Include="Models\Bd\BdEntityGenerico.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
