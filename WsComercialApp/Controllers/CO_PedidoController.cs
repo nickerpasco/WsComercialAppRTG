@@ -133,7 +133,7 @@ namespace WsComercialApp.Controllers
             var response = repositorio.getDescuentosReglas(documento); // 
             return response;
         } 
-
+         
         [HttpPost]
         [Route("api/getAgencias")]
         public PaginacionGenerico getAgencias([FromBody] FiltroGenerico documento)
