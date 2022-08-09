@@ -319,7 +319,7 @@ MA_FormadePago.CreditoFlag = 'S'
 		OFFSET (@Index -1)* @PageSize  ROWS
 		FETCH NEXT @PageSize ROWS ONLY
 
-
+ 
 	</Personas.getVendedorOnnline>
 
 
