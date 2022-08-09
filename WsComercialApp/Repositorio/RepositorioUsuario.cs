@@ -294,8 +294,19 @@ namespace WsComercialApp.Controllers
             List<SqlParameter> parametroscount = new List<SqlParameter>();
             PaginacionGenerico p = new PaginacionGenerico();
 
-            string sqlString = UtilsGlobal.ConvertLinesSqlXml("Query_Usuario", "Personas.getPersonasOnnline");
-            string sqlStringcount = UtilsGlobal.ConvertLinesSqlXml("Query_Usuario", "Personas.getPersonasOnlineCount");
+            string sqlString = "";
+            string sqlStringcount = "";
+
+            if(bean.TipoSelector == "Personas")
+            {
+                sqlString = UtilsGlobal.ConvertLinesSqlXml("Query_Usuario", "Personas.getPersonasOnnline");
+                sqlStringcount = UtilsGlobal.ConvertLinesSqlXml("Query_Usuario", "Personas.getPersonasOnlineCount");
+            }
+            else if(bean.TipoSelector == "Vendedor")
+            {
+                sqlString = UtilsGlobal.ConvertLinesSqlXml("Query_Usuario", "Personas.getVendedorOnnline");
+                sqlStringcount = UtilsGlobal.ConvertLinesSqlXml("Query_Usuario", "Personas.getVendedorOnnlineCount");
+            }
 
 
             //bean.paginacion.page = 1;
@@ -317,8 +328,17 @@ namespace WsComercialApp.Controllers
 
 
             var Resultado = UtilsDAO.getValueInt(sqlStringcount, parametroscount);
+            List<ModelDireccion> ListaDirecciones = new List<ModelDireccion>();
 
-            var ListaDirecciones = getDireccionCliente(resul);
+            if (bean.TipoSelector == "Personas")
+            {
+                ListaDirecciones = getDireccionCliente(resul);                
+                 
+            }
+            else if (bean.TipoSelector == "Vendedor")
+            {
+                 
+            } 
 
             p.countBD = Resultado;
             p.page = bean.paginacion.page;

@@ -307,5 +307,38 @@ MA_FormadePago.CreditoFlag = 'S'
 
 	</Usuario.getDetalleFacturasLinea>
 
+
+	<Personas.getVendedorOnnline>
+
+		select persona.Busqueda,persona.Telefono,persona.Direccion,persona.CorreoElectronico,persona.Documento
+		from CO_Vendedor vendedor
+		left join PersonaMast persona on persona.Persona = vendedor.Vendedor
+		where (@Persona is null or @Persona='' or persona.Persona = @Persona)
+		AND (@Busqueda is null or @Busqueda='' or UPPER(CONVERT(VARCHAR ,persona.Persona)+persona.Busqueda+persona.Documento)like '%'+upper(@Busqueda)+'%')
+		order by persona.Persona desc
+		OFFSET (@Index -1)* @PageSize  ROWS
+		FETCH NEXT @PageSize ROWS ONLY
+
+
+	</Personas.getVendedorOnnline>
+
+
+	<Personas.getVendedorOnnlineCount>
+
+
+
+		select count(1)
+		from CO_Vendedor vendedor
+		left join PersonaMast persona on persona.Persona = vendedor.Vendedor
+		where (@Persona is null or @Persona='' or persona.Persona = @Persona)
+		AND (@Busqueda is null or @Busqueda='' or UPPER(CONVERT(VARCHAR ,persona.Persona)+persona.Busqueda+persona.Documento)like '%'+upper(@Busqueda)+'%')
+		 
+
+
+
+	</Personas.getVendedorOnnlineCount>
+
+ 
+
 </sql-query>
 
