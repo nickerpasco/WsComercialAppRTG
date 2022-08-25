@@ -131,10 +131,10 @@
 
 		depa.DescripcionCorta as Departamento ,  prov.DescripcionCorta as Provincia,   isnull(zona.DescripcionCorta,'') as CodigoPostal ,
 		e.Departamento as DepartamentoCod,e.Distrito as CodigoPostalCod,e.Provincia as ProvinciaCod
-		from Direccion e
-		LEFT join Departamento depa on e.Departamento = depa.Departamento
-		LEFT join Provincia prov on   prov.Departamento = e.Departamento and prov.Provincia = e.Provincia
-		LEFT join ZonaPostal zona on   zona.Departamento = e.Departamento and zona.Provincia = e.Provincia and zona.CodigoPostal = e.CodigoPostal
+		from Direccion e with(nolock)
+		LEFT join Departamento depa with(nolock) on e.Departamento = depa.Departamento
+		LEFT join Provincia prov with(nolock) on   prov.Departamento = e.Departamento and prov.Provincia = e.Provincia
+		LEFT join ZonaPostal zona with(nolock) on   zona.Departamento = e.Departamento and zona.Provincia = e.Provincia and zona.CodigoPostal = e.CodigoPostal
 	</Usuario.DireccionByClienteAll>
 
 
@@ -153,7 +153,7 @@
 		,cli.IdTransportista,ftvehi.TransportistaDescripcion
 		from PersonaMast with(nolock)
 		inner join ClienteMast cli with(nolock) on PersonaMast.Persona= cli.Cliente
-		left join FT_Vehiculo ftvehi on  cli.IdTransportista = ftvehi.IdTransportista
+		left join FT_Vehiculo ftvehi with(nolock) on  cli.IdTransportista = ftvehi.IdTransportista
 		where EsCliente='S' and PersonaMast.Estado = 'A' and
 		(@Persona is null or @Persona='' or Persona = @Persona)
 		AND (@Busqueda is null or @Busqueda='' or UPPER(CONVERT(VARCHAR ,Persona)+Busqueda+Documento)like '%'+upper(@Busqueda)+'%')
@@ -164,7 +164,7 @@
 
 	
 	<Personas.DireccionByClienteAll>
-		select Persona,Secuencia,Direccion,ReferenciasDireccion , RutaDespacho from Direccion
+		select Persona,Secuencia,Direccion,ReferenciasDireccion , RutaDespacho from Direccion with(nolock)
 	</Personas.DireccionByClienteAll>
 
 	<Personas.getPersonasOnlineCount>
@@ -173,24 +173,24 @@
 
 		select
 		COUNT(1)
-		from PersonaMast
-		inner join ClienteMast cli on PersonaMast.Persona= cli.Cliente
-		left join FT_Vehiculo ftvehi on  cli.IdTransportista = ftvehi.IdTransportista
+		from PersonaMast with(nolock)
+		inner join ClienteMast cli with(nolock) on PersonaMast.Persona= cli.Cliente
+		left join FT_Vehiculo ftvehi with(nolock) on  cli.IdTransportista = ftvehi.IdTransportista
 		where EsCliente='S' and PersonaMast.Estado = 'A' and
 		(@Persona is null or @Persona='' or Persona = @Persona)
 		AND (@Busqueda is null or @Busqueda='' or UPPER(CONVERT(VARCHAR ,Persona)+Busqueda+Documento)like '%'+upper(@Busqueda)+'%')
 	</Personas.getPersonasOnlineCount>
 
 	<PersonaMast.GetIdByUser>
-		select Empleado as Persona from EmpleadoMast where CodigoUsuario= @Usuario
+		select Empleado as Persona from EmpleadoMast with(nolock) where CodigoUsuario= @Usuario
 	</PersonaMast.GetIdByUser> 
 
 	<PersonaMast.getCentroCostosUser>
-		select CentroCosto from ClienteMast where cliente=@Persona
+		select CentroCosto from ClienteMast with(nolock) where cliente=@Persona
 	</PersonaMast.getCentroCostosUser>
 
 	<PersonaMast.getDataEmpleado>
-		select Sucursal , UnidadNegocioAsignada as UnidadNegocio from EmpleadoMast where empleado=@Empleado
+		select Sucursal , UnidadNegocioAsignada as UnidadNegocio from EmpleadoMast with(nolock) where empleado=@Empleado
 	</PersonaMast.getDataEmpleado>
 
 	<Configuracion.getParametroTextto>

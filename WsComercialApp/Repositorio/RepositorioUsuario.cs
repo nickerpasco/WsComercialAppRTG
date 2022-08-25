@@ -297,7 +297,7 @@ namespace WsComercialApp.Controllers
             string sqlString = "";
             string sqlStringcount = "";
 
-            if(bean.TipoSelector == "Personas")
+            if(bean.TipoSelector == "Personas" || bean.TipoSelector == null)
             {
                 sqlString = UtilsGlobal.ConvertLinesSqlXml("Query_Usuario", "Personas.getPersonasOnnline");
                 sqlStringcount = UtilsGlobal.ConvertLinesSqlXml("Query_Usuario", "Personas.getPersonasOnlineCount");
@@ -431,7 +431,7 @@ namespace WsComercialApp.Controllers
                     error.CodigoError = 1000;
                     error.MensajeError = "El Usuario : " + bean.Usuario + ", Ya se encuentra activo en otro dispositivo.";
                     response.lstErrores.Add(error);
-                    return response;
+                    //return response;
                 }
 
             }
