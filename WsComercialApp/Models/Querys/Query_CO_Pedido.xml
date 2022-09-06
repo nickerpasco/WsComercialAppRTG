@@ -6,7 +6,8 @@
 	
 		<Co_Documento.Cabecera>
 
-			select
+			select 	pedido.TransportistaProvincia,
+			ft.TransportistaDescripcion as TransportistaProvinciaDescripcion,
 			CASE pedido.MonedaDocumento
 			When 'LO' Then 'S/ ' +  FORMAT(pedido.MontoTotal, '#,##0.00')
 			When 'EX' Then '$ ' +FORMAT(pedido.MontoTotal, '#,##0.00')
@@ -61,6 +62,8 @@
 			LEFT join ZonaPostal zona on   zona.Departamento = e.Departamento and zona.Provincia = e.Provincia and zona.CodigoPostal = e.CodigoPostal
 			LEFT join CompaniaMast com on com.CompaniaCodigo = SUBSTRING(pedido.CompaniaSocio,1,6)
 			LEFT join CO_TipoDocumento on pedido.TipoDocumento=CO_TipoDocumento.TipoDocumento
+			LEFT join FT_Vehiculo ft on ft.IdTransportista=pedido.TransportistaProvincia
+
 
 		</Co_Documento.Cabecera>
 
@@ -138,6 +141,7 @@
 		LEFT join ZonaPostal zona on   zona.Departamento = e.Departamento and zona.Provincia = e.Provincia and zona.CodigoPostal = e.CodigoPostal
 		LEFT join CompaniaMast com on com.CompaniaCodigo = SUBSTRING(pedido.CompaniaSocio,1,6)
 		LEFT join CO_TipoDocumento on pedido.TipoDocumento=CO_TipoDocumento.TipoDocumento
+		LEFT join FT_Vehiculo ft on ft.IdTransportista=pedido.TransportistaProvincia
 
 
 	</Co_Documento.CabeceraCount>

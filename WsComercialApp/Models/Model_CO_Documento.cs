@@ -26,6 +26,8 @@ namespace WsComercialApp.Models
 		public decimal? MontoImpuestoVentas { get; set; }
 		public string ClienteDireccion { get; set; } 
 		public int? ClienteDireccionDespacho { get; set; }
+		public int? TransportistaProvincia { get; set; }
+		public string TransportistaProvinciaDescripcion { get; set; }
 		public string ClienteReferencia { get; set; }
 		public decimal? TipodeCambio { get; set; }
 		public string TipoFacturacion { get; set; }
