@@ -1023,6 +1023,9 @@ namespace WsComercialApp.Dao
                     Otabla.RecojoFlag = c.RecojoFlag;
                     Otabla.MonedaDocumento = c.MonedaDocumento;
 
+                    Otabla.TransportistaProvincia = c.TransportistaProvincia;
+                    Otabla.Comentarios = c.Comentarios;
+
 
                     String creditoFlag = UtilsDAO.getValuString("select CreditoFlag from MA_FormadePAgo where FormadePago = '" + c.FormadePago + "'", null);
 
