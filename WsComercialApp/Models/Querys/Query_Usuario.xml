@@ -3,7 +3,7 @@
  
 
 <Usuario.GetAllParameters>
-
+ 
 
 	select     per.Busqueda, per.Telefono as Telefono   ,  per.Documento as Documento, per.FechaNacimiento as FechaNacimiento, em.CompaniaSocio as CompaniaSocio, em.Sucursal as Sucursal, em.UnidadNegocioAsignada ,
 	per.Persona as Persona , per.Direccion, vende.VentaEquipo,
