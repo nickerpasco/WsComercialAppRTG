@@ -12,6 +12,7 @@ namespace WsComercialApp.Utils
         public string NumeroDocumento { get; set; }
         public string TipoDocumento { get; set; }
         public string TipoSelector { get; set; }
+        public string Periodo { get; set; }
         public int Vendedor { get; set; }
         public int Persona { get; set; }
         public string FechaInicio { get; set; }

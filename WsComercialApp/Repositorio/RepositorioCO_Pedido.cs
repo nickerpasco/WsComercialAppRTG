@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Web;
@@ -39,6 +40,40 @@ namespace WsComercialApp.Repositorio
 
             String queryArmado = sqlString + RetornoQuery(bean);
             String queryArmadoCount = sqlStringcount + RetornoQueryCount(bean);
+
+
+            var resul = UtilsDAO.getDataByQuery<Model_CO_Documento>(queryArmado);
+            var Resultado = UtilsDAO.getValueIntOnly(queryArmadoCount);
+
+             
+            p.countBD = Resultado;
+            p.page = bean.paginacion.page;
+            p.limit = bean.paginacion.limit;
+            p.lstCabeceraPedidos = resul;
+
+
+
+
+            return p;
+
+        }
+
+         public PaginacionGenerico getFacturasLetras(FiltroGenerico bean)
+        {
+            var p = new PaginacionGenerico();
+
+
+
+            String sqlString = "";
+
+            sqlString = UtilsGlobal.ConvertLinesSqlXml("Query_CO_Pedido", "Co_Documento.Cabecera");
+
+            var sqlStringcount = UtilsGlobal.ConvertLinesSqlXml("Query_CO_Pedido", "Co_Documento.CabeceraCount");
+
+            bean.Periodo = DateTime.Now.ToString("yyyyMM", CultureInfo.InvariantCulture);
+
+            String queryArmado = sqlString + RetornoQueryFactura(bean);
+            String queryArmadoCount = sqlStringcount + RetornoQueryFacturaCount(bean);
 
 
             var resul = UtilsDAO.getDataByQuery<Model_CO_Documento>(queryArmado);
@@ -504,6 +539,42 @@ namespace WsComercialApp.Repositorio
             }
 
          
+        }
+
+
+
+        private string RetornoQueryFactura(FiltroGenerico bean)
+        {
+
+            String returnString = " where  pedido.Vendedor = " + bean.Vendedor + " and  pedido.CompaniaSocio = '" + bean.CompaniaSocio + "' " + " and  pedido.TipoDocumento = '" + bean.TipoDocumento + "' " +
+     " and ('" + bean.FechaInicio + "' IS NULL OR pedido.FechaDocumento >= '" + bean.FechaInicio + "') " +
+     " AND('" + bean.FechaFin + "' IS NULL OR pedido.FechaDocumento < DATEADD(DAY, 1, '" + bean.FechaFin + "')) " +
+      " AND ('" + bean.BusquedaAvanzada + "' is null or '" + bean.BusquedaAvanzada + "' ='' or UPPER(pedido.ClienteNombre+pedido.NumeroDocumento)like '%'+upper('" + bean.BusquedaAvanzada + "' )+'%') " +
+       "  AND ('" + bean.Estado + "' is null or '" + bean.Estado + "' ='' or UPPER(pedido.Estado)like '%'+upper('" + bean.Estado + "' )+'%') " +
+       " and ( pedido.Estado = 'PR' and pedido.ClienteNumero ="+bean.Persona+" AND CO_TipoDocumento.Clasificacion <> 'PE' AND CO_TipoDocumento.Clasificacion <> 'AD'" +
+        " AND formapago.CuotaCreditoFlag = 'S' ) Or ( pedido.TipoDocumento='NC' and pedido.ClienteNumero =" + bean.Persona + " and pedido.Estado = 'PR')  and pedido.VoucherPeriodo='"+bean.Periodo+"'-- Según el mes actual" +
+     " order by  NumeroDocumento desc " +
+     " OFFSET(" + bean.paginacion.page + " - 1) * " + bean.paginacion.limit + "  ROWS " +
+     " FETCH NEXT " + bean.paginacion.limit + " ROWS ONLY";
+
+
+            return returnString;
+
+
+        }
+
+        private string RetornoQueryFacturaCount(FiltroGenerico bean)
+        {
+
+            String returnString = " where pedido.Vendedor = " + bean.Vendedor + " and  pedido.CompaniaSocio = '" + bean.CompaniaSocio + "' " + " and  pedido.TipoDocumento = '" + bean.TipoDocumento + "' " +
+          " and ('" + bean.FechaInicio + "' IS NULL OR pedido.FechaDocumento >= '" + bean.FechaInicio + "') " +
+          " AND('" + bean.FechaFin + "' IS NULL OR pedido.FechaDocumento < DATEADD(DAY, 1, '" + bean.FechaFin + "')) " +
+            " AND ('" + bean.BusquedaAvanzada + "' is null or '" + bean.BusquedaAvanzada + "' ='' or UPPER(pedido.ClienteNombre+pedido.NumeroDocumento)like '%'+upper('" + bean.BusquedaAvanzada + "' )+'%') " +
+          "  AND ('" + bean.Estado + "' is null or '" + bean.Estado + "' ='' or UPPER(pedido.Estado)like '%'+upper('" + bean.Estado + "' )+'%') " +
+                 " and ( pedido.Estado = 'PR' and pedido.ClienteNumero =" + bean.Persona + " AND CO_TipoDocumento.Clasificacion <> 'PE' AND CO_TipoDocumento.Clasificacion <> 'AD'" +
+        " AND formapago.CuotaCreditoFlag = 'S' ) Or ( pedido.TipoDocumento='NC' and pedido.ClienteNumero =" + bean.Persona + " and pedido.Estado = 'PR')  and pedido.VoucherPeriodo='" + bean.Periodo + "'-- Según el mes actual";
+            return returnString;
+
         }
 
         private string RetornoQueryLetras(FiltroGenerico bean)

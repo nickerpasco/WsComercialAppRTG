@@ -34,6 +34,17 @@ namespace WsComercialApp.Controllers
             return resultlist;
         }
 
+
+        [HttpPost]
+        [Route("api/Co_Documento/getFacturasLetras")]
+        public PaginacionGenerico getFacturasLetras(FiltroGenerico bean)
+        {
+            RepositorioCO_Pedido co_pedido = new RepositorioCO_Pedido();
+            var resultlist = co_pedido.getFacturasLetras(bean);
+            return resultlist;
+        }
+
+
         [HttpPost]
         [Route("api/Co_Documento/getDetalle")]
         public List<Model_CO_DocumentoDetalle> getDetalle(FiltroGenerico bean)
