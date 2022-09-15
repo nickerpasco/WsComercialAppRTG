@@ -545,15 +545,20 @@ namespace WsComercialApp.Repositorio
 
         private string RetornoQueryFactura(FiltroGenerico bean)
         {
+            bean.Persona = bean.Vendedor;
+            String returnString = "  WHERE(pedido.Estado = 'PR' and pedido.ClienteNumero = "+bean.Persona+" AND CO_TipoDocumento.Clasificacion <> 'PE' AND CO_TipoDocumento.Clasificacion <> 'AD' "+
 
-            String returnString = " where  pedido.Vendedor = " + bean.Vendedor + " and  pedido.CompaniaSocio = '" + bean.CompaniaSocio + "' " + " and  pedido.TipoDocumento = '" + bean.TipoDocumento + "' " +
-     " and ('" + bean.FechaInicio + "' IS NULL OR pedido.FechaDocumento >= '" + bean.FechaInicio + "') " +
-     " AND('" + bean.FechaFin + "' IS NULL OR pedido.FechaDocumento < DATEADD(DAY, 1, '" + bean.FechaFin + "')) " +
-      " AND ('" + bean.BusquedaAvanzada + "' is null or '" + bean.BusquedaAvanzada + "' ='' or UPPER(pedido.ClienteNombre+pedido.NumeroDocumento)like '%'+upper('" + bean.BusquedaAvanzada + "' )+'%') " +
-       "  AND ('" + bean.Estado + "' is null or '" + bean.Estado + "' ='' or UPPER(pedido.Estado)like '%'+upper('" + bean.Estado + "' )+'%') " +
-       " and ( pedido.Estado = 'PR' and pedido.ClienteNumero ="+bean.Persona+" AND CO_TipoDocumento.Clasificacion <> 'PE' AND CO_TipoDocumento.Clasificacion <> 'AD'" +
-        " AND formapago.CuotaCreditoFlag = 'S' ) Or ( pedido.TipoDocumento='NC' and pedido.ClienteNumero =" + bean.Persona + " and pedido.Estado = 'PR')  and pedido.VoucherPeriodo='"+bean.Periodo+"'-- Según el mes actual" +
-     " order by  NumeroDocumento desc " +
+        "  AND formapago.CuotaCreditoFlag = 'S') Or(pedido.TipoDocumento = 'NC' and pedido.ClienteNumero = " + bean.Persona + "  and pedido.Estado = 'PR')" +
+
+       "  and pedido.VoucherPeriodo = '"+bean.Periodo+"'" +
+
+       " AND('" + bean.BusquedaAvanzada + "' is null or '" + bean.BusquedaAvanzada + "' = '' or UPPER(pedido.ClienteNombre + pedido.NumeroDocumento)like '%' + upper('" + bean.BusquedaAvanzada + "') + '%')" +
+
+      "      and('" + bean.FechaInicio + "' IS NULL OR pedido.FechaDocumento >= '" + bean.FechaInicio + "')" +
+      "  AND('" + bean.FechaFin + "' IS NULL OR pedido.FechaDocumento < DATEADD(DAY, 1, '" + bean.FechaFin + "'))" +
+
+
+     " order by  pedido.NumeroDocumento desc " +
      " OFFSET(" + bean.paginacion.page + " - 1) * " + bean.paginacion.limit + "  ROWS " +
      " FETCH NEXT " + bean.paginacion.limit + " ROWS ONLY";
 
@@ -565,14 +570,19 @@ namespace WsComercialApp.Repositorio
 
         private string RetornoQueryFacturaCount(FiltroGenerico bean)
         {
+            bean.Persona = bean.Vendedor;
 
-            String returnString = " where pedido.Vendedor = " + bean.Vendedor + " and  pedido.CompaniaSocio = '" + bean.CompaniaSocio + "' " + " and  pedido.TipoDocumento = '" + bean.TipoDocumento + "' " +
-          " and ('" + bean.FechaInicio + "' IS NULL OR pedido.FechaDocumento >= '" + bean.FechaInicio + "') " +
-          " AND('" + bean.FechaFin + "' IS NULL OR pedido.FechaDocumento < DATEADD(DAY, 1, '" + bean.FechaFin + "')) " +
-            " AND ('" + bean.BusquedaAvanzada + "' is null or '" + bean.BusquedaAvanzada + "' ='' or UPPER(pedido.ClienteNombre+pedido.NumeroDocumento)like '%'+upper('" + bean.BusquedaAvanzada + "' )+'%') " +
-          "  AND ('" + bean.Estado + "' is null or '" + bean.Estado + "' ='' or UPPER(pedido.Estado)like '%'+upper('" + bean.Estado + "' )+'%') " +
-                 " and ( pedido.Estado = 'PR' and pedido.ClienteNumero =" + bean.Persona + " AND CO_TipoDocumento.Clasificacion <> 'PE' AND CO_TipoDocumento.Clasificacion <> 'AD'" +
-        " AND formapago.CuotaCreditoFlag = 'S' ) Or ( pedido.TipoDocumento='NC' and pedido.ClienteNumero =" + bean.Persona + " and pedido.Estado = 'PR')  and pedido.VoucherPeriodo='" + bean.Periodo + "'-- Según el mes actual";
+            String returnString = "  WHERE(pedido.Estado = 'PR' and pedido.ClienteNumero = " + bean.Persona + " AND CO_TipoDocumento.Clasificacion <> 'PE' AND CO_TipoDocumento.Clasificacion <> 'AD' " +
+
+    "  AND formapago.CuotaCreditoFlag = 'S') Or(pedido.TipoDocumento = 'NC' and pedido.ClienteNumero = " + bean.Persona + "  and pedido.Estado = 'PR')" +
+
+   "  and pedido.VoucherPeriodo = '" + bean.Periodo + "'" +
+
+   " AND('" + bean.BusquedaAvanzada + "' is null or '" + bean.BusquedaAvanzada + "' = '' or UPPER(pedido.ClienteNombre + pedido.NumeroDocumento)like '%' + upper('" + bean.BusquedaAvanzada + "') + '%')" +
+
+  "      and('" + bean.FechaInicio + "' IS NULL OR pedido.FechaDocumento >= '" + bean.FechaInicio + "')" +
+  "  AND('" + bean.FechaFin + "' IS NULL OR pedido.FechaDocumento < DATEADD(DAY, 1, '" + bean.FechaFin + "'))";
+
             return returnString;
 
         }
