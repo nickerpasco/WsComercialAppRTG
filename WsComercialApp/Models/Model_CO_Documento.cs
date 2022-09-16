@@ -81,7 +81,7 @@ namespace WsComercialApp.Models
 		public string CodigoPostalCod { get; set; }
 		public string ProvinciaCod { get; set; }
 		public string Sucursal { get; set; }
-		public string ComercialPedidoNumero { get; set; }
+		public string ComercialPedidoNumero { get; set; } 
 		public string NumeroInterno { get; set; }
 		public string FechaDocParaQR { get; set; }
 		public string CodigoQR { get; set; }
