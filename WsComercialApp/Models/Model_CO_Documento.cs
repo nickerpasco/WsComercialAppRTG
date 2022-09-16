@@ -90,6 +90,7 @@ namespace WsComercialApp.Models
 		public string FlagImpresionPercepcionCampo { get; set; }
 		public string MonedaString { get; set; }
 		public string EstadoString { get; set; }
+		public DateTime? FechaDocumentoDate { get; set; }
 
 		public string LabelMes { get; set; }
 		public string LabelHora { get; set; }
