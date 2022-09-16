@@ -558,7 +558,7 @@ namespace WsComercialApp.Repositorio
       "  AND('" + bean.FechaFin + "' IS NULL OR pedido.FechaDocumento < DATEADD(DAY, 1, '" + bean.FechaFin + "'))" +
 
 
-     " order by  pedido.NumeroDocumento desc " +
+     " order by  pedido.FechaDocumento desc " +
      " OFFSET(" + bean.paginacion.page + " - 1) * " + bean.paginacion.limit + "  ROWS " +
      " FETCH NEXT " + bean.paginacion.limit + " ROWS ONLY";
 
