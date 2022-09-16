@@ -6,7 +6,9 @@
 	
 		<Co_Documento.Cabecera>
 
-			select 	pedido.TransportistaProvincia,
+			select
+			pedido.FechaDocumento as  FechaDocumentoDate,
+			pedido.TransportistaProvincia,
 			ft.TransportistaDescripcion as TransportistaProvinciaDescripcion,
 			CASE pedido.MonedaDocumento
 			When 'LO' Then 'S/ ' +  FORMAT(pedido.MontoTotal, '#,##0.00')
