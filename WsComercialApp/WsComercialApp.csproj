@@ -236,6 +236,18 @@
     <Compile Include="Models\Bd\CO_DocumentoImpuesto.cs">
       <DependentUpon>BdEntityGenerico.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Bd\CO_LetraCompromiso.cs">
+      <DependentUpon>BdEntityGenerico.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Bd\CO_LetraCompromisoBlog.cs">
+      <DependentUpon>BdEntityGenerico.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Bd\CO_LetraCompromisoDocumento.cs">
+      <DependentUpon>BdEntityGenerico.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Bd\CO_LetraCompromisoLetra.cs">
+      <DependentUpon>BdEntityGenerico.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Bd\Direccion.cs">
       <DependentUpon>BdEntityGenerico.tt</DependentUpon>
     </Compile>

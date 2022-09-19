@@ -93,6 +93,54 @@ namespace WsComercialApp.Dao
             return response;
         }
 
+
+          public ModelTransac_CO_Documento SaveLetras(ModelTransac_CO_Documento c)
+        {
+            ErrorObj error = new ErrorObj();
+            String TipoMotivo = "";
+
+            ModelTransac_CO_Documento response = new ModelTransac_CO_Documento();
+            using (var context = new BdEntityGenerico())
+            {
+                using (var dbContextTransaction = context.Database.BeginTransaction())
+                {
+                    try
+                    {
+
+                        response = InsertarLetras(c, context);
+                        if (response.lstErrores.Count > 0)
+                        {
+                            dbContextTransaction.Rollback();
+                            return response;
+                        } 
+
+                        dbContextTransaction.Commit();
+                           
+
+
+                    }
+                    catch (Exception ex)
+                    {
+                        if (ex.InnerException != null)
+                        {
+                            error.CodigoError = 500;
+                            error.MensajeError = ex.InnerException.InnerException.Message;
+
+                        }
+                        else
+                        {
+                            error.CodigoError = 500;
+                            error.MensajeError = ex.Message;
+                        }  
+                        dbContextTransaction.Rollback();
+
+                        response.lstErrores.Add(error); 
+                    }
+                }
+            }
+            return response;
+        }
+
         private void StokCompromentidoStart(List<ModelTransac_CO_DocumentoDetalle> detalle,String Almacen)
         {
 
@@ -731,6 +779,192 @@ namespace WsComercialApp.Dao
 
 
                         context.CO_DocumentoDetalleDespacho.Add(OtablaDetalleDespacho);
+                        context.SaveChanges();
+
+                    }
+
+                }
+
+            }
+            catch (DbEntityValidationException e)
+            {
+
+                foreach (var eve in e.EntityValidationErrors)
+                {
+                    foreach (var ve in eve.ValidationErrors)
+                    {
+                        error.CodigoError = 500;
+                        error.MensajeError = ve.ErrorMessage;
+
+                        response.lstErrores.Add(error);
+                    }
+
+                }
+
+                return response;
+
+            }
+            return response;
+        }    
+        
+        private ModelTransac_CO_Documento InsertarLetras(ModelTransac_CO_Documento c, BdEntityGenerico context)
+        {
+
+            ModelTransac_CO_Documento response = new ModelTransac_CO_Documento();
+            ErrorObj error = new ErrorObj();
+
+            
+ 
+            var company = "999999";
+            c.TipoDocumento = "LE";
+            c.Sucursal = "LESC";
+
+            if(c.Accion == "InsertarBlog")
+            {
+                if (c.LstBLogs != null)
+                {
+                    foreach (var detalle in c.LstBLogs)
+                    {
+
+                        try
+                        {
+
+                            var secuenciaId = context.CO_LetraCompromisoBlog.Where(x => x.Numerosolicitud == c.NumeroDocumento).DefaultIfEmpty().Max(t => t == null ? 0 : t.Secuencia);
+                            var OtablaDetalle = new CO_LetraCompromisoBlog();
+                            //OtablaDetalle.TipoDocumento = c.TipoDocumento;
+                            OtablaDetalle.Numerosolicitud = c.NumeroDocumento;
+                            OtablaDetalle.Comentario = detalle.Comentario;
+                            OtablaDetalle.Estado = "A";
+                            OtablaDetalle.UltimoUsuario = c.UltimoUsuario;
+                            OtablaDetalle.Ultimafechamodif = detalle.UltimaFechaModif;
+                            OtablaDetalle.Secuencia = secuenciaId + 1;
+
+                            context.CO_LetraCompromisoBlog.Add(OtablaDetalle);
+                            context.SaveChanges();
+
+                        }
+                        catch (DbEntityValidationException e)
+                        {
+
+                            foreach (var eve in e.EntityValidationErrors)
+                            {
+                                foreach (var ve in eve.ValidationErrors)
+                                {
+                                    error.CodigoError = 500;
+                                    error.MensajeError = ve.ErrorMessage;
+
+                                    response.lstErrores.Add(error);
+                                }
+
+                            }
+
+                            return response;
+
+                        } 
+                        
+
+                    }
+
+                    return c;
+                }
+            }
+
+            var CorrelativosMast = context.CorrelativosMast.DefaultIfEmpty().Where(t => t.CompaniaCodigo == company
+            && t.TipoComprobante == c.TipoDocumento && t.Serie == c.Sucursal).ToList();
+            int correlativo = 0;
+            int? NumeroInterno = 0;
+            if (CorrelativosMast.Count > 0)
+            {
+                correlativo = (int)((CorrelativosMast[0].CorrelativoNumero) + 1); 
+                c.NumeroDocumento =  correlativo.ToString("D10");
+            }
+            else
+            {
+                error.CodigoError = 500;
+                error.MensajeError = "Error al crear el correlativo, correlativo no encontrado .. Parametros Comapnia : " + company + " Tipo Documento : "+ c.TipoDocumento + " Serie :" + c.Sucursal;
+                response.lstErrores.Add(error);
+                return response;
+            }
+
+            try
+            {
+
+                var OtablaCorreclativo = context.CorrelativosMast.SingleOrDefault(t => t.CompaniaCodigo == company && t.TipoComprobante == c.TipoDocumento && t.Serie == c.Sucursal);
+                if (OtablaCorreclativo != null)
+                {
+                   
+                    OtablaCorreclativo.CorrelativoNumero = correlativo;
+
+                    context.Entry(OtablaCorreclativo).State = System.Data.Entity.EntityState.Modified;
+                }
+
+
+              
+
+                var Otabla = new CO_LetraCompromiso();
+
+                 
+                Otabla.NumeroSolicitud = c.NumeroDocumento;
+                Otabla.ClienteNumero = c.ClienteNumero;
+                Otabla.ClienteDireccionSecuencia = c.ClienteDireccionDespacho;
+                Otabla.Vendedor = c.Vendedor;
+                Otabla.LetrasCantidad = c.CantidadLetras;
+                Otabla.LetrasIntervalo = c.CantidadLetras;
+                Otabla.LetrasFechaBase = c.FechaBaseLetras;
+                Otabla.Comentarios = c.Comentarios;
+                Otabla.Estado = "PR";
+                Otabla.PreparadorPor = c.UltimoUsuario;
+                Otabla.PreparadoFecha = DateTime.Now;
+                Otabla.UltimafechaModif = Otabla.PreparadoFecha;
+                Otabla.GeneradoPor = null; 
+                Otabla.TransferenciaFecha = null;
+                Otabla.TransferenciaCanje = null;
+                Otabla.DiasAddFlag = "N";
+                 
+                context.CO_LetraCompromiso.Add(Otabla);
+                context.SaveChanges();
+
+
+                response = c;
+
+                 
+
+                if (c.Detalle != null)
+                {
+                    foreach (var detalle in c.Detalle)
+                    {
+
+                        var secuenciaId = context.CO_LetraCompromisoDocumento.Where(x => x.NumeroSolicitud == c.NumeroDocumento).DefaultIfEmpty().Max(t => t == null ? 0 : t.Secuencia);
+                        var OtablaDetalle = new CO_LetraCompromisoDocumento(); 
+                        //OtablaDetalle.TipoDocumento = c.TipoDocumento;
+                        OtablaDetalle.NumeroSolicitud = c.NumeroDocumento;
+                        OtablaDetalle.NumeroDocumento = detalle.Descripcion;
+                        OtablaDetalle.TipoDocumento = detalle.TipoDocumento;
+                        OtablaDetalle.Monto = detalle.MontoFinal;
+                        OtablaDetalle.Secuencia = secuenciaId + 1; 
+
+                        context.CO_LetraCompromisoDocumento.Add(OtablaDetalle);
+                        context.SaveChanges(); 
+
+                    }
+
+                }
+
+                if (c.LstLetras != null)
+                {
+                    foreach (var detalle in c.LstLetras)
+                    {
+
+                        var secuenciaId = context.CO_LetraCompromisoLetra.Where(x => x.NumeroSolicitud == c.NumeroDocumento).DefaultIfEmpty().Max(t => t == null ? 0 : t.Secuencia);
+                        var OtablaDetalle = new CO_LetraCompromisoLetra(); 
+                        OtablaDetalle.NumeroSolicitud = c.NumeroDocumento;
+                        OtablaDetalle.Secuencia = secuenciaId+1;
+                        OtablaDetalle.FechaEmision = (DateTime)c.FechaBaseLetras;
+                        OtablaDetalle.FechaVencimiento = (DateTime)detalle.FechaVencimiento;
+                        OtablaDetalle.MontoLetra = (decimal)detalle.MontoTotalLetras;
+                      
+
+                        context.CO_LetraCompromisoLetra.Add(OtablaDetalle);
                         context.SaveChanges();
 
                     }

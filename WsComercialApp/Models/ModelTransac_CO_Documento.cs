@@ -15,6 +15,7 @@ namespace WsComercialApp.Models
         public string AlmacenItemDescuento { get; set; }
         public string TipoDocumentoPedidoCLiente { get; set; }
         public string NumeroDocumento { get; set; }
+        public string Comentario { get; set; }
         public string Accion { get; set; }
         public Nullable<int> TransportistaProvincia { get; set; }
         public string EstablecimientoCodigo { get; set; }
@@ -22,6 +23,7 @@ namespace WsComercialApp.Models
         public string FormaFacturacion { get; set; }
         public string CodigoQR { get; set; }
         public Nullable<int> ClienteNumero { get; set; }
+        public Nullable<int> IdPersonaUsuario { get; set; }
         public Nullable<decimal> CantidadItemDescuento { get; set; }
         public string ClienteRUC { get; set; }
         public string Plataforma { get; set; }
@@ -42,6 +44,7 @@ namespace WsComercialApp.Models
         public string Criteria { get; set; }
         public Nullable<int> Vendedor { get; set; }
         public Nullable<decimal> TipodeCambio { get; set; }
+        public Nullable<decimal> MontoTotalLetras { get; set; }
         public string MonedaDocumento { get; set; }
         public bool ResponseBoolean { get; set; }
         public Nullable<decimal> MontoAfecto { get; set; }
@@ -206,22 +209,29 @@ namespace WsComercialApp.Models
         public Nullable<System.DateTime> FechaAnulacion { get; set; }
         public string CobranzaLegalVoucher { get; set; }
         public Nullable<System.DateTime> CobranzaLegalFecha { get; set; }
+        public Nullable<System.DateTime> LetrasFechaBase { get; set; }
+
         public Nullable<int> FEENVIONUMERO { get; set; }
         public Nullable<int> flag_resumendiario { get; set; }
+        public Nullable<System.DateTime> FechaBaseLetras { get; set; }
         public Nullable<int> flg_resumendiario { get; set; }
         public string flag_EstadoTransmision { get; set; }
         public Nullable<int> PromotorVenta { get; set; }
         public Nullable<decimal> MontoConvenio { get; set; }
         public string Convenio { get; set; }
         public Nullable<int> FEEnvioBaja { get; set; }
+        public Nullable<int> CantidadLetras { get; set; }
+        public Nullable<int> DiasCredito { get; set; }
         public string TipoCliente { get; set; }
         public string CreditoFlag { get; set; }
+        public string MonedaDocumentoLetra { get; set; }
 
 
         public string ComprobanteBase64 { get; set; }
 
-
+        public List<ModelTransac_CO_Documento> LstLetras { get; set; }
         public List<ModelTransac_CO_DocumentoDetalle> Detalle { get; set; }
+        public List<ModelTransac_CO_DocumentoDetalle> LstBLogs { get; set; }
 
         public List<ErrorObj> lstErrores = new List<ErrorObj>();
 

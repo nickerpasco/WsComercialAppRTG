@@ -16,6 +16,7 @@ namespace WsComercialApp.Models
         public string Lote { get; set; }
         public string Descripcion { get; set; }
         public string UnidadCodigo { get; set; }
+        public string Comentario { get; set; }
         public Nullable<decimal> CantidadPedida { get; set; }
         public Nullable<decimal> CantidadEntregada { get; set; }
         public string UnidadCodigoDoble { get; set; }

@@ -64,7 +64,15 @@ namespace WsComercialApp.Controllers
             var response = repositorio.InsertCo_Documento(documento); // 
             return response; 
         }
-         
+
+        [HttpPost]
+        [Route("api/SaveLetras")]
+        public ModelTransac_CO_Documento SaveLetras([FromBody] ModelTransac_CO_Documento documento)
+        {
+            RepositorioCO_Pedido repositorio = new RepositorioCO_Pedido();
+            var response = repositorio.SaveLetras(documento); // 
+            return response;
+        }
 
         [HttpPost]
         [Route("api/SaveFacturacion")]

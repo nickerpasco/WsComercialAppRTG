@@ -33,6 +33,10 @@
         <AssociationConnector Association="RTGModel.FK__MA_Formad__Forma__2E5C9EBB" />
         <AssociationConnector Association="RTGModel.FK__MA_Formad__Forma__2F50C2F4" />
         <EntityTypeShape EntityType="RTGModel.MA_ClienteVendedor" Width="1.5" PointX="10.375" PointY="4.75" />
+        <EntityTypeShape EntityType="RTGModel.CO_LetraCompromiso" Width="1.5" PointX="12.375" PointY="0.75" />
+        <EntityTypeShape EntityType="RTGModel.CO_LetraCompromisoBlog" Width="1.5" PointX="12.375" PointY="12.75" />
+        <EntityTypeShape EntityType="RTGModel.CO_LetraCompromisoDocumento" Width="1.5" PointX="13.375" PointY="6.75" />
+        <EntityTypeShape EntityType="RTGModel.CO_LetraCompromisoLetra" Width="1.5" PointX="13.375" PointY="9.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -620,6 +620,12 @@ namespace WsComercialApp.Repositorio
         {
             Co_DocumentoDao dao = new Co_DocumentoDao();
             return dao.InsertCo_Documento(c);
+        }  
+        
+        public ModelTransac_CO_Documento SaveLetras(ModelTransac_CO_Documento c)
+        {
+            Co_DocumentoDao dao = new Co_DocumentoDao();
+            return dao.SaveLetras(c);
         }
         
         public ModelTransac_CO_Documento SaveFacturacion(ModelTransac_CO_Documento c)

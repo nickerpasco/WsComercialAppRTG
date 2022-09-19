@@ -650,6 +650,63 @@
           <Property Name="Porcentaje" Type="money" />
           <Property Name="Monto" Type="money" />
         </EntityType>
+        <EntityType Name="CO_LetraCompromiso">
+          <Key>
+            <PropertyRef Name="NumeroSolicitud" />
+          </Key>
+          <Property Name="NumeroSolicitud" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="ClienteNumero" Type="numeric" Precision="9" Scale="0" />
+          <Property Name="ClienteDireccionSecuencia" Type="int" />
+          <Property Name="Vendedor" Type="numeric" Precision="9" Scale="0" />
+          <Property Name="LetrasCantidad" Type="int" />
+          <Property Name="LetrasIntervalo" Type="int" />
+          <Property Name="LetrasFechaBase" Type="datetime" />
+          <Property Name="Comentarios" Type="char" MaxLength="255" />
+          <Property Name="Estado" Type="char" MaxLength="2" />
+          <Property Name="PreparadorPor" Type="char" MaxLength="20" />
+          <Property Name="PreparadoFecha" Type="datetime" />
+          <Property Name="GeneradoPor" Type="char" MaxLength="20" />
+          <Property Name="GeneradoFecha" Type="datetime" />
+          <Property Name="UltimafechaModif" Type="datetime" />
+          <Property Name="DiasAddFlag" Type="char" MaxLength="1" />
+          <Property Name="TransferenciaFecha" Type="datetime" />
+          <Property Name="TransferenciaCanje" Type="numeric" Precision="9" Scale="0" />
+        </EntityType>
+        <EntityType Name="CO_LetraCompromisoBlog">
+          <Key>
+            <PropertyRef Name="Numerosolicitud" />
+            <PropertyRef Name="Secuencia" />
+          </Key>
+          <Property Name="Numerosolicitud" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="Secuencia" Type="int" Nullable="false" />
+          <Property Name="Comentario" Type="char" MaxLength="200" />
+          <Property Name="Estado" Type="char" MaxLength="1" />
+          <Property Name="UltimoUsuario" Type="char" MaxLength="20" />
+          <Property Name="Ultimafechamodif" Type="datetime" />
+        </EntityType>
+        <EntityType Name="CO_LetraCompromisoDocumento">
+          <Key>
+            <PropertyRef Name="NumeroSolicitud" />
+            <PropertyRef Name="Secuencia" />
+          </Key>
+          <Property Name="NumeroSolicitud" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="Secuencia" Type="int" Nullable="false" />
+          <Property Name="TipoDocumento" Type="char" MaxLength="2" Nullable="false" />
+          <Property Name="NumeroDocumento" Type="char" MaxLength="16" Nullable="false" />
+          <Property Name="Monto" Type="numeric" Precision="9" Scale="2" />
+        </EntityType>
+        <EntityType Name="CO_LetraCompromisoLetra">
+          <Key>
+            <PropertyRef Name="NumeroSolicitud" />
+            <PropertyRef Name="Secuencia" />
+          </Key>
+          <Property Name="NumeroSolicitud" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="Secuencia" Type="int" Nullable="false" />
+          <Property Name="FechaEmision" Type="datetime" Nullable="false" />
+          <Property Name="FechaVencimiento" Type="datetime" Nullable="false" />
+          <Property Name="MontoLetra" Type="numeric" Precision="9" Scale="2" Nullable="false" />
+          <Property Name="NumeroLetra" Type="char" MaxLength="15" />
+        </EntityType>
         <EntityType Name="CorrelativosMast">
           <Key>
             <PropertyRef Name="CompaniaCodigo" />
@@ -1190,6 +1247,10 @@
           <EntitySet Name="CO_DocumentoDetalle" EntityType="Self.CO_DocumentoDetalle" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CO_DocumentoDetalleDespacho" EntityType="Self.CO_DocumentoDetalleDespacho" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CO_DocumentoImpuesto" EntityType="Self.CO_DocumentoImpuesto" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CO_LetraCompromiso" EntityType="Self.CO_LetraCompromiso" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CO_LetraCompromisoBlog" EntityType="Self.CO_LetraCompromisoBlog" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CO_LetraCompromisoDocumento" EntityType="Self.CO_LetraCompromisoDocumento" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CO_LetraCompromisoLetra" EntityType="Self.CO_LetraCompromisoLetra" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CorrelativosMast" EntityType="Self.CorrelativosMast" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Direccion" EntityType="Self.Direccion" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MA_ClienteVendedor" EntityType="Self.MA_ClienteVendedor" Schema="dbo" store:Type="Tables" />
@@ -1330,6 +1391,10 @@
             <End Role="MA_FormadePagoDetalle" EntitySet="MA_FormadePagoDetalle" />
           </AssociationSet>
           <EntitySet Name="MA_ClienteVendedor" EntityType="RTGModel.MA_ClienteVendedor" />
+          <EntitySet Name="CO_LetraCompromiso" EntityType="RTGModel.CO_LetraCompromiso" />
+          <EntitySet Name="CO_LetraCompromisoBlog" EntityType="RTGModel.CO_LetraCompromisoBlog" />
+          <EntitySet Name="CO_LetraCompromisoDocumento" EntityType="RTGModel.CO_LetraCompromisoDocumento" />
+          <EntitySet Name="CO_LetraCompromisoLetra" EntityType="RTGModel.CO_LetraCompromisoLetra" />
         </EntityContainer>
         <EntityType Name="ClienteMast">
           <Key>
@@ -2537,6 +2602,63 @@
           <Property Name="UltimoUsuario" Type="String" MaxLength="20" FixedLength="true" Unicode="false" />
           <Property Name="Linea" Type="String" MaxLength="6" FixedLength="true" Unicode="false" />
         </EntityType>
+        <EntityType Name="CO_LetraCompromiso">
+          <Key>
+            <PropertyRef Name="NumeroSolicitud" />
+          </Key>
+          <Property Name="NumeroSolicitud" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="ClienteNumero" Type="Decimal" Precision="9" Scale="0" />
+          <Property Name="ClienteDireccionSecuencia" Type="Int32" />
+          <Property Name="Vendedor" Type="Decimal" Precision="9" Scale="0" />
+          <Property Name="LetrasCantidad" Type="Int32" />
+          <Property Name="LetrasIntervalo" Type="Int32" />
+          <Property Name="LetrasFechaBase" Type="DateTime" Precision="3" />
+          <Property Name="Comentarios" Type="String" MaxLength="255" FixedLength="true" Unicode="false" />
+          <Property Name="Estado" Type="String" MaxLength="2" FixedLength="true" Unicode="false" />
+          <Property Name="PreparadorPor" Type="String" MaxLength="20" FixedLength="true" Unicode="false" />
+          <Property Name="PreparadoFecha" Type="DateTime" Precision="3" />
+          <Property Name="GeneradoPor" Type="String" MaxLength="20" FixedLength="true" Unicode="false" />
+          <Property Name="GeneradoFecha" Type="DateTime" Precision="3" />
+          <Property Name="UltimafechaModif" Type="DateTime" Precision="3" />
+          <Property Name="DiasAddFlag" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="TransferenciaFecha" Type="DateTime" Precision="3" />
+          <Property Name="TransferenciaCanje" Type="Decimal" Precision="9" Scale="0" />
+        </EntityType>
+        <EntityType Name="CO_LetraCompromisoBlog">
+          <Key>
+            <PropertyRef Name="Numerosolicitud" />
+            <PropertyRef Name="Secuencia" />
+          </Key>
+          <Property Name="Numerosolicitud" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="Secuencia" Type="Int32" Nullable="false" />
+          <Property Name="Comentario" Type="String" MaxLength="200" FixedLength="true" Unicode="false" />
+          <Property Name="Estado" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="UltimoUsuario" Type="String" MaxLength="20" FixedLength="true" Unicode="false" />
+          <Property Name="Ultimafechamodif" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="CO_LetraCompromisoDocumento">
+          <Key>
+            <PropertyRef Name="NumeroSolicitud" />
+            <PropertyRef Name="Secuencia" />
+          </Key>
+          <Property Name="NumeroSolicitud" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="Secuencia" Type="Int32" Nullable="false" />
+          <Property Name="TipoDocumento" Type="String" Nullable="false" MaxLength="2" FixedLength="true" Unicode="false" />
+          <Property Name="NumeroDocumento" Type="String" Nullable="false" MaxLength="16" FixedLength="true" Unicode="false" />
+          <Property Name="Monto" Type="Decimal" Precision="9" Scale="2" />
+        </EntityType>
+        <EntityType Name="CO_LetraCompromisoLetra">
+          <Key>
+            <PropertyRef Name="NumeroSolicitud" />
+            <PropertyRef Name="Secuencia" />
+          </Key>
+          <Property Name="NumeroSolicitud" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="Secuencia" Type="Int32" Nullable="false" />
+          <Property Name="FechaEmision" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="FechaVencimiento" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="MontoLetra" Type="Decimal" Nullable="false" Precision="9" Scale="2" />
+          <Property Name="NumeroLetra" Type="String" MaxLength="15" FixedLength="true" Unicode="false" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -3506,6 +3628,64 @@
                 <ScalarProperty Name="Vendedor" ColumnName="Vendedor" />
                 <ScalarProperty Name="Secuencia" ColumnName="Secuencia" />
                 <ScalarProperty Name="Cliente" ColumnName="Cliente" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CO_LetraCompromiso">
+            <EntityTypeMapping TypeName="RTGModel.CO_LetraCompromiso">
+              <MappingFragment StoreEntitySet="CO_LetraCompromiso">
+                <ScalarProperty Name="TransferenciaCanje" ColumnName="TransferenciaCanje" />
+                <ScalarProperty Name="TransferenciaFecha" ColumnName="TransferenciaFecha" />
+                <ScalarProperty Name="DiasAddFlag" ColumnName="DiasAddFlag" />
+                <ScalarProperty Name="UltimafechaModif" ColumnName="UltimafechaModif" />
+                <ScalarProperty Name="GeneradoFecha" ColumnName="GeneradoFecha" />
+                <ScalarProperty Name="GeneradoPor" ColumnName="GeneradoPor" />
+                <ScalarProperty Name="PreparadoFecha" ColumnName="PreparadoFecha" />
+                <ScalarProperty Name="PreparadorPor" ColumnName="PreparadorPor" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="Comentarios" ColumnName="Comentarios" />
+                <ScalarProperty Name="LetrasFechaBase" ColumnName="LetrasFechaBase" />
+                <ScalarProperty Name="LetrasIntervalo" ColumnName="LetrasIntervalo" />
+                <ScalarProperty Name="LetrasCantidad" ColumnName="LetrasCantidad" />
+                <ScalarProperty Name="Vendedor" ColumnName="Vendedor" />
+                <ScalarProperty Name="ClienteDireccionSecuencia" ColumnName="ClienteDireccionSecuencia" />
+                <ScalarProperty Name="ClienteNumero" ColumnName="ClienteNumero" />
+                <ScalarProperty Name="NumeroSolicitud" ColumnName="NumeroSolicitud" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CO_LetraCompromisoBlog">
+            <EntityTypeMapping TypeName="RTGModel.CO_LetraCompromisoBlog">
+              <MappingFragment StoreEntitySet="CO_LetraCompromisoBlog">
+                <ScalarProperty Name="Ultimafechamodif" ColumnName="Ultimafechamodif" />
+                <ScalarProperty Name="UltimoUsuario" ColumnName="UltimoUsuario" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="Comentario" ColumnName="Comentario" />
+                <ScalarProperty Name="Secuencia" ColumnName="Secuencia" />
+                <ScalarProperty Name="Numerosolicitud" ColumnName="Numerosolicitud" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CO_LetraCompromisoDocumento">
+            <EntityTypeMapping TypeName="RTGModel.CO_LetraCompromisoDocumento">
+              <MappingFragment StoreEntitySet="CO_LetraCompromisoDocumento">
+                <ScalarProperty Name="Monto" ColumnName="Monto" />
+                <ScalarProperty Name="NumeroDocumento" ColumnName="NumeroDocumento" />
+                <ScalarProperty Name="TipoDocumento" ColumnName="TipoDocumento" />
+                <ScalarProperty Name="Secuencia" ColumnName="Secuencia" />
+                <ScalarProperty Name="NumeroSolicitud" ColumnName="NumeroSolicitud" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CO_LetraCompromisoLetra">
+            <EntityTypeMapping TypeName="RTGModel.CO_LetraCompromisoLetra">
+              <MappingFragment StoreEntitySet="CO_LetraCompromisoLetra">
+                <ScalarProperty Name="NumeroLetra" ColumnName="NumeroLetra" />
+                <ScalarProperty Name="MontoLetra" ColumnName="MontoLetra" />
+                <ScalarProperty Name="FechaVencimiento" ColumnName="FechaVencimiento" />
+                <ScalarProperty Name="FechaEmision" ColumnName="FechaEmision" />
+                <ScalarProperty Name="Secuencia" ColumnName="Secuencia" />
+                <ScalarProperty Name="NumeroSolicitud" ColumnName="NumeroSolicitud" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
