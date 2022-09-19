@@ -7,7 +7,7 @@
 		<Co_Documento.Cabecera>
 
 			select
-			pedido.FechaDocumento as  FechaDocumentoDate,
+			pedido.FechaVencimiento as  FechaDocumentoDate,
 			pedido.TransportistaProvincia,
 			ft.TransportistaDescripcion as TransportistaProvinciaDescripcion,
 			CASE pedido.MonedaDocumento
