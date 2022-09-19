@@ -546,7 +546,7 @@ namespace WsComercialApp.Repositorio
         private string RetornoQueryFactura(FiltroGenerico bean)
         {
             bean.Persona = bean.Vendedor;
-            String returnString = "  WHERE(pedido.Estado = 'PR' and pedido.ClienteNumero = "+bean.Persona+" AND CO_TipoDocumento.Clasificacion <> 'PE' AND CO_TipoDocumento.Clasificacion <> 'AD' "+
+            String returnString = "  WHERE(pedido.Estado = 'PR' and pedido.ClienteNumero = "+bean.Persona+ " AND pedido.MonedaDocumento = '"+bean.MonedaDocumento+"'  AND CO_TipoDocumento.Clasificacion <> 'PE' AND CO_TipoDocumento.Clasificacion <> 'AD' " +
 
         "  AND formapago.CuotaCreditoFlag = 'S') Or(pedido.TipoDocumento = 'NC' and pedido.ClienteNumero = " + bean.Persona + "  and pedido.Estado = 'PR')" +
 
@@ -572,7 +572,7 @@ namespace WsComercialApp.Repositorio
         {
             bean.Persona = bean.Vendedor;
 
-            String returnString = "  WHERE(pedido.Estado = 'PR' and pedido.ClienteNumero = " + bean.Persona + " AND CO_TipoDocumento.Clasificacion <> 'PE' AND CO_TipoDocumento.Clasificacion <> 'AD' " +
+            String returnString = "  WHERE(pedido.Estado = 'PR' and pedido.ClienteNumero = " + bean.Persona + " AND pedido.MonedaDocumento = '" + bean.MonedaDocumento + "' AND CO_TipoDocumento.Clasificacion <> 'PE' AND CO_TipoDocumento.Clasificacion <> 'AD' " +
 
     "  AND formapago.CuotaCreditoFlag = 'S') Or(pedido.TipoDocumento = 'NC' and pedido.ClienteNumero = " + bean.Persona + "  and pedido.Estado = 'PR')" +
 

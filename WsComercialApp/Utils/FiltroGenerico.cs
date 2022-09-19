@@ -16,6 +16,7 @@ namespace WsComercialApp.Utils
         public int Vendedor { get; set; }
         public int Persona { get; set; }
         public string FechaInicio { get; set; }
+        public string MonedaDocumento { get; set; }
         public string FechaFin { get; set; }
 
         public string BusquedaAvanzada { get; set; }
