@@ -960,7 +960,7 @@ namespace WsComercialApp.Dao
                         OtablaDetalle.NumeroSolicitud = c.NumeroDocumento;
                         OtablaDetalle.Secuencia = secuenciaId+1;
                         OtablaDetalle.FechaEmision = (DateTime)c.FechaBaseLetras;
-                        OtablaDetalle.FechaVencimiento = (DateTime)detalle.FechaVencimiento;
+                        OtablaDetalle.FechaVencimiento = (DateTime)detalle.FechaVencimientoDate;
                         OtablaDetalle.MontoLetra = (decimal)detalle.MontoTotalLetras;
                       
 
