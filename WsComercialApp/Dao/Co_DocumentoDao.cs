@@ -816,10 +816,11 @@ namespace WsComercialApp.Dao
             
  
             var company = "999999";
-            c.TipoDocumento = "LE";
-            c.Sucursal = "LESC";
+            c.TipoDocumento = "SY";
+            c.Sucursal = "COCA";
+            var NumeroDocumento = Convert.ToInt32(c.NumeroDocumento);
 
-            if(c.Accion == "InsertarBlog")
+            if (c.Accion == "InsertarBlog")
             {
                 if (c.LstBLogs != null)
                 {
@@ -829,17 +830,19 @@ namespace WsComercialApp.Dao
                         try
                         {
 
-                            var secuenciaId = context.CO_LetraCompromisoBlog.Where(x => x.Numerosolicitud == c.NumeroDocumento).DefaultIfEmpty().Max(t => t == null ? 0 : t.Secuencia);
-                            var OtablaDetalle = new CO_LetraCompromisoBlog();
+                            var secuenciaId = context.CO_OperacionCanjeComentario.Where(x => x.OperacionCanjeNumero == NumeroDocumento).DefaultIfEmpty().Max(t => t == null ? 0 : t.Secuencia);
+                            var OtablaDetalle = new CO_OperacionCanjeComentario();
                             //OtablaDetalle.TipoDocumento = c.TipoDocumento;
-                            OtablaDetalle.Numerosolicitud = c.NumeroDocumento;
+                            OtablaDetalle.OperacionCanjeNumero = Convert.ToInt32(c.NumeroDocumento);
+                            OtablaDetalle.CompaniaSocio = detalle.CompaniaSocio;
                             OtablaDetalle.Comentario = detalle.Comentario;
+                            OtablaDetalle.Secuencia = secuenciaId+1;
                             OtablaDetalle.Estado = "A";
                             OtablaDetalle.UltimoUsuario = c.UltimoUsuario;
-                            OtablaDetalle.Ultimafechamodif = detalle.UltimaFechaModif;
+                            OtablaDetalle.UltimaFechaModif = detalle.UltimaFechaModif;
                             OtablaDetalle.Secuencia = secuenciaId + 1;
 
-                            context.CO_LetraCompromisoBlog.Add(OtablaDetalle);
+                            context.CO_OperacionCanjeComentario.Add(OtablaDetalle);
                             context.SaveChanges();
 
                         }
@@ -901,49 +904,67 @@ namespace WsComercialApp.Dao
 
               
 
-                var Otabla = new CO_LetraCompromiso();
+                var Otabla = new CO_OperacionCanje();
 
-                 
-                Otabla.NumeroSolicitud = c.NumeroDocumento;
-                Otabla.ClienteNumero = c.ClienteNumero;
+
+
+                c.NumeroDocumento = ""+correlativo;
+                NumeroDocumento =  correlativo;
+                Otabla.CompaniaSocio = c.CompaniaSocio;
+                Otabla.OperacionCanjeNumero = Convert.ToInt32(c.NumeroDocumento);
+                Otabla.Cliente = c.ClienteNumero;
+                Otabla.ClienteCobrarA = c.ClienteNumero;
                 Otabla.ClienteDireccionSecuencia = c.ClienteDireccionDespacho;
                 Otabla.Vendedor = c.Vendedor;
-                Otabla.LetrasCantidad = c.CantidadLetras;
-                Otabla.LetrasIntervalo = c.CantidadLetras;
-                Otabla.LetrasFechaBase = c.FechaBaseLetras;
+                Otabla.LetrasCantidad = c.CantidadLetras; 
+                Otabla.FechaBase = c.FechaBaseLetras;
+                Otabla.FechaMaxima = Convert.ToDateTime(c.FechaBaseLetras).AddDays((double)c.DiasCredito);
+                Otabla.DiasCanje = c.DiasCredito;
                 Otabla.Comentarios = c.Comentarios;
                 Otabla.Estado = "PR";
-                Otabla.PreparadorPor = c.UltimoUsuario;
-                Otabla.PreparadoFecha = DateTime.Now;
-                Otabla.UltimafechaModif = Otabla.PreparadoFecha;
-                Otabla.GeneradoPor = null; 
-                Otabla.TransferenciaFecha = null;
-                Otabla.TransferenciaCanje = null;
-                Otabla.DiasAddFlag = "N";
+                Otabla.PreparadoPor = c.IdPersonaUsuario;
+                Otabla.FechaPreparacion = DateTime.Now;
+                Otabla.UltimaFechaModif = Otabla.FechaPreparacion;
+                Otabla.UltimoUsuario = c.UltimoUsuario;
+                string dateString = DateTime.Now.ToString("yyyyMM", CultureInfo.InvariantCulture);
+                Otabla.VoucherPeriodo = dateString;
+                Otabla.Procedencia = c.Procedencia;
+                Otabla.VoucherNo = null; 
+                Otabla.DiasAdicionales = null;
+                Otabla.NumeroSolicitud = null;
+                Otabla.TipoOperacion = null;
+                Otabla.FinanciamientoNumeroDocumento = null;
+                Otabla.FinanciamientoTipoDocumento = null;
                  
-                context.CO_LetraCompromiso.Add(Otabla);
+                context.CO_OperacionCanje.Add(Otabla);
                 context.SaveChanges();
 
 
                 response = c;
 
-                 
+                var FactorDivisor = UtilsDAO.getValueDecimal("select Numero from ParametrosMast where ParametroClave = 'VENTA%VEN' and AplicacionCodigo='CO'", null);
+
 
                 if (c.Detalle != null)
                 {
+                   
                     foreach (var detalle in c.Detalle)
                     {
 
-                        var secuenciaId = context.CO_LetraCompromisoDocumento.Where(x => x.NumeroSolicitud == c.NumeroDocumento).DefaultIfEmpty().Max(t => t == null ? 0 : t.Secuencia);
-                        var OtablaDetalle = new CO_LetraCompromisoDocumento(); 
-                        //OtablaDetalle.TipoDocumento = c.TipoDocumento;
-                        OtablaDetalle.NumeroSolicitud = c.NumeroDocumento;
+                        var secuenciaId = context.CO_OperacionCanjeDetalle.Where(x => x.OperacionCanjeNumero == NumeroDocumento).DefaultIfEmpty().Max(t => t == null ? 0 : t.Linea);
+                        var OtablaDetalle = new CO_OperacionCanjeDetalle(); 
+                        
+
+                        OtablaDetalle.OperacionCanjeNumero = Convert.ToInt32(c.NumeroDocumento);
+                        OtablaDetalle.CompaniaSocio = c.CompaniaSocio;
+                        OtablaDetalle.Linea = secuenciaId + 1;
+                        OtablaDetalle.InputOutputFlag = "I";
                         OtablaDetalle.NumeroDocumento = detalle.Descripcion;
                         OtablaDetalle.TipoDocumento = detalle.TipoDocumento;
                         OtablaDetalle.Monto = detalle.MontoFinal;
-                        OtablaDetalle.Secuencia = secuenciaId + 1; 
+                        OtablaDetalle.MontoComision = (detalle.MontoFinal* FactorDivisor) / 100; 
 
-                        context.CO_LetraCompromisoDocumento.Add(OtablaDetalle);
+                        context.CO_OperacionCanjeDetalle.Add(OtablaDetalle);
                         context.SaveChanges(); 
 
                     }
@@ -955,16 +976,32 @@ namespace WsComercialApp.Dao
                     foreach (var detalle in c.LstLetras)
                     {
 
-                        var secuenciaId = context.CO_LetraCompromisoLetra.Where(x => x.NumeroSolicitud == c.NumeroDocumento).DefaultIfEmpty().Max(t => t == null ? 0 : t.Secuencia);
-                        var OtablaDetalle = new CO_LetraCompromisoLetra(); 
-                        OtablaDetalle.NumeroSolicitud = c.NumeroDocumento;
-                        OtablaDetalle.Secuencia = secuenciaId+1;
-                        OtablaDetalle.FechaEmision = (DateTime)c.FechaBaseLetras;
-                        OtablaDetalle.FechaVencimiento = (DateTime)detalle.FechaVencimientoDate;
-                        OtablaDetalle.MontoLetra = (decimal)detalle.MontoTotalLetras;
+                        //var secuenciaId = context.CO_LetraCompromisoLetra.Where(x => x.NumeroSolicitud == c.NumeroDocumento).DefaultIfEmpty().Max(t => t == null ? 0 : t.Secuencia);
+                        //var OtablaDetalle = new CO_LetraCompromisoLetra(); 
+                        //OtablaDetalle.NumeroSolicitud = c.NumeroDocumento;
+                        //OtablaDetalle.Secuencia = secuenciaId+1;
+                        //OtablaDetalle.FechaEmision = (DateTime)c.FechaBaseLetras;
+                        //OtablaDetalle.FechaVencimiento = (DateTime)detalle.FechaVencimientoDate;
+                        //OtablaDetalle.MontoLetra = (decimal)detalle.MontoTotalLetras;
                       
 
-                        context.CO_LetraCompromisoLetra.Add(OtablaDetalle);
+                        //context.CO_LetraCompromisoLetra.Add(OtablaDetalle);
+                        //context.SaveChanges();
+
+
+                        var secuenciaId = context.CO_OperacionCanjeDetalle.Where(x => x.OperacionCanjeNumero == NumeroDocumento).DefaultIfEmpty().Max(t => t == null ? 0 : t.Linea);
+                        var OtablaDetalle = new CO_OperacionCanjeDetalle();
+
+                        OtablaDetalle.Linea = secuenciaId + 1;
+                        OtablaDetalle.OperacionCanjeNumero = Convert.ToInt32(c.NumeroDocumento);
+                        OtablaDetalle.CompaniaSocio = c.CompaniaSocio;
+                        OtablaDetalle.InputOutputFlag = "O";
+                        //OtablaDetalle.NumeroDocumento = detalle.Descripcion;
+                        //OtablaDetalle.TipoDocumento = detalle.TipoDocumento;
+                        OtablaDetalle.Monto = (decimal)detalle.MontoTotalLetras;
+                        OtablaDetalle.MontoComision = (OtablaDetalle.Monto * FactorDivisor) / 100;
+
+                        context.CO_OperacionCanjeDetalle.Add(OtablaDetalle);
                         context.SaveChanges();
 
                     }

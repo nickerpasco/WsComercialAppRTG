@@ -33,10 +33,17 @@
         <AssociationConnector Association="RTGModel.FK__MA_Formad__Forma__2E5C9EBB" />
         <AssociationConnector Association="RTGModel.FK__MA_Formad__Forma__2F50C2F4" />
         <EntityTypeShape EntityType="RTGModel.MA_ClienteVendedor" Width="1.5" PointX="10.375" PointY="4.75" />
-        <EntityTypeShape EntityType="RTGModel.CO_LetraCompromiso" Width="1.5" PointX="12.375" PointY="0.75" />
-        <EntityTypeShape EntityType="RTGModel.CO_LetraCompromisoBlog" Width="1.5" PointX="12.375" PointY="12.75" />
-        <EntityTypeShape EntityType="RTGModel.CO_LetraCompromisoDocumento" Width="1.5" PointX="13.375" PointY="6.75" />
-        <EntityTypeShape EntityType="RTGModel.CO_LetraCompromisoLetra" Width="1.5" PointX="13.375" PointY="9.75" />
+        <EntityTypeShape EntityType="RTGModel.CO_OperacionCanje" Width="1.5" PointX="12.375" PointY="13.125" />
+        <EntityTypeShape EntityType="RTGModel.CO_OperacionCanjeComentario" Width="1.5" PointX="12.375" PointY="0.75" />
+        <EntityTypeShape EntityType="RTGModel.CO_OperacionCanjeDetalle" Width="1.5" PointX="14.625" PointY="14.75" />
+        <AssociationConnector Association="RTGModel.FK__CO_OperacionCanj__0076A3D1" />
+        <AssociationConnector Association="RTGModel.FK__CO_OperacionCanj__1B49CA47" />
+        <AssociationConnector Association="RTGModel.FK__CO_OperacionCanj__1C3DEE80" />
+        <AssociationConnector Association="RTGModel.FK__CO_OperacionCanj__1D3212B9" />
+        <AssociationConnector Association="RTGModel.FK__CO_OperacionCanj__1E2636F2" />
+        <AssociationConnector Association="RTGModel.FK__CO_OperacionCanj__7D9A3726" />
+        <AssociationConnector Association="RTGModel.FK__CO_OperacionCanj__7E8E5B5F" />
+        <AssociationConnector Association="RTGModel.FK__CO_OperacionCanj__7F827F98" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -244,5 +244,7 @@ namespace WsComercialApp.Models
         public string FormadePagoAntiguaFlagCedito { get; set; }
         public string FormadePagoNuevaFlagCedito { get; set; }
         public string FormadePagoNueva { get; set; }
+        public string Procedencia { get; set; }
+        public DateTime? FechaMaxima { get; set; }
     }
 }

@@ -236,16 +236,13 @@
     <Compile Include="Models\Bd\CO_DocumentoImpuesto.cs">
       <DependentUpon>BdEntityGenerico.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Bd\CO_LetraCompromiso.cs">
+    <Compile Include="Models\Bd\CO_OperacionCanje.cs">
       <DependentUpon>BdEntityGenerico.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Bd\CO_LetraCompromisoBlog.cs">
+    <Compile Include="Models\Bd\CO_OperacionCanjeComentario.cs">
       <DependentUpon>BdEntityGenerico.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Bd\CO_LetraCompromisoDocumento.cs">
-      <DependentUpon>BdEntityGenerico.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Bd\CO_LetraCompromisoLetra.cs">
+    <Compile Include="Models\Bd\CO_OperacionCanjeDetalle.cs">
       <DependentUpon>BdEntityGenerico.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Bd\Direccion.cs">

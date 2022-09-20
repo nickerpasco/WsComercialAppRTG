@@ -39,9 +39,8 @@ namespace WsComercialApp.Models.Bd
         public virtual DbSet<PersonaMast> PersonaMast { get; set; }
         public virtual DbSet<SY_Preferences> SY_Preferences { get; set; }
         public virtual DbSet<MA_ClienteVendedor> MA_ClienteVendedor { get; set; }
-        public virtual DbSet<CO_LetraCompromiso> CO_LetraCompromiso { get; set; }
-        public virtual DbSet<CO_LetraCompromisoBlog> CO_LetraCompromisoBlog { get; set; }
-        public virtual DbSet<CO_LetraCompromisoDocumento> CO_LetraCompromisoDocumento { get; set; }
-        public virtual DbSet<CO_LetraCompromisoLetra> CO_LetraCompromisoLetra { get; set; }
+        public virtual DbSet<CO_OperacionCanje> CO_OperacionCanje { get; set; }
+        public virtual DbSet<CO_OperacionCanjeComentario> CO_OperacionCanjeComentario { get; set; }
+        public virtual DbSet<CO_OperacionCanjeDetalle> CO_OperacionCanjeDetalle { get; set; }
     }
 }

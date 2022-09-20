@@ -12,12 +12,14 @@ namespace WsComercialApp.Models.Bd
     using System;
     using System.Collections.Generic;
     
-    public partial class CO_LetraCompromisoDocumento
+    public partial class CO_OperacionCanjeComentario
     {
-        public string NumeroSolicitud { get; set; }
+        public string CompaniaSocio { get; set; }
+        public int OperacionCanjeNumero { get; set; }
         public int Secuencia { get; set; }
-        public string TipoDocumento { get; set; }
-        public string NumeroDocumento { get; set; }
-        public Nullable<decimal> Monto { get; set; }
+        public string Comentario { get; set; }
+        public string Estado { get; set; }
+        public string UltimoUsuario { get; set; }
+        public Nullable<System.DateTime> UltimaFechaModif { get; set; }
     }
 }
