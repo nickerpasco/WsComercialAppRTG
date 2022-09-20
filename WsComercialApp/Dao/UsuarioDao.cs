@@ -43,6 +43,30 @@ namespace WsComercialApp.Controllers
 
         }
 
+
+        public Model_PersonaMast getDataDiasCredito(Model_PersonaMast usuario)
+        {
+
+            Model_PersonaMast salida = new Model_PersonaMast();
+
+            var sqlStringDiasCredito = UtilsGlobal.ConvertLinesSqlXml("Query_Usuario", "Usuario.getNumerosDIasCredito"); 
+            var sqlStringCreditoTIpo = UtilsGlobal.ConvertLinesSqlXml("Query_Usuario", "Usuario.getTipoCredito");
+
+            List<SqlParameter> parametros = new List<SqlParameter>();
+            parametros.Add(new SqlParameter("@Persona", usuario.Persona));
+            parametros.Add(new SqlParameter("@Secuencia", usuario.DireccionSecuencia));
+
+            List<SqlParameter> parametros2 = new List<SqlParameter>();
+            parametros2.Add(new SqlParameter("@Persona", usuario.Persona));
+            parametros2.Add(new SqlParameter("@Secuencia", usuario.DireccionSecuencia));
+
+            salida.DiasCredito = UtilsDAO.getValueInt(sqlStringDiasCredito, parametros);
+            salida.TipoCredito = UtilsDAO.getValuString(sqlStringCreditoTIpo, parametros2);
+
+            return salida;
+
+        }
+
         internal List<ModelParametros> getParametrosSistema(ModelUsuario response)
         {
             var sqlString = UtilsGlobal.ConvertLinesSqlXml("Query_Usuario", "Usuario.getParametrosSistema");

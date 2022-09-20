@@ -465,6 +465,18 @@ namespace WsComercialApp.Controllers
 
             return response;
 
+        }  
+        
+        public Model_PersonaMast getDiasCreditoByTipo(Model_PersonaMast bean)
+        {
+
+
+
+            UsuarioDao dao = new UsuarioDao();
+           
+
+            return dao.getDataDiasCredito(bean);
+
         }
 
 

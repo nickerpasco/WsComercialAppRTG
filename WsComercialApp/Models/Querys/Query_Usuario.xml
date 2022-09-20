@@ -46,6 +46,33 @@
 
 
 
+	<Usuario.getNumerosDIasCredito>
+
+
+		select Case When Provincia.UnidadNegocio ='LIMA' then 60 when Provincia.UnidadNegocio='PROV' then 75 else 100 end
+		from Direccion inner join Departamento on Direccion.Departamento=Departamento.Departamento
+		inner join Provincia on Direccion.Departamento=Provincia.Departamento and
+		Direccion.Provincia=Provincia.Provincia
+		where persona=@Persona
+		and secuencia=@Secuencia
+
+
+	</Usuario.getNumerosDIasCredito>
+
+
+	<Usuario.getTipoCredito>
+
+
+
+		select Case When Provincia.UnidadNegocio ='LIMA' then 'L' when Provincia.UnidadNegocio='PROV' then 'P' else 'E' end
+		from Direccion inner join Departamento on Direccion.Departamento=Departamento.Departamento
+		inner join Provincia on Direccion.Departamento=Provincia.Departamento and
+		Direccion.Provincia=Provincia.Provincia
+		where persona=@Persona
+		and secuencia=@Secuencia
+
+
+	</Usuario.getTipoCredito>
 
 
 	<Usuario.GetAllParametersSeguridad>

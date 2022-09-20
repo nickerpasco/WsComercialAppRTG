@@ -268,6 +268,9 @@ namespace WsComercialApp.Utils
                 }
                 else
                 {
+
+                    
+
                     return FuncPrinc.trimValor(context.Database.SqlQuery<string>(sqlname, parametros.ToArray()).FirstOrDefault());
                 }
             }

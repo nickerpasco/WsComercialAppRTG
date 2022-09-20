@@ -77,6 +77,17 @@ namespace WsComercialApp.Controllers
 
         }
 
+
+        [HttpPost]
+        [Route("api/Usuario/getDiasCreditoByTipo")]
+        public Model_PersonaMast getDiasCreditoByTipo([FromBody] Model_PersonaMast bean)
+        {
+            RepositorioUsuario usuario = new RepositorioUsuario();
+            var resultlist = usuario.getDiasCreditoByTipo(bean);
+            return resultlist;
+
+        }
+
         [System.Web.Mvc.HttpPost]
         [System.Web.Http.Route("api/Personas/getOnline")]
         public PaginacionGenerico gestionGuiaCabecera([FromBody] FiltroGenerico bean)
