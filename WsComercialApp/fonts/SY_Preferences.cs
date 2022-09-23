@@ -7,22 +7,21 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace WsComercialApp.Models.Bd
+namespace WsComercialApp.fonts
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class MA_ClienteVendedor
+    public partial class SY_Preferences
     {
-        public int Cliente { get; set; }
-        public int Secuencia { get; set; }
-        public Nullable<int> Vendedor { get; set; }
-        public Nullable<System.DateTime> FechaDesde { get; set; }
-        public Nullable<System.DateTime> FechaHasta { get; set; }
-        public string Estado { get; set; }
-        public string TipoVenta { get; set; }
-        public Nullable<System.DateTime> UltimaFechaModif { get; set; }
+        public string Usuario { get; set; }
+        public string Preference { get; set; }
+        public string AplicacionCodigo { get; set; }
+        public string TipoValor { get; set; }
+        public string ValorString { get; set; }
+        public Nullable<int> ValorNumero { get; set; }
+        public Nullable<System.DateTime> ValorFecha { get; set; }
         public string UltimoUsuario { get; set; }
-        public string Linea { get; set; }
+        public Nullable<System.DateTime> UltimaFechaModif { get; set; }
     }
 }

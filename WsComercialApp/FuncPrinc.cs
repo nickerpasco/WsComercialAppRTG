@@ -13,8 +13,8 @@ using System.Net.Mail;
 using System.Net.Mime;
 using System.Text;
 using System.Web;
-using WsComercialApp.Models;
-using WsComercialApp.Models.Bd;
+using WsComercialApp.fonts;
+using WsComercialApp.Models; 
 using WsComercialApp.Utils;
 
 namespace WsComercialApp

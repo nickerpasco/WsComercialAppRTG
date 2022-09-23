@@ -7,18 +7,17 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace WsComercialApp.Models.Bd
+namespace WsComercialApp.fonts
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class CO_OperacionCanjeComentario
+    public partial class CO_DocumentoDespacho
     {
         public string CompaniaSocio { get; set; }
-        public int OperacionCanjeNumero { get; set; }
-        public int Secuencia { get; set; }
-        public string Comentario { get; set; }
-        public string Estado { get; set; }
+        public string TipoDocumento { get; set; }
+        public string NumeroDocumento { get; set; }
+        public string NumeroInterno { get; set; }
         public string UltimoUsuario { get; set; }
         public Nullable<System.DateTime> UltimaFechaModif { get; set; }
     }

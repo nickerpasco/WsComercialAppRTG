@@ -7,8 +7,8 @@ using System.Data.SqlClient;
 using System.Globalization;
 using System.Linq;
 using System.Web;
-using WsComercialApp.Models;
-using WsComercialApp.Models.Bd;
+using WsComercialApp.fonts;
+using WsComercialApp.Models; 
 using WsComercialApp.Repositorio;
 using WsComercialApp.Utils;
 

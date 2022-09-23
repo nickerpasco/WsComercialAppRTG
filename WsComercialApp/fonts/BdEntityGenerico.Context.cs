@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace WsComercialApp.Models.Bd
+namespace WsComercialApp.fonts
 {
     using System;
     using System.Data.Entity;
