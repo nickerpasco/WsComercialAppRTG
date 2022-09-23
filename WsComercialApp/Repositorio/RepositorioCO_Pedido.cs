@@ -317,6 +317,28 @@ namespace WsComercialApp.Repositorio
             return p;
              
 
+        } 
+        
+        internal List<Model_CO_DocumentoDetalle> getComentariosDetalleLetras(Model_CO_Documento request)
+        {
+           
+
+            PaginacionGenerico p = new PaginacionGenerico(); 
+
+            var sqlString = UtilsGlobal.ConvertLinesSqlXml("Query_CO_Pedido", "Co_Documento.getLetrasCabecera");
+            var sqlStringcount = UtilsGlobal.ConvertLinesSqlXml("Query_CO_Pedido", "Co_Documento.getLetrasCabeceraCount");
+
+
+            String queryArmado = " select CompaniaSocio,CONVERT(varchar, OperacionCanjeNumero) as NumeroDocumento , Secuencia as Linea , Comentario from CO_OperacionCanjeComentario "+
+                                 " where CompaniaSocio = '"+ request .CompaniaSocio+ "' and CONVERT(varchar, OperacionCanjeNumero) = '"+ request.NumeroDocumento+ "'";
+            var resultado = UtilsDAO.getDataByQuery<Model_CO_DocumentoDetalle>(queryArmado); 
+
+
+             
+
+            return resultado;
+             
+
         }
 
         public void BorrarFile(String rutita)

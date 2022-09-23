@@ -180,6 +180,16 @@ namespace WsComercialApp.Controllers
             return response;
         }
 
+        [HttpPost]
+        [Route("api/getComentariosDetalleLetras")]
+        public List<Model_CO_DocumentoDetalle> getComentariosDetalleLetras([FromBody] Model_CO_Documento documento)
+        {
+            RepositorioCO_Pedido repositorio = new RepositorioCO_Pedido();
+            List<Model_CO_DocumentoDetalle> response = repositorio.getComentariosDetalleLetras(documento); // 
+            return response;
+        }
+
+
 
     }
 }
