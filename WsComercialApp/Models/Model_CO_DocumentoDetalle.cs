@@ -10,8 +10,7 @@ namespace WsComercialApp.Models
 		public decimal? PorcentajeDescuento01 { get; set; }
 		public decimal? MontoDescuento { get; set; }
 		public string TransferenciaGratuitaFlag { get; set; }
-		public string CompaniaSocio { get; set; }
-		public string Estado { get; set; }
+		public string CompaniaSocio { get; set; } 
 		public string TipoDocumento { get; set; }
 		public string NumeroDocumento { get; set; }
 		public string Comentario { get; set; }
