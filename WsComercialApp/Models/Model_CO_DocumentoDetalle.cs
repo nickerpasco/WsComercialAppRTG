@@ -31,7 +31,7 @@ namespace WsComercialApp.Models
 		public decimal? PrecioUnitarioFinal { get; set; }
 		public decimal? Monto { get; set; }
 		public decimal? MontoFinal { get; set; }
-		public string AlmacenCodigo { get; set; }
+		public string AlmacenCodigo { get; set; } 
 		public string FlujodeCaja { get; set; }
 		public string Estado { get; set; }
 		public decimal? PrecioUnitarioFlete { get; set; }
