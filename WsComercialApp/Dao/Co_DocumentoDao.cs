@@ -830,19 +830,47 @@ namespace WsComercialApp.Dao
                         try
                         {
 
-                            var secuenciaId = context.CO_OperacionCanjeComentario.Where(x => x.OperacionCanjeNumero == NumeroDocumento).DefaultIfEmpty().Max(t => t == null ? 0 : t.Secuencia);
-                            var OtablaDetalle = new CO_OperacionCanjeComentario();
-                            //OtablaDetalle.TipoDocumento = c.TipoDocumento;
-                            OtablaDetalle.OperacionCanjeNumero = Convert.ToInt32(c.NumeroDocumento);
-                            OtablaDetalle.CompaniaSocio = c.CompaniaSocio;
-                            OtablaDetalle.Comentario = detalle.Comentario; 
-                            OtablaDetalle.Estado = "A";
-                            OtablaDetalle.UltimoUsuario = c.UltimoUsuario;
-                            OtablaDetalle.UltimaFechaModif = detalle.UltimaFechaModif;
-                            OtablaDetalle.Secuencia = secuenciaId + 1;
 
-                            context.CO_OperacionCanjeComentario.Add(OtablaDetalle);
-                            context.SaveChanges();
+                            var validaUpdate = context.CO_OperacionCanjeComentario.SingleOrDefault(x => x.OperacionCanjeNumero == NumeroDocumento && x.Secuencia == detalle.Linea);
+                            //var validaUpdate = context.CO_OperacionCanjeComentario.Where(x => x.OperacionCanjeNumero == NumeroDocumento).FirstOrDefault();
+
+                            if (validaUpdate == null)
+                            {
+                                var secuenciaId = context.CO_OperacionCanjeComentario.Where(x => x.OperacionCanjeNumero == NumeroDocumento).DefaultIfEmpty().Max(t => t == null ? 0 : t.Secuencia);
+                                var OtablaDetalle = new CO_OperacionCanjeComentario();
+                                //OtablaDetalle.TipoDocumento = c.TipoDocumento;
+                                OtablaDetalle.OperacionCanjeNumero = Convert.ToInt32(c.NumeroDocumento);
+                                OtablaDetalle.CompaniaSocio = c.CompaniaSocio;
+                                OtablaDetalle.Comentario = detalle.Comentario;
+                                OtablaDetalle.Estado = "A";
+                                OtablaDetalle.UltimoUsuario = c.UltimoUsuario;
+                                OtablaDetalle.UltimaFechaModif = detalle.UltimaFechaModif;
+                                OtablaDetalle.Secuencia = secuenciaId + 1;
+
+                                context.CO_OperacionCanjeComentario.Add(OtablaDetalle);
+                                context.SaveChanges();
+                            }
+                            else
+                            {
+
+                                if(detalle.Estado == "EL")
+                                {
+                                    context.Entry(validaUpdate).State = System.Data.Entity.EntityState.Deleted;
+                                    context.SaveChanges();
+                                }
+                                else
+                                {
+                                    validaUpdate.Comentario = detalle.Comentario;
+                                    context.Entry(validaUpdate).State = System.Data.Entity.EntityState.Modified;
+                                    context.SaveChanges();
+                                }
+
+                               
+                          
+
+                            }
+
+                         
 
                         }
                         catch (DbEntityValidationException e)
@@ -1392,6 +1420,7 @@ namespace WsComercialApp.Dao
                             objdetalleDespacho.CantidadTotal = detalle.CantidadPedida;
                             context.Entry(objdetalleDespacho).State = System.Data.Entity.EntityState.Modified;
                             context.SaveChanges();
+
                         }
                         else
                         {
