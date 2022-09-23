@@ -329,7 +329,7 @@ namespace WsComercialApp.Repositorio
             var sqlStringcount = UtilsGlobal.ConvertLinesSqlXml("Query_CO_Pedido", "Co_Documento.getLetrasCabeceraCount");
 
 
-            String queryArmado = " select 'BASEDATOS' AS Origen ,CompaniaSocio,CONVERT(varchar, OperacionCanjeNumero) as NumeroDocumento , Secuencia as Linea , Comentario from CO_OperacionCanjeComentario "+
+            String queryArmado = " select Estado, 'BASEDATOS' AS Origen ,CompaniaSocio,CONVERT(varchar, OperacionCanjeNumero) as NumeroDocumento , Secuencia as Linea , Comentario from CO_OperacionCanjeComentario "+
                                  " where CompaniaSocio = '"+ request .CompaniaSocio+ "' and CONVERT(varchar, OperacionCanjeNumero) = '"+ request.NumeroDocumento+ "'";
             var resultado = UtilsDAO.getDataByQuery<Model_CO_DocumentoDetalle>(queryArmado); 
 
