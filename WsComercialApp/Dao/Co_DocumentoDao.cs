@@ -834,9 +834,8 @@ namespace WsComercialApp.Dao
                             var OtablaDetalle = new CO_OperacionCanjeComentario();
                             //OtablaDetalle.TipoDocumento = c.TipoDocumento;
                             OtablaDetalle.OperacionCanjeNumero = Convert.ToInt32(c.NumeroDocumento);
-                            OtablaDetalle.CompaniaSocio = detalle.CompaniaSocio;
-                            OtablaDetalle.Comentario = detalle.Comentario;
-                            OtablaDetalle.Secuencia = secuenciaId+1;
+                            OtablaDetalle.CompaniaSocio = c.CompaniaSocio;
+                            OtablaDetalle.Comentario = detalle.Comentario; 
                             OtablaDetalle.Estado = "A";
                             OtablaDetalle.UltimoUsuario = c.UltimoUsuario;
                             OtablaDetalle.UltimaFechaModif = detalle.UltimaFechaModif;

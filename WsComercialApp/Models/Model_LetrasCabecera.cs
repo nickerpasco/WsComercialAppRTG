@@ -9,6 +9,7 @@ namespace WsComercialApp.Models
     {
 		public string EstadoString { get; set; }
 		public string ColorEstado { get; set; }
+		public string CompaniaSocio { get; set; }
 		public string PedidoEstadoCodigo { get; set; }
 		public string LabelMes { get; set; }
 		public string LabelHora { get; set; }
