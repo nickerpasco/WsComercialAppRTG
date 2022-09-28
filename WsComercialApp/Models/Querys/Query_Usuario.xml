@@ -3,7 +3,7 @@
  
 
 <Usuario.GetAllParameters>
- 
+
 
 	select     per.Busqueda, per.Telefono as Telefono   ,  per.Documento as Documento, per.FechaNacimiento as FechaNacimiento, em.CompaniaSocio as CompaniaSocio, em.Sucursal as Sucursal, em.UnidadNegocioAsignada ,
 	per.Persona as Persona , per.Direccion, vende.VentaEquipo,
@@ -11,7 +11,13 @@
 	,(select count(*) as PuedeFacturar from SeguridadAutorizaciones where AplicacionCodigo='CO' and Grupo='SYSTEM' and Concepto='FACAPP' and  Usuario=@UserName) as PuedeFacturar,
 	(select count(1) as PuedeCambiarPrecio from SeguridadAutorizaciones where AplicacionCodigo='CO' and Grupo='SYSTEM' and Concepto='EDITPE' and  Usuario=@UserName) as PuedeCambiarPrecio,
 	(select count(1) as PuedeHacerDescuento from SeguridadAutorizaciones where AplicacionCodigo='CO' and Grupo='SYSTEM' and Concepto='DESESC' and  Usuario=@UserName) as PuedeHacerDescuento,
-	(select count(1) as PuedeHacerDescuento from SeguridadAutorizaciones where AplicacionCodigo='CO' and Grupo='SYSTEM' and Concepto='GENSOL' and  Usuario=@UserName) as PuedeVerLetras
+	(select count(1) as PuedeHacerDescuento from SeguridadAutorizaciones where AplicacionCodigo='CO' and Grupo='SYSTEM' and Concepto='GENSOL' and  Usuario=@UserName) as PuedeVerLetras,
+
+	(select count(1) as PuedeHacerDescuento from SeguridadAutorizaciones where AplicacionCodigo='CO' and Grupo='SYSTEM' and Concepto='ADDCLI' and  Usuario=@UserName) as PuedeCrearCliente,
+	(select count(1) as PuedeHacerDescuento from SeguridadAutorizaciones where AplicacionCodigo='CO' and Grupo='SYSTEM' and Concepto='MODFP' and  Usuario=@UserName) as PuedeModificarFormaPago,
+	(select count(1) as PuedeHacerDescuento from SeguridadAutorizaciones where AplicacionCodigo='CO' and Grupo='SYSTEM' and Concepto='MODMON' and  Usuario=@UserName) as PuedeCambiarMoneda,
+	( select isnull(texto,'N') from ParametrosMast where ParametroClave='SETDIRPED' and AplicacionCodigo='CO' and CompaniaCodigo='999999') as BloquearDireccion
+
 	from Usuario u
 	inner join EmpleadoMast em on u.Usuario = em.CodigoUsuario
 	inner join PersonaMast per on per.Persona = em.Empleado

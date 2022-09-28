@@ -16,14 +16,14 @@ namespace WsComercialApp.Reportes {
     using CrystalDecisions.CrystalReports.Engine;
     
     
-    public class rpt_PedidoOriginal : ReportClass {
+    public class rpt_Pedido_UPC : ReportClass {
         
-        public rpt_PedidoOriginal() {
+        public rpt_Pedido_UPC() {
         }
         
         public override string ResourceName {
             get {
-                return "rpt_PedidoOriginal.rpt";
+                return "rpt_Pedido_UPC.rpt";
             }
             set {
                 // Do nothing
@@ -41,7 +41,7 @@ namespace WsComercialApp.Reportes {
         
         public override string FullResourceName {
             get {
-                return "WsComercialApp.Reportes.rpt_PedidoOriginal.rpt";
+                return "WsComercialApp.Reportes.rpt_Pedido_UPC.rpt";
             }
             set {
                 // Do nothing
@@ -98,9 +98,9 @@ namespace WsComercialApp.Reportes {
     }
     
     [System.Drawing.ToolboxBitmapAttribute(typeof(CrystalDecisions.Shared.ExportOptions), "report.bmp")]
-    public class Cachedrpt_PedidoOriginal : Component, ICachedReport {
+    public class Cachedrpt_Pedido_UPC : Component, ICachedReport {
         
-        public Cachedrpt_PedidoOriginal() {
+        public Cachedrpt_Pedido_UPC() {
         }
         
         [Browsable(false)]
@@ -137,7 +137,7 @@ namespace WsComercialApp.Reportes {
         }
         
         public virtual CrystalDecisions.CrystalReports.Engine.ReportDocument CreateReport() {
-            rpt_PedidoOriginal rpt = new rpt_PedidoOriginal();
+            rpt_Pedido_UPC rpt = new rpt_Pedido_UPC();
             rpt.Site = this.Site;
             return rpt;
         }

@@ -16,14 +16,14 @@ namespace WsComercialApp.Reportes {
     using CrystalDecisions.CrystalReports.Engine;
     
     
-    public class rpt_ComprobanteVentaOriginal : ReportClass {
+    public class rpt_ComprobanteVenta_UPC : ReportClass {
         
-        public rpt_ComprobanteVentaOriginal() {
+        public rpt_ComprobanteVenta_UPC() {
         }
         
         public override string ResourceName {
             get {
-                return "rpt_ComprobanteVentaOriginal.rpt";
+                return "rpt_ComprobanteVenta_UPC.rpt";
             }
             set {
                 // Do nothing
@@ -41,7 +41,7 @@ namespace WsComercialApp.Reportes {
         
         public override string FullResourceName {
             get {
-                return "WsComercialApp.Reportes.rpt_ComprobanteVentaOriginal.rpt";
+                return "WsComercialApp.Reportes.rpt_ComprobanteVenta_UPC.rpt";
             }
             set {
                 // Do nothing
@@ -98,9 +98,9 @@ namespace WsComercialApp.Reportes {
     }
     
     [System.Drawing.ToolboxBitmapAttribute(typeof(CrystalDecisions.Shared.ExportOptions), "report.bmp")]
-    public class Cachedrpt_ComprobanteVentaOriginal : Component, ICachedReport {
+    public class Cachedrpt_ComprobanteVenta_UPC : Component, ICachedReport {
         
-        public Cachedrpt_ComprobanteVentaOriginal() {
+        public Cachedrpt_ComprobanteVenta_UPC() {
         }
         
         [Browsable(false)]
@@ -137,7 +137,7 @@ namespace WsComercialApp.Reportes {
         }
         
         public virtual CrystalDecisions.CrystalReports.Engine.ReportDocument CreateReport() {
-            rpt_ComprobanteVentaOriginal rpt = new rpt_ComprobanteVentaOriginal();
+            rpt_ComprobanteVenta_UPC rpt = new rpt_ComprobanteVenta_UPC();
             rpt.Site = this.Site;
             return rpt;
         }
