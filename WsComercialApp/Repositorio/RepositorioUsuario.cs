@@ -376,7 +376,7 @@ namespace WsComercialApp.Controllers
 
 
             queryalmado.Append(sqlString +
-                               " where Persona in(" + queryRealIn + ") ;");
+                               " where Estado ='A' and Persona in(" + queryRealIn + ") ;");
 
             lstdireccion = UtilsDAO.getDataByQuery<ModelDireccion>(queryalmado.ToString());
 
