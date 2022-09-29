@@ -370,7 +370,7 @@ namespace WsComercialApp.Controllers
             String Ver = cuerpo.ToString();
             int charcan = (Ver.Length - 1);
             String queryRealIn = Ver.Substring(0, charcan);
-
+             
             var sqlString = UtilsGlobal.ConvertLinesSqlXml("Query_Usuario", "Personas.DireccionByClienteAll");
             //List<SqlParameter> parametros = new List<SqlParameter>(); 
 
