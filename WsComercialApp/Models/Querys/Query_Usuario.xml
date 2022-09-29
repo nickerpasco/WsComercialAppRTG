@@ -155,7 +155,7 @@
 	<Usuario.getDirrecionEMpleado>
 
 
-		select AlmacenCodigo,Persona,Secuencia,Direccion,RutaDespacho from Direccion where Persona = @Persona
+		select AlmacenCodigo,Persona,Secuencia,Direccion,RutaDespacho from Direccion where Estado ='A' and Persona = @Persona
 	</Usuario.getDirrecionEMpleado>
 
 	<Usuario.DireccionByClienteAll>

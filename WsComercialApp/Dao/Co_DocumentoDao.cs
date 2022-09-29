@@ -661,11 +661,11 @@ namespace WsComercialApp.Dao
                         OtablaDetalle.CantidadPedidaDoble = 0;
                         OtablaDetalle.AlmacenCodigo = detalle.AlmacenCodigoDetalle;
 
-                        if (OtablaDetalle.TipoDetalle == "S")
+                        if (OtablaDetalle.TipoDetalle == "S" || Otabla.Estado =="PR")
                         {
                             OtablaDetalle.Lote = "00";
                             OtablaDetalle.PrecioModificadoFlag = "S";
-                            OtablaDetalle.UnidadCodigo = "UND";
+                            OtablaDetalle.UnidadCodigo = detalle.UnidadCodigo;
                         }
                         else
                         {
