@@ -445,7 +445,7 @@ namespace WsComercialApp.Dao
                 Otabla.ClienteReferencia = c.ClienteReferencia;
                 Otabla.NumeroInterno = NumeroInterno.ToString();
 
-                Otabla.TipoFacturacion = UtilsDAO.getParametroString("999999", "DOCTIPOFAC"); 
+                Otabla.TipoFacturacion = c.TipoFacturacion; // UtilsDAO.getParametroString("999999", "DOCTIPOFAC"); 
                 Otabla.NumeroDocumento = c.NumeroDocumento;
                 Otabla.TipoVenta = UtilsDAO.getValuString("select tipoventa from CO_Vendedor where Vendedor="+ IdUsuarioPersona + "", null);
                 //Otabla.ConceptoFacturacion = UtilsDAO.getParametroString("999999", "DOCCONCEPT");

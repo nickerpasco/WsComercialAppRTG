@@ -13,9 +13,9 @@
 	(select count(1) as PuedeHacerDescuento from SeguridadAutorizaciones where AplicacionCodigo='CO' and Grupo='SYSTEM' and Concepto='DESESC' and  Usuario=@UserName) as PuedeHacerDescuento,
 	(select count(1) as PuedeHacerDescuento from SeguridadAutorizaciones where AplicacionCodigo='CO' and Grupo='SYSTEM' and Concepto='GENSOL' and  Usuario=@UserName) as PuedeVerLetras,
 
-	(select count(1) as PuedeHacerDescuento from SeguridadAutorizaciones where AplicacionCodigo='CO' and Grupo='SYSTEM' and Concepto='ADDCLI' and  Usuario=@UserName) as PuedeCrearCliente,
-	(select count(1) as PuedeHacerDescuento from SeguridadAutorizaciones where AplicacionCodigo='CO' and Grupo='SYSTEM' and Concepto='MODFP' and  Usuario=@UserName) as PuedeModificarFormaPago,
-	(select count(1) as PuedeHacerDescuento from SeguridadAutorizaciones where AplicacionCodigo='CO' and Grupo='SYSTEM' and Concepto='MODMON' and  Usuario=@UserName) as PuedeCambiarMoneda,
+	(select count(1) as PuedeCrearCliente from SeguridadAutorizaciones where AplicacionCodigo='CO' and Grupo='SYSTEM' and Concepto='ADDCLI' and  Usuario=@UserName) as PuedeCrearCliente,
+	(select count(1) as PuedeModificarFormaPago from SeguridadAutorizaciones where AplicacionCodigo='CO' and Grupo='SYSTEM' and Concepto='MODFP' and  Usuario=@UserName) as PuedeModificarFormaPago,
+	(select count(1) as PuedeCambiarMoneda from SeguridadAutorizaciones where AplicacionCodigo='CO' and Grupo='SYSTEM' and Concepto='MODMON' and  Usuario=@UserName) as PuedeCambiarMoneda,
 	( select isnull(texto,'N') from ParametrosMast where ParametroClave='SETDIRPED' and AplicacionCodigo='CO' and CompaniaCodigo='999999') as BloquearDireccion
 
 	from Usuario u
