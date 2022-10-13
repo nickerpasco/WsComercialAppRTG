@@ -13,6 +13,8 @@ namespace WsComercialApp.Models
 		public string NumeroDocumento { get; set; }
 		public int? ClienteNumero { get; set; }
 		public string ClienteRUC { get; set; }
+		public string TipoFacturacionNoAfectoFlag { get; set; }
+
 		public string TipoDocumentoPedidoCLiente { get; set; }
 		public string ClienteNombre { get; set; }
 		public string EstablecimientoCodigo { get; set; }
