@@ -53,7 +53,7 @@
 			e.Departamento as DepartamentoCod,e.Distrito as CodigoPostalCod,e.Provincia as ProvinciaCod , pedido.Sucursal, pedido.ComercialPedidoNumero , pedido.NumeroInterno  , CONVERT(char(10),pedido.FechaDocumento,126) as FechaDocParaQR , pedido.FEHashCode , ISNULL(com.AfectoPercepcionIGVFlag,'N') AfectoPercepcionIGVFlag , ISNULL(com.AfectoPercepcionIGVFlag,'N') FlagImpresionPercepcionCampo from CO_Documento pedido
 			LEFT join Co_TipoDOcumento cotipo WITH(NOLOCK) on cotipo.TipoDocumento=pedido.TipoDocumento
 			LEFT join MA_FormadePago formapago WITH(NOLOCK) on formapago.FormadePago=pedido.FormadePago
-			LEFT join CO_TipoFacturacion tipofacturacion WITH(NOLOCK) on tipofacturacion.FormadePago=pedido.TipoFacturacion
+			LEFT join CO_TipoFacturacion tipofacturacion WITH(NOLOCK) on tipofacturacion.TipoFacturacion=pedido.TipoFacturacion
 			LEFT join CO_TipoDocumento tdoc on pedido.TipoDocumento = tdoc.TipoDocumento
 			left join PersonaMast cli WITH(NOLOCK) on pedido.ClienteCobrarA = cli.Persona
 			LEFT join CO_RutaDespacho  ruta WITH(NOLOCK) on ruta.RutaDespacho=pedido.RutaDespacho
