@@ -3,7 +3,7 @@
 
  
 	
-	
+	  
 		<Co_Documento.Cabecera>
 
 			select isnull(tipofacturacion.NoAfectoFlag,'N') as TipoFacturacionNoAfectoFlag,
