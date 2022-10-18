@@ -129,6 +129,38 @@ namespace WsComercialApp.Controllers
 
         }
 
+        internal bool getValidarDiasPendientesFactura(Model_CO_Documento c)
+        {
+
+            var sqlString4 = UtilsGlobal.ConvertLinesSqlXml("Query_Usuario", "PersonaMast.getDataValidacionDocumentosVencidos");
+            List<SqlParameter> parametros4 = new List<SqlParameter>();
+            parametros4.Add(new SqlParameter("@ClienteNumero", c.ClienteNumero));
+            ModelTransac_CO_Documento obj2 = (ModelTransac_CO_Documento)UtilsDAO.getDataObjectByQueryWithParameters<ModelTransac_CO_Documento>(sqlString4, parametros4);
+
+            if (obj2 == null)
+            {
+                return false;
+            }
+            else
+            {
+
+                if(obj2.DiasDiferencias==0)
+                {
+
+                    return false;
+                }
+                else
+                {
+
+                    return true;
+                }
+
+                return true;
+            }
+
+
+        }
+
         internal string getDocumentoSUNAT(ModelUsuario bean)
         {
             ServicioSUNAT.ServiceClient onClient = new ServicioSUNAT.ServiceClient();

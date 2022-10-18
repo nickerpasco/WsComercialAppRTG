@@ -344,6 +344,9 @@ namespace WsComercialApp.Dao
             ModelTransac_CO_Documento obj = (ModelTransac_CO_Documento)UtilsDAO.getDataObjectByQueryWithParameters<ModelTransac_CO_Documento>(sqlString3, parametros3);
 
 
+         
+
+
             c.Sucursal = FuncPrinc.trimValor(obj.Sucursal);
             c.UnidadNegocio = FuncPrinc.trimValor(obj.UnidadNegocio);
 
@@ -566,7 +569,15 @@ namespace WsComercialApp.Dao
                     Otabla.TipoMotivo = "97";
                 }
 
-                if(c.FormadePagoNuevaFlagCedito =="S" && c.FormadePagoAntiguaFlagCedito == "S")
+                if (c.ValidacionDiasVencidoCanjeLetras)
+                {
+                    Otabla.Estado = "PR";
+                    Otabla.TipoMotivo = "92";
+                }
+
+                
+
+                if (c.FormadePagoNuevaFlagCedito =="S" && c.FormadePagoAntiguaFlagCedito == "S")
                 {
 
                     var DiasCreditoAntigua =  UtilsDAO.getValueIntOnly("select MAX(MA_FormadePagoDetalle.NumeroDias) from MA_FormadePago,MA_FormadePagoDetalle where MA_FormadePago.FormadePago=MA_FormadePagoDetalle.FormadePago and MA_FormadePago.FormadePago='"+c.FormadePagoAntigua+"' "); ;
@@ -582,6 +593,8 @@ namespace WsComercialApp.Dao
 
 
                 Otabla.ClienteDireccionSecuencia = Otabla.ClienteDireccionDespacho;
+
+
 
 
                 context.CO_Documento.Add(Otabla);

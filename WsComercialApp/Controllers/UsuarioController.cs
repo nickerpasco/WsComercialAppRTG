@@ -124,6 +124,19 @@ namespace WsComercialApp.Controllers
 
             return credito;
 
+        }  
+        
+        
+        [HttpPost]
+        [Route("api/Usuario/getValidarDiasPendientesFactura")]
+        public bool getLineaCreditoCliente([FromBody] Model_CO_Documento bean)
+        {
+            RepositorioUsuario usuario = new RepositorioUsuario();
+
+            Boolean respuesta = usuario.getValidarDiasPendientesFactura(bean);
+
+            return respuesta;
+
         }
 
 

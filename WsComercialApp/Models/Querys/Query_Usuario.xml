@@ -217,7 +217,42 @@
 
 	<PersonaMast.GetIdByUser>
 		select Empleado as Persona from EmpleadoMast with(nolock) where CodigoUsuario= @Usuario
-	</PersonaMast.GetIdByUser> 
+	</PersonaMast.GetIdByUser>
+
+
+	<PersonaMast.getDataValidacionDocumentosVencidos>
+
+		select
+		DATEDIFF(DAY,CO_Documento.FechaVencimiento,GETDATE())
+		from CO_Documento inner join
+		CO_TipoDocumento on CO_Documento.TipoDocumento=CO_TipoDocumento.TipoDocumento
+		left join PersonaMast Cliente on CO_Documento.ClienteNumero=Cliente.Persona
+		left join PersonaMast GrupoEmpresarial on Cliente.GrupoEmpresarial=GrupoEmpresarial.GrupoEmpresarial
+		where CO_TipoDocumento.Clasificacion in ('DC','DP','LE') and CO_Documento.Estado='PR'
+		and CO_Documento.ClienteNumero=@ClienteNumero
+		and CO_Documento.UnidadNegocio='LIMA'
+		group by CO_Documento.FechaVencimiento
+		having DATEDIFF(DAY,CO_Documento.FechaVencimiento,GETDATE())> (select Numero from ParametrosMast where ParametroClave = 'VALIDIALIM')
+		UNION ALL
+		select
+		DATEDIFF(DAY,CO_Documento.FechaVencimiento,GETDATE())
+		from CO_Documento inner join
+		CO_TipoDocumento on CO_Documento.TipoDocumento=CO_TipoDocumento.TipoDocumento
+		left join PersonaMast Cliente on CO_Documento.ClienteNumero=Cliente.Persona
+		left join PersonaMast GrupoEmpresarial on Cliente.GrupoEmpresarial=GrupoEmpresarial.GrupoEmpresarial
+		where CO_TipoDocumento.Clasificacion in ('DC','DP','LE') and CO_Documento.Estado='PR'
+		and CO_Documento.ClienteNumero=@ClienteNumero
+		and CO_Documento.UnidadNegocio='PROV'
+		group by CO_Documento.FechaVencimiento
+		having DATEDIFF(DAY,CO_Documento.FechaVencimiento,GETDATE())>(select Numero from ParametrosMast where ParametroClave = 'VALIDIAPRO')
+
+
+
+
+	</PersonaMast.getDataValidacionDocumentosVencidos>
+
+
+	
 
 	<PersonaMast.getCentroCostosUser>
 		select CentroCosto from ClienteMast with(nolock) where cliente=@Persona
