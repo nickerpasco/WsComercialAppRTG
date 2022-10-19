@@ -132,10 +132,15 @@ namespace WsComercialApp.Controllers
         internal bool getValidarDiasPendientesFactura(Model_CO_Documento c)
         {
 
-            var sqlString4 = UtilsGlobal.ConvertLinesSqlXml("Query_Usuario", "PersonaMast.getDataValidacionDocumentosVencidos");
-            List<SqlParameter> parametros4 = new List<SqlParameter>();
-            parametros4.Add(new SqlParameter("@ClienteNumero", c.ClienteNumero));
-            ModelTransac_CO_Documento obj2 = (ModelTransac_CO_Documento)UtilsDAO.getDataObjectByQueryWithParameters<ModelTransac_CO_Documento>(sqlString4, parametros4);
+            //var sqlString4 = UtilsGlobal.ConvertLinesSqlXml("Query_Usuario", "PersonaMast.getDataValidacionDocumentosVencidos");
+            //List<SqlParameter> parametros4 = new List<SqlParameter>();
+            //parametros4.Add(new SqlParameter("@ClienteNumero", c.ClienteNumero));
+            //parametros4.Add(new SqlParameter("@CompaniaSocio", c.CompaniaSocio));
+
+            var sqlString4 = "execute usp_co_consulta_Letras_pend '"+ c.CompaniaSocio + "', "+ c.ClienteNumero + "";
+
+
+            ModelTransac_CO_Documento obj2 = (ModelTransac_CO_Documento)UtilsDAO.getDataByQuery<ModelTransac_CO_Documento>(sqlString4).DefaultIfEmpty();
 
             if (obj2 == null)
             {
@@ -144,7 +149,7 @@ namespace WsComercialApp.Controllers
             else
             {
 
-                if(obj2.DiasDiferencias==0)
+                if(obj2.cnt == 0)
                 {
 
                     return false;
