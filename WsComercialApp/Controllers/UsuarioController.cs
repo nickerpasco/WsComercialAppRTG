@@ -129,11 +129,11 @@ namespace WsComercialApp.Controllers
         
         [HttpPost]
         [Route("api/Usuario/getValidarDiasPendientesFactura")]
-        public bool getLineaCreditoCliente([FromBody] Model_CO_Documento bean)
+        public ModelTransac_CO_Documento getLineaCreditoCliente([FromBody] Model_CO_Documento bean)
         {
             RepositorioUsuario usuario = new RepositorioUsuario();
 
-            Boolean respuesta = usuario.getValidarDiasPendientesFactura(bean);
+            ModelTransac_CO_Documento respuesta = usuario.getValidarDiasPendientesFactura(bean);
 
             return respuesta;
 

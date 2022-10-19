@@ -129,7 +129,7 @@ namespace WsComercialApp.Controllers
 
         }
 
-        internal bool getValidarDiasPendientesFactura(Model_CO_Documento c)
+        internal ModelTransac_CO_Documento getValidarDiasPendientesFactura(Model_CO_Documento c)
         {
 
             //var sqlString4 = UtilsGlobal.ConvertLinesSqlXml("Query_Usuario", "PersonaMast.getDataValidacionDocumentosVencidos");
@@ -142,26 +142,7 @@ namespace WsComercialApp.Controllers
 
             ModelTransac_CO_Documento obj2 = (ModelTransac_CO_Documento)UtilsDAO.getDataByQuery<ModelTransac_CO_Documento>(sqlString4).DefaultIfEmpty();
 
-            if (obj2 == null)
-            {
-                return false;
-            }
-            else
-            {
-
-                if(obj2.cnt == 0)
-                {
-
-                    return false;
-                }
-                else
-                {
-
-                    return true;
-                }
-
-                return true;
-            }
+            return obj2;
 
 
         }
