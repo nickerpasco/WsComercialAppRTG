@@ -129,7 +129,7 @@ namespace WsComercialApp.Controllers
 
         }
 
-        internal ModelTransac_CO_Documento getValidarDiasPendientesFactura(Model_CO_Documento c)
+        internal ReponseStoreLetras getValidarDiasPendientesFactura(Model_CO_Documento c)
         {
 
             //var sqlString4 = UtilsGlobal.ConvertLinesSqlXml("Query_Usuario", "PersonaMast.getDataValidacionDocumentosVencidos");
@@ -139,8 +139,8 @@ namespace WsComercialApp.Controllers
 
             var sqlString4 = "execute usp_co_consulta_Letras_pend '"+ c.CompaniaSocio + "', "+ c.ClienteNumero + "";
 
-
-            ModelTransac_CO_Documento obj2 = (ModelTransac_CO_Documento)UtilsDAO.getDataByQuery<ModelTransac_CO_Documento>(sqlString4).DefaultIfEmpty();
+             
+           ReponseStoreLetras obj2 = (ReponseStoreLetras)UtilsDAO.getDataByQuery<ReponseStoreLetras>(sqlString4).FirstOrDefault();
 
             return obj2;
 

@@ -18,7 +18,7 @@ namespace WsComercialApp.Models
         public string Comentario { get; set; }
         public string Accion { get; set; }
         public Nullable<int> TransportistaProvincia { get; set; }
-        public Nullable<int> cnt { get; set; }
+      
         public string EstablecimientoCodigo { get; set; }
         public string FiltroUbigeo { get; set; }
         public string FormaFacturacion { get; set; }

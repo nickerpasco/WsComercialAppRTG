@@ -293,6 +293,7 @@
     <Compile Include="Models\Model_Sy_Preferences.cs" />
     <Compile Include="Models\ObjErrorSpring.cs" />
     <Compile Include="Models\ObjToken.cs" />
+    <Compile Include="Models\ReponseStoreLetras.cs" />
     <Compile Include="Models\ReportePedidoObj.cs" />
     <Compile Include="Models\SunatDataObject.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
