@@ -13,9 +13,20 @@
 	(select count(1) as PuedeHacerDescuento from SeguridadAutorizaciones where AplicacionCodigo='CO' and Grupo='SYSTEM' and Concepto='DESESC' and  Usuario=@UserName) as PuedeHacerDescuento,
 	(select count(1) as PuedeHacerDescuento from SeguridadAutorizaciones where AplicacionCodigo='CO' and Grupo='SYSTEM' and Concepto='GENSOL' and  Usuario=@UserName) as PuedeVerLetras,
 
+
 	(select count(1) as PuedeCrearCliente from SeguridadAutorizaciones where AplicacionCodigo='CO' and Grupo='SYSTEM' and Concepto='ADDCLI' and  Usuario=@UserName) as PuedeCrearCliente,
 	(select count(1) as PuedeModificarFormaPago from SeguridadAutorizaciones where AplicacionCodigo='CO' and Grupo='SYSTEM' and Concepto='MODFP' and  Usuario=@UserName) as PuedeModificarFormaPago,
 	(select count(1) as PuedeCambiarMoneda from SeguridadAutorizaciones where AplicacionCodigo='CO' and Grupo='SYSTEM' and Concepto='MODMON' and  Usuario=@UserName) as PuedeCambiarMoneda,
+
+
+	(select count(1) as AccesoVentaRapida from SeguridadAutorizaciones where AplicacionCodigo='CO' and Grupo='SYSTEM' and Concepto='VENRAP' and  Usuario=@UserName) as AccesoVentaRapida,
+	(select count(1) as AccesoListaPedidos from SeguridadAutorizaciones where AplicacionCodigo='CO' and Grupo='SYSTEM' and Concepto='LISTAP' and  Usuario=@UserName) as AccesoListaPedidos,
+	(select count(1) as AccesoLineasCredito from SeguridadAutorizaciones where AplicacionCodigo='CO' and Grupo='SYSTEM' and Concepto='ESTAPP' and  Usuario=@UserName) as AccesoLineasCredito,
+	(select count(1) as AccesoClientes from SeguridadAutorizaciones where AplicacionCodigo='CO' and Grupo='SYSTEM' and Concepto='ACLAPP' and  Usuario=@UserName) as AccesoClientes,
+	(select count(1) as AccesoFacturacion from SeguridadAutorizaciones where AplicacionCodigo='CO' and Grupo='SYSTEM' and Concepto='LISFAP' and  Usuario=@UserName) as AccesoFacturacion,
+	(select count(1) as AccesoProductos from SeguridadAutorizaciones where AplicacionCodigo='CO' and Grupo='SYSTEM' and Concepto='CATIAP' and  Usuario=@UserName) as AccesoProductos,
+
+
 	( select isnull(texto,'N') from ParametrosMast where ParametroClave='SETDIRPED' and AplicacionCodigo='CO' and CompaniaCodigo='999999') as BloquearDireccion
 
 	from Usuario u
