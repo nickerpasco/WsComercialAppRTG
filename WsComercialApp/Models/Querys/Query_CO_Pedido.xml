@@ -7,7 +7,7 @@
 		<Co_Documento.Cabecera>
 
 			select isnull(tipofacturacion.NoAfectoFlag,'N') as TipoFacturacionNoAfectoFlag,
-			pedido.FechaVencimiento as  FechaDocumentoDate,
+			pedido.FechaDocumento as  FechaDocumentoDate,
 			pedido.TransportistaProvincia,
 			ft.TransportistaDescripcion as TransportistaProvinciaDescripcion,
 			CASE pedido.MonedaDocumento
