@@ -256,21 +256,24 @@ end
 
 
 
+  alter   
+   function Fn_MostrarDesCuento(@Compania as varchar(10),@TipoCliente as varchar(3),@Cliente as int,@VentaEquipo as varchar(4),@Sucursal as varchar(10),@Recojo as varchar(1),@Item as varchar(15),@Almacen varchar(10),@FormaPago as varchar(5))    
+returns varchar(100)    
+as    
+begin    
 
- ALTER function Fn_MostrarDesCuento(@Compania as varchar(10),@TipoCliente as varchar(3),@Cliente as int,@VentaEquipo as varchar(4),@Sucursal as varchar(10),@Recojo as varchar(1),@Item as varchar(15),@Almacen varchar(10))  
-returns varchar(1)  
-as  
-begin  
-   
-  declare @Ret varchar(1);   
+
   
-  
-  set @Ret = (select top 1 'S'    from VW_CO_DescuentoEscalaVigente  where (VW_CO_DescuentoEscalaVigente .Compania = @Compania) and  (VW_CO_DescuentoEscalaVigente.TipoCliente = '$$' or VW_CO_DescuentoEscalaVigente.TipoCliente =@TipoCliente) and (
-  VW_CO_DescuentoEscalaVigente.Cliente = -1 or VW_CO_DescuentoEscalaVigente.Cliente = @Cliente) and (VW_CO_DescuentoEscalaVigente.VentaEquipo = '$$' or VW_CO_DescuentoEscalaVigente.VentaEquipo =@VentaEquipo) and (VW_CO_DescuentoEscalaVigente.Sucursal = '$$' or 
-  VW_CO_DescuentoEscalaVigente.Sucursal = @Sucursal) and ((VW_CO_DescuentoEscalaVigente.TipoRecojoFlag = 'S') or (VW_CO_DescuentoEscalaVigente.TipoRecojoFlag = 'N' and VW_CO_DescuentoEscalaVigente.TipoRecojo = @Recojo)) and (VW_CO_DescuentoEscalaVigente.Item = @Item) and (VW_CO_DescuentoEscalaVigente.Almacen = '$$' or VW_CO_DescuentoEscalaVigente.Almacen = @Almacen))  
-  
-if @Ret is null  
-    return 'N';  
-  
-return @Ret;   
-end  
+     
+  declare @Ret varchar(100);     
+    
+  set @Ret = (select top 1 'S'  from VW_CO_DescuentoEscalaVigente  where (VW_CO_DescuentoEscalaVigente .Compania = @Compania) and  (VW_CO_DescuentoEscalaVigente.TipoCliente = '$$' or VW_CO_DescuentoEscalaVigente.TipoCliente =isnull(@TipoCliente,'$$')) and (  
+  --set @Ret = (select top 1 'S' +'|'+ CONVERT(VARCHAR,(PorcentajeDescuento) +'|'+ VW_CO_DescuentoEscalaVigente.tipodescuento  +'|'+ CONVERT(VARCHAR,VW_CO_DescuentoEscalaVigente.monto)  +'|'+ CONVERT(VARCHAR,VW_CO_DescuentoEscalaVigente.montohasta))   from VW_CO_DescuentoEscalaVigente  where (VW_CO_DescuentoEscalaVigente .Compania = @Compania) and  (VW_CO_DescuentoEscalaVigente.TipoCliente = '$$' or VW_CO_DescuentoEscalaVigente.TipoCliente =@TipoCliente) and (  
+  VW_CO_DescuentoEscalaVigente.Cliente = -1 or VW_CO_DescuentoEscalaVigente.Cliente = isnull(@Cliente,-1) ) and (VW_CO_DescuentoEscalaVigente.FormaPago = '$$' or VW_CO_DescuentoEscalaVigente.FormaPago =isnull(@FormaPago,'$$')) and (VW_CO_DescuentoEscalaVigente.VentaEquipo = '$$' or VW_CO_DescuentoEscalaVigente.VentaEquipo = isnull(@VentaEquipo,'$$') ) and (VW_CO_DescuentoEscalaVigente.Sucursal = '$$' or   
+  VW_CO_DescuentoEscalaVigente.Sucursal = isnull(@Sucursal,'$$')  ) and ((VW_CO_DescuentoEscalaVigente.TipoRecojoFlag = 'S') or (VW_CO_DescuentoEscalaVigente.TipoRecojoFlag = 'N' and VW_CO_DescuentoEscalaVigente.TipoRecojo = isnull(@Recojo,'$$') )) and (VW_CO_DescuentoEscalaVigente.Item = @Item) and (VW_CO_DescuentoEscalaVigente.Almacen = '$$' or VW_CO_DescuentoEscalaVigente.Almacen = isnull(@Almacen,'$$')))    
+    
+if @Ret is null    
+    return 'N';    
+    
+return @Ret;     
+end 

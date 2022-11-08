@@ -84,9 +84,8 @@ namespace WsComercialApp.Repositorio
             p.page = bean.paginacion.page;
             p.limit = bean.paginacion.limit;
             p.lstCabeceraPedidos = resul;
-
-
-
+             
+            System.Diagnostics.Trace.WriteLine("TENEMOS QUE HABLAR");
 
             return p;
 
@@ -568,21 +567,35 @@ namespace WsComercialApp.Repositorio
         private string RetornoQueryFactura(FiltroGenerico bean)
         {
             bean.Persona = bean.Vendedor;
-            String returnString = "  WHERE(pedido.Estado = 'PR' and pedido.ClienteNumero = "+bean.Persona+ " AND pedido.MonedaDocumento = '"+bean.MonedaDocumento+"'  AND CO_TipoDocumento.Clasificacion <> 'PE' AND CO_TipoDocumento.Clasificacion <> 'AD' " +
+            //       String returnString = "  WHERE(pedido.Estado = 'PR' and pedido.ClienteNumero = "+bean.Persona+ " AND pedido.MonedaDocumento = '"+bean.MonedaDocumento+"'  AND CO_TipoDocumento.Clasificacion <> 'PE' AND CO_TipoDocumento.Clasificacion <> 'AD' " +
 
-        "  AND formapago.CuotaCreditoFlag = 'S') Or(pedido.TipoDocumento = 'NC' and pedido.ClienteNumero = " + bean.Persona + "  and pedido.Estado = 'PR')" +
+            //   "  AND formapago.CuotaCreditoFlag = 'S') Or(pedido.TipoDocumento = 'NC' and pedido.ClienteNumero = " + bean.Persona + "  and pedido.Estado = 'PR')" +
 
-       "  and pedido.VoucherPeriodo = '"+bean.Periodo+"'" +
+            //  "  and pedido.VoucherPeriodo = '"+bean.Periodo+"'" +
 
-       " AND('" + bean.BusquedaAvanzada + "' is null or '" + bean.BusquedaAvanzada + "' = '' or UPPER(pedido.ClienteNombre + pedido.NumeroDocumento)like '%' + upper('" + bean.BusquedaAvanzada + "') + '%')" +
+            //  " AND('" + bean.BusquedaAvanzada + "' is null or '" + bean.BusquedaAvanzada + "' = '' or UPPER(pedido.ClienteNombre + pedido.NumeroDocumento)like '%' + upper('" + bean.BusquedaAvanzada + "') + '%')" +
 
-      "      and('" + bean.FechaInicio + "' IS NULL OR pedido.FechaDocumento >= '" + bean.FechaInicio + "')" +
-      "  AND('" + bean.FechaFin + "' IS NULL OR pedido.FechaDocumento < DATEADD(DAY, 1, '" + bean.FechaFin + "'))" +
+            //"      and('" + bean.FechaInicio + "' IS NULL OR pedido.FechaDocumento >= '" + bean.FechaInicio + "')" +
+            //"  AND('" + bean.FechaFin + "' IS NULL OR pedido.FechaDocumento < DATEADD(DAY, 1, '" + bean.FechaFin + "'))" +
 
 
-     " order by  pedido.FechaDocumento desc " +
-     " OFFSET(" + bean.paginacion.page + " - 1) * " + bean.paginacion.limit + "  ROWS " +
-     " FETCH NEXT " + bean.paginacion.limit + " ROWS ONLY";
+           //" order by  pedido.FechaDocumento desc " +
+           //" OFFSET(" + bean.paginacion.page + " - 1) * " + bean.paginacion.limit + "  ROWS " +
+           //" FETCH NEXT " + bean.paginacion.limit + " ROWS ONLY";
+
+
+           String returnString = " WHERE ( pedido.CompaniaSocio = '"+bean.CompaniaSocio + "' ) AND ( pedido.ClienteNumero = " + bean.Persona + " )     AND ( (pedido.Estado = 'PR' )  AND    " +
+            " (pedido.MonedaDocumento = '" + bean.MonedaDocumento + "') AND(CO_TipoDocumento.Clasificacion <> 'PE') AND(CO_TipoDocumento.Clasificacion <> 'AD') ) AND " +
+            " (CASE WHEN pedido.TipoDocumento = 'LC' AND pedido.LetraEstado NOT IN('AC', 'EC', 'DE') THEN '' ELSE 'PR' END = 'PR') " +
+
+            " AND('" + bean.BusquedaAvanzada + "' is null or '" + bean.BusquedaAvanzada + "' = '' or UPPER(pedido.ClienteNombre + pedido.NumeroDocumento)like '%' + upper('" + bean.BusquedaAvanzada + "') + '%')" +
+
+                       "      and('" + bean.FechaInicio + "' IS NULL OR pedido.FechaDocumento >= '" + bean.FechaInicio + "')" +
+            "  AND('" + bean.FechaFin + "' IS NULL OR pedido.FechaDocumento < DATEADD(DAY, 1, '" + bean.FechaFin + "'))" +
+
+            "  order by " +
+
+            " pedido.FechaDocumento desc  OFFSET(" + bean.paginacion.page + " - 1) * " + bean.paginacion.limit + "  ROWS FETCH NEXT " + bean.paginacion.limit + " ROWS ONLY";
 
 
             return returnString;
@@ -594,16 +607,16 @@ namespace WsComercialApp.Repositorio
         {
             bean.Persona = bean.Vendedor;
 
-            String returnString = "  WHERE(pedido.Estado = 'PR' and pedido.ClienteNumero = " + bean.Persona + " AND pedido.MonedaDocumento = '" + bean.MonedaDocumento + "' AND CO_TipoDocumento.Clasificacion <> 'PE' AND CO_TipoDocumento.Clasificacion <> 'AD' " +
+            String returnString = " WHERE ( pedido.CompaniaSocio = '" + bean.CompaniaSocio + "' ) AND ( pedido.ClienteNumero = " + bean.Persona + " )     AND ( (pedido.Estado = 'PR' )  AND    " +
+            " (pedido.MonedaDocumento = '" + bean.MonedaDocumento + "') AND(CO_TipoDocumento.Clasificacion <> 'PE') AND(CO_TipoDocumento.Clasificacion <> 'AD') ) AND " +
+            " (CASE WHEN pedido.TipoDocumento = 'LC' AND pedido.LetraEstado NOT IN('AC', 'EC', 'DE') THEN '' ELSE 'PR' END = 'PR') " +
 
-    "  AND formapago.CuotaCreditoFlag = 'S') Or(pedido.TipoDocumento = 'NC' and pedido.ClienteNumero = " + bean.Persona + "  and pedido.Estado = 'PR')" +
+            " AND('" + bean.BusquedaAvanzada + "' is null or '" + bean.BusquedaAvanzada + "' = '' or UPPER(pedido.ClienteNombre + pedido.NumeroDocumento)like '%' + upper('" + bean.BusquedaAvanzada + "') + '%')" +
 
-   "  and pedido.VoucherPeriodo = '" + bean.Periodo + "'" +
+                       "      and('" + bean.FechaInicio + "' IS NULL OR pedido.FechaDocumento >= '" + bean.FechaInicio + "')" +
+            "  AND('" + bean.FechaFin + "' IS NULL OR pedido.FechaDocumento < DATEADD(DAY, 1, '" + bean.FechaFin + "'))";
 
-   " AND('" + bean.BusquedaAvanzada + "' is null or '" + bean.BusquedaAvanzada + "' = '' or UPPER(pedido.ClienteNombre + pedido.NumeroDocumento)like '%' + upper('" + bean.BusquedaAvanzada + "') + '%')" +
-
-  "      and('" + bean.FechaInicio + "' IS NULL OR pedido.FechaDocumento >= '" + bean.FechaInicio + "')" +
-  "  AND('" + bean.FechaFin + "' IS NULL OR pedido.FechaDocumento < DATEADD(DAY, 1, '" + bean.FechaFin + "'))";
+            
 
             return returnString;
 

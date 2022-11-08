@@ -32,6 +32,7 @@ namespace WsComercialApp.Models
 		public int? PuedeHacerDescuento { get; set; }
 		public string VentaEquipo { get; set; }
 		public int? PuedeFacturar { get; set; }
+		public int? PuedeVerFacturas { get; set; }
 		public int? PuedeVerLetras { get; set; }
 		public int? PuedeCambiarPrecio { get; set; }
 
