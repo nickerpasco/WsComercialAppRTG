@@ -190,12 +190,14 @@
 
 
 
-		select isnull(tipo.NoAfectoFlag,'N') as TipoFacturacionNoAfectoFlag, Telefono, CorreoElectronico, Persona, TRIM(Busqueda) as Busqueda , TRIM(PersonaMast.Departamento) as Departamento,TRIM(PersonaMast.Provincia) as Provincia,TRIM(PersonaMast.CodigoPostal) as CodigoPostal,TRIM(TipoPersona) as TipoPersona,TRIM(EsCliente) as EsCliente,TRIM(EsProveedor) as EsProveedor,TRIM(EsEmpleado) as EsEmpleado,
+		select isnull(tipo.NoAfectoFlag,'N') as TipoFacturacionNoAfectoFlag, Telefono, CorreoElectronico,
+		Persona, TRIM(Busqueda) as Busqueda , TRIM(PersonaMast.Departamento) as Departamento,TRIM(PersonaMast.Provincia) as Provincia,TRIM(PersonaMast.CodigoPostal) as CodigoPostal,TRIM(TipoPersona) as TipoPersona,TRIM(EsCliente) as EsCliente,TRIM(EsProveedor) as EsProveedor,TRIM(EsEmpleado) as EsEmpleado,
 		TRIM(PersonaMast.TipoDocumento) as TipoDocumentoPersona,TRIM(cli.TipoDocumento) as TipoDocumento,TRIM(cli.TipoCliente) as TipoCliente, TRIM(cli.CentroCosto) as CentroCosto , TRIM(cli.TipoFacturacion) as TipoFacturacion,
 		isnull((select formadepago from CO_LineaCredito where ClienteNumero=cli.Cliente and estado='A'),cli.FormadePago) as FormadePago,
 		TRIM(cli.FormaFacturacion) as FormaFacturacion,  cli.Vendedor as Vendedor, TRIM(cli.ConceptoFacturacion) as ConceptoFacturacion,
 		TRIM(Documento) as Documento,TRIM(Direccion) as Direccion,TRIM(PersonaAnt) as PersonaAnt,TRIM(DocumentoFiscal) as DocumentoFiscal,TRIM(DocumentoIdentidad) as DocumentoIdentidad,TRIM(PersonaMast.Estado)  as Estado , isnull(cli.BloquearVendedor,'N') as BloquearVendedor
-		,cli.IdTransportista,ftvehi.TransportistaDescripcion
+		,cli.IdTransportista,ftvehi.TransportistaDescripcion,
+		(select Comentario from PersonaAdvertencias with(nolock) where Tipo='01' and persona=PersonaMast.Persona) as ComentarioPersona
 		from PersonaMast with(nolock)
 		inner join ClienteMast cli with(nolock) on PersonaMast.Persona= cli.Cliente
 		inner join CO_TipoFacturacion tipo with(nolock) on cli.TipoFacturacion = tipo.TipoFacturacion

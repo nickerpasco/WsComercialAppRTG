@@ -363,9 +363,10 @@ namespace WsComercialApp.Dao
             if (CorrelativosMast.Count > 0)
             {
                 correlativo = (int)((CorrelativosMast[0].CorrelativoNumero) + 1);
-                var serie = (CorrelativosMast[0].Serie); 
-                serie = serie.Substring(2, 2);
-                c.NumeroDocumento = serie + correlativo.ToString("D8");
+                //var serie = (CorrelativosMast[0].Serie); 
+                //serie = serie.Substring(2, 2);
+                //c.NumeroDocumento = serie + correlativo.ToString("D8");
+                c.NumeroDocumento =   correlativo.ToString("D10");
             }
             else
             {

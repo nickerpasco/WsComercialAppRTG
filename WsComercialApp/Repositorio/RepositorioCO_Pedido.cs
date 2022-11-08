@@ -85,7 +85,7 @@ namespace WsComercialApp.Repositorio
             p.limit = bean.paginacion.limit;
             p.lstCabeceraPedidos = resul;
              
-            System.Diagnostics.Trace.WriteLine("TENEMOS QUE HABLAR");
+            Trace.WriteLine("PRUEBA LOG");
 
             return p;
 
