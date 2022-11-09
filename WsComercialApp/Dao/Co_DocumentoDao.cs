@@ -87,6 +87,8 @@ namespace WsComercialApp.Dao
                         response.CantidadLetras = 0;
                         response.DiasCredito = 0;
                         response.FechaBaseLetras = DateTime.Now;
+                        response.FechaMaxima = DateTime.Now;
+                        response.FechaBloj = DateTime.Now;
 
                         response.lstErrores.Add(error);
 
