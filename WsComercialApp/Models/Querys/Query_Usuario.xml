@@ -9,7 +9,7 @@
 	per.Persona as Persona , per.Direccion, vende.VentaEquipo,
 	Usuario as Usuario , u.Clave, u.Nombre, u.UsuarioPerfil, u.Estado, per.Nombres as PrimerNombre , em.CompaniaSocio
 	,(select count(*) as PuedeFacturar from SeguridadAutorizaciones where AplicacionCodigo='CO' and Grupo='SYSTEM' and Concepto='FACAPP' and  Usuario=@UserName) as PuedeFacturar,
-	,(select count(*) as PuedeFacturar from SeguridadAutorizaciones where AplicacionCodigo='CO' and Grupo='SYSTEM' and Concepto='LISFAP' and  Usuario=@UserName) as PuedeVerFacturas,
+	(select count(*) as PuedeFacturar from SeguridadAutorizaciones where AplicacionCodigo='CO' and Grupo='SYSTEM' and Concepto='LISFAP' and  Usuario=@UserName) as PuedeVerFacturas,
 	(select count(1) as PuedeCambiarPrecio from SeguridadAutorizaciones where AplicacionCodigo='CO' and Grupo='SYSTEM' and Concepto='EDITPE' and  Usuario=@UserName) as PuedeCambiarPrecio,
 	(select count(1) as PuedeHacerDescuento from SeguridadAutorizaciones where AplicacionCodigo='CO' and Grupo='SYSTEM' and Concepto='DESESC' and  Usuario=@UserName) as PuedeHacerDescuento,
 	(select count(1) as PuedeHacerDescuento from SeguridadAutorizaciones where AplicacionCodigo='CO' and Grupo='SYSTEM' and Concepto='GENSOL' and  Usuario=@UserName) as PuedeVerLetras,
