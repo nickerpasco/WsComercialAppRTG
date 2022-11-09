@@ -331,6 +331,9 @@ namespace WsComercialApp.Dao
             var IdUsuarioPersona = UtilsDAO.getValueInt(sqlString, parametros);
 
 
+            c.IdPersonaUsuario = IdUsuarioPersona;
+            c.FechaBaseLetras = DateTime.Now;
+
             var sqlString2 = UtilsGlobal.ConvertLinesSqlXml("Query_Usuario", " PersonaMast.getCentroCostosUser");
             List<SqlParameter> parametros2 = new List<SqlParameter>();
             parametros2.Add(new SqlParameter("@Persona", c.ClienteNumero));
