@@ -5,7 +5,7 @@
 <Usuario.GetAllParameters>
 
 
-	select     per.Busqueda, per.Telefono as Telefono   ,  per.Documento as Documento, per.FechaNacimiento as FechaNacimiento, em.CompaniaSocio as CompaniaSocio, em.Sucursal as Sucursal, em.UnidadNegocioAsignada ,
+	select   per.Persona  as IdPersonaUsuario,  per.Busqueda, per.Telefono as Telefono   ,  per.Documento as Documento, per.FechaNacimiento as FechaNacimiento, em.CompaniaSocio as CompaniaSocio, em.Sucursal as Sucursal, em.UnidadNegocioAsignada ,
 	per.Persona as Persona , per.Direccion, vende.VentaEquipo,
 	Usuario as Usuario , u.Clave, u.Nombre, u.UsuarioPerfil, u.Estado, per.Nombres as PrimerNombre , em.CompaniaSocio
 	,(select count(*) as PuedeFacturar from SeguridadAutorizaciones where AplicacionCodigo='CO' and Grupo='SYSTEM' and Concepto='FACAPP' and  Usuario=@UserName) as PuedeFacturar,
