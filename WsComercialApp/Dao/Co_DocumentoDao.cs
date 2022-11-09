@@ -84,6 +84,8 @@ namespace WsComercialApp.Dao
                         dbContextTransaction.Rollback();
 
                         response.IdPersonaUsuario = 0;
+                        response.CantidadLetras = 0;
+                        response.DiasCredito = 0;
                         response.FechaBaseLetras = DateTime.Now;
 
                         response.lstErrores.Add(error);
