@@ -247,6 +247,7 @@ namespace WsComercialApp.Models
         public string FormadePagoNueva { get; set; }
         public string Procedencia { get; set; }
         public DateTime? FechaMaxima { get; set; }
+        public DateTime? FechaBloj { get; set; }
         public int DiasDiferencias { get;   set; }
         public bool ValidacionDiasVencidoCanjeLetras { get;   set; }
     }
