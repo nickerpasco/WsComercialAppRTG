@@ -155,7 +155,7 @@
 
 		select
 		CO_DocumentoDetalle.Linea as Linea,
-		CompaniaMast.LogoFile as LogoCompania,
+		CO_TipoFacturacion.DescripcionLocal as LogoCompania,
 		CompaniaMast.DescripcionLarga as Nombre,
 		'RUC'+'-'+CompaniaMast.DocumentoFiscal as RUC,
 		dbo.MostrarTituloReporte(RTRIM(CompaniaMast.DireccionComun) + '-' + RTRIM(CompaniaMast.DireccionAdicional))  as Direccion, CompaniaMast.Telefono1 as Telefono, CompaniaMast.Telefono2 as Celular, CompaniaMast.paginaweb as Email, RTRIM(CO_Documento.NumeroDocumento)+'-'+CONVERT(char(10),YEAR(GETDATE())) as NumeroCotizacion,
@@ -203,7 +203,7 @@
 		where CO_Documento.CompaniaSocio =@CompaniaSocio and CO_Documento.TipoDocumento= @TipoDocumento and CO_Documento.NumeroDocumento =@NumeroDocumento
 		group by
 		CO_DocumentoDetalle.Linea,
-		CompaniaMast.LogoFile,
+			CO_TipoFacturacion.DescripcionLocal,
 		CompaniaMast.DescripcionLarga,
 		'RUC'+'-'+CompaniaMast.DocumentoFiscal,
 		dbo.MostrarTituloReporte(RTRIM(CompaniaMast.DireccionComun) + '-' + RTRIM(CompaniaMast.DireccionAdicional))  ,
