@@ -83,6 +83,9 @@ namespace WsComercialApp.Dao
 
                         dbContextTransaction.Rollback();
 
+                        response.IdPersonaUsuario = 0;
+                        response.FechaBaseLetras = DateTime.Now;
+
                         response.lstErrores.Add(error);
 
 
@@ -331,7 +334,9 @@ namespace WsComercialApp.Dao
             var IdUsuarioPersona = UtilsDAO.getValueInt(sqlString, parametros);
 
 
+            response.IdPersonaUsuario = IdUsuarioPersona;
             c.IdPersonaUsuario = IdUsuarioPersona;
+            response.FechaBaseLetras = DateTime.Now;
             c.FechaBaseLetras = DateTime.Now;
 
             var sqlString2 = UtilsGlobal.ConvertLinesSqlXml("Query_Usuario", " PersonaMast.getCentroCostosUser");
