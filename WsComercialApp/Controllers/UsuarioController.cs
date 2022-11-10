@@ -124,9 +124,8 @@ namespace WsComercialApp.Controllers
 
             return credito;
 
-        }  
-        
-        
+        }
+
         [HttpPost]
         [Route("api/Usuario/getValidarDiasPendientesFactura")]
         public ReponseStoreLetras getLineaCreditoCliente([FromBody] Model_CO_Documento bean)
@@ -134,6 +133,17 @@ namespace WsComercialApp.Controllers
             RepositorioUsuario usuario = new RepositorioUsuario();
 
             ReponseStoreLetras respuesta = usuario.getValidarDiasPendientesFactura(bean);
+
+            return respuesta;
+
+        }
+        [HttpPost]
+        [Route("api/Usuario/getDiasVencidoFacturas")]
+        public ReponseStoreLetras getDiasVencidoFacturas([FromBody] Model_CO_Documento bean)
+        {
+            RepositorioUsuario usuario = new RepositorioUsuario();
+
+            ReponseStoreLetras respuesta = usuario.getDiasVencidoFacturas(bean);
 
             return respuesta;
 

@@ -146,6 +146,24 @@ namespace WsComercialApp.Controllers
 
 
         }
+        
+        internal ReponseStoreLetras getDiasVencidoFacturas(Model_CO_Documento c)
+        {
+
+            //var sqlString4 = UtilsGlobal.ConvertLinesSqlXml("Query_Usuario", "PersonaMast.getDataValidacionDocumentosVencidos");
+            //List<SqlParameter> parametros4 = new List<SqlParameter>();
+            //parametros4.Add(new SqlParameter("@ClienteNumero", c.ClienteNumero));
+            //parametros4.Add(new SqlParameter("@CompaniaSocio", c.CompaniaSocio));
+
+            var sqlString4 = "execute usp_co_consulta_clte_moroso '" + c.CompaniaSocio + "', "+ c.ClienteNumero + "";
+
+             
+           ReponseStoreLetras obj2 = (ReponseStoreLetras)UtilsDAO.getDataByQuery<ReponseStoreLetras>(sqlString4).FirstOrDefault();
+
+            return obj2;
+
+
+        }
 
         internal string getDocumentoSUNAT(ModelUsuario bean)
         {

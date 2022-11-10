@@ -74,6 +74,7 @@ namespace WsComercialApp.Models
         public string VoucherAnulacion { get; set; }
         public string CentroCosto { get; set; }
         public bool ValidacionLineaCredito { get; set; }
+        public bool ValidacionFacturasVencidas { get; set; }
         public string Proyecto { get; set; }
         public string CampoReferencia { get; set; }
         public string Sucursal { get; set; }

@@ -126,7 +126,7 @@
 
 		select 'TIPOPAGO' as CodigoTabla , TRIM(TipoPago) as CodigoElemento , DescripcionLocal as DescripcionLocal , 1  AS ValorDecimal ,'' as ValorCadena , '' AS ValorCadena2    from CO_TipoPago where  Estado = 'A'
 		UNION   select 'TIPODOCUMENTOS' as CodigoTabla , TRIM(TipoDocumento) as CodigoElemento , DescripcionLocal as DescripcionLocal , 1  AS ValorDecimal , '' as ValorCadena , '' AS ValorCadena2    from CO_TipoDocumento where  Estado = 'A'
-		UNION   SELECT 'FORMAPAGO' AS CodigoTabla, TRIM(FormadePago) as CodigoElemento , Descripcion as DescripcionLocal , 1  AS ValorDecimal ,CreditoFlag as ValorCadena , '' AS ValorCadena2  FROM MA_FormadePago
+		UNION   SELECT 'FORMAPAGO' AS CodigoTabla, TRIM(FormadePago) as CodigoElemento , Descripcion as DescripcionLocal , 1  AS ValorDecimal ,CreditoFlag as ValorCadena , '' AS ValorCadena2  FROM MA_FormadePago  where  Estado = 'A'
 		UNION SELECT 'IGVVALOR' AS CodigoTabla , 'CODE' AS CodigoElemento , IMPUESTOS.Descripcion as DescripcionLocal , IMPUESTOS.FactorPorcentaje   AS ValorDecimal ,ParametrosMast.Texto as ValorCadena , '' AS ValorCadena2  FROM ParametrosMast INNER JOIN IMPUESTOS ON ParametrosMast.Texto =   IMPUESTOS.Impuesto WHERE ParametrosMast.ParametroClave = 'IGVCODE' AND ParametrosMast.AplicacionCodigo='CO'
 		--UNION	 select 'DEPARTAMENTOS' AS CodigoTabla, TRIM(Departamento) as CodigoElemento,RTRIM(DescripcionCorta) as DescripcionLocal  , 1  AS ValorDecimal , '404' as ValorCadena , '' AS ValorCadena2  from Departamento
 		--UNION select 'PROVINCIAS' AS CodigoTabla, TRIM(Departamento) as CodigoElemento,RTRIM(DescripcionCorta) as DescripcionLocal ,1  AS ValorDecimal ,RTRIM(Provincia)  AS ValorCadena , '' AS ValorCadena2  from Provincia --where Departamento = '24'

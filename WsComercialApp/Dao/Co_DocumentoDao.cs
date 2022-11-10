@@ -429,23 +429,30 @@ namespace WsComercialApp.Dao
                     return response;
                 }
 
-                var getNumerosFechaVencimiento = context.MA_FormadePagoDetalle.SingleOrDefault(t => t.FormadePago == c.FormadePago);
-
-                if (getNumerosFechaVencimiento != null)
+                if (c.CreditoFlag == "S")
                 {
-                    int value = 0;
-                    int? numeroDias = getNumerosFechaVencimiento.NumeroDias;
-                    if (numeroDias != 0)
-                    {
-                        value = Convert.ToInt32(numeroDias);
-                    }
+                    var getNumerosFechaVencimiento = context.MA_FormadePagoDetalle.SingleOrDefault(t => t.FormadePago == c.FormadePago);
 
-                    c.FechaVencimiento = DateTime.Now.AddDays(value);
+                    if (getNumerosFechaVencimiento != null)
+                    {
+                        int value = 0;
+                        int? numeroDias = getNumerosFechaVencimiento.NumeroDias;
+                        if (numeroDias != 0)
+                        {
+                            value = Convert.ToInt32(numeroDias);
+                        }
+
+                        c.FechaVencimiento = DateTime.Now.AddDays(value);
+                    }
+                    else
+                    {
+                        c.FechaVencimiento = null;
+                    }
                 }
                 else
                 {
                     c.FechaVencimiento = null;
-                }
+                } 
 
 
                 var Otabla = new CO_Documento();
@@ -580,6 +587,12 @@ namespace WsComercialApp.Dao
                 {
                     Otabla.Estado = "PR";
                     Otabla.TipoMotivo = "97";
+                }  
+                
+                if (!c.ValidacionFacturasVencidas)
+                {
+                    Otabla.Estado = "PR";
+                    Otabla.TipoMotivo = "93";
                 }
 
                 if (c.ValidacionDiasVencidoCanjeLetras)
