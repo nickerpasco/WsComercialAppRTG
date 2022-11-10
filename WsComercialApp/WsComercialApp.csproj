@@ -266,6 +266,7 @@
     <Compile Include="fonts\Usuario.cs">
       <DependentUpon>BdEntityGenerico.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Model_Motivos.cs" />
     <Compile Include="Models\DescuentoModel.cs" />
     <Compile Include="Models\DetalleFacturasLinea.cs" />
     <Compile Include="Models\InfoCliente_LCredito.cs" />

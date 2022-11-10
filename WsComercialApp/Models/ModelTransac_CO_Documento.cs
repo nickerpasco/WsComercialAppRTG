@@ -237,7 +237,8 @@ namespace WsComercialApp.Models
         public List<ModelTransac_CO_DocumentoDetalle> LstBLogs { get; set; }
 
         public List<ErrorObj> lstErrores = new List<ErrorObj>();
-
+        public List<Model_Motivos> lstMotivos = new List<Model_Motivos>();
+      
         public List<Model_CoDocumentoImpuesto> DetalleImpuestos { get; set; }
 
 

@@ -6,6 +6,7 @@ using System.Data.Entity.Validation;
 using System.Data.SqlClient;
 using System.Globalization;
 using System.Linq;
+using System.Text;
 using System.Web;
 using WsComercialApp.fonts;
 using WsComercialApp.Models; 
@@ -596,7 +597,44 @@ namespace WsComercialApp.Dao
                     Otabla.Estado = "AP";
                 }
 
-               
+
+                ///VALIDAR STATUS 
+                ///
+
+                List<Model_Motivos> lstMotivos = c.lstMotivos;
+
+                if (lstMotivos.Count > 0)
+                {
+                    StringBuilder cuerpo = new StringBuilder();
+                    foreach (var item in lstMotivos)
+                    {
+                        
+
+                        cuerpo.Append("('" + item + "'),");
+
+                       
+                    }
+                    String Ver = cuerpo.ToString();
+                    int charcan = (Ver.Length - 1);
+                    String queryRealIn = Ver.Substring(0, charcan);
+
+                    var realQuery = UtilsGlobal.ConvertLinesSqlXml("Query_CO_Pedido", "Co_Documento.getReglasPrioridadesMotivos");
+
+                    String queryArmado = realQuery + " and valorcodigo in(" + queryRealIn + ")" + " order by Numero01";
+
+                    var LstReglas = UtilsDAO.getDataByQuery<Model_Motivos>(realQuery);
+
+                    var ReglaPrioridad = LstReglas.FirstOrDefault();
+
+                    Otabla.TipoMotivo = ReglaPrioridad.CodigoMotivo;
+                    Otabla.Estado = "PR";
+
+
+
+
+                }
+
+
                 Otabla.MontoPercepcion = c.MontoPercepcion;
                 Otabla.flagnuevaversion = "S";
                 Otabla.DetraccionCodigo = null;

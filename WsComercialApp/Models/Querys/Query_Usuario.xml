@@ -113,6 +113,7 @@
 
 		select CompaniaCodigo,AplicacionCodigo,RTRIM(ParametroClave) AS ParametroClave,TipodeDatoFlag,Numero,Texto,Fecha,Texto1,Texto2,DescripcionParametro, Estado,Explicacion   from ParametrosMast   where FlagMovil = 'S'
 		union  select CompaniaCodigo,AplicacionCodigo,RTRIM(ParametroClave) AS ParametroClave,TipodeDatoFlag,Numero,Texto,Fecha,Texto1,Texto2,DescripcionParametro, Estado,Explicacion   from ParametrosMast  where AplicacionCodigo='CO' and ParametroClave='CURRENCY' and CompaniaCodigo='999999'
+		union  select CompaniaCodigo,AplicacionCodigo,RTRIM(ParametroClave) AS ParametroClave,TipodeDatoFlag,Numero,Texto,Fecha,Texto1,Texto2,DescripcionParametro, Estado,Explicacion   from ParametrosMast  where AplicacionCodigo='CO' and ParametroClave='VALTIPOFAC' and CompaniaCodigo='999999'
 		union  select CompaniaCodigo,AplicacionCodigo,RTRIM(ParametroClave) AS ParametroClave,TipodeDatoFlag,Numero,Texto,Fecha,Texto1,Texto2,DescripcionParametro, Estado,Explicacion   from ParametrosMast  where AplicacionCodigo='CO' and ParametroClave='VNTRPD-FPA' and CompaniaCodigo='999999'
 		union  select CompaniaCodigo,AplicacionCodigo,RTRIM(ParametroClave) AS ParametroClave,TipodeDatoFlag,Numero,Texto,Fecha,Texto1,Texto2,DescripcionParametro, Estado,Explicacion   from ParametrosMast  where AplicacionCodigo='CO' and ParametroClave='RECOJODEF' and CompaniaCodigo=@Compania
 		union select '','','TIPOVENTA','T',0, tipoventa as Texto,null,null,null,null,null,null from CO_Vendedor where Vendedor=@Persona

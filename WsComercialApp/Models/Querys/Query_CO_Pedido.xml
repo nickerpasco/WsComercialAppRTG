@@ -68,7 +68,14 @@
 			LEFT join FT_Vehiculo ft on ft.IdTransportista=pedido.TransportistaProvincia
 
 
-		</Co_Documento.Cabecera>
+		</Co_Documento.Cabecera>	
+			
+			
+			<Co_Documento.getReglasPrioridadesMotivos>
+ SELECT Numero01 as Prioridad,ValorCodigo as CodigoMotivo, DescripcionLocal as MotivoDescripcion FROM MA_MaestroMiscelaneoDetalle 
+where AplicacionCodigo='CO' and MaestroCodigo='PEDMOTIVO'  
+
+		</Co_Documento.getReglasPrioridadesMotivos>
 
 
 	<Co_Documento.CabeceraComprobante>
