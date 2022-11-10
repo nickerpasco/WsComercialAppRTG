@@ -556,10 +556,44 @@ namespace WsComercialApp.Dao
                 if (c.CreditoFlag=="S")
                 {
                     Otabla.FechaVencimientoOriginal = UtilsDAO.getValueDatetime("select GETDATE()+MA_FormadePagoDetalle.NumeroDias from MA_FormadePago inner join MA_FormadePagoDetalle on MA_FormadePago.FormadePago=MA_FormadePagoDetalle.FormadePago where MA_FormadePago.FormadePago='"+c.FormadePago+"' and MA_FormadePAgo.CreditoFlag='S'", null);
+
+
+                    if (!c.ValidacionLineaCredito)
+                    {
+                        Otabla.Estado = "PR";
+                        Otabla.TipoMotivo = "97";
+                    }
+
+                    if (!c.ValidacionFacturasVencidas)
+                    {
+                        Otabla.Estado = "PR";
+                        Otabla.TipoMotivo = "93";
+                    }
+
+                    if (c.ValidacionDiasVencidoCanjeLetras)
+                    {
+                        Otabla.Estado = "PR";
+                        Otabla.TipoMotivo = "92";
+                    }
+
+
+
+                    if (c.FormadePagoNuevaFlagCedito == "S" && c.FormadePagoAntiguaFlagCedito == "S")
+                    {
+                        var DiasCreditoAntigua = UtilsDAO.getValueIntOnly("select MAX(MA_FormadePagoDetalle.NumeroDias) from MA_FormadePago,MA_FormadePagoDetalle where MA_FormadePago.FormadePago=MA_FormadePagoDetalle.FormadePago and MA_FormadePago.FormadePago='" + c.FormadePagoAntigua + "' "); ;
+                        var DiasCreditoNueva = UtilsDAO.getValueIntOnly("select MAX(MA_FormadePagoDetalle.NumeroDias) from MA_FormadePago,MA_FormadePagoDetalle where MA_FormadePago.FormadePago=MA_FormadePagoDetalle.FormadePago and MA_FormadePago.FormadePago='" + c.FormadePagoNueva + "' "); ;
+
+                        if (DiasCreditoNueva > DiasCreditoAntigua)
+                        {
+                            Otabla.Estado = "PR";
+                            Otabla.TipoMotivo = "99";
+                        }
+                    }
                 }
                 else
                 {
                     Otabla.FechaVencimientoOriginal = DateTime.Now;
+                    Otabla.Estado = "AP";
                 }
 
                
@@ -583,45 +617,8 @@ namespace WsComercialApp.Dao
                 Otabla.CentroCosto = c.CentroCosto;
                 Otabla.TransportistaProvincia = c.TransportistaProvincia;
 
-                if (!c.ValidacionLineaCredito)
-                {
-                    Otabla.Estado = "PR";
-                    Otabla.TipoMotivo = "97";
-                }  
                 
-                if (!c.ValidacionFacturasVencidas)
-                {
-                    Otabla.Estado = "PR";
-                    Otabla.TipoMotivo = "93";
-                }
-
-                if (c.ValidacionDiasVencidoCanjeLetras)
-                {
-                    Otabla.Estado = "PR";
-                    Otabla.TipoMotivo = "92";
-                }
-
-                
-
-                if (c.FormadePagoNuevaFlagCedito =="S" && c.FormadePagoAntiguaFlagCedito == "S")
-                {
-
-                    var DiasCreditoAntigua =  UtilsDAO.getValueIntOnly("select MAX(MA_FormadePagoDetalle.NumeroDias) from MA_FormadePago,MA_FormadePagoDetalle where MA_FormadePago.FormadePago=MA_FormadePagoDetalle.FormadePago and MA_FormadePago.FormadePago='"+c.FormadePagoAntigua+"' "); ;
-                    var DiasCreditoNueva =  UtilsDAO.getValueIntOnly("select MAX(MA_FormadePagoDetalle.NumeroDias) from MA_FormadePago,MA_FormadePagoDetalle where MA_FormadePago.FormadePago=MA_FormadePagoDetalle.FormadePago and MA_FormadePago.FormadePago='"+c.FormadePagoNueva+"' "); ;
-
-                    if(DiasCreditoNueva> DiasCreditoAntigua)
-                    {
-                        Otabla.Estado = "PR";
-                        Otabla.TipoMotivo = "99";
-                    }
-
-                }
-
-
                 Otabla.ClienteDireccionSecuencia = Otabla.ClienteDireccionDespacho;
-
-
-
 
                 context.CO_Documento.Add(Otabla);
                 context.SaveChanges();
