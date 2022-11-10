@@ -125,6 +125,7 @@
 	<Usuario.getMiscelaneos>
 
 		select 'TIPOPAGO' as CodigoTabla , TRIM(TipoPago) as CodigoElemento , DescripcionLocal as DescripcionLocal , 1  AS ValorDecimal ,'' as ValorCadena , '' AS ValorCadena2    from CO_TipoPago where  Estado = 'A'
+		UNION   select 'TIPOFACTURACION' as CodigoTabla , TRIM(TipoFacturacion) as CodigoElemento , DescripcionLocal as DescripcionLocal , 1  AS ValorDecimal , '' as ValorCadena , '' AS ValorCadena2    from CO_TipoFacturacion where  Estado = 'A'
 		UNION   select 'TIPODOCUMENTOS' as CodigoTabla , TRIM(TipoDocumento) as CodigoElemento , DescripcionLocal as DescripcionLocal , 1  AS ValorDecimal , '' as ValorCadena , '' AS ValorCadena2    from CO_TipoDocumento where  Estado = 'A'
 		UNION   SELECT 'FORMAPAGO' AS CodigoTabla, TRIM(FormadePago) as CodigoElemento , Descripcion as DescripcionLocal , 1  AS ValorDecimal ,CreditoFlag as ValorCadena , '' AS ValorCadena2  FROM MA_FormadePago  where  Estado = 'A'
 		UNION SELECT 'IGVVALOR' AS CodigoTabla , 'CODE' AS CodigoElemento , IMPUESTOS.Descripcion as DescripcionLocal , IMPUESTOS.FactorPorcentaje   AS ValorDecimal ,ParametrosMast.Texto as ValorCadena , '' AS ValorCadena2  FROM ParametrosMast INNER JOIN IMPUESTOS ON ParametrosMast.Texto =   IMPUESTOS.Impuesto WHERE ParametrosMast.ParametroClave = 'IGVCODE' AND ParametrosMast.AplicacionCodigo='CO'
