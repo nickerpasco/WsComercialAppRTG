@@ -123,7 +123,7 @@ namespace WsComercialApp.Controllers
 
             return lstMicelaneo;
         }
-
+        //api peru 150 anuales --> 50000 peticiones // ruc, sunat , reniec
 
         [HttpPost]
         [Route("api/getMiscelaneosUbigeo")]

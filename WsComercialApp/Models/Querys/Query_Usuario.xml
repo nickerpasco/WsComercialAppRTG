@@ -367,7 +367,7 @@ MA_FormadePago.CreditoFlag = 'S'
 	
 	 
 		 
-SELECT CO_Documento.TipoDocumento+CO_Documento.NumeroDocumento as NumeroDocumento, 
+SELECT CO_Documento.LetraNumeroUnico, CO_Documento.TipoDocumento+CO_Documento.NumeroDocumento as NumeroDocumento, 
 CASE CO_Documento.MonedaDocumento
 		When 'LO' Then 'S/ ' +  FORMAT(CO_Documento.MontoTotal, '#,##0.00')
 		When 'EX' Then '$ ' +FORMAT(CO_Documento.MontoTotal, '#,##0.00')
