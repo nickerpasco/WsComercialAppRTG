@@ -610,7 +610,7 @@ namespace WsComercialApp.Dao
                     {
                         
 
-                        cuerpo.Append("('" + item + "'),");
+                        cuerpo.Append("'" + item.CodigoMotivo + "',");
 
                        
                     }
@@ -622,11 +622,11 @@ namespace WsComercialApp.Dao
 
                     String queryArmado = realQuery + " and valorcodigo in(" + queryRealIn + ")" + " order by Numero01";
 
-                    var LstReglas = UtilsDAO.getDataByQuery<Model_Motivos>(realQuery);
+                    var LstReglas = UtilsDAO.getDataByQuery<Model_Motivos>(queryArmado);
 
                     var ReglaPrioridad = LstReglas.FirstOrDefault();
 
-                    Otabla.TipoMotivo = ReglaPrioridad.CodigoMotivo;
+                    Otabla.TipoMotivo = ReglaPrioridad.CodigoMotivo.Trim();
                     Otabla.Estado = "PR";
 
 
@@ -639,7 +639,7 @@ namespace WsComercialApp.Dao
                 Otabla.flagnuevaversion = "S";
                 Otabla.DetraccionCodigo = null;
                 Otabla.DetraccionMontoLocal = null;
-                Otabla.TipoMotivo = null;
+                //Otabla.TipoMotivo = null;
                 Otabla.FechaOrdenCompra = c.FechaOrdenCompra;
                 Otabla.FechaRecepcion = c.FechaRecepcion;
                 Otabla.FechaRecepcionADV = c.FechaRecepcionADV;

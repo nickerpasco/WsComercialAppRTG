@@ -9,6 +9,7 @@ namespace WsComercialApp.Models
     {
         public int Persona { get; set; }
         public string Busqueda { get; set; }
+        public string SuspensionFlag { get; set; }
         public string ComentarioPersona { get; set; }
         public string TipoFacturacionNoAfectoFlag { get; set; }
         public string Departamento { get; set; }

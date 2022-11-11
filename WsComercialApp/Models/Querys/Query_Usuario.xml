@@ -192,7 +192,11 @@
 
 
 
-		select isnull(tipo.NoAfectoFlag,'N') as TipoFacturacionNoAfectoFlag, Telefono, CorreoElectronico,
+		select
+
+		cli.SuspensionFlag,
+
+		isnull(tipo.NoAfectoFlag,'N') as TipoFacturacionNoAfectoFlag, Telefono, CorreoElectronico,
 		Persona, TRIM(Busqueda) as Busqueda , TRIM(PersonaMast.Departamento) as Departamento,TRIM(PersonaMast.Provincia) as Provincia,TRIM(PersonaMast.CodigoPostal) as CodigoPostal,TRIM(TipoPersona) as TipoPersona,TRIM(EsCliente) as EsCliente,TRIM(EsProveedor) as EsProveedor,TRIM(EsEmpleado) as EsEmpleado,
 		TRIM(PersonaMast.TipoDocumento) as TipoDocumentoPersona,TRIM(cli.TipoDocumento) as TipoDocumento,TRIM(cli.TipoCliente) as TipoCliente, TRIM(cli.CentroCosto) as CentroCosto , TRIM(cli.TipoFacturacion) as TipoFacturacion,
 		isnull((select formadepago from CO_LineaCredito where ClienteNumero=cli.Cliente and estado='A'),cli.FormadePago) as FormadePago,
