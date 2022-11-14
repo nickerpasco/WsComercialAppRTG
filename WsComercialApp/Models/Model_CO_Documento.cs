@@ -96,5 +96,14 @@ namespace WsComercialApp.Models
 
 		public string LabelMes { get; set; }
 		public string LabelHora { get; set; }
+
+
+		public string Asignado { get; set; }
+		public string Procesado { get; set; }
+		public string Completado { get; set; }
+		public string AsignadoPersona { get; set; }
+		public string FechaAsignacion { get; set; }
+		public string FechaConfirmacion	 { get; set; }
+		public string FechaFacturacion { get; set; }
 	}
 }

@@ -6,7 +6,29 @@
 	  
 		<Co_Documento.Cabecera>
 
-			select isnull(tipofacturacion.NoAfectoFlag,'N') as TipoFacturacionNoAfectoFlag,
+			select
+
+			(Select Max(Concepto)
+			from CO_DocumentoProduccion p
+			where p.CompaniaSocio = pedido.CompaniaSocio and p.TipoDocumento = pedido.TipoDocumento and p.NumeroDocumento = pedido.NumeroDocumento
+			and p.estado='CO' and p.concepto='ASSIGN') as Asignado,
+
+			(Select Max(distinct Case Concepto when 'PROCESS' then 'PROCESS' when 'OBSERV' then 'OBSERV' else '' end)
+			from CO_DocumentoProduccion p
+			where p.CompaniaSocio = pedido.CompaniaSocio and p.TipoDocumento = pedido.TipoDocumento and p.NumeroDocumento = pedido.NumeroDocumento
+			and p.estado='CO') as Procesado,
+
+			Case when pedido.Estado='FA' then 'COMPLET' else '' end as Completado,
+
+			AsignadoA.NombreCompleto AsignadoPersona,
+			FORMAT(CR_OrdenDistribucion.Fechaprogramada ,'dd/mm/yyy hh:mm tt')  AS FechaAsignacion,
+			ProcesadoPor.NombreCompleto as ConfirmadoPor,
+			FORMAT(CR_OrdenDistribucion.fechaconfirmacion ,'dd/mm/yyy hh:mm tt')  AS FechaConfirmacion,
+			Facturador.NombreCompleto as  FacturadoPor,
+			FORMAT(Comprobante.FechaDocumento ,'dd/mm/yyy hh:mm tt')  AS FechaFacturacion,
+
+
+			isnull(tipofacturacion.NoAfectoFlag,'N') as TipoFacturacionNoAfectoFlag,
 			pedido.FechaDocumento as  FechaDocumentoDate,
 			pedido.TransportistaProvincia,
 			ft.TransportistaDescripcion as TransportistaProvinciaDescripcion,
@@ -41,11 +63,11 @@
 			FORMAT(pedido.FechaDocumento,'hh:mm tt')  AS LabelHora,
 			pedido.CodigoQR,
 			pedido.TipoVenta, cliente.TipoDocumento as TipoDocumentoPedidoCLiente,
-			pedido.Vendedor ,pedido.CompaniaSocio, pedido.TipoDocumento , pedido.NumeroDocumento , ClienteNumero, ClienteRUC, TRIM(ClienteNombre) AS ClienteNombre ,
-			pedido.EstablecimientoCodigo,	convert(varchar(20),pedido.FechaDocumento,103)  +' '+convert(varchar(20),pedido.FechaDocumento,108) as FechaDocumento, MontoTotal,MontoAfecto,MontoNoAfecto,pedido.MontoFlete,MontoImpuestos,MontoImpuestoVentas,
-			ClienteDireccion,pedido.Vendedor,pedido.ClienteDireccionDespacho,ClienteReferencia , TipodeCambio, pedido.TipoFacturacion, ISNULL(formapago.CreditoFlag,'N')  as CreditoFlag  , formapago.Descripcion as FormaPagoDescripcion  , tdoc.DescripcionLocal as TipoDocumentoDescripcion,
-			pedido.FormadePago as FormadePago, MonedaDocumento,pedido.FormaFacturacion,pedido.ConceptoFacturacion,cliente.TipoCliente, RecojoFlag, ruta.Descripcion as RutaDespachoDescripcion ,
-			CanalVenta,convert(varchar(20),pedido.ComercialPedidoFechaRequerida,103)  +' '+convert(varchar(20),pedido.ComercialPedidoFechaRequerida,108) as ComercialPedidoFechaRequeridaString  , pedido.Estado , convert(varchar(20),pedido.FechaVencimiento,103)  as   FechaVencimiento, MontoDescuentos, pedido.RutaDespacho , pedido.TipoDocumento , cotipo.DescripcionLocal as TipoDocumentoVentaDescripcion  ,
+			pedido.Vendedor ,pedido.CompaniaSocio, pedido.TipoDocumento , pedido.NumeroDocumento ,pedido. ClienteNumero, pedido.ClienteRUC, TRIM(pedido.ClienteNombre) AS ClienteNombre ,
+			pedido.EstablecimientoCodigo,	convert(varchar(20),pedido.FechaDocumento,103)  +' '+convert(varchar(20),pedido.FechaDocumento,108) as FechaDocumento, pedido.MontoTotal,pedido.MontoAfecto,pedido.MontoNoAfecto,pedido.MontoFlete,pedido.MontoImpuestos,pedido.MontoImpuestoVentas,
+			pedido.ClienteDireccion,pedido.Vendedor,pedido.ClienteDireccionDespacho,pedido.ClienteReferencia , pedido.TipodeCambio, pedido.TipoFacturacion, ISNULL(formapago.CreditoFlag,'N')  as CreditoFlag  , formapago.Descripcion as FormaPagoDescripcion  , tdoc.DescripcionLocal as TipoDocumentoDescripcion,
+			pedido.FormadePago as FormadePago, pedido.MonedaDocumento,pedido.FormaFacturacion,pedido.ConceptoFacturacion,cliente.TipoCliente, pedido.RecojoFlag, ruta.Descripcion as RutaDespachoDescripcion ,
+			pedido.CanalVenta,convert(varchar(20),pedido.ComercialPedidoFechaRequerida,103)  +' '+convert(varchar(20),pedido.ComercialPedidoFechaRequerida,108) as ComercialPedidoFechaRequeridaString  , pedido.Estado , convert(varchar(20),pedido.FechaVencimiento,103)  as   FechaVencimiento,pedido. MontoDescuentos, pedido.RutaDespacho , pedido.TipoDocumento , cotipo.DescripcionLocal as TipoDocumentoVentaDescripcion  ,
 			cli.ApellidoPaterno ,cli.ApellidoMaterno, convert(varchar(20), cli.FechaNacimiento,103)  +' '+convert(varchar(20), cli.FechaNacimiento,108) as FechaNacimiento  ,cli.Telefono,cli.Direccion,cli.DireccionReferencia,cli.DocumentoFiscal,cli.Documento,cli.Nombres, cli.CorreoElectronico,
 			contacto.ApellidoPaterno as ApellidoPaternoContacto  ,contacto.ApellidoMaterno ApellidoMaternoContacto, contacto.Nombres NombreContacto , ISNULL(contacto.Telefono, contacto.Celular)   as TelefonoContacto ,   contacto.TipoDocumento as TipoDocumentoPersona,
 			contacto.Direccion as DireccionContacto , contacto.Busqueda as NombresCompletoContacto , convert(varchar(20), contacto.FechaNacimiento,103)  +' '+convert(varchar(20), contacto.FechaNacimiento,108) as FechaNacimientoContacto     , contacto.DocumentoFiscal as DocumentoFiscalContacto
@@ -66,6 +88,25 @@
 			LEFT join CompaniaMast com on com.CompaniaCodigo = SUBSTRING(pedido.CompaniaSocio,1,6)
 			LEFT join CO_TipoDocumento on pedido.TipoDocumento=CO_TipoDocumento.TipoDocumento
 			LEFT join FT_Vehiculo ft on ft.IdTransportista=pedido.TransportistaProvincia
+
+			left join CR_OrdenDistribucionDetalle on
+			pedido.CompaniaSocio = CR_OrdenDistribucionDetalle.CompaniaSocio and
+			pedido.TipoDocumento = CR_OrdenDistribucionDetalle.TipoDocumentoOrig and
+			pedido.NumeroDocumento = CR_OrdenDistribucionDetalle.PedidoCotizacionOrig
+			left join CR_OrdenDistribucion on
+			CR_OrdenDistribucionDetalle.CompaniaSocio = CR_OrdenDistribucion.CompaniaSocio and
+			CR_OrdenDistribucionDetalle.Ordendistribucion = CR_OrdenDistribucion.Ordendistribucion
+			left join PersonaMast AsignadoA on
+			CR_OrdenDistribucion.PreparadoPor = AsignadoA.Persona
+			left join PersonaMast ProcesadoPor on
+			CR_OrdenDistribucion.Usuarioaprobacion = ProcesadoPor.Persona
+			left join CO_Documento Comprobante on
+			pedido.CompaniaSocio = Comprobante.CompaniaSocio and
+			SUBSTRING(pedido.ComercialPedidoNumero,1,2)=Comprobante.TipoDocumento and
+			SUBSTRING(pedido.ComercialPedidoNumero,3,12)=Comprobante.NumeroDocumento
+			left join PersonaMast Facturador on
+			Comprobante.PreparadoPor = Facturador.Persona
+
 
 
 		</Co_Documento.Cabecera>	
