@@ -402,6 +402,9 @@ and ( VW_CO_DescuentoEscalaVigente.monto <= @Cantidad and VW_CO_DescuentoEscalaV
 
 
 	</Miscelaneos.getTipoCambios>
+	
+	
+	
 
 	<Co_Documento.Detalle>
 

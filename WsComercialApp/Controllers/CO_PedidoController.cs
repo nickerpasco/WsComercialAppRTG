@@ -114,6 +114,8 @@ namespace WsComercialApp.Controllers
 
         }
 
+        
+
         [Route("api/getTipoCambio")]
         public List<ModelMiscelaneos> getTipoCambio()
         {

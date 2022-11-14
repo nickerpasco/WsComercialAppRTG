@@ -96,7 +96,8 @@ namespace WsComercialApp.Repositorio
             var sqlquery = UtilsGlobal.ConvertLinesSqlXml("Query_CO_Pedido", "Miscelaneos.getTipoCambios");
             var ls = UtilsDAO.getDataByQuery<ModelMiscelaneos>(sqlquery);
             return ls;
-        }
+        }   
+       
 
         internal List<Model_CO_DocumentoDetalle> getDataDetalle(FiltroGenerico bean)
         {
