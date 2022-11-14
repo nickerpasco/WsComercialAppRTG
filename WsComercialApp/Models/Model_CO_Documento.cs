@@ -102,6 +102,8 @@ namespace WsComercialApp.Models
 		public string Procesado { get; set; }
 		public string Completado { get; set; }
 		public string AsignadoPersona { get; set; }
+		public string ConfirmadoPor { get; set; }
+		public string FacturadoPor { get; set; }
 		public string FechaAsignacion { get; set; }
 		public string FechaConfirmacion	 { get; set; }
 		public string FechaFacturacion { get; set; }
