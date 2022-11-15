@@ -11,6 +11,7 @@ namespace WsComercialApp.Models
 		public string CompaniaSocio { get; set; }
 		public string TipoDocumento { get; set; }
 		public string NumeroDocumento { get; set; }
+		public string FlagEnEspera { get; set; }
 		public int? ClienteNumero { get; set; }
 		public string ClienteRUC { get; set; }
 		public string TipoFacturacionNoAfectoFlag { get; set; }
@@ -101,6 +102,9 @@ namespace WsComercialApp.Models
 		public string Asignado { get; set; }
 		public string Procesado { get; set; }
 		public string Completado { get; set; }
+		public string Observado { get; set; }
+		public string ObservadoPor { get; set; }
+		public string FechaObservacion { get; set; }
 		public string AsignadoPersona { get; set; }
 		public string ConfirmadoPor { get; set; }
 		public string FacturadoPor { get; set; }
