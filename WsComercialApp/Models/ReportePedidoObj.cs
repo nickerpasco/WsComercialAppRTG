@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 
 namespace WsComercialApp.Models
-{
+{ 
     public class ReportePedidoObj
     {
 		public string LogoCompania { get; set; }
