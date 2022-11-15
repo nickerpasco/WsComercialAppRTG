@@ -7,9 +7,9 @@ using System.Data.SqlClient;
 using System.Globalization;
 using System.Linq;
 using System.Text;
-using System.Web;
-using WsComercialApp.fonts;
-using WsComercialApp.Models; 
+using System.Web; 
+using WsComercialApp.Models;
+using WsComercialApp.Models.Bd;
 using WsComercialApp.Repositorio;
 using WsComercialApp.Utils;
 
@@ -462,6 +462,7 @@ namespace WsComercialApp.Dao
                 c.CentroCosto = FuncPrinc.trimValor(CentroCostosUsuario);
                 Otabla.CompaniaSocio = c.CompaniaSocio;
                 Otabla.TipoDocumento = c.TipoDocumento;
+                Otabla.FlagEnEspera = c.FlagEnEspera;
                 Otabla.NumeroDocumento = c.NumeroDocumento;
                 Otabla.EstablecimientoCodigo = c.EstablecimientoCodigo;
                 Otabla.FechaDocumento = DateTime.Now;//c.FechaDocumento;
@@ -1394,7 +1395,8 @@ namespace WsComercialApp.Dao
                     Otabla.FormadePago = c.FormadePago;
                     Otabla.RecojoFlag = c.RecojoFlag;
                     Otabla.MonedaDocumento = c.MonedaDocumento;
-
+                    Otabla.FlagEnEspera = c.FlagEnEspera;
+                    Otabla.TipoFacturacion = c.TipoFacturacion;
                     Otabla.TransportistaProvincia = c.TransportistaProvincia;
                     Otabla.Comentarios = c.Comentarios;
 

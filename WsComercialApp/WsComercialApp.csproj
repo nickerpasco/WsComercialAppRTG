@@ -200,70 +200,70 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AgenciasModel.cs" />
-    <Compile Include="fonts\BdEntityGenerico.Context.cs">
+    <Compile Include="Models\Bd\BdEntityGenerico.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>BdEntityGenerico.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="fonts\BdEntityGenerico.cs">
+    <Compile Include="Models\Bd\BdEntityGenerico.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>BdEntityGenerico.tt</DependentUpon>
     </Compile>
-    <Compile Include="fonts\BdEntityGenerico.Designer.cs">
+    <Compile Include="Models\Bd\BdEntityGenerico.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>BdEntityGenerico.edmx</DependentUpon>
     </Compile>
-    <Compile Include="fonts\ClienteMast.cs">
+    <Compile Include="Models\Bd\ClienteMast.cs">
       <DependentUpon>BdEntityGenerico.tt</DependentUpon>
     </Compile>
-    <Compile Include="fonts\CorrelativosMast.cs">
+    <Compile Include="Models\Bd\CorrelativosMast.cs">
       <DependentUpon>BdEntityGenerico.tt</DependentUpon>
     </Compile>
-    <Compile Include="fonts\CO_Documento.cs">
+    <Compile Include="Models\Bd\CO_Documento.cs">
       <DependentUpon>BdEntityGenerico.tt</DependentUpon>
     </Compile>
-    <Compile Include="fonts\CO_DocumentoDespacho.cs">
+    <Compile Include="Models\Bd\CO_DocumentoDespacho.cs">
       <DependentUpon>BdEntityGenerico.tt</DependentUpon>
     </Compile>
-    <Compile Include="fonts\CO_DocumentoDetalle.cs">
+    <Compile Include="Models\Bd\CO_DocumentoDetalle.cs">
       <DependentUpon>BdEntityGenerico.tt</DependentUpon>
     </Compile>
-    <Compile Include="fonts\CO_DocumentoDetalleDespacho.cs">
+    <Compile Include="Models\Bd\CO_DocumentoDetalleDespacho.cs">
       <DependentUpon>BdEntityGenerico.tt</DependentUpon>
     </Compile>
-    <Compile Include="fonts\CO_DocumentoImpuesto.cs">
+    <Compile Include="Models\Bd\CO_DocumentoImpuesto.cs">
       <DependentUpon>BdEntityGenerico.tt</DependentUpon>
     </Compile>
-    <Compile Include="fonts\CO_OperacionCanje.cs">
+    <Compile Include="Models\Bd\CO_OperacionCanje.cs">
       <DependentUpon>BdEntityGenerico.tt</DependentUpon>
     </Compile>
-    <Compile Include="fonts\CO_OperacionCanjeComentario.cs">
+    <Compile Include="Models\Bd\CO_OperacionCanjeComentario.cs">
       <DependentUpon>BdEntityGenerico.tt</DependentUpon>
     </Compile>
-    <Compile Include="fonts\CO_OperacionCanjeDetalle.cs">
+    <Compile Include="Models\Bd\CO_OperacionCanjeDetalle.cs">
       <DependentUpon>BdEntityGenerico.tt</DependentUpon>
     </Compile>
-    <Compile Include="fonts\Direccion.cs">
+    <Compile Include="Models\Bd\Direccion.cs">
       <DependentUpon>BdEntityGenerico.tt</DependentUpon>
     </Compile>
-    <Compile Include="fonts\MA_ClienteVendedor.cs">
+    <Compile Include="Models\Bd\MA_ClienteVendedor.cs">
       <DependentUpon>BdEntityGenerico.tt</DependentUpon>
     </Compile>
-    <Compile Include="fonts\MA_FormadePago.cs">
+    <Compile Include="Models\Bd\MA_FormadePago.cs">
       <DependentUpon>BdEntityGenerico.tt</DependentUpon>
     </Compile>
-    <Compile Include="fonts\MA_FormadePagoDetalle.cs">
+    <Compile Include="Models\Bd\MA_FormadePagoDetalle.cs">
       <DependentUpon>BdEntityGenerico.tt</DependentUpon>
     </Compile>
-    <Compile Include="fonts\PersonaMast.cs">
+    <Compile Include="Models\Bd\PersonaMast.cs">
       <DependentUpon>BdEntityGenerico.tt</DependentUpon>
     </Compile>
-    <Compile Include="fonts\SY_Preferences.cs">
+    <Compile Include="Models\Bd\SY_Preferences.cs">
       <DependentUpon>BdEntityGenerico.tt</DependentUpon>
     </Compile>
-    <Compile Include="fonts\Usuario.cs">
+    <Compile Include="Models\Bd\Usuario.cs">
       <DependentUpon>BdEntityGenerico.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Model_Motivos.cs" />
@@ -360,12 +360,12 @@
     <Content Include="ImgF\0000000033.jpg" />
     <Content Include="ImgF\0000000034.jpg" />
     <Content Include="ImgF\ic_404.png" />
-    <Content Include="fonts\BdEntityGenerico.Context.tt">
+    <Content Include="Models\Bd\BdEntityGenerico.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>BdEntityGenerico.Context.cs</LastGenOutput>
       <DependentUpon>BdEntityGenerico.edmx</DependentUpon>
     </Content>
-    <Content Include="fonts\BdEntityGenerico.tt">
+    <Content Include="Models\Bd\BdEntityGenerico.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>BdEntityGenerico.edmx</DependentUpon>
       <LastGenOutput>BdEntityGenerico.cs</LastGenOutput>
@@ -395,11 +395,11 @@
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\CollectionModelDescription.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\ApiGroup.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\Api.cshtml" />
-    <EntityDeploy Include="fonts\BdEntityGenerico.edmx">
+    <EntityDeploy Include="Models\Bd\BdEntityGenerico.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>BdEntityGenerico.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <Content Include="fonts\BdEntityGenerico.edmx.diagram">
+    <Content Include="Models\Bd\BdEntityGenerico.edmx.diagram">
       <DependentUpon>BdEntityGenerico.edmx</DependentUpon>
     </Content>
     <None Include="Connected Services\ServicioSUNAT\Service.wsdl" />
@@ -434,16 +434,15 @@
     </Content>
     <Content Include="Areas\HelpPage\Views\_ViewStart.cshtml" />
     <Content Include="Content\Site.css" />
-    <Content Include="Views\Web.config" />
-    <Content Include="Views\_ViewStart.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Shared\Error.cshtml" />
-    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Utils\Views\Web.config" />
+    <Content Include="Utils\Views\_ViewStart.cshtml" />
+    <Content Include="Utils\Views\Home\Index.cshtml" />
+    <Content Include="Utils\Views\Shared\Error.cshtml" />
+    <Content Include="Utils\Views\Shared\_Layout.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="FilesPdfExport\" />
-    <Folder Include="Models\Bd\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

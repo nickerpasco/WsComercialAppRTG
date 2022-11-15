@@ -7,8 +7,9 @@ using System.Linq;
 using System.Diagnostics;
 using System.Data.Entity.Validation;
 using WsComercialApp.Utils;
+ 
+using WsComercialApp.Models.Bd;
 using WsComercialApp.Models;
-using WsComercialApp.fonts;
 
 namespace WsComercialApp.Controllers
 {
