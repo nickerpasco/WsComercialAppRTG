@@ -1386,6 +1386,8 @@ namespace WsComercialApp.Dao
                 if (Otabla != null)
                 {
 
+
+                    response.IdPersonaUsuario = c.IdPersonaUsuario;
                     Otabla.MontoAfecto = c.MontoAfecto;
                     Otabla.MontoNoAfecto = c.MontoNoAfecto;
                     Otabla.MontoImpuestoVentas = c.MontoImpuestoVentas;
