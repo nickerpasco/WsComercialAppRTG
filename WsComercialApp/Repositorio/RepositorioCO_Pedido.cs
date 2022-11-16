@@ -649,7 +649,7 @@ namespace WsComercialApp.Repositorio
 
             return query;
 
-
+             
         }
 
         public ModelTransac_CO_Documento InsertCo_Documento(ModelTransac_CO_Documento c)
