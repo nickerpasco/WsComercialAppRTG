@@ -1386,9 +1386,9 @@ namespace WsComercialApp.Dao
                 if (Otabla != null)
                 {
 
-
+                      
                     response.IdPersonaUsuario = c.IdPersonaUsuario;
-
+                      
                     response.IdPersonaUsuario = 0;
                     response.CantidadLetras = 0;
                     response.DiasCredito = 0;
