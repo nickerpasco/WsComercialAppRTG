@@ -1388,6 +1388,14 @@ namespace WsComercialApp.Dao
 
 
                     response.IdPersonaUsuario = c.IdPersonaUsuario;
+
+                    response.IdPersonaUsuario = 0;
+                    response.CantidadLetras = 0;
+                    response.DiasCredito = 0;
+                    response.FechaBaseLetras = DateTime.Now;
+                    response.FechaMaxima = DateTime.Now;
+                    response.FechaBloj = DateTime.Now;
+
                     Otabla.MontoAfecto = c.MontoAfecto;
                     Otabla.MontoNoAfecto = c.MontoNoAfecto;
                     Otabla.MontoImpuestoVentas = c.MontoImpuestoVentas;
