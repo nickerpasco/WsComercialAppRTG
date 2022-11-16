@@ -175,7 +175,7 @@ namespace WsComercialApp.Repositorio
 
                     rd.Load(Path.Combine(System.Web.HttpContext.Current.Server.MapPath("~/Reportes"), "rpt_ComprobanteVenta.rpt"));
                     rd.SetDataSource(resultado);
-                    rd.SetParameterValue("imgFirma", request.CodigoQR);
+                    rd.SetParameterValue("imgFirma", FuncPrinc.trimValor(request.CodigoQR));
 
                     System.Web.HttpContext.Current.Response.Buffer = false;
                     System.Web.HttpContext.Current.Response.ClearContent();
@@ -645,7 +645,7 @@ namespace WsComercialApp.Repositorio
         " and ('" + bean.FechaInicio + "' IS NULL OR CO_OperacionCanje.FechaPreparacion >= '" + bean.FechaInicio + "') " +
         " AND('" + bean.FechaFin + "' IS NULL OR CO_OperacionCanje.FechaPreparacion < DATEADD(DAY, 1, '" + bean.FechaFin + "')) " +
          " AND ('" + bean.BusquedaAvanzada + "' is null or '" + bean.BusquedaAvanzada + "' ='' or UPPER(Cliente.Busqueda+convert(varchar,CO_OperacionCanje.OperacionCanjeNumero))like '%'+upper('" + bean.BusquedaAvanzada + "' )+'%') " +
-          " AND ('" + bean.Estado + "' is null or '" + bean.Estado + "' ='' or UPPER(CO_OperacionCanje.Estado)like '%'+upper('" + bean.Estado + "' )+'%') ";
+          " AND ('" +  bean.Estado + "' is null or '" + bean.Estado + "' ='' or UPPER(CO_OperacionCanje.Estado)like '%'+upper('" + bean.Estado + "' )+'%') ";
 
             return query;
 
