@@ -95,6 +95,7 @@
 			pedido.CompaniaSocio = CR_OrdenDistribucionDetalle.CompaniaSocio and
 			pedido.TipoDocumento = CR_OrdenDistribucionDetalle.TipoDocumentoOrig and
 			pedido.NumeroDocumento = CR_OrdenDistribucionDetalle.PedidoCotizacionOrig
+			and CR_OrdenDistribuciondetalle.Secuencia = 1
 			left join CR_OrdenDistribucion on
 			CR_OrdenDistribucionDetalle.CompaniaSocio = CR_OrdenDistribucion.CompaniaSocio and
 			CR_OrdenDistribucionDetalle.Ordendistribucion = CR_OrdenDistribucion.Ordendistribucion
