@@ -7,7 +7,7 @@
 		<Co_Documento.Cabecera>
 
 			select
-
+			MA_MaestroMiscelaneoDetalle.DescripcionLocal as EstadoPendienteComentario,
 			(Select Max(Concepto)
 			from CO_DocumentoProduccion p
 			where p.CompaniaSocio = pedido.CompaniaSocio and p.TipoDocumento = pedido.TipoDocumento and p.NumeroDocumento = pedido.NumeroDocumento
@@ -109,6 +109,10 @@
 			SUBSTRING(pedido.ComercialPedidoNumero,3,12)=Comprobante.NumeroDocumento
 			left join PersonaMast Facturador on
 			Comprobante.PreparadoPor = Facturador.Persona
+			 left join MA_MaestroMiscelaneoDetalle with(nolock) on
+			 pedido.TipoMotivo=MA_MaestroMiscelaneoDetalle.ValorCodigo and
+			 MA_MaestroMiscelaneoDetalle.AplicacionCodigo='CO' and
+			 MA_MaestroMiscelaneoDetalle.MaestroCodigo='PEDMOTIVO'
 
 
 
