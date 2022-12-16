@@ -7,7 +7,7 @@
 		<Co_Documento.Cabecera>
 
 			select
-
+			MA_MaestroMiscelaneoDetalle.DescripcionLocal as EstadoPendienteComentario,
 			(Select Max(Concepto)
 			from CO_DocumentoProduccion p
 			where p.CompaniaSocio = pedido.CompaniaSocio and p.TipoDocumento = pedido.TipoDocumento and p.NumeroDocumento = pedido.NumeroDocumento
@@ -95,6 +95,7 @@
 			pedido.CompaniaSocio = CR_OrdenDistribucionDetalle.CompaniaSocio and
 			pedido.TipoDocumento = CR_OrdenDistribucionDetalle.TipoDocumentoOrig and
 			pedido.NumeroDocumento = CR_OrdenDistribucionDetalle.PedidoCotizacionOrig
+			and CR_OrdenDistribuciondetalle.Secuencia = 1
 			left join CR_OrdenDistribucion on
 			CR_OrdenDistribucionDetalle.CompaniaSocio = CR_OrdenDistribucion.CompaniaSocio and
 			CR_OrdenDistribucionDetalle.Ordendistribucion = CR_OrdenDistribucion.Ordendistribucion
@@ -108,6 +109,10 @@
 			SUBSTRING(pedido.ComercialPedidoNumero,3,12)=Comprobante.NumeroDocumento
 			left join PersonaMast Facturador on
 			Comprobante.PreparadoPor = Facturador.Persona
+			 left join MA_MaestroMiscelaneoDetalle with(nolock) on
+			 pedido.TipoMotivo=MA_MaestroMiscelaneoDetalle.ValorCodigo and
+			 MA_MaestroMiscelaneoDetalle.AplicacionCodigo='CO' and
+			 MA_MaestroMiscelaneoDetalle.MaestroCodigo='PEDMOTIVO'
 
 
 
@@ -242,6 +247,9 @@ where AplicacionCodigo='CO' and MaestroCodigo='PEDMOTIVO'
 		inner join CompaniaMast on CompaniaMast.CompaniaCodigo=companyowner.company
 		inner join PersonaMast Cliente on CO_Documento.ClienteNumero=Cliente.Persona
 		inner join MA_FormadePago on MA_FormadePago.FormadePago = CO_Documento.FormadePago
+		left join CO_TipoFacturacion on CO_TipoFacturacion.TipoFacturacion=CO_Documento.TipoFacturacion
+
+
 		left join WH_ItemMast on CO_DocumentoDetalle.ItemCodigo=WH_ItemMast.Item
 		left join CO_ServicioClasificacion on CO_DocumentoDetalle.ItemCodigo=CO_ServicioClasificacion.ServicioClasificacion
 		inner join Direccion on CO_Documento.ClienteDireccionDespacho=Direccion.Secuencia and CO_Documento.ClienteNumero=Direccion.Persona
@@ -249,11 +257,11 @@ where AplicacionCodigo='CO' and MaestroCodigo='PEDMOTIVO'
 		full join ParametrosMast A on A.CompaniaCodigo = '999999' and A.ParametroClave = 'COTCONDENT' and A.AplicacionCodigo = 'CO'
 		full join ParametrosMast B on B.CompaniaCodigo = '999999' and B.ParametroClave = 'COTGARANTI' and B.AplicacionCodigo = 'CO'
 		full join ParametrosMast C on C.CompaniaCodigo = '999999' and C.ParametroClave = 'COTCONDICI' and C.AplicacionCodigo = 'CO'
-		full join PersonaMast UsuarioCotizacion on UsuarioCotizacion.Persona = -1
+		full join PersonaMast UsuarioCotizacion on UsuarioCotizacion.Persona = CO_Documento.Vendedor
 		where CO_Documento.CompaniaSocio =@CompaniaSocio and CO_Documento.TipoDocumento= @TipoDocumento and CO_Documento.NumeroDocumento =@NumeroDocumento
 		group by
 		CO_DocumentoDetalle.Linea,
-			CO_TipoFacturacion.DescripcionLocal,
+		CO_TipoFacturacion.DescripcionLocal,
 		CompaniaMast.DescripcionLarga,
 		'RUC'+'-'+CompaniaMast.DocumentoFiscal,
 		dbo.MostrarTituloReporte(RTRIM(CompaniaMast.DireccionComun) + '-' + RTRIM(CompaniaMast.DireccionAdicional))  ,

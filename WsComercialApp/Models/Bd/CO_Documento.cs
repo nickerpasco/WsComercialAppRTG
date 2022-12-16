@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace WsComercialApp.fonts
+namespace WsComercialApp.Models.Bd
 {
     using System;
     using System.Collections.Generic;
@@ -230,7 +230,6 @@ namespace WsComercialApp.fonts
         public string Convenio { get; set; }
         public Nullable<decimal> CostoTotal { get; set; }
         public Nullable<decimal> CostoTotalPromedio { get; set; }
-        public string DocumentoReferencia { get; set; }
         public string EnTransporte { get; set; }
         public string EquipoVenta { get; set; }
         public string ESWEBFLAG { get; set; }
@@ -299,6 +298,15 @@ namespace WsComercialApp.fonts
         public Nullable<decimal> MontoPendientePago { get; set; }
         public string CodigoQR { get; set; }
         public string VentaEquipo { get; set; }
+        public string documentoreferencia { get; set; }
+        public string AutPedidoAdelantFlag { get; set; }
+        public string AutPedidoContadoFlag { get; set; }
+        public string AutorizarAnulacionFlag { get; set; }
+        public string FlagEnEspera { get; set; }
+        public string DOTNumero { get; set; }
+        public string DOTEstado { get; set; }
+        public Nullable<System.DateTime> FechaAprobPed { get; set; }
+        public string UsuarioAprobPed { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CO_DocumentoDetalle> CO_DocumentoDetalle { get; set; }

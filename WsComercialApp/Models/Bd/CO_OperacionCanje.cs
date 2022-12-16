@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace WsComercialApp.fonts
+namespace WsComercialApp.Models.Bd
 {
     using System;
     using System.Collections.Generic;
@@ -51,6 +51,8 @@ namespace WsComercialApp.fonts
         public Nullable<int> LetrasCantidad { get; set; }
         public string Comentarios { get; set; }
         public Nullable<int> Vendedor { get; set; }
+        public string FormaPago { get; set; }
+        public string AutorizarDiasAdicFlag { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CO_OperacionCanjeDetalle> CO_OperacionCanjeDetalle { get; set; }

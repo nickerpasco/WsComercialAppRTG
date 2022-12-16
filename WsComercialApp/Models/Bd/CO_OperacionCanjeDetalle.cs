@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace WsComercialApp.fonts
+namespace WsComercialApp.Models.Bd
 {
     using System;
     using System.Collections.Generic;
@@ -22,6 +22,8 @@ namespace WsComercialApp.fonts
         public Nullable<decimal> Monto { get; set; }
         public string InputOutputFlag { get; set; }
         public Nullable<decimal> MontoComision { get; set; }
+        public Nullable<decimal> Dias { get; set; }
+        public Nullable<System.DateTime> FechaVencimiento { get; set; }
     
         public virtual CO_OperacionCanje CO_OperacionCanje { get; set; }
         public virtual CO_OperacionCanje CO_OperacionCanje1 { get; set; }

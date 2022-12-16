@@ -14,6 +14,7 @@ namespace WsComercialApp.Models
 		public string FlagEnEspera { get; set; }
 		public int? ClienteNumero { get; set; }
 		public string ClienteRUC { get; set; }
+		public string EstadoPendienteComentario { get; set; }
 		public string TipoFacturacionNoAfectoFlag { get; set; }
 
 		public string TipoDocumentoPedidoCLiente { get; set; }

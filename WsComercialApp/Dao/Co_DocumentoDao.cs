@@ -7,9 +7,9 @@ using System.Data.SqlClient;
 using System.Globalization;
 using System.Linq;
 using System.Text;
-using System.Web;
-using WsComercialApp.fonts;
-using WsComercialApp.Models; 
+using System.Web; 
+using WsComercialApp.Models;
+using WsComercialApp.Models.Bd;
 using WsComercialApp.Repositorio;
 using WsComercialApp.Utils;
 
@@ -462,6 +462,7 @@ namespace WsComercialApp.Dao
                 c.CentroCosto = FuncPrinc.trimValor(CentroCostosUsuario);
                 Otabla.CompaniaSocio = c.CompaniaSocio;
                 Otabla.TipoDocumento = c.TipoDocumento;
+                Otabla.FlagEnEspera = c.FlagEnEspera;
                 Otabla.NumeroDocumento = c.NumeroDocumento;
                 Otabla.EstablecimientoCodigo = c.EstablecimientoCodigo;
                 Otabla.FechaDocumento = DateTime.Now;//c.FechaDocumento;
@@ -820,13 +821,9 @@ namespace WsComercialApp.Dao
                         context.SaveChanges();
 
                         /// INSERTAR DESPACHODETALLE
-
+                         
                         //var secuenciaIddespacho = context.CO_DocumentoDetalleDespacho.Where(x => x.CompaniaSocio == c.CompaniaSocio && x.TipoDocumento == c.TipoDocumento && x.NumeroDocumento == c.NumeroDocumento).DefaultIfEmpty().Max(t => t == null ? 0 : t.Secuencia);
-
-                        if (Otabla.Estado != "PR")
-                        {
-
-                            var OtablaDetalleDespacho = new CO_DocumentoDetalleDespacho();
+                        var OtablaDetalleDespacho = new CO_DocumentoDetalleDespacho();
 
                             OtablaDetalleDespacho.CompaniaSocio = c.CompaniaSocio;
                             OtablaDetalleDespacho.TipoDocumento = c.TipoDocumento;
@@ -856,8 +853,8 @@ namespace WsComercialApp.Dao
                             OtablaDetalleDespacho.FechaEntrega = Otabla.FechaDocumento;
 
 
-                            context.CO_DocumentoDetalleDespacho.Add(OtablaDetalleDespacho);
-                            context.SaveChanges();
+                        context.CO_DocumentoDetalleDespacho.Add(OtablaDetalleDespacho);
+                        context.SaveChanges();
 
                         }
 
@@ -1319,24 +1316,31 @@ namespace WsComercialApp.Dao
                 var detallePedidoDespacho = Newtonsoft.Json.JsonConvert.SerializeObject(CO_DOCUMENTODETALLEDESPACHO, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore });
                 var OtablaDetallePedidoDespacho = (List<CO_DocumentoDetalleDespacho>)Newtonsoft.Json.JsonConvert.DeserializeObject(detallePedidoDespacho, typeof(List<CO_DocumentoDetalleDespacho>));
 
-
-                foreach (var OtablaDetalleDespacho in OtablaDetallePedidoDespacho)
+                if (c.Estado != "PR")
+                {
+                    foreach (var OtablaDetalleDespacho in OtablaDetallePedidoDespacho)
                     {
 
-                    //OtablaDetalleDespacho.CO_Documento = Otabla;
-                    OtablaDetalleDespacho.CO_Documento = Otabla; 
-                    OtablaDetalleDespacho.CompaniaSocio = c.CompaniaSocio;
-                    OtablaDetalleDespacho.TipoDocumento = c.TipoDocumento;
-                    OtablaDetalleDespacho.NumeroDocumento = c.NumeroDocumento;  
-                    OtablaDetalleDespacho.FechaEntrega = Otabla.FechaDocumento;  
-                    OtablaDetalleDespacho.Turno = 1;  
-                    OtablaDetalleDespacho.Estado = "PE";  
-                    OtablaDetalleDespacho.CantidadMerma = 0;  
-                    OtablaDetalleDespacho.Secuencia = 1; 
 
-                    context.CO_DocumentoDetalleDespacho.Add(OtablaDetalleDespacho);
-                    context.SaveChanges();
+                        //OtablaDetalleDespacho.CO_Documento = Otabla;
+                        OtablaDetalleDespacho.CO_Documento = Otabla;
+                        OtablaDetalleDespacho.CompaniaSocio = c.CompaniaSocio;
+                        OtablaDetalleDespacho.TipoDocumento = c.TipoDocumento;
+                        OtablaDetalleDespacho.NumeroDocumento = c.NumeroDocumento;
+                        OtablaDetalleDespacho.FechaEntrega = Otabla.FechaDocumento;
+                        OtablaDetalleDespacho.Turno = 1;
+                        OtablaDetalleDespacho.Estado = "PE";
+                        OtablaDetalleDespacho.CantidadMerma = 0;
+                        OtablaDetalleDespacho.Secuencia = 1;
 
+                        context.CO_DocumentoDetalleDespacho.Add(OtablaDetalleDespacho);
+                        context.SaveChanges();
+
+
+
+
+
+                    }
                 }
 
 
@@ -1394,6 +1398,16 @@ namespace WsComercialApp.Dao
                 if (Otabla != null)
                 {
 
+                        
+                    response.IdPersonaUsuario = c.IdPersonaUsuario;
+                      
+                    response.IdPersonaUsuario = 0;
+                    response.CantidadLetras = 0;
+                    response.DiasCredito = 0;
+                    response.FechaBaseLetras = DateTime.Now;
+                    response.FechaMaxima = DateTime.Now;
+                    response.FechaBloj = DateTime.Now;
+
                     Otabla.MontoAfecto = c.MontoAfecto;
                     Otabla.MontoNoAfecto = c.MontoNoAfecto;
                     Otabla.MontoImpuestoVentas = c.MontoImpuestoVentas;
@@ -1403,7 +1417,8 @@ namespace WsComercialApp.Dao
                     Otabla.FormadePago = c.FormadePago;
                     Otabla.RecojoFlag = c.RecojoFlag;
                     Otabla.MonedaDocumento = c.MonedaDocumento;
-
+                    Otabla.FlagEnEspera = c.FlagEnEspera;
+                    Otabla.TipoFacturacion = c.TipoFacturacion;
                     Otabla.TransportistaProvincia = c.TransportistaProvincia;
                     Otabla.Comentarios = c.Comentarios;
 
@@ -1626,39 +1641,33 @@ namespace WsComercialApp.Dao
                             /// INSERTAR DESPACHODETALLE
 
                             //var secuenciaIddespacho = context.CO_DocumentoDetalleDespacho.Where(x => x.CompaniaSocio == c.CompaniaSocio && x.TipoDocumento == c.TipoDocumento && x.NumeroDocumento == c.NumeroDocumento).DefaultIfEmpty().Max(t => t == null ? 0 : t.Secuencia);
+                            var OtablaDetalleDespacho = new CO_DocumentoDetalleDespacho();
 
-                            if (Otabla.Estado != "PR")
-                            {
-                                var OtablaDetalleDespacho = new CO_DocumentoDetalleDespacho();
-
-                                OtablaDetalleDespacho.CompaniaSocio = c.CompaniaSocio;
-                                OtablaDetalleDespacho.TipoDocumento = c.TipoDocumento;
-                                OtablaDetalleDespacho.NumeroDocumento = c.NumeroDocumento;
-                                OtablaDetalleDespacho.Linea = OtablaDetalle.Linea;
-                                OtablaDetalleDespacho.Secuencia = 1;
-                                OtablaDetalleDespacho.Turno = 1;
-                                OtablaDetalleDespacho.Cantidad = detalle.CantidadPedida;
-                                OtablaDetalleDespacho.AlmacenCodigo = detalle.AlmacenCodigoDetalle; ;
-                                OtablaDetalleDespacho.AlmacenPrincipal = detalle.AlmacenCodigoDetalle; ;
-                                OtablaDetalleDespacho.FechaEntrega = c.ComercialPedidoFechaRequerida;
-                                OtablaDetalleDespacho.Estado = "PE";
-                                OtablaDetalleDespacho.UltimaFechaModif = DateTime.Now;
-                                OtablaDetalleDespacho.UltimoUsuario = c.UltimoUsuario;
-                                OtablaDetalleDespacho.CantidadSOD = 0;
-                                OtablaDetalleDespacho.CantidadMerma = 0;
-                                OtablaDetalleDespacho.CantidadTotal = detalle.CantidadPedida;
-                                OtablaDetalleDespacho.Item = detalle.ItemCodigo;
-                                OtablaDetalleDespacho.AlmacenPrincipal = detalle.AlmacenCodigoDetalle; ;
-                                OtablaDetalleDespacho.CantidadRecibida = 0;
-                                OtablaDetalleDespacho.ClienteDireccionDespacho = c.ClienteDireccionDespacho;
-                                OtablaDetalleDespacho.TipoRegistro = "P";
-                                OtablaDetalleDespacho.ComprometeFlag = "N";
-                                OtablaDetalleDespacho.FechaEntrega = Otabla.FechaDocumento;
-                                context.CO_DocumentoDetalleDespacho.Add(OtablaDetalleDespacho);
-                                context.SaveChanges();
-                            }
-
-                                
+                            OtablaDetalleDespacho.CompaniaSocio = c.CompaniaSocio;
+                            OtablaDetalleDespacho.TipoDocumento = c.TipoDocumento;
+                            OtablaDetalleDespacho.NumeroDocumento = c.NumeroDocumento;
+                            OtablaDetalleDespacho.Linea = OtablaDetalle.Linea;
+                            OtablaDetalleDespacho.Secuencia = 1;
+                            OtablaDetalleDespacho.Turno = 1;
+                            OtablaDetalleDespacho.Cantidad = detalle.CantidadPedida;
+                            OtablaDetalleDespacho.AlmacenCodigo = detalle.AlmacenCodigoDetalle; ;
+                            OtablaDetalleDespacho.AlmacenPrincipal = detalle.AlmacenCodigoDetalle; ;
+                            OtablaDetalleDespacho.FechaEntrega = c.ComercialPedidoFechaRequerida;
+                            OtablaDetalleDespacho.Estado = "PE";
+                            OtablaDetalleDespacho.UltimaFechaModif = DateTime.Now;
+                            OtablaDetalleDespacho.UltimoUsuario = c.UltimoUsuario;
+                            OtablaDetalleDespacho.CantidadSOD = 0;
+                            OtablaDetalleDespacho.CantidadMerma = 0;
+                            OtablaDetalleDespacho.CantidadTotal = detalle.CantidadPedida;
+                            OtablaDetalleDespacho.Item = detalle.ItemCodigo;
+                            OtablaDetalleDespacho.AlmacenPrincipal = detalle.AlmacenCodigoDetalle; ;
+                            OtablaDetalleDespacho.CantidadRecibida = 0;
+                            OtablaDetalleDespacho.ClienteDireccionDespacho = c.ClienteDireccionDespacho;
+                            OtablaDetalleDespacho.TipoRegistro = "P";
+                            OtablaDetalleDespacho.ComprometeFlag = "N";
+                            OtablaDetalleDespacho.FechaEntrega = Otabla.FechaDocumento;
+                            context.CO_DocumentoDetalleDespacho.Add(OtablaDetalleDespacho);
+                            context.SaveChanges();
 
 
                         }

@@ -11,8 +11,8 @@ using System.IO;
 using WsComercialApp.Models;
 using WsComercialApp.Utils;
 using WsComercialApp.Security;
-using System.Linq;
-using WsComercialApp.fonts;
+using System.Linq; 
+using WsComercialApp.Models.Bd;
 
 namespace WsComercialApp.Controllers
 {

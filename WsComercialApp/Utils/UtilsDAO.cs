@@ -7,7 +7,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using System.Web.Configuration;
-using WsComercialApp.fonts;
+using WsComercialApp.Models.Bd;
 
 namespace WsComercialApp.Utils
 {

@@ -365,7 +365,6 @@
           <Property Name="Convenio" Type="char" MaxLength="3" />
           <Property Name="CostoTotal" Type="decimal" Precision="16" Scale="6" />
           <Property Name="CostoTotalPromedio" Type="decimal" Precision="16" Scale="6" />
-          <Property Name="DocumentoReferencia" Type="char" MaxLength="20" />
           <Property Name="EnTransporte" Type="char" MaxLength="2" />
           <Property Name="EquipoVenta" Type="char" MaxLength="3" />
           <Property Name="ESWEBFLAG" Type="varchar" MaxLength="1" />
@@ -434,6 +433,15 @@
           <Property Name="MontoPendientePago" Type="money" />
           <Property Name="CodigoQR" Type="char" MaxLength="500" />
           <Property Name="VentaEquipo" Type="char" MaxLength="3" />
+          <Property Name="documentoreferencia" Type="char" MaxLength="30" />
+          <Property Name="AutPedidoAdelantFlag" Type="char" MaxLength="1" />
+          <Property Name="AutPedidoContadoFlag" Type="char" MaxLength="1" />
+          <Property Name="AutorizarAnulacionFlag" Type="char" MaxLength="1" />
+          <Property Name="FlagEnEspera" Type="char" MaxLength="1" />
+          <Property Name="DOTNumero" Type="char" MaxLength="10" />
+          <Property Name="DOTEstado" Type="char" MaxLength="2" />
+          <Property Name="FechaAprobPed" Type="datetime" />
+          <Property Name="UsuarioAprobPed" Type="char" MaxLength="20" />
         </EntityType>
         <EntityType Name="CO_DocumentoDespacho">
           <Key>
@@ -600,6 +608,7 @@
           <Property Name="TransferenciaBonificacionFlag" Type="char" MaxLength="1" />
           <Property Name="TransferenciaRepresentacionFla" Type="char" MaxLength="1" />
           <Property Name="SpringCodigo" Type="char" MaxLength="1" />
+          <Property Name="CantidadDevolucion" Type="money" />
         </EntityType>
         <EntityType Name="CO_DocumentoDetalleDespacho">
           <Key>
@@ -679,6 +688,8 @@
           <Property Name="LetrasCantidad" Type="int" />
           <Property Name="Comentarios" Type="varchar" MaxLength="255" />
           <Property Name="Vendedor" Type="int" />
+          <Property Name="FormaPago" Type="char" MaxLength="4" />
+          <Property Name="AutorizarDiasAdicFlag" Type="char" MaxLength="1" />
         </EntityType>
         <EntityType Name="CO_OperacionCanjeComentario">
           <Key>
@@ -708,6 +719,8 @@
           <Property Name="Monto" Type="money" />
           <Property Name="InputOutputFlag" Type="char" MaxLength="1" />
           <Property Name="MontoComision" Type="money" />
+          <Property Name="Dias" Type="money" />
+          <Property Name="FechaVencimiento" Type="datetime" />
         </EntityType>
         <EntityType Name="CorrelativosMast">
           <Key>
@@ -1467,49 +1480,12 @@
       <Schema Namespace="RTGModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="BdEntityGenerico" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="ClienteMast" EntityType="RTGModel.ClienteMast" />
-          <EntitySet Name="CO_Documento" EntityType="RTGModel.CO_Documento" />
           <EntitySet Name="CO_DocumentoDespacho" EntityType="RTGModel.CO_DocumentoDespacho" />
           <EntitySet Name="CO_DocumentoDetalle" EntityType="RTGModel.CO_DocumentoDetalle" />
           <EntitySet Name="CO_DocumentoDetalleDespacho" EntityType="RTGModel.CO_DocumentoDetalleDespacho" />
           <EntitySet Name="CO_DocumentoImpuesto" EntityType="RTGModel.CO_DocumentoImpuesto" />
           <EntitySet Name="CorrelativosMast" EntityType="RTGModel.CorrelativosMast" />
           <EntitySet Name="Usuario" EntityType="RTGModel.Usuario" />
-          <AssociationSet Name="FK__CO_DocumentoDeta__5190CC5F" Association="RTGModel.FK__CO_DocumentoDeta__5190CC5F">
-            <End Role="CO_Documento" EntitySet="CO_Documento" />
-            <End Role="CO_DocumentoDetalle" EntitySet="CO_DocumentoDetalle" />
-          </AssociationSet>
-          <AssociationSet Name="FK__CO_DocumentoDeta__5284F098" Association="RTGModel.FK__CO_DocumentoDeta__5284F098">
-            <End Role="CO_Documento" EntitySet="CO_Documento" />
-            <End Role="CO_DocumentoDetalle" EntitySet="CO_DocumentoDetalle" />
-          </AssociationSet>
-          <AssociationSet Name="FK__CO_DocumentoDeta__5A3BEC50" Association="RTGModel.FK__CO_DocumentoDeta__5A3BEC50">
-            <End Role="CO_Documento" EntitySet="CO_Documento" />
-            <End Role="CO_DocumentoDetalle" EntitySet="CO_DocumentoDetalle" />
-          </AssociationSet>
-          <AssociationSet Name="FK__CO_DocumentoDeta__5B301089" Association="RTGModel.FK__CO_DocumentoDeta__5B301089">
-            <End Role="CO_Documento" EntitySet="CO_Documento" />
-            <End Role="CO_DocumentoDetalle" EntitySet="CO_DocumentoDetalle" />
-          </AssociationSet>
-          <AssociationSet Name="FK__CO_DocumentoImpu__4AE3CED0" Association="RTGModel.FK__CO_DocumentoImpu__4AE3CED0">
-            <End Role="CO_Documento" EntitySet="CO_Documento" />
-            <End Role="CO_DocumentoImpuesto" EntitySet="CO_DocumentoImpuesto" />
-          </AssociationSet>
-          <AssociationSet Name="FK__CO_DocumentoImpu__4BD7F309" Association="RTGModel.FK__CO_DocumentoImpu__4BD7F309">
-            <End Role="CO_Documento" EntitySet="CO_Documento" />
-            <End Role="CO_DocumentoImpuesto" EntitySet="CO_DocumentoImpuesto" />
-          </AssociationSet>
-          <AssociationSet Name="FK__CO_DocumentoImpu__548312FA" Association="RTGModel.FK__CO_DocumentoImpu__548312FA">
-            <End Role="CO_Documento" EntitySet="CO_Documento" />
-            <End Role="CO_DocumentoImpuesto" EntitySet="CO_DocumentoImpuesto" />
-          </AssociationSet>
-          <AssociationSet Name="FK__CO_DocumentoImpu__55773733" Association="RTGModel.FK__CO_DocumentoImpu__55773733">
-            <End Role="CO_Documento" EntitySet="CO_Documento" />
-            <End Role="CO_DocumentoImpuesto" EntitySet="CO_DocumentoImpuesto" />
-          </AssociationSet>
-          <AssociationSet Name="FK_CO_DocumentoDetalleDespacho_CO_Documento" Association="RTGModel.FK_CO_DocumentoDetalleDespacho_CO_Documento">
-            <End Role="CO_Documento" EntitySet="CO_Documento" />
-            <End Role="CO_DocumentoDetalleDespacho" EntitySet="CO_DocumentoDetalleDespacho" />
-          </AssociationSet>
           <EntitySet Name="Direccion" EntityType="RTGModel.Direccion" />
           <EntitySet Name="MA_FormadePago" EntityType="RTGModel.MA_FormadePago" />
           <EntitySet Name="MA_FormadePagoDetalle" EntityType="RTGModel.MA_FormadePagoDetalle" />
@@ -1570,6 +1546,43 @@
           <AssociationSet Name="FK__CO_OperacionCanj__7F827F98" Association="RTGModel.FK__CO_OperacionCanj__7F827F98">
             <End Role="CO_OperacionCanje" EntitySet="CO_OperacionCanje" />
             <End Role="CO_OperacionCanjeDetalle" EntitySet="CO_OperacionCanjeDetalle" />
+          </AssociationSet>
+          <EntitySet Name="CO_Documento" EntityType="RTGModel.CO_Documento" />
+          <AssociationSet Name="FK__CO_DocumentoDeta__5190CC5F" Association="RTGModel.FK__CO_DocumentoDeta__5190CC5F">
+            <End Role="CO_Documento" EntitySet="CO_Documento" />
+            <End Role="CO_DocumentoDetalle" EntitySet="CO_DocumentoDetalle" />
+          </AssociationSet>
+          <AssociationSet Name="FK__CO_DocumentoDeta__5284F098" Association="RTGModel.FK__CO_DocumentoDeta__5284F098">
+            <End Role="CO_Documento" EntitySet="CO_Documento" />
+            <End Role="CO_DocumentoDetalle" EntitySet="CO_DocumentoDetalle" />
+          </AssociationSet>
+          <AssociationSet Name="FK__CO_DocumentoDeta__5A3BEC50" Association="RTGModel.FK__CO_DocumentoDeta__5A3BEC50">
+            <End Role="CO_Documento" EntitySet="CO_Documento" />
+            <End Role="CO_DocumentoDetalle" EntitySet="CO_DocumentoDetalle" />
+          </AssociationSet>
+          <AssociationSet Name="FK__CO_DocumentoDeta__5B301089" Association="RTGModel.FK__CO_DocumentoDeta__5B301089">
+            <End Role="CO_Documento" EntitySet="CO_Documento" />
+            <End Role="CO_DocumentoDetalle" EntitySet="CO_DocumentoDetalle" />
+          </AssociationSet>
+          <AssociationSet Name="FK__CO_DocumentoImpu__4AE3CED0" Association="RTGModel.FK__CO_DocumentoImpu__4AE3CED0">
+            <End Role="CO_Documento" EntitySet="CO_Documento" />
+            <End Role="CO_DocumentoImpuesto" EntitySet="CO_DocumentoImpuesto" />
+          </AssociationSet>
+          <AssociationSet Name="FK__CO_DocumentoImpu__4BD7F309" Association="RTGModel.FK__CO_DocumentoImpu__4BD7F309">
+            <End Role="CO_Documento" EntitySet="CO_Documento" />
+            <End Role="CO_DocumentoImpuesto" EntitySet="CO_DocumentoImpuesto" />
+          </AssociationSet>
+          <AssociationSet Name="FK__CO_DocumentoImpu__548312FA" Association="RTGModel.FK__CO_DocumentoImpu__548312FA">
+            <End Role="CO_Documento" EntitySet="CO_Documento" />
+            <End Role="CO_DocumentoImpuesto" EntitySet="CO_DocumentoImpuesto" />
+          </AssociationSet>
+          <AssociationSet Name="FK__CO_DocumentoImpu__55773733" Association="RTGModel.FK__CO_DocumentoImpu__55773733">
+            <End Role="CO_Documento" EntitySet="CO_Documento" />
+            <End Role="CO_DocumentoImpuesto" EntitySet="CO_DocumentoImpuesto" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CO_DocumentoDetalleDespacho_CO_Documento" Association="RTGModel.FK_CO_DocumentoDetalleDespacho_CO_Documento">
+            <End Role="CO_Documento" EntitySet="CO_Documento" />
+            <End Role="CO_DocumentoDetalleDespacho" EntitySet="CO_DocumentoDetalleDespacho" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="ClienteMast">
@@ -1724,293 +1737,6 @@
           <Property Name="Recepcion01Dia01Flag" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
           <Property Name="Timestamp" Type="Binary" Nullable="false" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
           <NavigationProperty Name="PersonaMast" Relationship="RTGModel.FK__ClienteMa__Clien__5BCF2F07" FromRole="ClienteMast" ToRole="PersonaMast" />
-        </EntityType>
-        <EntityType Name="CO_Documento">
-          <Key>
-            <PropertyRef Name="CompaniaSocio" />
-            <PropertyRef Name="TipoDocumento" />
-            <PropertyRef Name="NumeroDocumento" />
-          </Key>
-          <Property Name="CompaniaSocio" Type="String" Nullable="false" MaxLength="8" FixedLength="true" Unicode="false" />
-          <Property Name="TipoDocumento" Type="String" Nullable="false" MaxLength="2" FixedLength="true" Unicode="false" />
-          <Property Name="NumeroDocumento" Type="String" Nullable="false" MaxLength="14" FixedLength="true" Unicode="false" />
-          <Property Name="EstablecimientoCodigo" Type="String" MaxLength="4" FixedLength="true" Unicode="false" />
-          <Property Name="FormaFacturacion" Type="String" MaxLength="2" FixedLength="true" Unicode="false" />
-          <Property Name="ClienteNumero" Type="Int32" />
-          <Property Name="ClienteRUC" Type="String" MaxLength="20" FixedLength="true" Unicode="false" />
-          <Property Name="ClienteNombre" Type="String" MaxLength="60" FixedLength="true" Unicode="false" />
-          <Property Name="ClienteDireccion" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="ClienteReferencia" Type="String" MaxLength="15" FixedLength="true" Unicode="false" />
-          <Property Name="ClienteCobrarA" Type="Int32" />
-          <Property Name="FechaDocumento" Type="DateTime" Precision="3" />
-          <Property Name="FechaVencimiento" Type="DateTime" Precision="3" />
-          <Property Name="TipoFacturacion" Type="String" MaxLength="3" FixedLength="true" Unicode="false" />
-          <Property Name="TipoVenta" Type="String" MaxLength="3" FixedLength="true" Unicode="false" />
-          <Property Name="ConceptoFacturacion" Type="String" MaxLength="3" FixedLength="true" Unicode="false" />
-          <Property Name="FormadePago" Type="String" MaxLength="3" FixedLength="true" Unicode="false" />
-          <Property Name="Criteria" Type="String" MaxLength="20" FixedLength="true" Unicode="false" />
-          <Property Name="Vendedor" Type="Int32" />
-          <Property Name="TipodeCambio" Type="Decimal" Precision="10" Scale="3" />
-          <Property Name="MonedaDocumento" Type="String" MaxLength="2" FixedLength="true" Unicode="false" />
-          <Property Name="MontoAfecto" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="MontoNoAfecto" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="MontoImpuestoVentas" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="MontoImpuestos" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="MontoDescuentos" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="MontoTotal" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="MontoPagado" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="MontoAdelantoSaldo" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="PreparadoPor" Type="Int32" />
-          <Property Name="AprobadoPor" Type="Int32" />
-          <Property Name="FechaPreparacion" Type="DateTime" Precision="3" />
-          <Property Name="FechaAprobacion" Type="DateTime" Precision="3" />
-          <Property Name="NotaCreditoDocumento" Type="String" MaxLength="17" FixedLength="true" Unicode="false" />
-          <Property Name="ComercialPedidoNumero" Type="String" MaxLength="17" FixedLength="true" Unicode="false" />
-          <Property Name="ComercialPedidoFechaRequerida" Type="DateTime" Precision="3" />
-          <Property Name="AlmacenCodigo" Type="String" MaxLength="10" FixedLength="true" Unicode="false" />
-          <Property Name="ImpresionPendienteFlag" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
-          <Property Name="DocumentoMoraFlag" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
-          <Property Name="ContabilizacionPendienteFlag" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
-          <Property Name="VoucherPeriodo" Type="String" MaxLength="6" FixedLength="true" Unicode="false" />
-          <Property Name="VoucherNo" Type="String" MaxLength="6" FixedLength="true" Unicode="false" />
-          <Property Name="VoucherAnulacion" Type="String" MaxLength="12" FixedLength="true" Unicode="false" />
-          <Property Name="CentroCosto" Type="String" MaxLength="10" FixedLength="true" Unicode="false" />
-          <Property Name="Proyecto" Type="String" MaxLength="15" FixedLength="true" Unicode="false" />
-          <Property Name="CampoReferencia" Type="String" MaxLength="12" FixedLength="true" Unicode="false" />
-          <Property Name="Sucursal" Type="String" MaxLength="4" FixedLength="true" Unicode="false" />
-          <Property Name="TipoCanjeFactura" Type="String" MaxLength="2" FixedLength="true" Unicode="false" />
-          <Property Name="LetraCarteraFlag" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
-          <Property Name="LetraBanco" Type="String" MaxLength="3" FixedLength="true" Unicode="false" />
-          <Property Name="LetraCobranzaNumero" Type="String" MaxLength="30" FixedLength="true" Unicode="false" />
-          <Property Name="LetraAvalNombre" Type="String" MaxLength="60" FixedLength="true" Unicode="false" />
-          <Property Name="LetraAvalRUC" Type="String" MaxLength="20" FixedLength="true" Unicode="false" />
-          <Property Name="LetraAvalDireccion" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="LetraAvalTelefono" Type="String" MaxLength="20" FixedLength="true" Unicode="false" />
-          <Property Name="LetraAceptadoPor" Type="String" MaxLength="50" FixedLength="true" Unicode="false" />
-          <Property Name="LetraUbicacion" Type="String" MaxLength="50" FixedLength="true" Unicode="false" />
-          <Property Name="LetraFechaRecepcion" Type="DateTime" Precision="3" />
-          <Property Name="LetraDescuentoCuentaBancaria" Type="String" MaxLength="20" FixedLength="true" Unicode="false" />
-          <Property Name="LetraDescuentoIntereses" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="LetraDescuentoVoucherFlag" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
-          <Property Name="LetraDescuentoVoucher" Type="String" MaxLength="12" FixedLength="true" Unicode="false" />
-          <Property Name="LetraDescuentoCanjeFlag" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
-          <Property Name="LetraDescuentoCanjeVoucher" Type="String" MaxLength="12" FixedLength="true" Unicode="false" />
-          <Property Name="DescuentoFlag" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
-          <Property Name="APTransferidoFlag" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
-          <Property Name="APProcesoNumero" Type="Int32" />
-          <Property Name="APProcesoSecuencia" Type="Int32" />
-          <Property Name="CobranzaDudosaEstado" Type="String" MaxLength="2" FixedLength="true" Unicode="false" />
-          <Property Name="CobranzaDudosaVoucher" Type="String" MaxLength="12" FixedLength="true" Unicode="false" />
-          <Property Name="CobranzaDudosaVoucherClearing" Type="String" MaxLength="12" FixedLength="true" Unicode="false" />
-          <Property Name="CobranzaDudosaFecha" Type="DateTime" Precision="3" />
-          <Property Name="CobranzaDudosaFechaClearing" Type="DateTime" Precision="3" />
-          <Property Name="UnidadNegocio" Type="String" MaxLength="4" FixedLength="true" Unicode="false" />
-          <Property Name="UnidadReplicacion" Type="String" MaxLength="4" FixedLength="true" Unicode="false" />
-          <Property Name="ProcesoImportacion" Type="String" MaxLength="6" FixedLength="true" Unicode="false" />
-          <Property Name="ProcesoImportacionNumero" Type="String" MaxLength="15" FixedLength="true" Unicode="false" />
-          <Property Name="ProcesoImportacionFecha" Type="DateTime" Precision="3" />
-          <Property Name="Comentarios" Type="String" MaxLength="255" FixedLength="true" Unicode="false" />
-          <Property Name="ComentariosImprimirFlag" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
-          <Property Name="ComentariosMonto" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="NumeroInterno" Type="String" MaxLength="15" FixedLength="true" Unicode="false" />
-          <Property Name="RutaDespacho" Type="String" MaxLength="4" FixedLength="true" Unicode="false" />
-          <Property Name="Estado" Type="String" MaxLength="2" FixedLength="true" Unicode="false" />
-          <Property Name="UltimoUsuario" Type="String" MaxLength="20" FixedLength="true" Unicode="false" />
-          <Property Name="UltimaFechaModif" Type="DateTime" Precision="3" />
-          <Property Name="MontoRedondeo" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="LetraAceptadoFlag" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
-          <Property Name="ClienteContacto" Type="String" MaxLength="50" FixedLength="true" Unicode="false" />
-          <Property Name="ClienteDireccionSecuencia" Type="Int32" />
-          <Property Name="TransportistaChofer" Type="String" MaxLength="4" FixedLength="true" Unicode="false" />
-          <Property Name="TransportistaVehiculo" Type="String" MaxLength="10" FixedLength="true" Unicode="false" />
-          <Property Name="ReprogramacionMotivo" Type="String" MaxLength="50" FixedLength="true" Unicode="false" />
-          <Property Name="ReprogramacionPuntoPartida" Type="String" MaxLength="50" FixedLength="true" Unicode="false" />
-          <Property Name="ReprogramacionPuntoLlegada" Type="String" MaxLength="50" FixedLength="true" Unicode="false" />
-          <Property Name="APFechaTransferencia" Type="DateTime" Precision="3" />
-          <Property Name="DocumentosinDespachoFlag" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
-          <Property Name="DocumentosinCantidadFlag" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
-          <Property Name="RutaDespachoFechaAsignacion" Type="DateTime" Precision="3" />
-          <Property Name="RutaDespachoPlacaVehiculo" Type="String" MaxLength="10" FixedLength="true" Unicode="false" />
-          <Property Name="Cobrador" Type="Int32" />
-          <Property Name="LetraProtestoFlag" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
-          <Property Name="AprobadoPorDescuento" Type="Int32" />
-          <Property Name="FechaVencimientoOriginal" Type="DateTime" Precision="3" />
-          <Property Name="NumeroContrato" Type="String" MaxLength="20" FixedLength="true" Unicode="false" />
-          <Property Name="CentroCostoDestino" Type="String" MaxLength="6" FixedLength="true" Unicode="false" />
-          <Property Name="CobranzaDudosaMotivo" Type="String" MaxLength="4" FixedLength="true" Unicode="false" />
-          <Property Name="MontoImpuestoRetenido" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="TransferenciaGratuitaIGVFactor" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="LetraEstado" Type="String" MaxLength="2" FixedLength="true" Unicode="false" />
-          <Property Name="LetraDescuentoPortes" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="LetraProtestoFecha" Type="DateTime" Precision="3" />
-          <Property Name="LetraProtestoNDFlag" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
-          <Property Name="LetraEstadoAnterior" Type="String" MaxLength="2" FixedLength="true" Unicode="false" />
-          <Property Name="NumeroUnico" Type="String" MaxLength="20" FixedLength="true" Unicode="false" />
-          <Property Name="WEB_UsuarioMobil" Type="String" MaxLength="20" FixedLength="true" Unicode="false" />
-          <Property Name="WEB_Notaventa" Type="Decimal" Precision="9" Scale="0" />
-          <Property Name="NotaVenta" Type="String" MaxLength="10" FixedLength="true" Unicode="false" />
-          <Property Name="PlacaVehiculo" Type="String" MaxLength="10" FixedLength="true" Unicode="false" />
-          <Property Name="DespachoDireccionSecuencia" Type="Int32" />
-          <Property Name="DespachoVehiculoflag" Type="Int32" />
-          <Property Name="MontoComision" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="MontoComisionPagada" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="Comentario01" Type="String" MaxLength="255" FixedLength="true" Unicode="false" />
-          <Property Name="Comentario02" Type="String" MaxLength="255" FixedLength="true" Unicode="false" />
-          <Property Name="ClasificacionCobranza" Type="Int32" />
-          <Property Name="Comentario03" Type="String" MaxLength="255" FixedLength="true" Unicode="false" />
-          <Property Name="DocumentoElectronicoFlag" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
-          <Property Name="RecojoFlag" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
-          <Property Name="ClienteDireccionDespacho" Type="Int32" />
-          <Property Name="CotizacionNumero" Type="String" MaxLength="20" FixedLength="true" Unicode="false" />
-          <Property Name="FechaOrdenCompra" Type="DateTime" Precision="3" />
-          <Property Name="FechaRecepcion" Type="DateTime" Precision="3" />
-          <Property Name="ComentarioAprobacion" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="ObservacionFE" Type="String" MaxLength="255" FixedLength="true" Unicode="false" />
-          <Property Name="PrecioModificadoFlag" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
-          <Property Name="ProcesoFlag" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
-          <Property Name="ProduccionSecuencia" Type="Int32" />
-          <Property Name="SIAF_Correlativo" Type="String" MaxLength="4" FixedLength="true" Unicode="false" />
-          <Property Name="SIAF_Expediente" Type="String" MaxLength="10" FixedLength="true" Unicode="false" />
-          <Property Name="SIAF_FechaPago" Type="DateTime" Precision="3" />
-          <Property Name="SIAF_Secuencia" Type="String" MaxLength="4" FixedLength="true" Unicode="false" />
-          <Property Name="TransferProduccionFlag" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
-          <Property Name="NumeroEnvio" Type="Int32" />
-          <Property Name="MontoRetenidoFlag" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
-          <Property Name="NotaCreditoRelacionadas" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="LetraPortes" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="LetraPresentadaVoucher" Type="String" MaxLength="6" FixedLength="true" Unicode="false" />
-          <Property Name="LetraProtesto" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="LetraTipoNegociacion" Type="String" MaxLength="2" FixedLength="true" Unicode="false" />
-          <Property Name="LicitacionNumeroProceso" Type="String" MaxLength="20" FixedLength="true" Unicode="false" />
-          <Property Name="MEF_Estado" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
-          <Property Name="MontoPercepcion" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="MontoRetenido" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="ImpresionNumero" Type="Int32" />
-          <Property Name="INT_EstadoEnvio" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
-          <Property Name="INT_EstadoProceso" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
-          <Property Name="INT_Secuencial" Type="String" MaxLength="20" FixedLength="true" Unicode="false" />
-          <Property Name="LetraComisiones" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="LetraIntereses" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="LetraNumeroUnico" Type="String" MaxLength="30" FixedLength="true" Unicode="false" />
-          <Property Name="LetraPersona" Type="Int32" />
-          <Property Name="LetraPlanillaBanco" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="FEInternalNumber" Type="Int32" />
-          <Property Name="FENotaCreditoMotivo" Type="String" MaxLength="2" FixedLength="true" Unicode="false" />
-          <Property Name="FENotaCreditoSustento" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="FEResumenNumero" Type="Int32" />
-          <Property Name="flag_EstadoTransmision" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
-          <Property Name="flag_resumendiario" Type="Int32" />
-          <Property Name="flg_resumendiario" Type="Int32" />
-          <Property Name="DiferidoDocumento" Type="String" MaxLength="20" FixedLength="true" Unicode="false" />
-          <Property Name="DiferidoFlag" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
-          <Property Name="EstadoEnviadoTCI" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
-          <Property Name="EstadoSunat" Type="String" MaxLength="2" FixedLength="true" Unicode="false" />
-          <Property Name="exportacionsituacion" Type="String" MaxLength="2" FixedLength="true" Unicode="false" />
-          <Property Name="FechaImpresion" Type="DateTime" Precision="3" />
-          <Property Name="FechaIngreso" Type="DateTime" Precision="3" />
-          <Property Name="FEComunicadoNumero" Type="Int32" />
-          <Property Name="FEEstado" Type="String" MaxLength="2" FixedLength="true" Unicode="false" />
-          <Property Name="FEHashCode" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="DetraccionCodigo" Type="String" MaxLength="4" FixedLength="true" Unicode="false" />
-          <Property Name="DetraccionMontoLocal" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="DespachoFlag" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
-          <Property Name="DecripcionEstadoSunat" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
-          <Property Name="ComisionMonto" Type="Decimal" Precision="16" Scale="4" />
-          <Property Name="Comentario" Type="String" MaxLength="100" FixedLength="true" Unicode="false" />
-          <Property Name="Cajero" Type="Int32" />
-          <Property Name="AlmacenConsignacion" Type="String" MaxLength="10" FixedLength="true" Unicode="false" />
-          <Property Name="Cadena" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
-          <Property Name="ActividadEconomica" Type="String" MaxLength="4" FixedLength="true" Unicode="false" />
-          <Property Name="ArbitrioFlag" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
-          <Property Name="CanalVenta" Type="String" MaxLength="2" FixedLength="true" Unicode="false" />
-          <Property Name="CertificadoRetencion" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="CobranzaLegalFecha" Type="DateTime" Precision="3" />
-          <Property Name="CobranzaLegalVoucher" Type="String" MaxLength="12" FixedLength="true" Unicode="false" />
-          <Property Name="ComentarioAux1" Type="String" MaxLength="255" FixedLength="true" Unicode="false" />
-          <Property Name="ComentarioOrdenCompra" Type="String" MaxLength="255" FixedLength="true" Unicode="false" />
-          <Property Name="Contacto" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="ContratoSecuencia" Type="Int32" />
-          <Property Name="Convenio" Type="String" MaxLength="3" FixedLength="true" Unicode="false" />
-          <Property Name="CostoTotal" Type="Decimal" Precision="16" Scale="6" />
-          <Property Name="CostoTotalPromedio" Type="Decimal" Precision="16" Scale="6" />
-          <Property Name="DocumentoReferencia" Type="String" MaxLength="20" FixedLength="true" Unicode="false" />
-          <Property Name="EnTransporte" Type="String" MaxLength="2" FixedLength="true" Unicode="false" />
-          <Property Name="EquipoVenta" Type="String" MaxLength="3" FixedLength="true" Unicode="false" />
-          <Property Name="ESWEBFLAG" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
-          <Property Name="FechaAnulacion" Type="DateTime" Precision="3" />
-          <Property Name="FechaCanje" Type="DateTime" Precision="3" />
-          <Property Name="FechaDocOriginal" Type="DateTime" Precision="3" />
-          <Property Name="FechaInicioTraslado" Type="DateTime" Precision="3" />
-          <Property Name="FechaRecepcionADV" Type="DateTime" Precision="3" />
-          <Property Name="FechaVencimientoDOT" Type="DateTime" Precision="3" />
-          <Property Name="FEEnvioBaja" Type="Int32" />
-          <Property Name="FEENVIONUMERO" Type="Int32" />
-          <Property Name="flagnuevaversion" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
-          <Property Name="Flg_ComunicadoBaja" Type="Int32" />
-          <Property Name="IdPrefactura" Type="Int32" />
-          <Property Name="IDTransportista" Type="Int32" />
-          <Property Name="LATITUD_ENTREGA" Type="Decimal" Precision="16" Scale="6" />
-          <Property Name="LATITUDENTREGA" Type="Decimal" Precision="30" Scale="12" />
-          <Property Name="LetraVoucherDiferido" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
-          <Property Name="LONGITUD_ENTREGA" Type="Decimal" Precision="16" Scale="6" />
-          <Property Name="LONGITUDENTREGA" Type="Decimal" Precision="30" Scale="12" />
-          <Property Name="Margen" Type="Decimal" Precision="16" Scale="6" />
-          <Property Name="MargenPorcentaje" Type="Decimal" Precision="16" Scale="6" />
-          <Property Name="MargenPorcentajePromedio" Type="Decimal" Precision="16" Scale="6" />
-          <Property Name="MargenPromedio" Type="Decimal" Precision="16" Scale="6" />
-          <Property Name="MontoBruto" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="MontoConvenio" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="MontoDescuentosSISE" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="MontoFlete" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="MontoTotalLetra" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="MotivoAnulacion" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
-          <Property Name="MotivoNotaCredito" Type="String" MaxLength="4" FixedLength="true" Unicode="false" />
-          <Property Name="NotaCreditoMotivo" Type="String" MaxLength="2" FixedLength="true" Unicode="false" />
-          <Property Name="NotaCreditoSustento" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="NotaIngreso" Type="String" MaxLength="100" FixedLength="true" Unicode="false" />
-          <Property Name="NumeroCopias" Type="Int32" />
-          <Property Name="PedidoNumerado" Type="Int32" />
-          <Property Name="PercepcionDocumento" Type="String" MaxLength="14" FixedLength="true" Unicode="false" />
-          <Property Name="PercepcionPorcentaje" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="PromotorVenta" Type="Int32" />
-          <Property Name="REALIZADOPORWEB" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
-          <Property Name="ReferenciaCompaniaOrden" Type="String" MaxLength="8" FixedLength="true" Unicode="false" />
-          <Property Name="ReferenciaNumeroOrden" Type="String" MaxLength="10" FixedLength="true" Unicode="false" />
-          <Property Name="ReferenciaTipoPago" Type="String" MaxLength="2" FixedLength="true" Unicode="false" />
-          <Property Name="RequisicionNumero" Type="String" MaxLength="20" FixedLength="true" Unicode="false" />
-          <Property Name="SERIEDOCUMENTO" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
-          <Property Name="TipoCliente" Type="String" MaxLength="2" FixedLength="true" Unicode="false" />
-          <Property Name="TipodeCambioPactado" Type="Decimal" Precision="16" Scale="6" />
-          <Property Name="TIPODOCUMENTOVENTA" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
-          <Property Name="tipoformapagosunat" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
-          <Property Name="TipoMotivo" Type="String" MaxLength="2" FixedLength="true" Unicode="false" />
-          <Property Name="TransportistaBrevete" Type="String" MaxLength="11" FixedLength="false" Unicode="false" />
-          <Property Name="TransportistaDireccion" Type="String" MaxLength="190" FixedLength="false" Unicode="false" />
-          <Property Name="TransportistaMarca" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="TransportistaNombre" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="TransportistaPlaca" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="TransportistaProvincia" Type="Int32" />
-          <Property Name="TransportistaRUC" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="ValidezOferta" Type="Decimal" Precision="10" Scale="2" />
-          <Property Name="Vendedor_all" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
-          <Property Name="VentaSeparadoFlag" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
-          <Property Name="SpringCodigo" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
-          <Property Name="MotivoComunicado" Type="String" MaxLength="49" FixedLength="true" Unicode="false" />
-          <Property Name="ObservacionEstadoFE" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
-          <Property Name="FechaRegistroResumen" Type="DateTime" Precision="3" />
-          <Property Name="TramaFormaPago" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
-          <Property Name="MontoPendientePago" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="CodigoQR" Type="String" MaxLength="500" FixedLength="true" Unicode="false" />
-          <Property Name="VentaEquipo" Type="String" MaxLength="3" FixedLength="true" Unicode="false" />
-          <NavigationProperty Name="CO_DocumentoDetalle" Relationship="RTGModel.FK__CO_DocumentoDeta__5190CC5F" FromRole="CO_Documento" ToRole="CO_DocumentoDetalle" />
-          <NavigationProperty Name="CO_DocumentoDetalle1" Relationship="RTGModel.FK__CO_DocumentoDeta__5284F098" FromRole="CO_Documento" ToRole="CO_DocumentoDetalle" />
-          <NavigationProperty Name="CO_DocumentoDetalle2" Relationship="RTGModel.FK__CO_DocumentoDeta__5A3BEC50" FromRole="CO_Documento" ToRole="CO_DocumentoDetalle" />
-          <NavigationProperty Name="CO_DocumentoDetalle3" Relationship="RTGModel.FK__CO_DocumentoDeta__5B301089" FromRole="CO_Documento" ToRole="CO_DocumentoDetalle" />
-          <NavigationProperty Name="CO_DocumentoImpuesto" Relationship="RTGModel.FK__CO_DocumentoImpu__4AE3CED0" FromRole="CO_Documento" ToRole="CO_DocumentoImpuesto" />
-          <NavigationProperty Name="CO_DocumentoImpuesto1" Relationship="RTGModel.FK__CO_DocumentoImpu__4BD7F309" FromRole="CO_Documento" ToRole="CO_DocumentoImpuesto" />
-          <NavigationProperty Name="CO_DocumentoImpuesto2" Relationship="RTGModel.FK__CO_DocumentoImpu__548312FA" FromRole="CO_Documento" ToRole="CO_DocumentoImpuesto" />
-          <NavigationProperty Name="CO_DocumentoImpuesto3" Relationship="RTGModel.FK__CO_DocumentoImpu__55773733" FromRole="CO_Documento" ToRole="CO_DocumentoImpuesto" />
-          <NavigationProperty Name="CO_DocumentoDetalleDespacho" Relationship="RTGModel.FK_CO_DocumentoDetalleDespacho_CO_Documento" FromRole="CO_Documento" ToRole="CO_DocumentoDetalleDespacho" />
         </EntityType>
         <EntityType Name="CO_DocumentoDespacho">
           <Key>
@@ -2177,11 +1903,12 @@
           <Property Name="TransferenciaBonificacionFlag" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
           <Property Name="TransferenciaRepresentacionFla" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
           <Property Name="SpringCodigo" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="CantidadDevolucion" Type="Decimal" Precision="19" Scale="4" />
           <NavigationProperty Name="CO_Documento" Relationship="RTGModel.FK__CO_DocumentoDeta__5190CC5F" FromRole="CO_DocumentoDetalle" ToRole="CO_Documento" />
           <NavigationProperty Name="CO_Documento1" Relationship="RTGModel.FK__CO_DocumentoDeta__5284F098" FromRole="CO_DocumentoDetalle" ToRole="CO_Documento" />
           <NavigationProperty Name="CO_Documento2" Relationship="RTGModel.FK__CO_DocumentoDeta__5A3BEC50" FromRole="CO_DocumentoDetalle" ToRole="CO_Documento" />
           <NavigationProperty Name="CO_Documento3" Relationship="RTGModel.FK__CO_DocumentoDeta__5B301089" FromRole="CO_DocumentoDetalle" ToRole="CO_Documento" />
-        </EntityType>
+          </EntityType>
         <EntityType Name="CO_DocumentoDetalleDespacho">
           <Key>
             <PropertyRef Name="CompaniaSocio" />
@@ -2235,7 +1962,7 @@
           <NavigationProperty Name="CO_Documento1" Relationship="RTGModel.FK__CO_DocumentoImpu__4BD7F309" FromRole="CO_DocumentoImpuesto" ToRole="CO_Documento" />
           <NavigationProperty Name="CO_Documento2" Relationship="RTGModel.FK__CO_DocumentoImpu__548312FA" FromRole="CO_DocumentoImpuesto" ToRole="CO_Documento" />
           <NavigationProperty Name="CO_Documento3" Relationship="RTGModel.FK__CO_DocumentoImpu__55773733" FromRole="CO_DocumentoImpuesto" ToRole="CO_Documento" />
-        </EntityType>
+          </EntityType>
         <EntityType Name="CorrelativosMast">
           <Key>
             <PropertyRef Name="CompaniaCodigo" />
@@ -2294,150 +2021,6 @@
           <Property Name="HoraInicioAp" Type="String" MaxLength="10" FixedLength="true" Unicode="false" />
           <Property Name="PersonaNumero" Type="Int32" />
         </EntityType>
-        <Association Name="FK__CO_DocumentoDeta__5190CC5F">
-          <End Type="RTGModel.CO_Documento" Role="CO_Documento" Multiplicity="1" />
-          <End Type="RTGModel.CO_DocumentoDetalle" Role="CO_DocumentoDetalle" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="CO_Documento">
-              <PropertyRef Name="CompaniaSocio" />
-              <PropertyRef Name="TipoDocumento" />
-              <PropertyRef Name="NumeroDocumento" />
-            </Principal>
-            <Dependent Role="CO_DocumentoDetalle">
-              <PropertyRef Name="CompaniaSocio" />
-              <PropertyRef Name="TipoDocumento" />
-              <PropertyRef Name="NumeroDocumento" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__CO_DocumentoDeta__5284F098">
-          <End Type="RTGModel.CO_Documento" Role="CO_Documento" Multiplicity="1" />
-          <End Type="RTGModel.CO_DocumentoDetalle" Role="CO_DocumentoDetalle" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="CO_Documento">
-              <PropertyRef Name="CompaniaSocio" />
-              <PropertyRef Name="TipoDocumento" />
-              <PropertyRef Name="NumeroDocumento" />
-            </Principal>
-            <Dependent Role="CO_DocumentoDetalle">
-              <PropertyRef Name="CompaniaSocio" />
-              <PropertyRef Name="TipoDocumento" />
-              <PropertyRef Name="NumeroDocumento" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__CO_DocumentoDeta__5A3BEC50">
-          <End Type="RTGModel.CO_Documento" Role="CO_Documento" Multiplicity="1" />
-          <End Type="RTGModel.CO_DocumentoDetalle" Role="CO_DocumentoDetalle" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="CO_Documento">
-              <PropertyRef Name="CompaniaSocio" />
-              <PropertyRef Name="TipoDocumento" />
-              <PropertyRef Name="NumeroDocumento" />
-            </Principal>
-            <Dependent Role="CO_DocumentoDetalle">
-              <PropertyRef Name="CompaniaSocio" />
-              <PropertyRef Name="TipoDocumento" />
-              <PropertyRef Name="NumeroDocumento" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__CO_DocumentoDeta__5B301089">
-          <End Type="RTGModel.CO_Documento" Role="CO_Documento" Multiplicity="1" />
-          <End Type="RTGModel.CO_DocumentoDetalle" Role="CO_DocumentoDetalle" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="CO_Documento">
-              <PropertyRef Name="CompaniaSocio" />
-              <PropertyRef Name="TipoDocumento" />
-              <PropertyRef Name="NumeroDocumento" />
-            </Principal>
-            <Dependent Role="CO_DocumentoDetalle">
-              <PropertyRef Name="CompaniaSocio" />
-              <PropertyRef Name="TipoDocumento" />
-              <PropertyRef Name="NumeroDocumento" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__CO_DocumentoImpu__4AE3CED0">
-          <End Type="RTGModel.CO_Documento" Role="CO_Documento" Multiplicity="1" />
-          <End Type="RTGModel.CO_DocumentoImpuesto" Role="CO_DocumentoImpuesto" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="CO_Documento">
-              <PropertyRef Name="CompaniaSocio" />
-              <PropertyRef Name="TipoDocumento" />
-              <PropertyRef Name="NumeroDocumento" />
-            </Principal>
-            <Dependent Role="CO_DocumentoImpuesto">
-              <PropertyRef Name="CompaniaSocio" />
-              <PropertyRef Name="TipoDocumento" />
-              <PropertyRef Name="NumeroDocumento" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__CO_DocumentoImpu__4BD7F309">
-          <End Type="RTGModel.CO_Documento" Role="CO_Documento" Multiplicity="1" />
-          <End Type="RTGModel.CO_DocumentoImpuesto" Role="CO_DocumentoImpuesto" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="CO_Documento">
-              <PropertyRef Name="CompaniaSocio" />
-              <PropertyRef Name="TipoDocumento" />
-              <PropertyRef Name="NumeroDocumento" />
-            </Principal>
-            <Dependent Role="CO_DocumentoImpuesto">
-              <PropertyRef Name="CompaniaSocio" />
-              <PropertyRef Name="TipoDocumento" />
-              <PropertyRef Name="NumeroDocumento" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__CO_DocumentoImpu__548312FA">
-          <End Type="RTGModel.CO_Documento" Role="CO_Documento" Multiplicity="1" />
-          <End Type="RTGModel.CO_DocumentoImpuesto" Role="CO_DocumentoImpuesto" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="CO_Documento">
-              <PropertyRef Name="CompaniaSocio" />
-              <PropertyRef Name="TipoDocumento" />
-              <PropertyRef Name="NumeroDocumento" />
-            </Principal>
-            <Dependent Role="CO_DocumentoImpuesto">
-              <PropertyRef Name="CompaniaSocio" />
-              <PropertyRef Name="TipoDocumento" />
-              <PropertyRef Name="NumeroDocumento" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__CO_DocumentoImpu__55773733">
-          <End Type="RTGModel.CO_Documento" Role="CO_Documento" Multiplicity="1" />
-          <End Type="RTGModel.CO_DocumentoImpuesto" Role="CO_DocumentoImpuesto" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="CO_Documento">
-              <PropertyRef Name="CompaniaSocio" />
-              <PropertyRef Name="TipoDocumento" />
-              <PropertyRef Name="NumeroDocumento" />
-            </Principal>
-            <Dependent Role="CO_DocumentoImpuesto">
-              <PropertyRef Name="CompaniaSocio" />
-              <PropertyRef Name="TipoDocumento" />
-              <PropertyRef Name="NumeroDocumento" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_CO_DocumentoDetalleDespacho_CO_Documento">
-          <End Type="RTGModel.CO_Documento" Role="CO_Documento" Multiplicity="1" />
-          <End Type="RTGModel.CO_DocumentoDetalleDespacho" Role="CO_DocumentoDetalleDespacho" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="CO_Documento">
-              <PropertyRef Name="CompaniaSocio" />
-              <PropertyRef Name="TipoDocumento" />
-              <PropertyRef Name="NumeroDocumento" />
-            </Principal>
-            <Dependent Role="CO_DocumentoDetalleDespacho">
-              <PropertyRef Name="CompaniaSocio" />
-              <PropertyRef Name="TipoDocumento" />
-              <PropertyRef Name="NumeroDocumento" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="Direccion">
           <Key>
             <PropertyRef Name="Persona" />
@@ -2815,6 +2398,8 @@
           <NavigationProperty Name="CO_OperacionCanjeDetalle5" Relationship="RTGModel.FK__CO_OperacionCanj__7D9A3726" FromRole="CO_OperacionCanje" ToRole="CO_OperacionCanjeDetalle" />
           <NavigationProperty Name="CO_OperacionCanjeDetalle6" Relationship="RTGModel.FK__CO_OperacionCanj__7E8E5B5F" FromRole="CO_OperacionCanje" ToRole="CO_OperacionCanjeDetalle" />
           <NavigationProperty Name="CO_OperacionCanjeDetalle7" Relationship="RTGModel.FK__CO_OperacionCanj__7F827F98" FromRole="CO_OperacionCanje" ToRole="CO_OperacionCanjeDetalle" />
+          <Property Name="FormaPago" Type="String" MaxLength="4" FixedLength="true" Unicode="false" />
+          <Property Name="AutorizarDiasAdicFlag" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
         </EntityType>
         <EntityType Name="CO_OperacionCanjeComentario">
           <Key>
@@ -2852,6 +2437,8 @@
           <NavigationProperty Name="CO_OperacionCanje5" Relationship="RTGModel.FK__CO_OperacionCanj__7D9A3726" FromRole="CO_OperacionCanjeDetalle" ToRole="CO_OperacionCanje" />
           <NavigationProperty Name="CO_OperacionCanje6" Relationship="RTGModel.FK__CO_OperacionCanj__7E8E5B5F" FromRole="CO_OperacionCanjeDetalle" ToRole="CO_OperacionCanje" />
           <NavigationProperty Name="CO_OperacionCanje7" Relationship="RTGModel.FK__CO_OperacionCanj__7F827F98" FromRole="CO_OperacionCanjeDetalle" ToRole="CO_OperacionCanje" />
+          <Property Name="Dias" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="FechaVencimiento" Type="DateTime" Precision="3" />
         </EntityType>
         <Association Name="FK__CO_OperacionCanj__0076A3D1">
           <End Type="RTGModel.CO_OperacionCanje" Role="CO_OperacionCanje" Multiplicity="1" />
@@ -2962,6 +2549,445 @@
             <Dependent Role="CO_OperacionCanjeDetalle">
               <PropertyRef Name="CompaniaSocio" />
               <PropertyRef Name="OperacionCanjeNumero" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="CO_Documento">
+          <Key>
+            <PropertyRef Name="CompaniaSocio" />
+            <PropertyRef Name="TipoDocumento" />
+            <PropertyRef Name="NumeroDocumento" />
+          </Key>
+          <Property Name="CompaniaSocio" Type="String" Nullable="false" MaxLength="8" FixedLength="true" Unicode="false" />
+          <Property Name="TipoDocumento" Type="String" Nullable="false" MaxLength="2" FixedLength="true" Unicode="false" />
+          <Property Name="NumeroDocumento" Type="String" Nullable="false" MaxLength="14" FixedLength="true" Unicode="false" />
+          <Property Name="EstablecimientoCodigo" Type="String" MaxLength="4" FixedLength="true" Unicode="false" />
+          <Property Name="FormaFacturacion" Type="String" MaxLength="2" FixedLength="true" Unicode="false" />
+          <Property Name="ClienteNumero" Type="Int32" />
+          <Property Name="ClienteRUC" Type="String" MaxLength="20" FixedLength="true" Unicode="false" />
+          <Property Name="ClienteNombre" Type="String" MaxLength="60" FixedLength="true" Unicode="false" />
+          <Property Name="ClienteDireccion" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="ClienteReferencia" Type="String" MaxLength="15" FixedLength="true" Unicode="false" />
+          <Property Name="ClienteCobrarA" Type="Int32" />
+          <Property Name="FechaDocumento" Type="DateTime" Precision="3" />
+          <Property Name="FechaVencimiento" Type="DateTime" Precision="3" />
+          <Property Name="TipoFacturacion" Type="String" MaxLength="3" FixedLength="true" Unicode="false" />
+          <Property Name="TipoVenta" Type="String" MaxLength="3" FixedLength="true" Unicode="false" />
+          <Property Name="ConceptoFacturacion" Type="String" MaxLength="3" FixedLength="true" Unicode="false" />
+          <Property Name="FormadePago" Type="String" MaxLength="3" FixedLength="true" Unicode="false" />
+          <Property Name="Criteria" Type="String" MaxLength="20" FixedLength="true" Unicode="false" />
+          <Property Name="Vendedor" Type="Int32" />
+          <Property Name="TipodeCambio" Type="Decimal" Precision="10" Scale="3" />
+          <Property Name="MonedaDocumento" Type="String" MaxLength="2" FixedLength="true" Unicode="false" />
+          <Property Name="MontoAfecto" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="MontoNoAfecto" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="MontoImpuestoVentas" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="MontoImpuestos" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="MontoDescuentos" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="MontoTotal" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="MontoPagado" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="MontoAdelantoSaldo" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="PreparadoPor" Type="Int32" />
+          <Property Name="AprobadoPor" Type="Int32" />
+          <Property Name="FechaPreparacion" Type="DateTime" Precision="3" />
+          <Property Name="FechaAprobacion" Type="DateTime" Precision="3" />
+          <Property Name="NotaCreditoDocumento" Type="String" MaxLength="17" FixedLength="true" Unicode="false" />
+          <Property Name="ComercialPedidoNumero" Type="String" MaxLength="17" FixedLength="true" Unicode="false" />
+          <Property Name="ComercialPedidoFechaRequerida" Type="DateTime" Precision="3" />
+          <Property Name="AlmacenCodigo" Type="String" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="ImpresionPendienteFlag" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="DocumentoMoraFlag" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="ContabilizacionPendienteFlag" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="VoucherPeriodo" Type="String" MaxLength="6" FixedLength="true" Unicode="false" />
+          <Property Name="VoucherNo" Type="String" MaxLength="6" FixedLength="true" Unicode="false" />
+          <Property Name="VoucherAnulacion" Type="String" MaxLength="12" FixedLength="true" Unicode="false" />
+          <Property Name="CentroCosto" Type="String" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="Proyecto" Type="String" MaxLength="15" FixedLength="true" Unicode="false" />
+          <Property Name="CampoReferencia" Type="String" MaxLength="12" FixedLength="true" Unicode="false" />
+          <Property Name="Sucursal" Type="String" MaxLength="4" FixedLength="true" Unicode="false" />
+          <Property Name="TipoCanjeFactura" Type="String" MaxLength="2" FixedLength="true" Unicode="false" />
+          <Property Name="LetraCarteraFlag" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="LetraBanco" Type="String" MaxLength="3" FixedLength="true" Unicode="false" />
+          <Property Name="LetraCobranzaNumero" Type="String" MaxLength="30" FixedLength="true" Unicode="false" />
+          <Property Name="LetraAvalNombre" Type="String" MaxLength="60" FixedLength="true" Unicode="false" />
+          <Property Name="LetraAvalRUC" Type="String" MaxLength="20" FixedLength="true" Unicode="false" />
+          <Property Name="LetraAvalDireccion" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="LetraAvalTelefono" Type="String" MaxLength="20" FixedLength="true" Unicode="false" />
+          <Property Name="LetraAceptadoPor" Type="String" MaxLength="50" FixedLength="true" Unicode="false" />
+          <Property Name="LetraUbicacion" Type="String" MaxLength="50" FixedLength="true" Unicode="false" />
+          <Property Name="LetraFechaRecepcion" Type="DateTime" Precision="3" />
+          <Property Name="LetraDescuentoCuentaBancaria" Type="String" MaxLength="20" FixedLength="true" Unicode="false" />
+          <Property Name="LetraDescuentoIntereses" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="LetraDescuentoVoucherFlag" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="LetraDescuentoVoucher" Type="String" MaxLength="12" FixedLength="true" Unicode="false" />
+          <Property Name="LetraDescuentoCanjeFlag" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="LetraDescuentoCanjeVoucher" Type="String" MaxLength="12" FixedLength="true" Unicode="false" />
+          <Property Name="DescuentoFlag" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="APTransferidoFlag" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="APProcesoNumero" Type="Int32" />
+          <Property Name="APProcesoSecuencia" Type="Int32" />
+          <Property Name="CobranzaDudosaEstado" Type="String" MaxLength="2" FixedLength="true" Unicode="false" />
+          <Property Name="CobranzaDudosaVoucher" Type="String" MaxLength="12" FixedLength="true" Unicode="false" />
+          <Property Name="CobranzaDudosaVoucherClearing" Type="String" MaxLength="12" FixedLength="true" Unicode="false" />
+          <Property Name="CobranzaDudosaFecha" Type="DateTime" Precision="3" />
+          <Property Name="CobranzaDudosaFechaClearing" Type="DateTime" Precision="3" />
+          <Property Name="UnidadNegocio" Type="String" MaxLength="4" FixedLength="true" Unicode="false" />
+          <Property Name="UnidadReplicacion" Type="String" MaxLength="4" FixedLength="true" Unicode="false" />
+          <Property Name="ProcesoImportacion" Type="String" MaxLength="6" FixedLength="true" Unicode="false" />
+          <Property Name="ProcesoImportacionNumero" Type="String" MaxLength="15" FixedLength="true" Unicode="false" />
+          <Property Name="ProcesoImportacionFecha" Type="DateTime" Precision="3" />
+          <Property Name="Comentarios" Type="String" MaxLength="255" FixedLength="true" Unicode="false" />
+          <Property Name="ComentariosImprimirFlag" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="ComentariosMonto" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="NumeroInterno" Type="String" MaxLength="15" FixedLength="true" Unicode="false" />
+          <Property Name="RutaDespacho" Type="String" MaxLength="4" FixedLength="true" Unicode="false" />
+          <Property Name="Estado" Type="String" MaxLength="2" FixedLength="true" Unicode="false" />
+          <Property Name="UltimoUsuario" Type="String" MaxLength="20" FixedLength="true" Unicode="false" />
+          <Property Name="UltimaFechaModif" Type="DateTime" Precision="3" />
+          <Property Name="MontoRedondeo" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="LetraAceptadoFlag" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="ClienteContacto" Type="String" MaxLength="50" FixedLength="true" Unicode="false" />
+          <Property Name="ClienteDireccionSecuencia" Type="Int32" />
+          <Property Name="TransportistaChofer" Type="String" MaxLength="4" FixedLength="true" Unicode="false" />
+          <Property Name="TransportistaVehiculo" Type="String" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="ReprogramacionMotivo" Type="String" MaxLength="50" FixedLength="true" Unicode="false" />
+          <Property Name="ReprogramacionPuntoPartida" Type="String" MaxLength="50" FixedLength="true" Unicode="false" />
+          <Property Name="ReprogramacionPuntoLlegada" Type="String" MaxLength="50" FixedLength="true" Unicode="false" />
+          <Property Name="APFechaTransferencia" Type="DateTime" Precision="3" />
+          <Property Name="DocumentosinDespachoFlag" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="DocumentosinCantidadFlag" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="RutaDespachoFechaAsignacion" Type="DateTime" Precision="3" />
+          <Property Name="RutaDespachoPlacaVehiculo" Type="String" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="Cobrador" Type="Int32" />
+          <Property Name="LetraProtestoFlag" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="AprobadoPorDescuento" Type="Int32" />
+          <Property Name="FechaVencimientoOriginal" Type="DateTime" Precision="3" />
+          <Property Name="NumeroContrato" Type="String" MaxLength="20" FixedLength="true" Unicode="false" />
+          <Property Name="CentroCostoDestino" Type="String" MaxLength="6" FixedLength="true" Unicode="false" />
+          <Property Name="CobranzaDudosaMotivo" Type="String" MaxLength="4" FixedLength="true" Unicode="false" />
+          <Property Name="MontoImpuestoRetenido" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="TransferenciaGratuitaIGVFactor" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="LetraEstado" Type="String" MaxLength="2" FixedLength="true" Unicode="false" />
+          <Property Name="LetraDescuentoPortes" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="LetraProtestoFecha" Type="DateTime" Precision="3" />
+          <Property Name="LetraProtestoNDFlag" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="LetraEstadoAnterior" Type="String" MaxLength="2" FixedLength="true" Unicode="false" />
+          <Property Name="NumeroUnico" Type="String" MaxLength="20" FixedLength="true" Unicode="false" />
+          <Property Name="WEB_UsuarioMobil" Type="String" MaxLength="20" FixedLength="true" Unicode="false" />
+          <Property Name="WEB_Notaventa" Type="Decimal" Precision="9" Scale="0" />
+          <Property Name="NotaVenta" Type="String" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="PlacaVehiculo" Type="String" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="DespachoDireccionSecuencia" Type="Int32" />
+          <Property Name="DespachoVehiculoflag" Type="Int32" />
+          <Property Name="MontoComision" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="MontoComisionPagada" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="Comentario01" Type="String" MaxLength="255" FixedLength="true" Unicode="false" />
+          <Property Name="Comentario02" Type="String" MaxLength="255" FixedLength="true" Unicode="false" />
+          <Property Name="ClasificacionCobranza" Type="Int32" />
+          <Property Name="Comentario03" Type="String" MaxLength="255" FixedLength="true" Unicode="false" />
+          <Property Name="DocumentoElectronicoFlag" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="RecojoFlag" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="ClienteDireccionDespacho" Type="Int32" />
+          <Property Name="CotizacionNumero" Type="String" MaxLength="20" FixedLength="true" Unicode="false" />
+          <Property Name="FechaOrdenCompra" Type="DateTime" Precision="3" />
+          <Property Name="FechaRecepcion" Type="DateTime" Precision="3" />
+          <Property Name="ComentarioAprobacion" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="ObservacionFE" Type="String" MaxLength="255" FixedLength="true" Unicode="false" />
+          <Property Name="PrecioModificadoFlag" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="ProcesoFlag" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="ProduccionSecuencia" Type="Int32" />
+          <Property Name="SIAF_Correlativo" Type="String" MaxLength="4" FixedLength="true" Unicode="false" />
+          <Property Name="SIAF_Expediente" Type="String" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="SIAF_FechaPago" Type="DateTime" Precision="3" />
+          <Property Name="SIAF_Secuencia" Type="String" MaxLength="4" FixedLength="true" Unicode="false" />
+          <Property Name="TransferProduccionFlag" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="NumeroEnvio" Type="Int32" />
+          <Property Name="MontoRetenidoFlag" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="NotaCreditoRelacionadas" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="LetraPortes" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="LetraPresentadaVoucher" Type="String" MaxLength="6" FixedLength="true" Unicode="false" />
+          <Property Name="LetraProtesto" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="LetraTipoNegociacion" Type="String" MaxLength="2" FixedLength="true" Unicode="false" />
+          <Property Name="LicitacionNumeroProceso" Type="String" MaxLength="20" FixedLength="true" Unicode="false" />
+          <Property Name="MEF_Estado" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="MontoPercepcion" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="MontoRetenido" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="ImpresionNumero" Type="Int32" />
+          <Property Name="INT_EstadoEnvio" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="INT_EstadoProceso" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="INT_Secuencial" Type="String" MaxLength="20" FixedLength="true" Unicode="false" />
+          <Property Name="LetraComisiones" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="LetraIntereses" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="LetraNumeroUnico" Type="String" MaxLength="30" FixedLength="true" Unicode="false" />
+          <Property Name="LetraPersona" Type="Int32" />
+          <Property Name="LetraPlanillaBanco" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="FEInternalNumber" Type="Int32" />
+          <Property Name="FENotaCreditoMotivo" Type="String" MaxLength="2" FixedLength="true" Unicode="false" />
+          <Property Name="FENotaCreditoSustento" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FEResumenNumero" Type="Int32" />
+          <Property Name="flag_EstadoTransmision" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="flag_resumendiario" Type="Int32" />
+          <Property Name="flg_resumendiario" Type="Int32" />
+          <Property Name="DiferidoDocumento" Type="String" MaxLength="20" FixedLength="true" Unicode="false" />
+          <Property Name="DiferidoFlag" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="EstadoEnviadoTCI" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="EstadoSunat" Type="String" MaxLength="2" FixedLength="true" Unicode="false" />
+          <Property Name="exportacionsituacion" Type="String" MaxLength="2" FixedLength="true" Unicode="false" />
+          <Property Name="FechaImpresion" Type="DateTime" Precision="3" />
+          <Property Name="FechaIngreso" Type="DateTime" Precision="3" />
+          <Property Name="FEComunicadoNumero" Type="Int32" />
+          <Property Name="FEEstado" Type="String" MaxLength="2" FixedLength="true" Unicode="false" />
+          <Property Name="FEHashCode" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="DetraccionCodigo" Type="String" MaxLength="4" FixedLength="true" Unicode="false" />
+          <Property Name="DetraccionMontoLocal" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="DespachoFlag" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="DecripcionEstadoSunat" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="ComisionMonto" Type="Decimal" Precision="16" Scale="4" />
+          <Property Name="Comentario" Type="String" MaxLength="100" FixedLength="true" Unicode="false" />
+          <Property Name="Cajero" Type="Int32" />
+          <Property Name="AlmacenConsignacion" Type="String" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="Cadena" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
+          <Property Name="ActividadEconomica" Type="String" MaxLength="4" FixedLength="true" Unicode="false" />
+          <Property Name="ArbitrioFlag" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="CanalVenta" Type="String" MaxLength="2" FixedLength="true" Unicode="false" />
+          <Property Name="CertificadoRetencion" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="CobranzaLegalFecha" Type="DateTime" Precision="3" />
+          <Property Name="CobranzaLegalVoucher" Type="String" MaxLength="12" FixedLength="true" Unicode="false" />
+          <Property Name="ComentarioAux1" Type="String" MaxLength="255" FixedLength="true" Unicode="false" />
+          <Property Name="ComentarioOrdenCompra" Type="String" MaxLength="255" FixedLength="true" Unicode="false" />
+          <Property Name="Contacto" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="ContratoSecuencia" Type="Int32" />
+          <Property Name="Convenio" Type="String" MaxLength="3" FixedLength="true" Unicode="false" />
+          <Property Name="CostoTotal" Type="Decimal" Precision="16" Scale="6" />
+          <Property Name="CostoTotalPromedio" Type="Decimal" Precision="16" Scale="6" />
+          <Property Name="EnTransporte" Type="String" MaxLength="2" FixedLength="true" Unicode="false" />
+          <Property Name="EquipoVenta" Type="String" MaxLength="3" FixedLength="true" Unicode="false" />
+          <Property Name="ESWEBFLAG" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="FechaAnulacion" Type="DateTime" Precision="3" />
+          <Property Name="FechaCanje" Type="DateTime" Precision="3" />
+          <Property Name="FechaDocOriginal" Type="DateTime" Precision="3" />
+          <Property Name="FechaInicioTraslado" Type="DateTime" Precision="3" />
+          <Property Name="FechaRecepcionADV" Type="DateTime" Precision="3" />
+          <Property Name="FechaVencimientoDOT" Type="DateTime" Precision="3" />
+          <Property Name="FEEnvioBaja" Type="Int32" />
+          <Property Name="FEENVIONUMERO" Type="Int32" />
+          <Property Name="flagnuevaversion" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="Flg_ComunicadoBaja" Type="Int32" />
+          <Property Name="IdPrefactura" Type="Int32" />
+          <Property Name="IDTransportista" Type="Int32" />
+          <Property Name="LATITUD_ENTREGA" Type="Decimal" Precision="16" Scale="6" />
+          <Property Name="LATITUDENTREGA" Type="Decimal" Precision="30" Scale="12" />
+          <Property Name="LetraVoucherDiferido" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
+          <Property Name="LONGITUD_ENTREGA" Type="Decimal" Precision="16" Scale="6" />
+          <Property Name="LONGITUDENTREGA" Type="Decimal" Precision="30" Scale="12" />
+          <Property Name="Margen" Type="Decimal" Precision="16" Scale="6" />
+          <Property Name="MargenPorcentaje" Type="Decimal" Precision="16" Scale="6" />
+          <Property Name="MargenPorcentajePromedio" Type="Decimal" Precision="16" Scale="6" />
+          <Property Name="MargenPromedio" Type="Decimal" Precision="16" Scale="6" />
+          <Property Name="MontoBruto" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="MontoConvenio" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="MontoDescuentosSISE" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="MontoFlete" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="MontoTotalLetra" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="MotivoAnulacion" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Name="MotivoNotaCredito" Type="String" MaxLength="4" FixedLength="true" Unicode="false" />
+          <Property Name="NotaCreditoMotivo" Type="String" MaxLength="2" FixedLength="true" Unicode="false" />
+          <Property Name="NotaCreditoSustento" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="NotaIngreso" Type="String" MaxLength="100" FixedLength="true" Unicode="false" />
+          <Property Name="NumeroCopias" Type="Int32" />
+          <Property Name="PedidoNumerado" Type="Int32" />
+          <Property Name="PercepcionDocumento" Type="String" MaxLength="14" FixedLength="true" Unicode="false" />
+          <Property Name="PercepcionPorcentaje" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="PromotorVenta" Type="Int32" />
+          <Property Name="REALIZADOPORWEB" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="ReferenciaCompaniaOrden" Type="String" MaxLength="8" FixedLength="true" Unicode="false" />
+          <Property Name="ReferenciaNumeroOrden" Type="String" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="ReferenciaTipoPago" Type="String" MaxLength="2" FixedLength="true" Unicode="false" />
+          <Property Name="RequisicionNumero" Type="String" MaxLength="20" FixedLength="true" Unicode="false" />
+          <Property Name="SERIEDOCUMENTO" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="TipoCliente" Type="String" MaxLength="2" FixedLength="true" Unicode="false" />
+          <Property Name="TipodeCambioPactado" Type="Decimal" Precision="16" Scale="6" />
+          <Property Name="TIPODOCUMENTOVENTA" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="tipoformapagosunat" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="TipoMotivo" Type="String" MaxLength="2" FixedLength="true" Unicode="false" />
+          <Property Name="TransportistaBrevete" Type="String" MaxLength="11" FixedLength="false" Unicode="false" />
+          <Property Name="TransportistaDireccion" Type="String" MaxLength="190" FixedLength="false" Unicode="false" />
+          <Property Name="TransportistaMarca" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="TransportistaNombre" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="TransportistaPlaca" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="TransportistaProvincia" Type="Int32" />
+          <Property Name="TransportistaRUC" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="ValidezOferta" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="Vendedor_all" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="VentaSeparadoFlag" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="SpringCodigo" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="MotivoComunicado" Type="String" MaxLength="49" FixedLength="true" Unicode="false" />
+          <Property Name="ObservacionEstadoFE" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="FechaRegistroResumen" Type="DateTime" Precision="3" />
+          <Property Name="TramaFormaPago" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="MontoPendientePago" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="CodigoQR" Type="String" MaxLength="500" FixedLength="true" Unicode="false" />
+          <Property Name="VentaEquipo" Type="String" MaxLength="3" FixedLength="true" Unicode="false" />
+          <Property Name="documentoreferencia" Type="String" MaxLength="30" FixedLength="true" Unicode="false" />
+          <Property Name="AutPedidoAdelantFlag" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="AutPedidoContadoFlag" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="AutorizarAnulacionFlag" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="FlagEnEspera" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="DOTNumero" Type="String" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="DOTEstado" Type="String" MaxLength="2" FixedLength="true" Unicode="false" />
+          <Property Name="FechaAprobPed" Type="DateTime" Precision="3" />
+          <Property Name="UsuarioAprobPed" Type="String" MaxLength="20" FixedLength="true" Unicode="false" />
+          <NavigationProperty Name="CO_DocumentoDetalle" Relationship="RTGModel.FK__CO_DocumentoDeta__5190CC5F" FromRole="CO_Documento" ToRole="CO_DocumentoDetalle" />
+          <NavigationProperty Name="CO_DocumentoDetalle1" Relationship="RTGModel.FK__CO_DocumentoDeta__5284F098" FromRole="CO_Documento" ToRole="CO_DocumentoDetalle" />
+          <NavigationProperty Name="CO_DocumentoDetalle2" Relationship="RTGModel.FK__CO_DocumentoDeta__5A3BEC50" FromRole="CO_Documento" ToRole="CO_DocumentoDetalle" />
+          <NavigationProperty Name="CO_DocumentoDetalle3" Relationship="RTGModel.FK__CO_DocumentoDeta__5B301089" FromRole="CO_Documento" ToRole="CO_DocumentoDetalle" />
+          <NavigationProperty Name="CO_DocumentoImpuesto" Relationship="RTGModel.FK__CO_DocumentoImpu__4AE3CED0" FromRole="CO_Documento" ToRole="CO_DocumentoImpuesto" />
+          <NavigationProperty Name="CO_DocumentoImpuesto1" Relationship="RTGModel.FK__CO_DocumentoImpu__4BD7F309" FromRole="CO_Documento" ToRole="CO_DocumentoImpuesto" />
+          <NavigationProperty Name="CO_DocumentoImpuesto2" Relationship="RTGModel.FK__CO_DocumentoImpu__548312FA" FromRole="CO_Documento" ToRole="CO_DocumentoImpuesto" />
+          <NavigationProperty Name="CO_DocumentoImpuesto3" Relationship="RTGModel.FK__CO_DocumentoImpu__55773733" FromRole="CO_Documento" ToRole="CO_DocumentoImpuesto" />
+          <NavigationProperty Name="CO_DocumentoDetalleDespacho" Relationship="RTGModel.FK_CO_DocumentoDetalleDespacho_CO_Documento" FromRole="CO_Documento" ToRole="CO_DocumentoDetalleDespacho" />
+        </EntityType>
+        <Association Name="FK__CO_DocumentoDeta__5190CC5F">
+          <End Type="RTGModel.CO_Documento" Role="CO_Documento" Multiplicity="1" />
+          <End Type="RTGModel.CO_DocumentoDetalle" Role="CO_DocumentoDetalle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CO_Documento">
+              <PropertyRef Name="CompaniaSocio" />
+              <PropertyRef Name="TipoDocumento" />
+              <PropertyRef Name="NumeroDocumento" />
+            </Principal>
+            <Dependent Role="CO_DocumentoDetalle">
+              <PropertyRef Name="CompaniaSocio" />
+              <PropertyRef Name="TipoDocumento" />
+              <PropertyRef Name="NumeroDocumento" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__CO_DocumentoDeta__5284F098">
+          <End Type="RTGModel.CO_Documento" Role="CO_Documento" Multiplicity="1" />
+          <End Type="RTGModel.CO_DocumentoDetalle" Role="CO_DocumentoDetalle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CO_Documento">
+              <PropertyRef Name="CompaniaSocio" />
+              <PropertyRef Name="TipoDocumento" />
+              <PropertyRef Name="NumeroDocumento" />
+            </Principal>
+            <Dependent Role="CO_DocumentoDetalle">
+              <PropertyRef Name="CompaniaSocio" />
+              <PropertyRef Name="TipoDocumento" />
+              <PropertyRef Name="NumeroDocumento" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__CO_DocumentoDeta__5A3BEC50">
+          <End Type="RTGModel.CO_Documento" Role="CO_Documento" Multiplicity="1" />
+          <End Type="RTGModel.CO_DocumentoDetalle" Role="CO_DocumentoDetalle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CO_Documento">
+              <PropertyRef Name="CompaniaSocio" />
+              <PropertyRef Name="TipoDocumento" />
+              <PropertyRef Name="NumeroDocumento" />
+            </Principal>
+            <Dependent Role="CO_DocumentoDetalle">
+              <PropertyRef Name="CompaniaSocio" />
+              <PropertyRef Name="TipoDocumento" />
+              <PropertyRef Name="NumeroDocumento" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__CO_DocumentoDeta__5B301089">
+          <End Type="RTGModel.CO_Documento" Role="CO_Documento" Multiplicity="1" />
+          <End Type="RTGModel.CO_DocumentoDetalle" Role="CO_DocumentoDetalle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CO_Documento">
+              <PropertyRef Name="CompaniaSocio" />
+              <PropertyRef Name="TipoDocumento" />
+              <PropertyRef Name="NumeroDocumento" />
+            </Principal>
+            <Dependent Role="CO_DocumentoDetalle">
+              <PropertyRef Name="CompaniaSocio" />
+              <PropertyRef Name="TipoDocumento" />
+              <PropertyRef Name="NumeroDocumento" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__CO_DocumentoImpu__4AE3CED0">
+          <End Type="RTGModel.CO_Documento" Role="CO_Documento" Multiplicity="1" />
+          <End Type="RTGModel.CO_DocumentoImpuesto" Role="CO_DocumentoImpuesto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CO_Documento">
+              <PropertyRef Name="CompaniaSocio" />
+              <PropertyRef Name="TipoDocumento" />
+              <PropertyRef Name="NumeroDocumento" />
+            </Principal>
+            <Dependent Role="CO_DocumentoImpuesto">
+              <PropertyRef Name="CompaniaSocio" />
+              <PropertyRef Name="TipoDocumento" />
+              <PropertyRef Name="NumeroDocumento" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__CO_DocumentoImpu__4BD7F309">
+          <End Type="RTGModel.CO_Documento" Role="CO_Documento" Multiplicity="1" />
+          <End Type="RTGModel.CO_DocumentoImpuesto" Role="CO_DocumentoImpuesto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CO_Documento">
+              <PropertyRef Name="CompaniaSocio" />
+              <PropertyRef Name="TipoDocumento" />
+              <PropertyRef Name="NumeroDocumento" />
+            </Principal>
+            <Dependent Role="CO_DocumentoImpuesto">
+              <PropertyRef Name="CompaniaSocio" />
+              <PropertyRef Name="TipoDocumento" />
+              <PropertyRef Name="NumeroDocumento" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__CO_DocumentoImpu__548312FA">
+          <End Type="RTGModel.CO_Documento" Role="CO_Documento" Multiplicity="1" />
+          <End Type="RTGModel.CO_DocumentoImpuesto" Role="CO_DocumentoImpuesto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CO_Documento">
+              <PropertyRef Name="CompaniaSocio" />
+              <PropertyRef Name="TipoDocumento" />
+              <PropertyRef Name="NumeroDocumento" />
+            </Principal>
+            <Dependent Role="CO_DocumentoImpuesto">
+              <PropertyRef Name="CompaniaSocio" />
+              <PropertyRef Name="TipoDocumento" />
+              <PropertyRef Name="NumeroDocumento" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__CO_DocumentoImpu__55773733">
+          <End Type="RTGModel.CO_Documento" Role="CO_Documento" Multiplicity="1" />
+          <End Type="RTGModel.CO_DocumentoImpuesto" Role="CO_DocumentoImpuesto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CO_Documento">
+              <PropertyRef Name="CompaniaSocio" />
+              <PropertyRef Name="TipoDocumento" />
+              <PropertyRef Name="NumeroDocumento" />
+            </Principal>
+            <Dependent Role="CO_DocumentoImpuesto">
+              <PropertyRef Name="CompaniaSocio" />
+              <PropertyRef Name="TipoDocumento" />
+              <PropertyRef Name="NumeroDocumento" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CO_DocumentoDetalleDespacho_CO_Documento">
+          <End Type="RTGModel.CO_Documento" Role="CO_Documento" Multiplicity="1" />
+          <End Type="RTGModel.CO_DocumentoDetalleDespacho" Role="CO_DocumentoDetalleDespacho" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CO_Documento">
+              <PropertyRef Name="CompaniaSocio" />
+              <PropertyRef Name="TipoDocumento" />
+              <PropertyRef Name="NumeroDocumento" />
+            </Principal>
+            <Dependent Role="CO_DocumentoDetalleDespacho">
+              <PropertyRef Name="CompaniaSocio" />
+              <PropertyRef Name="TipoDocumento" />
+              <PropertyRef Name="NumeroDocumento" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -3124,283 +3150,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="CO_Documento">
-            <EntityTypeMapping TypeName="RTGModel.CO_Documento">
-              <MappingFragment StoreEntitySet="CO_Documento">
-                <ScalarProperty Name="VentaEquipo" ColumnName="VentaEquipo" />
-                <ScalarProperty Name="CodigoQR" ColumnName="CodigoQR" />
-                <ScalarProperty Name="MontoPendientePago" ColumnName="MontoPendientePago" />
-                <ScalarProperty Name="TramaFormaPago" ColumnName="TramaFormaPago" />
-                <ScalarProperty Name="FechaRegistroResumen" ColumnName="FechaRegistroResumen" />
-                <ScalarProperty Name="ObservacionEstadoFE" ColumnName="ObservacionEstadoFE" />
-                <ScalarProperty Name="MotivoComunicado" ColumnName="MotivoComunicado" />
-                <ScalarProperty Name="SpringCodigo" ColumnName="SpringCodigo" />
-                <ScalarProperty Name="VentaSeparadoFlag" ColumnName="VentaSeparadoFlag" />
-                <ScalarProperty Name="Vendedor_all" ColumnName="Vendedor_all" />
-                <ScalarProperty Name="ValidezOferta" ColumnName="ValidezOferta" />
-                <ScalarProperty Name="TransportistaRUC" ColumnName="TransportistaRUC" />
-                <ScalarProperty Name="TransportistaProvincia" ColumnName="TransportistaProvincia" />
-                <ScalarProperty Name="TransportistaPlaca" ColumnName="TransportistaPlaca" />
-                <ScalarProperty Name="TransportistaNombre" ColumnName="TransportistaNombre" />
-                <ScalarProperty Name="TransportistaMarca" ColumnName="TransportistaMarca" />
-                <ScalarProperty Name="TransportistaDireccion" ColumnName="TransportistaDireccion" />
-                <ScalarProperty Name="TransportistaBrevete" ColumnName="TransportistaBrevete" />
-                <ScalarProperty Name="TipoMotivo" ColumnName="TipoMotivo" />
-                <ScalarProperty Name="tipoformapagosunat" ColumnName="tipoformapagosunat" />
-                <ScalarProperty Name="TIPODOCUMENTOVENTA" ColumnName="TIPODOCUMENTOVENTA" />
-                <ScalarProperty Name="TipodeCambioPactado" ColumnName="TipodeCambioPactado" />
-                <ScalarProperty Name="TipoCliente" ColumnName="TipoCliente" />
-                <ScalarProperty Name="SERIEDOCUMENTO" ColumnName="SERIEDOCUMENTO" />
-                <ScalarProperty Name="RequisicionNumero" ColumnName="RequisicionNumero" />
-                <ScalarProperty Name="ReferenciaTipoPago" ColumnName="ReferenciaTipoPago" />
-                <ScalarProperty Name="ReferenciaNumeroOrden" ColumnName="ReferenciaNumeroOrden" />
-                <ScalarProperty Name="ReferenciaCompaniaOrden" ColumnName="ReferenciaCompaniaOrden" />
-                <ScalarProperty Name="REALIZADOPORWEB" ColumnName="REALIZADOPORWEB" />
-                <ScalarProperty Name="PromotorVenta" ColumnName="PromotorVenta" />
-                <ScalarProperty Name="PercepcionPorcentaje" ColumnName="PercepcionPorcentaje" />
-                <ScalarProperty Name="PercepcionDocumento" ColumnName="PercepcionDocumento" />
-                <ScalarProperty Name="PedidoNumerado" ColumnName="PedidoNumerado" />
-                <ScalarProperty Name="NumeroCopias" ColumnName="NumeroCopias" />
-                <ScalarProperty Name="NotaIngreso" ColumnName="NotaIngreso" />
-                <ScalarProperty Name="NotaCreditoSustento" ColumnName="NotaCreditoSustento" />
-                <ScalarProperty Name="NotaCreditoMotivo" ColumnName="NotaCreditoMotivo" />
-                <ScalarProperty Name="MotivoNotaCredito" ColumnName="MotivoNotaCredito" />
-                <ScalarProperty Name="MotivoAnulacion" ColumnName="MotivoAnulacion" />
-                <ScalarProperty Name="MontoTotalLetra" ColumnName="MontoTotalLetra" />
-                <ScalarProperty Name="MontoFlete" ColumnName="MontoFlete" />
-                <ScalarProperty Name="MontoDescuentosSISE" ColumnName="MontoDescuentosSISE" />
-                <ScalarProperty Name="MontoConvenio" ColumnName="MontoConvenio" />
-                <ScalarProperty Name="MontoBruto" ColumnName="MontoBruto" />
-                <ScalarProperty Name="MargenPromedio" ColumnName="MargenPromedio" />
-                <ScalarProperty Name="MargenPorcentajePromedio" ColumnName="MargenPorcentajePromedio" />
-                <ScalarProperty Name="MargenPorcentaje" ColumnName="MargenPorcentaje" />
-                <ScalarProperty Name="Margen" ColumnName="Margen" />
-                <ScalarProperty Name="LONGITUDENTREGA" ColumnName="LONGITUDENTREGA" />
-                <ScalarProperty Name="LONGITUD_ENTREGA" ColumnName="LONGITUD_ENTREGA" />
-                <ScalarProperty Name="LetraVoucherDiferido" ColumnName="LetraVoucherDiferido" />
-                <ScalarProperty Name="LATITUDENTREGA" ColumnName="LATITUDENTREGA" />
-                <ScalarProperty Name="LATITUD_ENTREGA" ColumnName="LATITUD_ENTREGA" />
-                <ScalarProperty Name="IDTransportista" ColumnName="IDTransportista" />
-                <ScalarProperty Name="IdPrefactura" ColumnName="IdPrefactura" />
-                <ScalarProperty Name="Flg_ComunicadoBaja" ColumnName="Flg_ComunicadoBaja" />
-                <ScalarProperty Name="flagnuevaversion" ColumnName="flagnuevaversion" />
-                <ScalarProperty Name="FEENVIONUMERO" ColumnName="FEENVIONUMERO" />
-                <ScalarProperty Name="FEEnvioBaja" ColumnName="FEEnvioBaja" />
-                <ScalarProperty Name="FechaVencimientoDOT" ColumnName="FechaVencimientoDOT" />
-                <ScalarProperty Name="FechaRecepcionADV" ColumnName="FechaRecepcionADV" />
-                <ScalarProperty Name="FechaInicioTraslado" ColumnName="FechaInicioTraslado" />
-                <ScalarProperty Name="FechaDocOriginal" ColumnName="FechaDocOriginal" />
-                <ScalarProperty Name="FechaCanje" ColumnName="FechaCanje" />
-                <ScalarProperty Name="FechaAnulacion" ColumnName="FechaAnulacion" />
-                <ScalarProperty Name="ESWEBFLAG" ColumnName="ESWEBFLAG" />
-                <ScalarProperty Name="EquipoVenta" ColumnName="EquipoVenta" />
-                <ScalarProperty Name="EnTransporte" ColumnName="EnTransporte" />
-                <ScalarProperty Name="DocumentoReferencia" ColumnName="DocumentoReferencia" />
-                <ScalarProperty Name="CostoTotalPromedio" ColumnName="CostoTotalPromedio" />
-                <ScalarProperty Name="CostoTotal" ColumnName="CostoTotal" />
-                <ScalarProperty Name="Convenio" ColumnName="Convenio" />
-                <ScalarProperty Name="ContratoSecuencia" ColumnName="ContratoSecuencia" />
-                <ScalarProperty Name="Contacto" ColumnName="Contacto" />
-                <ScalarProperty Name="ComentarioOrdenCompra" ColumnName="ComentarioOrdenCompra" />
-                <ScalarProperty Name="ComentarioAux1" ColumnName="ComentarioAux1" />
-                <ScalarProperty Name="CobranzaLegalVoucher" ColumnName="CobranzaLegalVoucher" />
-                <ScalarProperty Name="CobranzaLegalFecha" ColumnName="CobranzaLegalFecha" />
-                <ScalarProperty Name="CertificadoRetencion" ColumnName="CertificadoRetencion" />
-                <ScalarProperty Name="CanalVenta" ColumnName="CanalVenta" />
-                <ScalarProperty Name="ArbitrioFlag" ColumnName="ArbitrioFlag" />
-                <ScalarProperty Name="ActividadEconomica" ColumnName="ActividadEconomica" />
-                <ScalarProperty Name="Cadena" ColumnName="Cadena" />
-                <ScalarProperty Name="AlmacenConsignacion" ColumnName="AlmacenConsignacion" />
-                <ScalarProperty Name="Cajero" ColumnName="Cajero" />
-                <ScalarProperty Name="Comentario" ColumnName="Comentario" />
-                <ScalarProperty Name="ComisionMonto" ColumnName="ComisionMonto" />
-                <ScalarProperty Name="DecripcionEstadoSunat" ColumnName="DecripcionEstadoSunat" />
-                <ScalarProperty Name="DespachoFlag" ColumnName="DespachoFlag" />
-                <ScalarProperty Name="DetraccionMontoLocal" ColumnName="DetraccionMontoLocal" />
-                <ScalarProperty Name="DetraccionCodigo" ColumnName="DetraccionCodigo" />
-                <ScalarProperty Name="FEHashCode" ColumnName="FEHashCode" />
-                <ScalarProperty Name="FEEstado" ColumnName="FEEstado" />
-                <ScalarProperty Name="FEComunicadoNumero" ColumnName="FEComunicadoNumero" />
-                <ScalarProperty Name="FechaIngreso" ColumnName="FechaIngreso" />
-                <ScalarProperty Name="FechaImpresion" ColumnName="FechaImpresion" />
-                <ScalarProperty Name="exportacionsituacion" ColumnName="exportacionsituacion" />
-                <ScalarProperty Name="EstadoSunat" ColumnName="EstadoSunat" />
-                <ScalarProperty Name="EstadoEnviadoTCI" ColumnName="EstadoEnviadoTCI" />
-                <ScalarProperty Name="DiferidoFlag" ColumnName="DiferidoFlag" />
-                <ScalarProperty Name="DiferidoDocumento" ColumnName="DiferidoDocumento" />
-                <ScalarProperty Name="flg_resumendiario" ColumnName="flg_resumendiario" />
-                <ScalarProperty Name="flag_resumendiario" ColumnName="flag_resumendiario" />
-                <ScalarProperty Name="flag_EstadoTransmision" ColumnName="flag_EstadoTransmision" />
-                <ScalarProperty Name="FEResumenNumero" ColumnName="FEResumenNumero" />
-                <ScalarProperty Name="FENotaCreditoSustento" ColumnName="FENotaCreditoSustento" />
-                <ScalarProperty Name="FENotaCreditoMotivo" ColumnName="FENotaCreditoMotivo" />
-                <ScalarProperty Name="FEInternalNumber" ColumnName="FEInternalNumber" />
-                <ScalarProperty Name="LetraPlanillaBanco" ColumnName="LetraPlanillaBanco" />
-                <ScalarProperty Name="LetraPersona" ColumnName="LetraPersona" />
-                <ScalarProperty Name="LetraNumeroUnico" ColumnName="LetraNumeroUnico" />
-                <ScalarProperty Name="LetraIntereses" ColumnName="LetraIntereses" />
-                <ScalarProperty Name="LetraComisiones" ColumnName="LetraComisiones" />
-                <ScalarProperty Name="INT_Secuencial" ColumnName="INT_Secuencial" />
-                <ScalarProperty Name="INT_EstadoProceso" ColumnName="INT_EstadoProceso" />
-                <ScalarProperty Name="INT_EstadoEnvio" ColumnName="INT_EstadoEnvio" />
-                <ScalarProperty Name="ImpresionNumero" ColumnName="ImpresionNumero" />
-                <ScalarProperty Name="MontoRetenido" ColumnName="MontoRetenido" />
-                <ScalarProperty Name="MontoPercepcion" ColumnName="MontoPercepcion" />
-                <ScalarProperty Name="MEF_Estado" ColumnName="MEF_Estado" />
-                <ScalarProperty Name="LicitacionNumeroProceso" ColumnName="LicitacionNumeroProceso" />
-                <ScalarProperty Name="LetraTipoNegociacion" ColumnName="LetraTipoNegociacion" />
-                <ScalarProperty Name="LetraProtesto" ColumnName="LetraProtesto" />
-                <ScalarProperty Name="LetraPresentadaVoucher" ColumnName="LetraPresentadaVoucher" />
-                <ScalarProperty Name="LetraPortes" ColumnName="LetraPortes" />
-                <ScalarProperty Name="NotaCreditoRelacionadas" ColumnName="NotaCreditoRelacionadas" />
-                <ScalarProperty Name="MontoRetenidoFlag" ColumnName="MontoRetenidoFlag" />
-                <ScalarProperty Name="NumeroEnvio" ColumnName="NumeroEnvio" />
-                <ScalarProperty Name="TransferProduccionFlag" ColumnName="TransferProduccionFlag" />
-                <ScalarProperty Name="SIAF_Secuencia" ColumnName="SIAF_Secuencia" />
-                <ScalarProperty Name="SIAF_FechaPago" ColumnName="SIAF_FechaPago" />
-                <ScalarProperty Name="SIAF_Expediente" ColumnName="SIAF_Expediente" />
-                <ScalarProperty Name="SIAF_Correlativo" ColumnName="SIAF_Correlativo" />
-                <ScalarProperty Name="ProduccionSecuencia" ColumnName="ProduccionSecuencia" />
-                <ScalarProperty Name="ProcesoFlag" ColumnName="ProcesoFlag" />
-                <ScalarProperty Name="PrecioModificadoFlag" ColumnName="PrecioModificadoFlag" />
-                <ScalarProperty Name="ObservacionFE" ColumnName="ObservacionFE" />
-                <ScalarProperty Name="ComentarioAprobacion" ColumnName="ComentarioAprobacion" />
-                <ScalarProperty Name="FechaRecepcion" ColumnName="FechaRecepcion" />
-                <ScalarProperty Name="FechaOrdenCompra" ColumnName="FechaOrdenCompra" />
-                <ScalarProperty Name="CotizacionNumero" ColumnName="CotizacionNumero" />
-                <ScalarProperty Name="ClienteDireccionDespacho" ColumnName="ClienteDireccionDespacho" />
-                <ScalarProperty Name="RecojoFlag" ColumnName="RecojoFlag" />
-                <ScalarProperty Name="DocumentoElectronicoFlag" ColumnName="DocumentoElectronicoFlag" />
-                <ScalarProperty Name="Comentario03" ColumnName="Comentario03" />
-                <ScalarProperty Name="ClasificacionCobranza" ColumnName="ClasificacionCobranza" />
-                <ScalarProperty Name="Comentario02" ColumnName="Comentario02" />
-                <ScalarProperty Name="Comentario01" ColumnName="Comentario01" />
-                <ScalarProperty Name="MontoComisionPagada" ColumnName="MontoComisionPagada" />
-                <ScalarProperty Name="MontoComision" ColumnName="MontoComision" />
-                <ScalarProperty Name="DespachoVehiculoflag" ColumnName="DespachoVehiculoflag" />
-                <ScalarProperty Name="DespachoDireccionSecuencia" ColumnName="DespachoDireccionSecuencia" />
-                <ScalarProperty Name="PlacaVehiculo" ColumnName="PlacaVehiculo" />
-                <ScalarProperty Name="NotaVenta" ColumnName="NotaVenta" />
-                <ScalarProperty Name="WEB_Notaventa" ColumnName="WEB_Notaventa" />
-                <ScalarProperty Name="WEB_UsuarioMobil" ColumnName="WEB_UsuarioMobil" />
-                <ScalarProperty Name="NumeroUnico" ColumnName="NumeroUnico" />
-                <ScalarProperty Name="LetraEstadoAnterior" ColumnName="LetraEstadoAnterior" />
-                <ScalarProperty Name="LetraProtestoNDFlag" ColumnName="LetraProtestoNDFlag" />
-                <ScalarProperty Name="LetraProtestoFecha" ColumnName="LetraProtestoFecha" />
-                <ScalarProperty Name="LetraDescuentoPortes" ColumnName="LetraDescuentoPortes" />
-                <ScalarProperty Name="LetraEstado" ColumnName="LetraEstado" />
-                <ScalarProperty Name="TransferenciaGratuitaIGVFactor" ColumnName="TransferenciaGratuitaIGVFactor" />
-                <ScalarProperty Name="MontoImpuestoRetenido" ColumnName="MontoImpuestoRetenido" />
-                <ScalarProperty Name="CobranzaDudosaMotivo" ColumnName="CobranzaDudosaMotivo" />
-                <ScalarProperty Name="CentroCostoDestino" ColumnName="CentroCostoDestino" />
-                <ScalarProperty Name="NumeroContrato" ColumnName="NumeroContrato" />
-                <ScalarProperty Name="FechaVencimientoOriginal" ColumnName="FechaVencimientoOriginal" />
-                <ScalarProperty Name="AprobadoPorDescuento" ColumnName="AprobadoPorDescuento" />
-                <ScalarProperty Name="LetraProtestoFlag" ColumnName="LetraProtestoFlag" />
-                <ScalarProperty Name="Cobrador" ColumnName="Cobrador" />
-                <ScalarProperty Name="RutaDespachoPlacaVehiculo" ColumnName="RutaDespachoPlacaVehiculo" />
-                <ScalarProperty Name="RutaDespachoFechaAsignacion" ColumnName="RutaDespachoFechaAsignacion" />
-                <ScalarProperty Name="DocumentosinCantidadFlag" ColumnName="DocumentosinCantidadFlag" />
-                <ScalarProperty Name="DocumentosinDespachoFlag" ColumnName="DocumentosinDespachoFlag" />
-                <ScalarProperty Name="APFechaTransferencia" ColumnName="APFechaTransferencia" />
-                <ScalarProperty Name="ReprogramacionPuntoLlegada" ColumnName="ReprogramacionPuntoLlegada" />
-                <ScalarProperty Name="ReprogramacionPuntoPartida" ColumnName="ReprogramacionPuntoPartida" />
-                <ScalarProperty Name="ReprogramacionMotivo" ColumnName="ReprogramacionMotivo" />
-                <ScalarProperty Name="TransportistaVehiculo" ColumnName="TransportistaVehiculo" />
-                <ScalarProperty Name="TransportistaChofer" ColumnName="TransportistaChofer" />
-                <ScalarProperty Name="ClienteDireccionSecuencia" ColumnName="ClienteDireccionSecuencia" />
-                <ScalarProperty Name="ClienteContacto" ColumnName="ClienteContacto" />
-                <ScalarProperty Name="LetraAceptadoFlag" ColumnName="LetraAceptadoFlag" />
-                <ScalarProperty Name="MontoRedondeo" ColumnName="MontoRedondeo" />
-                <ScalarProperty Name="UltimaFechaModif" ColumnName="UltimaFechaModif" />
-                <ScalarProperty Name="UltimoUsuario" ColumnName="UltimoUsuario" />
-                <ScalarProperty Name="Estado" ColumnName="Estado" />
-                <ScalarProperty Name="RutaDespacho" ColumnName="RutaDespacho" />
-                <ScalarProperty Name="NumeroInterno" ColumnName="NumeroInterno" />
-                <ScalarProperty Name="ComentariosMonto" ColumnName="ComentariosMonto" />
-                <ScalarProperty Name="ComentariosImprimirFlag" ColumnName="ComentariosImprimirFlag" />
-                <ScalarProperty Name="Comentarios" ColumnName="Comentarios" />
-                <ScalarProperty Name="ProcesoImportacionFecha" ColumnName="ProcesoImportacionFecha" />
-                <ScalarProperty Name="ProcesoImportacionNumero" ColumnName="ProcesoImportacionNumero" />
-                <ScalarProperty Name="ProcesoImportacion" ColumnName="ProcesoImportacion" />
-                <ScalarProperty Name="UnidadReplicacion" ColumnName="UnidadReplicacion" />
-                <ScalarProperty Name="UnidadNegocio" ColumnName="UnidadNegocio" />
-                <ScalarProperty Name="CobranzaDudosaFechaClearing" ColumnName="CobranzaDudosaFechaClearing" />
-                <ScalarProperty Name="CobranzaDudosaFecha" ColumnName="CobranzaDudosaFecha" />
-                <ScalarProperty Name="CobranzaDudosaVoucherClearing" ColumnName="CobranzaDudosaVoucherClearing" />
-                <ScalarProperty Name="CobranzaDudosaVoucher" ColumnName="CobranzaDudosaVoucher" />
-                <ScalarProperty Name="CobranzaDudosaEstado" ColumnName="CobranzaDudosaEstado" />
-                <ScalarProperty Name="APProcesoSecuencia" ColumnName="APProcesoSecuencia" />
-                <ScalarProperty Name="APProcesoNumero" ColumnName="APProcesoNumero" />
-                <ScalarProperty Name="APTransferidoFlag" ColumnName="APTransferidoFlag" />
-                <ScalarProperty Name="DescuentoFlag" ColumnName="DescuentoFlag" />
-                <ScalarProperty Name="LetraDescuentoCanjeVoucher" ColumnName="LetraDescuentoCanjeVoucher" />
-                <ScalarProperty Name="LetraDescuentoCanjeFlag" ColumnName="LetraDescuentoCanjeFlag" />
-                <ScalarProperty Name="LetraDescuentoVoucher" ColumnName="LetraDescuentoVoucher" />
-                <ScalarProperty Name="LetraDescuentoVoucherFlag" ColumnName="LetraDescuentoVoucherFlag" />
-                <ScalarProperty Name="LetraDescuentoIntereses" ColumnName="LetraDescuentoIntereses" />
-                <ScalarProperty Name="LetraDescuentoCuentaBancaria" ColumnName="LetraDescuentoCuentaBancaria" />
-                <ScalarProperty Name="LetraFechaRecepcion" ColumnName="LetraFechaRecepcion" />
-                <ScalarProperty Name="LetraUbicacion" ColumnName="LetraUbicacion" />
-                <ScalarProperty Name="LetraAceptadoPor" ColumnName="LetraAceptadoPor" />
-                <ScalarProperty Name="LetraAvalTelefono" ColumnName="LetraAvalTelefono" />
-                <ScalarProperty Name="LetraAvalDireccion" ColumnName="LetraAvalDireccion" />
-                <ScalarProperty Name="LetraAvalRUC" ColumnName="LetraAvalRUC" />
-                <ScalarProperty Name="LetraAvalNombre" ColumnName="LetraAvalNombre" />
-                <ScalarProperty Name="LetraCobranzaNumero" ColumnName="LetraCobranzaNumero" />
-                <ScalarProperty Name="LetraBanco" ColumnName="LetraBanco" />
-                <ScalarProperty Name="LetraCarteraFlag" ColumnName="LetraCarteraFlag" />
-                <ScalarProperty Name="TipoCanjeFactura" ColumnName="TipoCanjeFactura" />
-                <ScalarProperty Name="Sucursal" ColumnName="Sucursal" />
-                <ScalarProperty Name="CampoReferencia" ColumnName="CampoReferencia" />
-                <ScalarProperty Name="Proyecto" ColumnName="Proyecto" />
-                <ScalarProperty Name="CentroCosto" ColumnName="CentroCosto" />
-                <ScalarProperty Name="VoucherAnulacion" ColumnName="VoucherAnulacion" />
-                <ScalarProperty Name="VoucherNo" ColumnName="VoucherNo" />
-                <ScalarProperty Name="VoucherPeriodo" ColumnName="VoucherPeriodo" />
-                <ScalarProperty Name="ContabilizacionPendienteFlag" ColumnName="ContabilizacionPendienteFlag" />
-                <ScalarProperty Name="DocumentoMoraFlag" ColumnName="DocumentoMoraFlag" />
-                <ScalarProperty Name="ImpresionPendienteFlag" ColumnName="ImpresionPendienteFlag" />
-                <ScalarProperty Name="AlmacenCodigo" ColumnName="AlmacenCodigo" />
-                <ScalarProperty Name="ComercialPedidoFechaRequerida" ColumnName="ComercialPedidoFechaRequerida" />
-                <ScalarProperty Name="ComercialPedidoNumero" ColumnName="ComercialPedidoNumero" />
-                <ScalarProperty Name="NotaCreditoDocumento" ColumnName="NotaCreditoDocumento" />
-                <ScalarProperty Name="FechaAprobacion" ColumnName="FechaAprobacion" />
-                <ScalarProperty Name="FechaPreparacion" ColumnName="FechaPreparacion" />
-                <ScalarProperty Name="AprobadoPor" ColumnName="AprobadoPor" />
-                <ScalarProperty Name="PreparadoPor" ColumnName="PreparadoPor" />
-                <ScalarProperty Name="MontoAdelantoSaldo" ColumnName="MontoAdelantoSaldo" />
-                <ScalarProperty Name="MontoPagado" ColumnName="MontoPagado" />
-                <ScalarProperty Name="MontoTotal" ColumnName="MontoTotal" />
-                <ScalarProperty Name="MontoDescuentos" ColumnName="MontoDescuentos" />
-                <ScalarProperty Name="MontoImpuestos" ColumnName="MontoImpuestos" />
-                <ScalarProperty Name="MontoImpuestoVentas" ColumnName="MontoImpuestoVentas" />
-                <ScalarProperty Name="MontoNoAfecto" ColumnName="MontoNoAfecto" />
-                <ScalarProperty Name="MontoAfecto" ColumnName="MontoAfecto" />
-                <ScalarProperty Name="MonedaDocumento" ColumnName="MonedaDocumento" />
-                <ScalarProperty Name="TipodeCambio" ColumnName="TipodeCambio" />
-                <ScalarProperty Name="Vendedor" ColumnName="Vendedor" />
-                <ScalarProperty Name="Criteria" ColumnName="Criteria" />
-                <ScalarProperty Name="FormadePago" ColumnName="FormadePago" />
-                <ScalarProperty Name="ConceptoFacturacion" ColumnName="ConceptoFacturacion" />
-                <ScalarProperty Name="TipoVenta" ColumnName="TipoVenta" />
-                <ScalarProperty Name="TipoFacturacion" ColumnName="TipoFacturacion" />
-                <ScalarProperty Name="FechaVencimiento" ColumnName="FechaVencimiento" />
-                <ScalarProperty Name="FechaDocumento" ColumnName="FechaDocumento" />
-                <ScalarProperty Name="ClienteCobrarA" ColumnName="ClienteCobrarA" />
-                <ScalarProperty Name="ClienteReferencia" ColumnName="ClienteReferencia" />
-                <ScalarProperty Name="ClienteDireccion" ColumnName="ClienteDireccion" />
-                <ScalarProperty Name="ClienteNombre" ColumnName="ClienteNombre" />
-                <ScalarProperty Name="ClienteRUC" ColumnName="ClienteRUC" />
-                <ScalarProperty Name="ClienteNumero" ColumnName="ClienteNumero" />
-                <ScalarProperty Name="FormaFacturacion" ColumnName="FormaFacturacion" />
-                <ScalarProperty Name="EstablecimientoCodigo" ColumnName="EstablecimientoCodigo" />
-                <ScalarProperty Name="NumeroDocumento" ColumnName="NumeroDocumento" />
-                <ScalarProperty Name="TipoDocumento" ColumnName="TipoDocumento" />
-                <ScalarProperty Name="CompaniaSocio" ColumnName="CompaniaSocio" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="CO_DocumentoDespacho">
             <EntityTypeMapping TypeName="RTGModel.CO_DocumentoDespacho">
               <MappingFragment StoreEntitySet="CO_DocumentoDespacho">
@@ -3416,6 +3165,7 @@
           <EntitySetMapping Name="CO_DocumentoDetalle">
             <EntityTypeMapping TypeName="RTGModel.CO_DocumentoDetalle">
               <MappingFragment StoreEntitySet="CO_DocumentoDetalle">
+                <ScalarProperty Name="CantidadDevolucion" ColumnName="CantidadDevolucion" />
                 <ScalarProperty Name="SpringCodigo" ColumnName="SpringCodigo" />
                 <ScalarProperty Name="TransferenciaRepresentacionFla" ColumnName="TransferenciaRepresentacionFla" />
                 <ScalarProperty Name="TransferenciaBonificacionFlag" ColumnName="TransferenciaBonificacionFlag" />
@@ -3940,6 +3690,8 @@
           <EntitySetMapping Name="CO_OperacionCanje">
             <EntityTypeMapping TypeName="RTGModel.CO_OperacionCanje">
               <MappingFragment StoreEntitySet="CO_OperacionCanje">
+                <ScalarProperty Name="AutorizarDiasAdicFlag" ColumnName="AutorizarDiasAdicFlag" />
+                <ScalarProperty Name="FormaPago" ColumnName="FormaPago" />
                 <ScalarProperty Name="Vendedor" ColumnName="Vendedor" />
                 <ScalarProperty Name="Comentarios" ColumnName="Comentarios" />
                 <ScalarProperty Name="LetrasCantidad" ColumnName="LetrasCantidad" />
@@ -3983,6 +3735,8 @@
           <EntitySetMapping Name="CO_OperacionCanjeDetalle">
             <EntityTypeMapping TypeName="RTGModel.CO_OperacionCanjeDetalle">
               <MappingFragment StoreEntitySet="CO_OperacionCanjeDetalle">
+                <ScalarProperty Name="FechaVencimiento" ColumnName="FechaVencimiento" />
+                <ScalarProperty Name="Dias" ColumnName="Dias" />
                 <ScalarProperty Name="MontoComision" ColumnName="MontoComision" />
                 <ScalarProperty Name="InputOutputFlag" ColumnName="InputOutputFlag" />
                 <ScalarProperty Name="Monto" ColumnName="Monto" />
@@ -3990,6 +3744,291 @@
                 <ScalarProperty Name="TipoDocumento" ColumnName="TipoDocumento" />
                 <ScalarProperty Name="Linea" ColumnName="Linea" />
                 <ScalarProperty Name="OperacionCanjeNumero" ColumnName="OperacionCanjeNumero" />
+                <ScalarProperty Name="CompaniaSocio" ColumnName="CompaniaSocio" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CO_Documento">
+            <EntityTypeMapping TypeName="RTGModel.CO_Documento">
+              <MappingFragment StoreEntitySet="CO_Documento">
+                <ScalarProperty Name="UsuarioAprobPed" ColumnName="UsuarioAprobPed" />
+                <ScalarProperty Name="FechaAprobPed" ColumnName="FechaAprobPed" />
+                <ScalarProperty Name="DOTEstado" ColumnName="DOTEstado" />
+                <ScalarProperty Name="DOTNumero" ColumnName="DOTNumero" />
+                <ScalarProperty Name="FlagEnEspera" ColumnName="FlagEnEspera" />
+                <ScalarProperty Name="AutorizarAnulacionFlag" ColumnName="AutorizarAnulacionFlag" />
+                <ScalarProperty Name="AutPedidoContadoFlag" ColumnName="AutPedidoContadoFlag" />
+                <ScalarProperty Name="AutPedidoAdelantFlag" ColumnName="AutPedidoAdelantFlag" />
+                <ScalarProperty Name="documentoreferencia" ColumnName="documentoreferencia" />
+                <ScalarProperty Name="VentaEquipo" ColumnName="VentaEquipo" />
+                <ScalarProperty Name="CodigoQR" ColumnName="CodigoQR" />
+                <ScalarProperty Name="MontoPendientePago" ColumnName="MontoPendientePago" />
+                <ScalarProperty Name="TramaFormaPago" ColumnName="TramaFormaPago" />
+                <ScalarProperty Name="FechaRegistroResumen" ColumnName="FechaRegistroResumen" />
+                <ScalarProperty Name="ObservacionEstadoFE" ColumnName="ObservacionEstadoFE" />
+                <ScalarProperty Name="MotivoComunicado" ColumnName="MotivoComunicado" />
+                <ScalarProperty Name="SpringCodigo" ColumnName="SpringCodigo" />
+                <ScalarProperty Name="VentaSeparadoFlag" ColumnName="VentaSeparadoFlag" />
+                <ScalarProperty Name="Vendedor_all" ColumnName="Vendedor_all" />
+                <ScalarProperty Name="ValidezOferta" ColumnName="ValidezOferta" />
+                <ScalarProperty Name="TransportistaRUC" ColumnName="TransportistaRUC" />
+                <ScalarProperty Name="TransportistaProvincia" ColumnName="TransportistaProvincia" />
+                <ScalarProperty Name="TransportistaPlaca" ColumnName="TransportistaPlaca" />
+                <ScalarProperty Name="TransportistaNombre" ColumnName="TransportistaNombre" />
+                <ScalarProperty Name="TransportistaMarca" ColumnName="TransportistaMarca" />
+                <ScalarProperty Name="TransportistaDireccion" ColumnName="TransportistaDireccion" />
+                <ScalarProperty Name="TransportistaBrevete" ColumnName="TransportistaBrevete" />
+                <ScalarProperty Name="TipoMotivo" ColumnName="TipoMotivo" />
+                <ScalarProperty Name="tipoformapagosunat" ColumnName="tipoformapagosunat" />
+                <ScalarProperty Name="TIPODOCUMENTOVENTA" ColumnName="TIPODOCUMENTOVENTA" />
+                <ScalarProperty Name="TipodeCambioPactado" ColumnName="TipodeCambioPactado" />
+                <ScalarProperty Name="TipoCliente" ColumnName="TipoCliente" />
+                <ScalarProperty Name="SERIEDOCUMENTO" ColumnName="SERIEDOCUMENTO" />
+                <ScalarProperty Name="RequisicionNumero" ColumnName="RequisicionNumero" />
+                <ScalarProperty Name="ReferenciaTipoPago" ColumnName="ReferenciaTipoPago" />
+                <ScalarProperty Name="ReferenciaNumeroOrden" ColumnName="ReferenciaNumeroOrden" />
+                <ScalarProperty Name="ReferenciaCompaniaOrden" ColumnName="ReferenciaCompaniaOrden" />
+                <ScalarProperty Name="REALIZADOPORWEB" ColumnName="REALIZADOPORWEB" />
+                <ScalarProperty Name="PromotorVenta" ColumnName="PromotorVenta" />
+                <ScalarProperty Name="PercepcionPorcentaje" ColumnName="PercepcionPorcentaje" />
+                <ScalarProperty Name="PercepcionDocumento" ColumnName="PercepcionDocumento" />
+                <ScalarProperty Name="PedidoNumerado" ColumnName="PedidoNumerado" />
+                <ScalarProperty Name="NumeroCopias" ColumnName="NumeroCopias" />
+                <ScalarProperty Name="NotaIngreso" ColumnName="NotaIngreso" />
+                <ScalarProperty Name="NotaCreditoSustento" ColumnName="NotaCreditoSustento" />
+                <ScalarProperty Name="NotaCreditoMotivo" ColumnName="NotaCreditoMotivo" />
+                <ScalarProperty Name="MotivoNotaCredito" ColumnName="MotivoNotaCredito" />
+                <ScalarProperty Name="MotivoAnulacion" ColumnName="MotivoAnulacion" />
+                <ScalarProperty Name="MontoTotalLetra" ColumnName="MontoTotalLetra" />
+                <ScalarProperty Name="MontoFlete" ColumnName="MontoFlete" />
+                <ScalarProperty Name="MontoDescuentosSISE" ColumnName="MontoDescuentosSISE" />
+                <ScalarProperty Name="MontoConvenio" ColumnName="MontoConvenio" />
+                <ScalarProperty Name="MontoBruto" ColumnName="MontoBruto" />
+                <ScalarProperty Name="MargenPromedio" ColumnName="MargenPromedio" />
+                <ScalarProperty Name="MargenPorcentajePromedio" ColumnName="MargenPorcentajePromedio" />
+                <ScalarProperty Name="MargenPorcentaje" ColumnName="MargenPorcentaje" />
+                <ScalarProperty Name="Margen" ColumnName="Margen" />
+                <ScalarProperty Name="LONGITUDENTREGA" ColumnName="LONGITUDENTREGA" />
+                <ScalarProperty Name="LONGITUD_ENTREGA" ColumnName="LONGITUD_ENTREGA" />
+                <ScalarProperty Name="LetraVoucherDiferido" ColumnName="LetraVoucherDiferido" />
+                <ScalarProperty Name="LATITUDENTREGA" ColumnName="LATITUDENTREGA" />
+                <ScalarProperty Name="LATITUD_ENTREGA" ColumnName="LATITUD_ENTREGA" />
+                <ScalarProperty Name="IDTransportista" ColumnName="IDTransportista" />
+                <ScalarProperty Name="IdPrefactura" ColumnName="IdPrefactura" />
+                <ScalarProperty Name="Flg_ComunicadoBaja" ColumnName="Flg_ComunicadoBaja" />
+                <ScalarProperty Name="flagnuevaversion" ColumnName="flagnuevaversion" />
+                <ScalarProperty Name="FEENVIONUMERO" ColumnName="FEENVIONUMERO" />
+                <ScalarProperty Name="FEEnvioBaja" ColumnName="FEEnvioBaja" />
+                <ScalarProperty Name="FechaVencimientoDOT" ColumnName="FechaVencimientoDOT" />
+                <ScalarProperty Name="FechaRecepcionADV" ColumnName="FechaRecepcionADV" />
+                <ScalarProperty Name="FechaInicioTraslado" ColumnName="FechaInicioTraslado" />
+                <ScalarProperty Name="FechaDocOriginal" ColumnName="FechaDocOriginal" />
+                <ScalarProperty Name="FechaCanje" ColumnName="FechaCanje" />
+                <ScalarProperty Name="FechaAnulacion" ColumnName="FechaAnulacion" />
+                <ScalarProperty Name="ESWEBFLAG" ColumnName="ESWEBFLAG" />
+                <ScalarProperty Name="EquipoVenta" ColumnName="EquipoVenta" />
+                <ScalarProperty Name="EnTransporte" ColumnName="EnTransporte" />
+                <ScalarProperty Name="CostoTotalPromedio" ColumnName="CostoTotalPromedio" />
+                <ScalarProperty Name="CostoTotal" ColumnName="CostoTotal" />
+                <ScalarProperty Name="Convenio" ColumnName="Convenio" />
+                <ScalarProperty Name="ContratoSecuencia" ColumnName="ContratoSecuencia" />
+                <ScalarProperty Name="Contacto" ColumnName="Contacto" />
+                <ScalarProperty Name="ComentarioOrdenCompra" ColumnName="ComentarioOrdenCompra" />
+                <ScalarProperty Name="ComentarioAux1" ColumnName="ComentarioAux1" />
+                <ScalarProperty Name="CobranzaLegalVoucher" ColumnName="CobranzaLegalVoucher" />
+                <ScalarProperty Name="CobranzaLegalFecha" ColumnName="CobranzaLegalFecha" />
+                <ScalarProperty Name="CertificadoRetencion" ColumnName="CertificadoRetencion" />
+                <ScalarProperty Name="CanalVenta" ColumnName="CanalVenta" />
+                <ScalarProperty Name="ArbitrioFlag" ColumnName="ArbitrioFlag" />
+                <ScalarProperty Name="ActividadEconomica" ColumnName="ActividadEconomica" />
+                <ScalarProperty Name="Cadena" ColumnName="Cadena" />
+                <ScalarProperty Name="AlmacenConsignacion" ColumnName="AlmacenConsignacion" />
+                <ScalarProperty Name="Cajero" ColumnName="Cajero" />
+                <ScalarProperty Name="Comentario" ColumnName="Comentario" />
+                <ScalarProperty Name="ComisionMonto" ColumnName="ComisionMonto" />
+                <ScalarProperty Name="DecripcionEstadoSunat" ColumnName="DecripcionEstadoSunat" />
+                <ScalarProperty Name="DespachoFlag" ColumnName="DespachoFlag" />
+                <ScalarProperty Name="DetraccionMontoLocal" ColumnName="DetraccionMontoLocal" />
+                <ScalarProperty Name="DetraccionCodigo" ColumnName="DetraccionCodigo" />
+                <ScalarProperty Name="FEHashCode" ColumnName="FEHashCode" />
+                <ScalarProperty Name="FEEstado" ColumnName="FEEstado" />
+                <ScalarProperty Name="FEComunicadoNumero" ColumnName="FEComunicadoNumero" />
+                <ScalarProperty Name="FechaIngreso" ColumnName="FechaIngreso" />
+                <ScalarProperty Name="FechaImpresion" ColumnName="FechaImpresion" />
+                <ScalarProperty Name="exportacionsituacion" ColumnName="exportacionsituacion" />
+                <ScalarProperty Name="EstadoSunat" ColumnName="EstadoSunat" />
+                <ScalarProperty Name="EstadoEnviadoTCI" ColumnName="EstadoEnviadoTCI" />
+                <ScalarProperty Name="DiferidoFlag" ColumnName="DiferidoFlag" />
+                <ScalarProperty Name="DiferidoDocumento" ColumnName="DiferidoDocumento" />
+                <ScalarProperty Name="flg_resumendiario" ColumnName="flg_resumendiario" />
+                <ScalarProperty Name="flag_resumendiario" ColumnName="flag_resumendiario" />
+                <ScalarProperty Name="flag_EstadoTransmision" ColumnName="flag_EstadoTransmision" />
+                <ScalarProperty Name="FEResumenNumero" ColumnName="FEResumenNumero" />
+                <ScalarProperty Name="FENotaCreditoSustento" ColumnName="FENotaCreditoSustento" />
+                <ScalarProperty Name="FENotaCreditoMotivo" ColumnName="FENotaCreditoMotivo" />
+                <ScalarProperty Name="FEInternalNumber" ColumnName="FEInternalNumber" />
+                <ScalarProperty Name="LetraPlanillaBanco" ColumnName="LetraPlanillaBanco" />
+                <ScalarProperty Name="LetraPersona" ColumnName="LetraPersona" />
+                <ScalarProperty Name="LetraNumeroUnico" ColumnName="LetraNumeroUnico" />
+                <ScalarProperty Name="LetraIntereses" ColumnName="LetraIntereses" />
+                <ScalarProperty Name="LetraComisiones" ColumnName="LetraComisiones" />
+                <ScalarProperty Name="INT_Secuencial" ColumnName="INT_Secuencial" />
+                <ScalarProperty Name="INT_EstadoProceso" ColumnName="INT_EstadoProceso" />
+                <ScalarProperty Name="INT_EstadoEnvio" ColumnName="INT_EstadoEnvio" />
+                <ScalarProperty Name="ImpresionNumero" ColumnName="ImpresionNumero" />
+                <ScalarProperty Name="MontoRetenido" ColumnName="MontoRetenido" />
+                <ScalarProperty Name="MontoPercepcion" ColumnName="MontoPercepcion" />
+                <ScalarProperty Name="MEF_Estado" ColumnName="MEF_Estado" />
+                <ScalarProperty Name="LicitacionNumeroProceso" ColumnName="LicitacionNumeroProceso" />
+                <ScalarProperty Name="LetraTipoNegociacion" ColumnName="LetraTipoNegociacion" />
+                <ScalarProperty Name="LetraProtesto" ColumnName="LetraProtesto" />
+                <ScalarProperty Name="LetraPresentadaVoucher" ColumnName="LetraPresentadaVoucher" />
+                <ScalarProperty Name="LetraPortes" ColumnName="LetraPortes" />
+                <ScalarProperty Name="NotaCreditoRelacionadas" ColumnName="NotaCreditoRelacionadas" />
+                <ScalarProperty Name="MontoRetenidoFlag" ColumnName="MontoRetenidoFlag" />
+                <ScalarProperty Name="NumeroEnvio" ColumnName="NumeroEnvio" />
+                <ScalarProperty Name="TransferProduccionFlag" ColumnName="TransferProduccionFlag" />
+                <ScalarProperty Name="SIAF_Secuencia" ColumnName="SIAF_Secuencia" />
+                <ScalarProperty Name="SIAF_FechaPago" ColumnName="SIAF_FechaPago" />
+                <ScalarProperty Name="SIAF_Expediente" ColumnName="SIAF_Expediente" />
+                <ScalarProperty Name="SIAF_Correlativo" ColumnName="SIAF_Correlativo" />
+                <ScalarProperty Name="ProduccionSecuencia" ColumnName="ProduccionSecuencia" />
+                <ScalarProperty Name="ProcesoFlag" ColumnName="ProcesoFlag" />
+                <ScalarProperty Name="PrecioModificadoFlag" ColumnName="PrecioModificadoFlag" />
+                <ScalarProperty Name="ObservacionFE" ColumnName="ObservacionFE" />
+                <ScalarProperty Name="ComentarioAprobacion" ColumnName="ComentarioAprobacion" />
+                <ScalarProperty Name="FechaRecepcion" ColumnName="FechaRecepcion" />
+                <ScalarProperty Name="FechaOrdenCompra" ColumnName="FechaOrdenCompra" />
+                <ScalarProperty Name="CotizacionNumero" ColumnName="CotizacionNumero" />
+                <ScalarProperty Name="ClienteDireccionDespacho" ColumnName="ClienteDireccionDespacho" />
+                <ScalarProperty Name="RecojoFlag" ColumnName="RecojoFlag" />
+                <ScalarProperty Name="DocumentoElectronicoFlag" ColumnName="DocumentoElectronicoFlag" />
+                <ScalarProperty Name="Comentario03" ColumnName="Comentario03" />
+                <ScalarProperty Name="ClasificacionCobranza" ColumnName="ClasificacionCobranza" />
+                <ScalarProperty Name="Comentario02" ColumnName="Comentario02" />
+                <ScalarProperty Name="Comentario01" ColumnName="Comentario01" />
+                <ScalarProperty Name="MontoComisionPagada" ColumnName="MontoComisionPagada" />
+                <ScalarProperty Name="MontoComision" ColumnName="MontoComision" />
+                <ScalarProperty Name="DespachoVehiculoflag" ColumnName="DespachoVehiculoflag" />
+                <ScalarProperty Name="DespachoDireccionSecuencia" ColumnName="DespachoDireccionSecuencia" />
+                <ScalarProperty Name="PlacaVehiculo" ColumnName="PlacaVehiculo" />
+                <ScalarProperty Name="NotaVenta" ColumnName="NotaVenta" />
+                <ScalarProperty Name="WEB_Notaventa" ColumnName="WEB_Notaventa" />
+                <ScalarProperty Name="WEB_UsuarioMobil" ColumnName="WEB_UsuarioMobil" />
+                <ScalarProperty Name="NumeroUnico" ColumnName="NumeroUnico" />
+                <ScalarProperty Name="LetraEstadoAnterior" ColumnName="LetraEstadoAnterior" />
+                <ScalarProperty Name="LetraProtestoNDFlag" ColumnName="LetraProtestoNDFlag" />
+                <ScalarProperty Name="LetraProtestoFecha" ColumnName="LetraProtestoFecha" />
+                <ScalarProperty Name="LetraDescuentoPortes" ColumnName="LetraDescuentoPortes" />
+                <ScalarProperty Name="LetraEstado" ColumnName="LetraEstado" />
+                <ScalarProperty Name="TransferenciaGratuitaIGVFactor" ColumnName="TransferenciaGratuitaIGVFactor" />
+                <ScalarProperty Name="MontoImpuestoRetenido" ColumnName="MontoImpuestoRetenido" />
+                <ScalarProperty Name="CobranzaDudosaMotivo" ColumnName="CobranzaDudosaMotivo" />
+                <ScalarProperty Name="CentroCostoDestino" ColumnName="CentroCostoDestino" />
+                <ScalarProperty Name="NumeroContrato" ColumnName="NumeroContrato" />
+                <ScalarProperty Name="FechaVencimientoOriginal" ColumnName="FechaVencimientoOriginal" />
+                <ScalarProperty Name="AprobadoPorDescuento" ColumnName="AprobadoPorDescuento" />
+                <ScalarProperty Name="LetraProtestoFlag" ColumnName="LetraProtestoFlag" />
+                <ScalarProperty Name="Cobrador" ColumnName="Cobrador" />
+                <ScalarProperty Name="RutaDespachoPlacaVehiculo" ColumnName="RutaDespachoPlacaVehiculo" />
+                <ScalarProperty Name="RutaDespachoFechaAsignacion" ColumnName="RutaDespachoFechaAsignacion" />
+                <ScalarProperty Name="DocumentosinCantidadFlag" ColumnName="DocumentosinCantidadFlag" />
+                <ScalarProperty Name="DocumentosinDespachoFlag" ColumnName="DocumentosinDespachoFlag" />
+                <ScalarProperty Name="APFechaTransferencia" ColumnName="APFechaTransferencia" />
+                <ScalarProperty Name="ReprogramacionPuntoLlegada" ColumnName="ReprogramacionPuntoLlegada" />
+                <ScalarProperty Name="ReprogramacionPuntoPartida" ColumnName="ReprogramacionPuntoPartida" />
+                <ScalarProperty Name="ReprogramacionMotivo" ColumnName="ReprogramacionMotivo" />
+                <ScalarProperty Name="TransportistaVehiculo" ColumnName="TransportistaVehiculo" />
+                <ScalarProperty Name="TransportistaChofer" ColumnName="TransportistaChofer" />
+                <ScalarProperty Name="ClienteDireccionSecuencia" ColumnName="ClienteDireccionSecuencia" />
+                <ScalarProperty Name="ClienteContacto" ColumnName="ClienteContacto" />
+                <ScalarProperty Name="LetraAceptadoFlag" ColumnName="LetraAceptadoFlag" />
+                <ScalarProperty Name="MontoRedondeo" ColumnName="MontoRedondeo" />
+                <ScalarProperty Name="UltimaFechaModif" ColumnName="UltimaFechaModif" />
+                <ScalarProperty Name="UltimoUsuario" ColumnName="UltimoUsuario" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="RutaDespacho" ColumnName="RutaDespacho" />
+                <ScalarProperty Name="NumeroInterno" ColumnName="NumeroInterno" />
+                <ScalarProperty Name="ComentariosMonto" ColumnName="ComentariosMonto" />
+                <ScalarProperty Name="ComentariosImprimirFlag" ColumnName="ComentariosImprimirFlag" />
+                <ScalarProperty Name="Comentarios" ColumnName="Comentarios" />
+                <ScalarProperty Name="ProcesoImportacionFecha" ColumnName="ProcesoImportacionFecha" />
+                <ScalarProperty Name="ProcesoImportacionNumero" ColumnName="ProcesoImportacionNumero" />
+                <ScalarProperty Name="ProcesoImportacion" ColumnName="ProcesoImportacion" />
+                <ScalarProperty Name="UnidadReplicacion" ColumnName="UnidadReplicacion" />
+                <ScalarProperty Name="UnidadNegocio" ColumnName="UnidadNegocio" />
+                <ScalarProperty Name="CobranzaDudosaFechaClearing" ColumnName="CobranzaDudosaFechaClearing" />
+                <ScalarProperty Name="CobranzaDudosaFecha" ColumnName="CobranzaDudosaFecha" />
+                <ScalarProperty Name="CobranzaDudosaVoucherClearing" ColumnName="CobranzaDudosaVoucherClearing" />
+                <ScalarProperty Name="CobranzaDudosaVoucher" ColumnName="CobranzaDudosaVoucher" />
+                <ScalarProperty Name="CobranzaDudosaEstado" ColumnName="CobranzaDudosaEstado" />
+                <ScalarProperty Name="APProcesoSecuencia" ColumnName="APProcesoSecuencia" />
+                <ScalarProperty Name="APProcesoNumero" ColumnName="APProcesoNumero" />
+                <ScalarProperty Name="APTransferidoFlag" ColumnName="APTransferidoFlag" />
+                <ScalarProperty Name="DescuentoFlag" ColumnName="DescuentoFlag" />
+                <ScalarProperty Name="LetraDescuentoCanjeVoucher" ColumnName="LetraDescuentoCanjeVoucher" />
+                <ScalarProperty Name="LetraDescuentoCanjeFlag" ColumnName="LetraDescuentoCanjeFlag" />
+                <ScalarProperty Name="LetraDescuentoVoucher" ColumnName="LetraDescuentoVoucher" />
+                <ScalarProperty Name="LetraDescuentoVoucherFlag" ColumnName="LetraDescuentoVoucherFlag" />
+                <ScalarProperty Name="LetraDescuentoIntereses" ColumnName="LetraDescuentoIntereses" />
+                <ScalarProperty Name="LetraDescuentoCuentaBancaria" ColumnName="LetraDescuentoCuentaBancaria" />
+                <ScalarProperty Name="LetraFechaRecepcion" ColumnName="LetraFechaRecepcion" />
+                <ScalarProperty Name="LetraUbicacion" ColumnName="LetraUbicacion" />
+                <ScalarProperty Name="LetraAceptadoPor" ColumnName="LetraAceptadoPor" />
+                <ScalarProperty Name="LetraAvalTelefono" ColumnName="LetraAvalTelefono" />
+                <ScalarProperty Name="LetraAvalDireccion" ColumnName="LetraAvalDireccion" />
+                <ScalarProperty Name="LetraAvalRUC" ColumnName="LetraAvalRUC" />
+                <ScalarProperty Name="LetraAvalNombre" ColumnName="LetraAvalNombre" />
+                <ScalarProperty Name="LetraCobranzaNumero" ColumnName="LetraCobranzaNumero" />
+                <ScalarProperty Name="LetraBanco" ColumnName="LetraBanco" />
+                <ScalarProperty Name="LetraCarteraFlag" ColumnName="LetraCarteraFlag" />
+                <ScalarProperty Name="TipoCanjeFactura" ColumnName="TipoCanjeFactura" />
+                <ScalarProperty Name="Sucursal" ColumnName="Sucursal" />
+                <ScalarProperty Name="CampoReferencia" ColumnName="CampoReferencia" />
+                <ScalarProperty Name="Proyecto" ColumnName="Proyecto" />
+                <ScalarProperty Name="CentroCosto" ColumnName="CentroCosto" />
+                <ScalarProperty Name="VoucherAnulacion" ColumnName="VoucherAnulacion" />
+                <ScalarProperty Name="VoucherNo" ColumnName="VoucherNo" />
+                <ScalarProperty Name="VoucherPeriodo" ColumnName="VoucherPeriodo" />
+                <ScalarProperty Name="ContabilizacionPendienteFlag" ColumnName="ContabilizacionPendienteFlag" />
+                <ScalarProperty Name="DocumentoMoraFlag" ColumnName="DocumentoMoraFlag" />
+                <ScalarProperty Name="ImpresionPendienteFlag" ColumnName="ImpresionPendienteFlag" />
+                <ScalarProperty Name="AlmacenCodigo" ColumnName="AlmacenCodigo" />
+                <ScalarProperty Name="ComercialPedidoFechaRequerida" ColumnName="ComercialPedidoFechaRequerida" />
+                <ScalarProperty Name="ComercialPedidoNumero" ColumnName="ComercialPedidoNumero" />
+                <ScalarProperty Name="NotaCreditoDocumento" ColumnName="NotaCreditoDocumento" />
+                <ScalarProperty Name="FechaAprobacion" ColumnName="FechaAprobacion" />
+                <ScalarProperty Name="FechaPreparacion" ColumnName="FechaPreparacion" />
+                <ScalarProperty Name="AprobadoPor" ColumnName="AprobadoPor" />
+                <ScalarProperty Name="PreparadoPor" ColumnName="PreparadoPor" />
+                <ScalarProperty Name="MontoAdelantoSaldo" ColumnName="MontoAdelantoSaldo" />
+                <ScalarProperty Name="MontoPagado" ColumnName="MontoPagado" />
+                <ScalarProperty Name="MontoTotal" ColumnName="MontoTotal" />
+                <ScalarProperty Name="MontoDescuentos" ColumnName="MontoDescuentos" />
+                <ScalarProperty Name="MontoImpuestos" ColumnName="MontoImpuestos" />
+                <ScalarProperty Name="MontoImpuestoVentas" ColumnName="MontoImpuestoVentas" />
+                <ScalarProperty Name="MontoNoAfecto" ColumnName="MontoNoAfecto" />
+                <ScalarProperty Name="MontoAfecto" ColumnName="MontoAfecto" />
+                <ScalarProperty Name="MonedaDocumento" ColumnName="MonedaDocumento" />
+                <ScalarProperty Name="TipodeCambio" ColumnName="TipodeCambio" />
+                <ScalarProperty Name="Vendedor" ColumnName="Vendedor" />
+                <ScalarProperty Name="Criteria" ColumnName="Criteria" />
+                <ScalarProperty Name="FormadePago" ColumnName="FormadePago" />
+                <ScalarProperty Name="ConceptoFacturacion" ColumnName="ConceptoFacturacion" />
+                <ScalarProperty Name="TipoVenta" ColumnName="TipoVenta" />
+                <ScalarProperty Name="TipoFacturacion" ColumnName="TipoFacturacion" />
+                <ScalarProperty Name="FechaVencimiento" ColumnName="FechaVencimiento" />
+                <ScalarProperty Name="FechaDocumento" ColumnName="FechaDocumento" />
+                <ScalarProperty Name="ClienteCobrarA" ColumnName="ClienteCobrarA" />
+                <ScalarProperty Name="ClienteReferencia" ColumnName="ClienteReferencia" />
+                <ScalarProperty Name="ClienteDireccion" ColumnName="ClienteDireccion" />
+                <ScalarProperty Name="ClienteNombre" ColumnName="ClienteNombre" />
+                <ScalarProperty Name="ClienteRUC" ColumnName="ClienteRUC" />
+                <ScalarProperty Name="ClienteNumero" ColumnName="ClienteNumero" />
+                <ScalarProperty Name="FormaFacturacion" ColumnName="FormaFacturacion" />
+                <ScalarProperty Name="EstablecimientoCodigo" ColumnName="EstablecimientoCodigo" />
+                <ScalarProperty Name="NumeroDocumento" ColumnName="NumeroDocumento" />
+                <ScalarProperty Name="TipoDocumento" ColumnName="TipoDocumento" />
                 <ScalarProperty Name="CompaniaSocio" ColumnName="CompaniaSocio" />
               </MappingFragment>
             </EntityTypeMapping>

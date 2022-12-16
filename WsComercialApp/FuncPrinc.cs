@@ -12,9 +12,9 @@ using System.Net.Http;
 using System.Net.Mail;
 using System.Net.Mime;
 using System.Text;
-using System.Web;
-using WsComercialApp.fonts;
-using WsComercialApp.Models; 
+using System.Web; 
+using WsComercialApp.Models;
+using WsComercialApp.Models.Bd;
 using WsComercialApp.Utils;
 
 namespace WsComercialApp
@@ -60,11 +60,11 @@ namespace WsComercialApp
             'Y', 'Z', '[', '\\', ']', '^', '_', '`', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
             'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', '{', '|', '}', '~'
 
-    };
+    }; 
 
         public static string trimValor(string valor)
         {
-            if (valor != null && valor != "")
+            if (valor  != null && valor != "")
             {
                 return valor.Trim();
             }

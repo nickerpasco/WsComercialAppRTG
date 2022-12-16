@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace WsComercialApp.fonts
+namespace WsComercialApp.Models.Bd
 {
     using System;
     using System.Collections.Generic;
@@ -158,6 +158,7 @@ namespace WsComercialApp.fonts
         public string TransferenciaBonificacionFlag { get; set; }
         public string TransferenciaRepresentacionFla { get; set; }
         public string SpringCodigo { get; set; }
+        public Nullable<decimal> CantidadDevolucion { get; set; }
     
         public virtual CO_Documento CO_Documento { get; set; }
         public virtual CO_Documento CO_Documento1 { get; set; }

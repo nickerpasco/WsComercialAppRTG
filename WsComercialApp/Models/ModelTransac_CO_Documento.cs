@@ -11,6 +11,7 @@ namespace WsComercialApp.Models
 
         public string CompaniaSocio { get; set; }
         public string TipoDocumento { get; set; }
+        public string FlagEnEspera { get; set; }
         public string ItemDescuento { get; set; }
         public string AlmacenItemDescuento { get; set; }
         public string TipoDocumentoPedidoCLiente { get; set; }
