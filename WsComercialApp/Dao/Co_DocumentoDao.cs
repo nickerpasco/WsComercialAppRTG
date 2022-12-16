@@ -39,7 +39,7 @@ namespace WsComercialApp.Dao
                         {
                             response = InsertarPedido(c, context);
                         }
-                    
+
 
                         dbContextTransaction.Commit();
 
@@ -56,7 +56,7 @@ namespace WsComercialApp.Dao
 
                         var retorno = UtilsDAO.ExecuteQueryResponse(sqlString, parametros);
 
-                        StokCompromentidoStart(c.Detalle,c.AlmacenCodigo);
+                        StokCompromentidoStart(c.Detalle, c.AlmacenCodigo);
 
 
                         //Co_Documento.StoreActualiza_Costos_Margenes
@@ -102,7 +102,7 @@ namespace WsComercialApp.Dao
         }
 
 
-          public ModelTransac_CO_Documento SaveLetras(ModelTransac_CO_Documento c)
+        public ModelTransac_CO_Documento SaveLetras(ModelTransac_CO_Documento c)
         {
             ErrorObj error = new ErrorObj();
             String TipoMotivo = "";
@@ -120,10 +120,10 @@ namespace WsComercialApp.Dao
                         {
                             dbContextTransaction.Rollback();
                             return response;
-                        } 
+                        }
 
                         dbContextTransaction.Commit();
-                           
+
 
 
                     }
@@ -139,17 +139,17 @@ namespace WsComercialApp.Dao
                         {
                             error.CodigoError = 500;
                             error.MensajeError = ex.Message;
-                        }  
+                        }
                         dbContextTransaction.Rollback();
 
-                        response.lstErrores.Add(error); 
+                        response.lstErrores.Add(error);
                     }
                 }
             }
             return response;
         }
 
-        private void StokCompromentidoStart(List<ModelTransac_CO_DocumentoDetalle> detalle,String Almacen)
+        private void StokCompromentidoStart(List<ModelTransac_CO_DocumentoDetalle> detalle, String Almacen)
         {
 
             String ParametroValida = UtilsDAO.getParametroString("999999", "ITEMCOMMIT");
@@ -157,17 +157,17 @@ namespace WsComercialApp.Dao
             if (FuncPrinc.trimValor(ParametroValida) == "S")
             {
 
-                foreach(var item in detalle)
+                foreach (var item in detalle)
                 {
                     var sqlString = UtilsGlobal.ConvertLinesSqlXml("Query_CO_Pedido", "Co_Documento.MotoActualizaComprometido");
                     List<SqlParameter> parametros = new List<SqlParameter>();
                     parametros.Add(new SqlParameter("@Item", item.ItemCodigo.Trim()));
                     parametros.Add(new SqlParameter("@Cantidad", item.CantidadPedida));
                     parametros.Add(new SqlParameter("@Almacen", Almacen));
-                    parametros.Add(new SqlParameter("@Lote", getLote(item.ItemCodigo,Almacen,item.CantidadPedida))); 
+                    parametros.Add(new SqlParameter("@Lote", getLote(item.ItemCodigo, Almacen, item.CantidadPedida)));
 
                     var retorno = UtilsDAO.ExecuteQueryResponse(sqlString, parametros);
-                } 
+                }
 
 
             }
@@ -177,7 +177,7 @@ namespace WsComercialApp.Dao
 
         private String getLote(string itemCodigo, string almacen, decimal? cantidad)
         {
-            String validatem = UtilsDAO.getValuString("select isnull(ManejoxLoteFlag,'N') as ManejoxLoteFlag from WH_ItemMast where Item = '" + itemCodigo+ "'", null);
+            String validatem = UtilsDAO.getValuString("select isnull(ManejoxLoteFlag,'N') as ManejoxLoteFlag from WH_ItemMast where Item = '" + itemCodigo + "'", null);
 
             if (validatem == "N")
             {
@@ -187,11 +187,11 @@ namespace WsComercialApp.Dao
             String realQuery = "select Lote,StockActual from WH_ItemAlmacenLote  where  AlmacenCodigo = '" + almacen + "' AND Item = '" + itemCodigo + "' order by FechaIngreso asc";
             var resultado = UtilsDAO.getDataByQuery<Model_Stock_Query>(realQuery);
 
-            foreach(var item in resultado)
+            foreach (var item in resultado)
             {
-                if(item.StockActual > cantidad)
+                if (item.StockActual > cantidad)
                 {
-                   return item.Lote;
+                    return item.Lote;
                 }
             }
 
@@ -278,7 +278,7 @@ namespace WsComercialApp.Dao
             }
             return response;
         }
-        
+
         public ModelTransac_CO_Documento AnularPedido(ModelTransac_CO_Documento c)
         {
             ErrorObj error = new ErrorObj();
@@ -295,7 +295,7 @@ namespace WsComercialApp.Dao
 
                         dbContextTransaction.Commit();
 
-  
+
 
                     }
                     catch (Exception ex)
@@ -357,7 +357,7 @@ namespace WsComercialApp.Dao
             ModelTransac_CO_Documento obj = (ModelTransac_CO_Documento)UtilsDAO.getDataObjectByQueryWithParameters<ModelTransac_CO_Documento>(sqlString3, parametros3);
 
 
-         
+
 
 
             c.Sucursal = FuncPrinc.trimValor(obj.Sucursal);
@@ -379,7 +379,7 @@ namespace WsComercialApp.Dao
                 //var serie = (CorrelativosMast[0].Serie); 
                 //serie = serie.Substring(2, 2);
                 //c.NumeroDocumento = serie + correlativo.ToString("D8");
-                c.NumeroDocumento =   correlativo.ToString("D10");
+                c.NumeroDocumento = correlativo.ToString("D10");
             }
             else
             {
@@ -395,14 +395,14 @@ namespace WsComercialApp.Dao
                 var OtablaCorreclativo = context.CorrelativosMast.SingleOrDefault(t => t.CompaniaCodigo == company && t.TipoComprobante == c.TipoDocumento && t.Serie == c.Sucursal);
                 if (OtablaCorreclativo != null)
                 {
-                   
+
                     OtablaCorreclativo.CorrelativoNumero = correlativo;
 
                     context.Entry(OtablaCorreclativo).State = System.Data.Entity.EntityState.Modified;
                 }
 
 
-                var OtablaNumeroInterno = context.CorrelativosMast.SingleOrDefault(t =>  t.TipoComprobante == "TK");
+                var OtablaNumeroInterno = context.CorrelativosMast.SingleOrDefault(t => t.TipoComprobante == "TK");
                 if (OtablaNumeroInterno != null)
                 {
                     NumeroInterno = (OtablaNumeroInterno.CorrelativoNumero) + 1;
@@ -453,7 +453,7 @@ namespace WsComercialApp.Dao
                 else
                 {
                     c.FechaVencimiento = null;
-                } 
+                }
 
 
                 var Otabla = new CO_Documento();
@@ -462,7 +462,6 @@ namespace WsComercialApp.Dao
                 c.CentroCosto = FuncPrinc.trimValor(CentroCostosUsuario);
                 Otabla.CompaniaSocio = c.CompaniaSocio;
                 Otabla.TipoDocumento = c.TipoDocumento;
-                Otabla.FlagEnEspera = c.FlagEnEspera;
                 Otabla.NumeroDocumento = c.NumeroDocumento;
                 Otabla.EstablecimientoCodigo = c.EstablecimientoCodigo;
                 Otabla.FechaDocumento = DateTime.Now;//c.FechaDocumento;
@@ -472,7 +471,7 @@ namespace WsComercialApp.Dao
 
                 Otabla.TipoFacturacion = c.TipoFacturacion; // UtilsDAO.getParametroString("999999", "DOCTIPOFAC"); 
                 Otabla.NumeroDocumento = c.NumeroDocumento;
-                Otabla.TipoVenta = UtilsDAO.getValuString("select tipoventa from CO_Vendedor where Vendedor="+ IdUsuarioPersona + "", null);
+                Otabla.TipoVenta = UtilsDAO.getValuString("select tipoventa from CO_Vendedor where Vendedor=" + IdUsuarioPersona + "", null);
                 //Otabla.ConceptoFacturacion = UtilsDAO.getParametroString("999999", "DOCCONCEPT");
                 Otabla.ConceptoFacturacion = c.ConceptoFacturacion;
                 Otabla.REALIZADOPORWEB = "S";
@@ -505,10 +504,10 @@ namespace WsComercialApp.Dao
                 Otabla.ClienteDireccionDespacho = c.ClienteDireccionDespacho;
                 Otabla.FechaPreparacion = Otabla.FechaDocumento;
                 Otabla.ComercialPedidoFechaRequerida = Otabla.FechaPreparacion;
-              
+
                 //Otabla.ComercialPedidoFechaRequerida = c.FechaDocumento;
                 Otabla.TipoMotivo = c.TipoMotivo;
-                Otabla.AlmacenCodigo = UtilsDAO.getValuString("select ValorString from SY_Preferences where usuario='"+c.UltimoUsuario+"' and Preference='ALMACEN'", null); ;
+                Otabla.AlmacenCodigo = UtilsDAO.getValuString("select ValorString from SY_Preferences where usuario='" + c.UltimoUsuario + "' and Preference='ALMACEN'", null); ;
                 c.AlmacenCodigo = Otabla.AlmacenCodigo;
                 Otabla.ReferenciaTipoPago = UtilsDAO.getValuString("select texto from ParametrosMast where CompaniaCodigo='999999' and ParametroClave='TIPAGAPP' and AplicacionCodigo='CO'", null); ;
                 Otabla.ImpresionPendienteFlag = "S";
@@ -545,9 +544,9 @@ namespace WsComercialApp.Dao
                 Otabla.LetraDescuentoIntereses = 0;
 
                 Otabla.APTransferidoFlag = "N";
-                Otabla.MontoAdelantoSaldo = 0; 
+                Otabla.MontoAdelantoSaldo = 0;
                 Otabla.FormaFacturacion = UtilsDAO.getParametroString(company, "DOCFORFACT");
-                Otabla.RutaDespacho = UtilsDAO.getValuString("select RutaDespacho from Direccion  with(nolock) where persona=" + Otabla.ClienteNumero + " and secuencia ="+ Otabla.ClienteDireccionDespacho+"", null); ;
+                Otabla.RutaDespacho = UtilsDAO.getValuString("select RutaDespacho from Direccion  with(nolock) where persona=" + Otabla.ClienteNumero + " and secuencia =" + Otabla.ClienteDireccionDespacho + "", null); ;
                 Otabla.MontoRedondeo = 0;
                 //Otabla.clientedireccionsecuencia = c.clientedireccionsecuencia;
                 Otabla.SIAF_Correlativo = "01";
@@ -555,9 +554,9 @@ namespace WsComercialApp.Dao
                 Otabla.TipoCliente = c.TipoCliente;
                 Otabla.DocumentosinDespachoFlag = "N";
 
-                if (c.CreditoFlag=="S")
+                if (c.CreditoFlag == "S")
                 {
-                    Otabla.FechaVencimientoOriginal = UtilsDAO.getValueDatetime("select GETDATE()+MA_FormadePagoDetalle.NumeroDias from MA_FormadePago inner join MA_FormadePagoDetalle on MA_FormadePago.FormadePago=MA_FormadePagoDetalle.FormadePago where MA_FormadePago.FormadePago='"+c.FormadePago+"' and MA_FormadePAgo.CreditoFlag='S'", null);
+                    Otabla.FechaVencimientoOriginal = UtilsDAO.getValueDatetime("select GETDATE()+MA_FormadePagoDetalle.NumeroDias from MA_FormadePago inner join MA_FormadePagoDetalle on MA_FormadePago.FormadePago=MA_FormadePagoDetalle.FormadePago where MA_FormadePago.FormadePago='" + c.FormadePago + "' and MA_FormadePAgo.CreditoFlag='S'", null);
 
 
                     //if (!c.ValidacionLineaCredito)
@@ -609,11 +608,11 @@ namespace WsComercialApp.Dao
                     StringBuilder cuerpo = new StringBuilder();
                     foreach (var item in lstMotivos)
                     {
-                        
+
 
                         cuerpo.Append("'" + item.CodigoMotivo + "',");
 
-                       
+
                     }
                     String Ver = cuerpo.ToString();
                     int charcan = (Ver.Length - 1);
@@ -644,7 +643,7 @@ namespace WsComercialApp.Dao
                 Otabla.FechaOrdenCompra = c.FechaOrdenCompra;
                 Otabla.FechaRecepcion = c.FechaRecepcion;
                 Otabla.FechaRecepcionADV = c.FechaRecepcionADV;
-                Otabla.CotizacionNumero = c.CotizacionNumero; 
+                Otabla.CotizacionNumero = c.CotizacionNumero;
                 Otabla.MontoBruto = c.MontoBruto;
                 Otabla.MontoFlete = c.MontoFlete;
                 Otabla.RecojoFlag = c.RecojoFlag;
@@ -656,7 +655,7 @@ namespace WsComercialApp.Dao
                 Otabla.CentroCosto = c.CentroCosto;
                 Otabla.TransportistaProvincia = c.TransportistaProvincia;
 
-                
+
                 Otabla.ClienteDireccionSecuencia = Otabla.ClienteDireccionDespacho;
 
                 context.CO_Documento.Add(Otabla);
@@ -679,7 +678,7 @@ namespace WsComercialApp.Dao
 
                     context.CO_DocumentoImpuesto.Add(OtablaImpuesto);
                     context.SaveChanges();
-                } 
+                }
 
                 if (c.Detalle != null)
                 {
@@ -697,9 +696,9 @@ namespace WsComercialApp.Dao
 
 
 
-                        OtablaDetalle.ItemCodigo =FuncPrinc.trimValor(detalle.ItemCodigo);
+                        OtablaDetalle.ItemCodigo = FuncPrinc.trimValor(detalle.ItemCodigo);
                         OtablaDetalle.Descripcion = detalle.Descripcion;
-                    
+
                         OtablaDetalle.CantidadPedida = detalle.CantidadPedida;
                         OtablaDetalle.CantidadEntregada = 0;
                         OtablaDetalle.CantidadSOD = 0;
@@ -736,7 +735,7 @@ namespace WsComercialApp.Dao
                         OtablaDetalle.CantidadPedidaDoble = 0;
                         OtablaDetalle.AlmacenCodigo = detalle.AlmacenCodigoDetalle;
 
-                        if (OtablaDetalle.TipoDetalle == "S" || Otabla.Estado =="PR")
+                        if (OtablaDetalle.TipoDetalle == "S" || Otabla.Estado == "PR")
                         {
                             OtablaDetalle.Lote = "00";
                             OtablaDetalle.PrecioModificadoFlag = "S";
@@ -749,14 +748,14 @@ namespace WsComercialApp.Dao
                             OtablaDetalle.UnidadCodigo = detalle.UnidadCodigo;
                         }
 
-                        
+
 
                         OtablaDetalle.FlujodeCaja = detalle.FlujodeCaja;
 
 
                         OtablaDetalle.CantidadEntregadaDoble = 0;
                         OtablaDetalle.DespachoUnidadEquivalenteFlag = "N";
-                       
+
                         OtablaDetalle.ClienteDireccionDespacho = c.ClienteDireccionDespacho;
                         OtablaDetalle.RutaDespacho = Otabla.RutaDespacho;
 
@@ -821,9 +820,13 @@ namespace WsComercialApp.Dao
                         context.SaveChanges();
 
                         /// INSERTAR DESPACHODETALLE
-                         
+
                         //var secuenciaIddespacho = context.CO_DocumentoDetalleDespacho.Where(x => x.CompaniaSocio == c.CompaniaSocio && x.TipoDocumento == c.TipoDocumento && x.NumeroDocumento == c.NumeroDocumento).DefaultIfEmpty().Max(t => t == null ? 0 : t.Secuencia);
-                        var OtablaDetalleDespacho = new CO_DocumentoDetalleDespacho();
+
+                        if (Otabla.Estado != "PR")
+                        {
+
+                            var OtablaDetalleDespacho = new CO_DocumentoDetalleDespacho();
 
                             OtablaDetalleDespacho.CompaniaSocio = c.CompaniaSocio;
                             OtablaDetalleDespacho.TipoDocumento = c.TipoDocumento;
@@ -853,13 +856,13 @@ namespace WsComercialApp.Dao
                             OtablaDetalleDespacho.FechaEntrega = Otabla.FechaDocumento;
 
 
-                        context.CO_DocumentoDetalleDespacho.Add(OtablaDetalleDespacho);
-                        context.SaveChanges();
+                            context.CO_DocumentoDetalleDespacho.Add(OtablaDetalleDespacho);
+                            context.SaveChanges();
 
                         }
 
 
-                         
+
 
                     }
 
@@ -885,16 +888,16 @@ namespace WsComercialApp.Dao
 
             }
             return response;
-        }    
-        
+        }
+
         private ModelTransac_CO_Documento InsertarLetras(ModelTransac_CO_Documento c, BdEntityGenerico context)
         {
 
             ModelTransac_CO_Documento response = new ModelTransac_CO_Documento();
             ErrorObj error = new ErrorObj();
 
-            
- 
+
+
             var company = "999999";
             c.TipoDocumento = "SY";
             c.Sucursal = "COCA";
@@ -933,7 +936,7 @@ namespace WsComercialApp.Dao
                             else
                             {
 
-                                if(detalle.Estado == "EL")
+                                if (detalle.Estado == "EL")
                                 {
                                     context.Entry(validaUpdate).State = System.Data.Entity.EntityState.Deleted;
                                     context.SaveChanges();
@@ -945,12 +948,12 @@ namespace WsComercialApp.Dao
                                     context.SaveChanges();
                                 }
 
-                               
-                          
+
+
 
                             }
 
-                         
+
 
                         }
                         catch (DbEntityValidationException e)
@@ -970,8 +973,8 @@ namespace WsComercialApp.Dao
 
                             return response;
 
-                        } 
-                        
+                        }
+
 
                     }
 
@@ -985,13 +988,13 @@ namespace WsComercialApp.Dao
             int? NumeroInterno = 0;
             if (CorrelativosMast.Count > 0)
             {
-                correlativo = (int)((CorrelativosMast[0].CorrelativoNumero) + 1); 
-                c.NumeroDocumento =  correlativo.ToString("D10");
+                correlativo = (int)((CorrelativosMast[0].CorrelativoNumero) + 1);
+                c.NumeroDocumento = correlativo.ToString("D10");
             }
             else
             {
                 error.CodigoError = 500;
-                error.MensajeError = "Error al crear el correlativo, correlativo no encontrado .. Parametros Comapnia : " + company + " Tipo Documento : "+ c.TipoDocumento + " Serie :" + c.Sucursal;
+                error.MensajeError = "Error al crear el correlativo, correlativo no encontrado .. Parametros Comapnia : " + company + " Tipo Documento : " + c.TipoDocumento + " Serie :" + c.Sucursal;
                 response.lstErrores.Add(error);
                 return response;
             }
@@ -1002,28 +1005,28 @@ namespace WsComercialApp.Dao
                 var OtablaCorreclativo = context.CorrelativosMast.SingleOrDefault(t => t.CompaniaCodigo == company && t.TipoComprobante == c.TipoDocumento && t.Serie == c.Sucursal);
                 if (OtablaCorreclativo != null)
                 {
-                   
+
                     OtablaCorreclativo.CorrelativoNumero = correlativo;
 
                     context.Entry(OtablaCorreclativo).State = System.Data.Entity.EntityState.Modified;
                 }
 
 
-              
+
 
                 var Otabla = new CO_OperacionCanje();
 
 
 
-                c.NumeroDocumento = ""+correlativo;
-                NumeroDocumento =  correlativo;
+                c.NumeroDocumento = "" + correlativo;
+                NumeroDocumento = correlativo;
                 Otabla.CompaniaSocio = c.CompaniaSocio;
                 Otabla.OperacionCanjeNumero = Convert.ToInt32(c.NumeroDocumento);
                 Otabla.Cliente = c.ClienteNumero;
                 Otabla.ClienteCobrarA = c.ClienteNumero;
                 Otabla.ClienteDireccionSecuencia = c.ClienteDireccionDespacho;
                 Otabla.Vendedor = c.Vendedor;
-                Otabla.LetrasCantidad = c.CantidadLetras; 
+                Otabla.LetrasCantidad = c.CantidadLetras;
                 Otabla.FechaBase = c.FechaBaseLetras;
                 Otabla.FechaMaxima = Convert.ToDateTime(c.FechaBaseLetras).AddDays((double)c.DiasCredito);
                 Otabla.DiasCanje = c.DiasCredito;
@@ -1036,13 +1039,13 @@ namespace WsComercialApp.Dao
                 string dateString = DateTime.Now.ToString("yyyyMM", CultureInfo.InvariantCulture);
                 Otabla.VoucherPeriodo = dateString;
                 Otabla.Procedencia = c.Procedencia;
-                Otabla.VoucherNo = null; 
+                Otabla.VoucherNo = null;
                 Otabla.DiasAdicionales = null;
                 Otabla.NumeroSolicitud = null;
                 Otabla.TipoOperacion = null;
                 Otabla.FinanciamientoNumeroDocumento = null;
                 Otabla.FinanciamientoTipoDocumento = null;
-                 
+
                 context.CO_OperacionCanje.Add(Otabla);
                 context.SaveChanges();
 
@@ -1054,13 +1057,13 @@ namespace WsComercialApp.Dao
 
                 if (c.Detalle != null)
                 {
-                   
+
                     foreach (var detalle in c.Detalle)
                     {
 
                         var secuenciaId = context.CO_OperacionCanjeDetalle.Where(x => x.OperacionCanjeNumero == NumeroDocumento).DefaultIfEmpty().Max(t => t == null ? 0 : t.Linea);
-                        var OtablaDetalle = new CO_OperacionCanjeDetalle(); 
-                        
+                        var OtablaDetalle = new CO_OperacionCanjeDetalle();
+
 
                         OtablaDetalle.OperacionCanjeNumero = Convert.ToInt32(c.NumeroDocumento);
                         OtablaDetalle.CompaniaSocio = c.CompaniaSocio;
@@ -1069,10 +1072,10 @@ namespace WsComercialApp.Dao
                         OtablaDetalle.NumeroDocumento = detalle.Descripcion;
                         OtablaDetalle.TipoDocumento = detalle.TipoDocumento;
                         OtablaDetalle.Monto = detalle.MontoFinal;
-                        OtablaDetalle.MontoComision = (detalle.MontoFinal* FactorDivisor) / 100; 
+                        OtablaDetalle.MontoComision = (detalle.MontoFinal * FactorDivisor) / 100;
 
                         context.CO_OperacionCanjeDetalle.Add(OtablaDetalle);
-                        context.SaveChanges(); 
+                        context.SaveChanges();
 
                     }
 
@@ -1090,7 +1093,7 @@ namespace WsComercialApp.Dao
                         //OtablaDetalle.FechaEmision = (DateTime)c.FechaBaseLetras;
                         //OtablaDetalle.FechaVencimiento = (DateTime)detalle.FechaVencimientoDate;
                         //OtablaDetalle.MontoLetra = (decimal)detalle.MontoTotalLetras;
-                      
+
 
                         //context.CO_LetraCompromisoLetra.Add(OtablaDetalle);
                         //context.SaveChanges();
@@ -1135,8 +1138,8 @@ namespace WsComercialApp.Dao
 
             }
             return response;
-        } 
-          
+        }
+
         private ModelTransac_CO_Documento InsertarFacturacion(ModelTransac_CO_Documento c, BdEntityGenerico context)
         {
 
@@ -1153,7 +1156,7 @@ namespace WsComercialApp.Dao
             var companyAll = c.CompaniaSocio;
             var company = c.CompaniaSocio.Substring(0, 6);
 
-            String validaDocumento = UtilsDAO.getValuString("select codigofiscal from ClienteMast cli  inner join CO_TipoDocumento  doc on doc.TipoDocumento = cli.TipoDocumento  where Cliente = " + c.ClienteNumero+"", null);
+            String validaDocumento = UtilsDAO.getValuString("select codigofiscal from ClienteMast cli  inner join CO_TipoDocumento  doc on doc.TipoDocumento = cli.TipoDocumento  where Cliente = " + c.ClienteNumero + "", null);
 
             if (validaDocumento == "")
             {
@@ -1165,7 +1168,7 @@ namespace WsComercialApp.Dao
 
             if (validaDocumento == "01")
             {
-                Sucursal = UtilsDAO.getValuString("select valorstring from SY_Preferences with(nolock) where AplicacionCodigo='CO' and Preference='Serie-FC' and Usuario='" + c.UltimoUsuario+"'", null);
+                Sucursal = UtilsDAO.getValuString("select valorstring from SY_Preferences with(nolock) where AplicacionCodigo='CO' and Preference='Serie-FC' and Usuario='" + c.UltimoUsuario + "'", null);
             }
 
             if (validaDocumento == "03")
@@ -1186,19 +1189,19 @@ namespace WsComercialApp.Dao
             c.Sucursal = Sucursal;
             //c.TipoDocumento = "BV";
             c.TipoDocumento = c.TipoDocumentoPedidoCLiente;
-        
 
 
-           var CorrelativosMast = context.CorrelativosMast.DefaultIfEmpty().Where(t => t.CompaniaCodigo == company
-            && t.TipoComprobante == c.TipoDocumento && t.Serie == c.Sucursal).ToList();
+
+            var CorrelativosMast = context.CorrelativosMast.DefaultIfEmpty().Where(t => t.CompaniaCodigo == company
+             && t.TipoComprobante == c.TipoDocumento && t.Serie == c.Sucursal).ToList();
             int correlativo = 0;
             int? NumeroInterno = 0;
             if (CorrelativosMast.Count > 0)
             {
                 correlativo = (int)((CorrelativosMast[0].CorrelativoNumero) + 1);
-                var serie = (CorrelativosMast[0].Serie); 
+                var serie = (CorrelativosMast[0].Serie);
                 //serie = serie.Substring(2, 2);
-                c.NumeroDocumento = serie +"-"+ correlativo.ToString("D7");
+                c.NumeroDocumento = serie + "-" + correlativo.ToString("D7");
             }
             else
             {
@@ -1214,45 +1217,45 @@ namespace WsComercialApp.Dao
                 var OtablaCorreclativo = context.CorrelativosMast.SingleOrDefault(t => t.CompaniaCodigo == company && t.TipoComprobante == c.TipoDocumento && t.Serie == c.Sucursal);
                 if (OtablaCorreclativo != null)
                 {
-                   
+
                     OtablaCorreclativo.CorrelativoNumero = correlativo;
 
                     context.Entry(OtablaCorreclativo).State = System.Data.Entity.EntityState.Modified;
                 }
-                 
 
-                var CO_DOCUMENTO = context.CO_Documento.Where(t => t.CompaniaSocio == Compania && t.TipoDocumento == TipoDocumento && t.NumeroDocumento == NumeroDOcumento).FirstOrDefault();              
+
+                var CO_DOCUMENTO = context.CO_Documento.Where(t => t.CompaniaSocio == Compania && t.TipoDocumento == TipoDocumento && t.NumeroDocumento == NumeroDOcumento).FirstOrDefault();
                 var cabecera = Newtonsoft.Json.JsonConvert.SerializeObject(CO_DOCUMENTO, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore });
 
                 var Otabla = (CO_Documento)Newtonsoft.Json.JsonConvert.DeserializeObject(cabecera, typeof(CO_Documento));
 
-                
+
                 Otabla.CO_DocumentoDetalle.Clear();
                 Otabla.CO_DocumentoDetalle1.Clear();
                 Otabla.CO_DocumentoDetalle2.Clear();
                 Otabla.CO_DocumentoDetalle3.Clear();
                 Otabla.CO_DocumentoDetalleDespacho.Clear();
                 Otabla.CO_DocumentoImpuesto.Clear();
-                Otabla.CO_DocumentoImpuesto1.Clear(); 
-                Otabla.CO_DocumentoImpuesto2.Clear(); 
-                Otabla.CO_DocumentoImpuesto3.Clear(); 
-               
+                Otabla.CO_DocumentoImpuesto1.Clear();
+                Otabla.CO_DocumentoImpuesto2.Clear();
+                Otabla.CO_DocumentoImpuesto3.Clear();
 
-                Otabla.ComercialPedidoNumero = Otabla.TipoDocumento+ Otabla.NumeroDocumento;
+
+                Otabla.ComercialPedidoNumero = Otabla.TipoDocumento + Otabla.NumeroDocumento;
                 Otabla.CompaniaSocio = c.CompaniaSocio;
-                Otabla.TipoDocumento = c.TipoDocumento ;
+                Otabla.TipoDocumento = c.TipoDocumento;
                 Otabla.NumeroDocumento = c.NumeroDocumento;
                 Otabla.FechaDocumento = DateTime.Now;
                 Otabla.TipodeCambio = c.TipodeCambio;
-                Otabla.CodigoQR = FuncPrinc.GenerarQRSunat(Otabla, "20603858329", "03","03");
+                Otabla.CodigoQR = FuncPrinc.GenerarQRSunat(Otabla, "20603858329", "03", "03");
                 Otabla.APProcesoNumero = 0;
                 Otabla.APProcesoSecuencia = 0;
                 Otabla.MontoPercepcion = 0;
                 Otabla.Estado = "PR";
                 //Otabla.DocumentoSinCantidadFlag = "N";
                 Otabla.MontoRetenidoFlag = "N";
-                Otabla.UltimoUsuario =c.UltimoUsuario;
-                Otabla.UltimaFechaModif = Otabla.FechaDocumento; 
+                Otabla.UltimoUsuario = c.UltimoUsuario;
+                Otabla.UltimaFechaModif = Otabla.FechaDocumento;
                 context.CO_Documento.Add(Otabla);
                 context.SaveChanges();
 
@@ -1260,22 +1263,22 @@ namespace WsComercialApp.Dao
                 response = c;
 
 
-                var CO_DOCUMENTOIMPUESTO = context.CO_DocumentoImpuesto.Where(t => t.CompaniaSocio == Compania && t.TipoDocumento == TipoDocumento && t.NumeroDocumento == NumeroDOcumento).ToList();               
+                var CO_DOCUMENTOIMPUESTO = context.CO_DocumentoImpuesto.Where(t => t.CompaniaSocio == Compania && t.TipoDocumento == TipoDocumento && t.NumeroDocumento == NumeroDOcumento).ToList();
                 var cabeceraImpuesto = Newtonsoft.Json.JsonConvert.SerializeObject(CO_DOCUMENTOIMPUESTO, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore });
 
                 var OtablaImpuestos = (List<CO_DocumentoImpuesto>)Newtonsoft.Json.JsonConvert.DeserializeObject(cabeceraImpuesto, typeof(List<CO_DocumentoImpuesto>));
-              
-              
+
+
 
                 foreach (var impuesto in OtablaImpuestos)
                 {
                     impuesto.CO_Documento = Otabla;
                     impuesto.CO_Documento1 = Otabla;
                     impuesto.CO_Documento2 = Otabla;
-                    impuesto.CO_Documento3 = Otabla;                    
+                    impuesto.CO_Documento3 = Otabla;
                     impuesto.CompaniaSocio = c.CompaniaSocio;
                     impuesto.TipoDocumento = c.TipoDocumento;
-                    impuesto.NumeroDocumento = c.NumeroDocumento;               
+                    impuesto.NumeroDocumento = c.NumeroDocumento;
 
                     context.CO_DocumentoImpuesto.Add(impuesto);
                     context.SaveChanges();
@@ -1289,7 +1292,7 @@ namespace WsComercialApp.Dao
 
 
                 foreach (var OtablaDetalle in OtablaDetallePedido)
-                    {
+                {
 
                     //OtablaDetalle.CO_Documento = Otabla;
                     OtablaDetalle.CO_Documento = Otabla;
@@ -1307,47 +1310,40 @@ namespace WsComercialApp.Dao
 
 
                     context.CO_DocumentoDetalle.Add(OtablaDetalle);
-                    context.SaveChanges(); 
+                    context.SaveChanges();
 
-                 }
+                }
 
 
                 var CO_DOCUMENTODETALLEDESPACHO = context.CO_DocumentoDetalleDespacho.Where(t => t.CompaniaSocio == Compania && t.TipoDocumento == TipoDocumento && t.NumeroDocumento == NumeroDOcumento).ToList();
                 var detallePedidoDespacho = Newtonsoft.Json.JsonConvert.SerializeObject(CO_DOCUMENTODETALLEDESPACHO, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore });
                 var OtablaDetallePedidoDespacho = (List<CO_DocumentoDetalleDespacho>)Newtonsoft.Json.JsonConvert.DeserializeObject(detallePedidoDespacho, typeof(List<CO_DocumentoDetalleDespacho>));
 
-                if (c.Estado != "PR")
+
+                foreach (var OtablaDetalleDespacho in OtablaDetallePedidoDespacho)
                 {
-                    foreach (var OtablaDetalleDespacho in OtablaDetallePedidoDespacho)
-                    {
 
+                    //OtablaDetalleDespacho.CO_Documento = Otabla;
+                    OtablaDetalleDespacho.CO_Documento = Otabla;
+                    OtablaDetalleDespacho.CompaniaSocio = c.CompaniaSocio;
+                    OtablaDetalleDespacho.TipoDocumento = c.TipoDocumento;
+                    OtablaDetalleDespacho.NumeroDocumento = c.NumeroDocumento;
+                    OtablaDetalleDespacho.FechaEntrega = Otabla.FechaDocumento;
+                    OtablaDetalleDespacho.Turno = 1;
+                    OtablaDetalleDespacho.Estado = "PE";
+                    OtablaDetalleDespacho.CantidadMerma = 0;
+                    OtablaDetalleDespacho.Secuencia = 1;
 
-                        //OtablaDetalleDespacho.CO_Documento = Otabla;
-                        OtablaDetalleDespacho.CO_Documento = Otabla;
-                        OtablaDetalleDespacho.CompaniaSocio = c.CompaniaSocio;
-                        OtablaDetalleDespacho.TipoDocumento = c.TipoDocumento;
-                        OtablaDetalleDespacho.NumeroDocumento = c.NumeroDocumento;
-                        OtablaDetalleDespacho.FechaEntrega = Otabla.FechaDocumento;
-                        OtablaDetalleDespacho.Turno = 1;
-                        OtablaDetalleDespacho.Estado = "PE";
-                        OtablaDetalleDespacho.CantidadMerma = 0;
-                        OtablaDetalleDespacho.Secuencia = 1;
+                    context.CO_DocumentoDetalleDespacho.Add(OtablaDetalleDespacho);
+                    context.SaveChanges();
 
-                        context.CO_DocumentoDetalleDespacho.Add(OtablaDetalleDespacho);
-                        context.SaveChanges();
-
-
-
-
-
-                    }
                 }
 
 
                 //ACTUALIZAR ESTADOS
 
                 CO_DOCUMENTO.Estado = "FA";
-                CO_DOCUMENTO.ComercialPedidoNumero = c.TipoDocumento+c.NumeroDocumento;
+                CO_DOCUMENTO.ComercialPedidoNumero = c.TipoDocumento + c.NumeroDocumento;
                 context.Entry(CO_DOCUMENTO).State = System.Data.Entity.EntityState.Modified;
                 context.SaveChanges();
 
@@ -1382,31 +1378,21 @@ namespace WsComercialApp.Dao
 
             }
             return response;
-        } 
-        
-          private ModelTransac_CO_Documento ActualizarPedido(ModelTransac_CO_Documento c, BdEntityGenerico context)
+        }
+
+        private ModelTransac_CO_Documento ActualizarPedido(ModelTransac_CO_Documento c, BdEntityGenerico context)
         {
 
             ModelTransac_CO_Documento response = new ModelTransac_CO_Documento();
             ErrorObj error = new ErrorObj();
 
-           
+
             try
             {
                 c.NumeroDocumento = c.NumeroDocumento.Trim();
                 var Otabla = context.CO_Documento.Where(t => t.CompaniaSocio == c.CompaniaSocio && t.TipoDocumento == c.TipoDocumento && t.NumeroDocumento == c.NumeroDocumento).FirstOrDefault();
                 if (Otabla != null)
                 {
-
-                        
-                    response.IdPersonaUsuario = c.IdPersonaUsuario;
-                      
-                    response.IdPersonaUsuario = 0;
-                    response.CantidadLetras = 0;
-                    response.DiasCredito = 0;
-                    response.FechaBaseLetras = DateTime.Now;
-                    response.FechaMaxima = DateTime.Now;
-                    response.FechaBloj = DateTime.Now;
 
                     Otabla.MontoAfecto = c.MontoAfecto;
                     Otabla.MontoNoAfecto = c.MontoNoAfecto;
@@ -1417,8 +1403,7 @@ namespace WsComercialApp.Dao
                     Otabla.FormadePago = c.FormadePago;
                     Otabla.RecojoFlag = c.RecojoFlag;
                     Otabla.MonedaDocumento = c.MonedaDocumento;
-                    Otabla.FlagEnEspera = c.FlagEnEspera;
-                    Otabla.TipoFacturacion = c.TipoFacturacion;
+
                     Otabla.TransportistaProvincia = c.TransportistaProvincia;
                     Otabla.Comentarios = c.Comentarios;
 
@@ -1444,7 +1429,7 @@ namespace WsComercialApp.Dao
                     response.TipoDocumento = Otabla.TipoDocumento;
                     response.NumeroDocumento = Otabla.NumeroDocumento;
                     response.CompaniaSocio = Otabla.CompaniaSocio;
-                }  
+                }
                 //response = c; 
 
                 foreach (var impuesto in c.DetalleImpuestos)
@@ -1460,7 +1445,7 @@ namespace WsComercialApp.Dao
                     OtablaImpuesto.Monto = impuesto.Monto;
                     context.Entry(OtablaImpuesto).State = System.Data.Entity.EntityState.Modified;
                     context.SaveChanges();
-                } 
+                }
 
                 if (c.Detalle != null)
                 {
@@ -1470,7 +1455,7 @@ namespace WsComercialApp.Dao
                         //context.CO_Documento.SingleOrDefault
                         var objdetalle = context.CO_DocumentoDetalle.SingleOrDefault(x => x.CompaniaSocio == c.CompaniaSocio && x.TipoDocumento == c.TipoDocumento && x.NumeroDocumento == c.NumeroDocumento && x.Linea == detalle.Linea);
 
-                        if (objdetalle !=null)
+                        if (objdetalle != null)
                         {
 
                             objdetalle.UnidadCodigo = detalle.UnidadCodigo;
@@ -1496,19 +1481,19 @@ namespace WsComercialApp.Dao
 
                             if (objdetalle.TipoDetalle == "S")
                             {
-                                 
+
                                 objdetalle.PrecioModificadoFlag = "S";
                                 objdetalle.UnidadCodigo = "UND";
                             }
                             else
-                            { 
+                            {
                                 objdetalle.UnidadCodigo = detalle.UnidadCodigo;
                             }
 
                             context.Entry(objdetalle).State = System.Data.Entity.EntityState.Modified;
                             context.SaveChanges();
 
-                            if(Otabla.Estado != "PR")
+                            if (Otabla.Estado != "PR")
                             {
                                 var objdetalleDespacho = context.CO_DocumentoDetalleDespacho.Where(x => x.CompaniaSocio == c.CompaniaSocio && x.TipoDocumento == c.TipoDocumento && x.NumeroDocumento == c.NumeroDocumento).FirstOrDefault();
 
@@ -1522,7 +1507,7 @@ namespace WsComercialApp.Dao
                                 context.SaveChanges();
                             }
 
-                            
+
 
                         }
                         else
@@ -1566,7 +1551,7 @@ namespace WsComercialApp.Dao
                             OtablaDetalle.UltimaFechaModif = DateTime.Now;
                             OtablaDetalle.CantidadPedidaDoble = 0;
                             OtablaDetalle.AlmacenCodigo = detalle.AlmacenCodigoDetalle;
-                             
+
                             OtablaDetalle.FlujodeCaja = detalle.FlujodeCaja;
                             OtablaDetalle.CantidadEntregadaDoble = 0;
                             OtablaDetalle.DespachoUnidadEquivalenteFlag = "N";
@@ -1641,37 +1626,43 @@ namespace WsComercialApp.Dao
                             /// INSERTAR DESPACHODETALLE
 
                             //var secuenciaIddespacho = context.CO_DocumentoDetalleDespacho.Where(x => x.CompaniaSocio == c.CompaniaSocio && x.TipoDocumento == c.TipoDocumento && x.NumeroDocumento == c.NumeroDocumento).DefaultIfEmpty().Max(t => t == null ? 0 : t.Secuencia);
-                            var OtablaDetalleDespacho = new CO_DocumentoDetalleDespacho();
 
-                            OtablaDetalleDespacho.CompaniaSocio = c.CompaniaSocio;
-                            OtablaDetalleDespacho.TipoDocumento = c.TipoDocumento;
-                            OtablaDetalleDespacho.NumeroDocumento = c.NumeroDocumento;
-                            OtablaDetalleDespacho.Linea = OtablaDetalle.Linea;
-                            OtablaDetalleDespacho.Secuencia = 1;
-                            OtablaDetalleDespacho.Turno = 1;
-                            OtablaDetalleDespacho.Cantidad = detalle.CantidadPedida;
-                            OtablaDetalleDespacho.AlmacenCodigo = detalle.AlmacenCodigoDetalle; ;
-                            OtablaDetalleDespacho.AlmacenPrincipal = detalle.AlmacenCodigoDetalle; ;
-                            OtablaDetalleDespacho.FechaEntrega = c.ComercialPedidoFechaRequerida;
-                            OtablaDetalleDespacho.Estado = "PE";
-                            OtablaDetalleDespacho.UltimaFechaModif = DateTime.Now;
-                            OtablaDetalleDespacho.UltimoUsuario = c.UltimoUsuario;
-                            OtablaDetalleDespacho.CantidadSOD = 0;
-                            OtablaDetalleDespacho.CantidadMerma = 0;
-                            OtablaDetalleDespacho.CantidadTotal = detalle.CantidadPedida;
-                            OtablaDetalleDespacho.Item = detalle.ItemCodigo;
-                            OtablaDetalleDespacho.AlmacenPrincipal = detalle.AlmacenCodigoDetalle; ;
-                            OtablaDetalleDespacho.CantidadRecibida = 0;
-                            OtablaDetalleDespacho.ClienteDireccionDespacho = c.ClienteDireccionDespacho;
-                            OtablaDetalleDespacho.TipoRegistro = "P";
-                            OtablaDetalleDespacho.ComprometeFlag = "N";
-                            OtablaDetalleDespacho.FechaEntrega = Otabla.FechaDocumento;
-                            context.CO_DocumentoDetalleDespacho.Add(OtablaDetalleDespacho);
-                            context.SaveChanges();
+                            if (Otabla.Estado != "PR")
+                            {
+                                var OtablaDetalleDespacho = new CO_DocumentoDetalleDespacho();
+
+                                OtablaDetalleDespacho.CompaniaSocio = c.CompaniaSocio;
+                                OtablaDetalleDespacho.TipoDocumento = c.TipoDocumento;
+                                OtablaDetalleDespacho.NumeroDocumento = c.NumeroDocumento;
+                                OtablaDetalleDespacho.Linea = OtablaDetalle.Linea;
+                                OtablaDetalleDespacho.Secuencia = 1;
+                                OtablaDetalleDespacho.Turno = 1;
+                                OtablaDetalleDespacho.Cantidad = detalle.CantidadPedida;
+                                OtablaDetalleDespacho.AlmacenCodigo = detalle.AlmacenCodigoDetalle; ;
+                                OtablaDetalleDespacho.AlmacenPrincipal = detalle.AlmacenCodigoDetalle; ;
+                                OtablaDetalleDespacho.FechaEntrega = c.ComercialPedidoFechaRequerida;
+                                OtablaDetalleDespacho.Estado = "PE";
+                                OtablaDetalleDespacho.UltimaFechaModif = DateTime.Now;
+                                OtablaDetalleDespacho.UltimoUsuario = c.UltimoUsuario;
+                                OtablaDetalleDespacho.CantidadSOD = 0;
+                                OtablaDetalleDespacho.CantidadMerma = 0;
+                                OtablaDetalleDespacho.CantidadTotal = detalle.CantidadPedida;
+                                OtablaDetalleDespacho.Item = detalle.ItemCodigo;
+                                OtablaDetalleDespacho.AlmacenPrincipal = detalle.AlmacenCodigoDetalle; ;
+                                OtablaDetalleDespacho.CantidadRecibida = 0;
+                                OtablaDetalleDespacho.ClienteDireccionDespacho = c.ClienteDireccionDespacho;
+                                OtablaDetalleDespacho.TipoRegistro = "P";
+                                OtablaDetalleDespacho.ComprometeFlag = "N";
+                                OtablaDetalleDespacho.FechaEntrega = Otabla.FechaDocumento;
+                                context.CO_DocumentoDetalleDespacho.Add(OtablaDetalleDespacho);
+                                context.SaveChanges();
+                            }
+
+
 
 
                         }
-                       
+
 
                     }
 
@@ -1697,9 +1688,9 @@ namespace WsComercialApp.Dao
 
             }
             return response;
-        } 
-        
-        
+        }
+
+
         private ModelTransac_CO_Documento AnularPedido(ModelTransac_CO_Documento c, BdEntityGenerico context)
         {
 
@@ -1740,8 +1731,8 @@ namespace WsComercialApp.Dao
                         context.SaveChanges();
                         return c;
                     }
-                    
-                }                 
+
+                }
 
             }
             catch (DbEntityValidationException e)
