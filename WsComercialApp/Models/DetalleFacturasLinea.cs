@@ -13,6 +13,6 @@ namespace WsComercialApp.Models
         public string FechaDocumento { get; set; } 
         public string FechaVencimiento { get; set; }  
         public Nullable<int> DiasVencido { get; set; }
-        public Nullable<int> LetraNumeroUnico { get; set; }
+        public string LetraNumeroUnico { get; set; }
     }
 }
