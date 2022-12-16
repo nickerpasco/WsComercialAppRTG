@@ -337,6 +337,9 @@ namespace WsComercialApp.Controllers
             {
                 sqlString = UtilsGlobal.ConvertLinesSqlXml("Query_Usuario", "Personas.getPersonasOnnline");
                 sqlStringcount = UtilsGlobal.ConvertLinesSqlXml("Query_Usuario", "Personas.getPersonasOnlineCount");
+
+                parametros.Add(new SqlParameter("@Vendedor", bean.Vendedor)); 
+                parametroscount.Add(new SqlParameter("@Vendedor", bean.Vendedor));
             }
             else if(bean.TipoSelector == "Vendedor")
             {

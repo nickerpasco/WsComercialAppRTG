@@ -207,7 +207,7 @@
 		from PersonaMast with(nolock)
 		inner join ClienteMast cli with(nolock) on PersonaMast.Persona= cli.Cliente
 		left join CO_TipoFacturacion tipo with(nolock) on cli.TipoFacturacion = tipo.TipoFacturacion
-		inner join MA_ClienteVendedor cliven with(nolock) on cli.Cliente= cliven.Cliente
+		inner join MA_ClienteVendedor cliven with(nolock) on cli.Cliente= cliven.Cliente and cliven.Vendedor = @Vendedor
 		left join FT_Vehiculo ftvehi with(nolock) on  cli.IdTransportista = ftvehi.IdTransportista
 		where EsCliente='S' and PersonaMast.Estado = 'A' and
 		(@Persona is null or @Persona='' or Persona = @Persona)
@@ -230,8 +230,8 @@
 		COUNT(1)
 		from PersonaMast with(nolock)
 		inner join ClienteMast cli with(nolock) on PersonaMast.Persona= cli.Cliente
-		left join CO_TipoFacturacion tipo with(nolock) on cli.TipoFacturacion = tipo.TipoFacturacion
-		inner join MA_ClienteVendedor cliven with(nolock) on cli.Cliente= cliven.Cliente
+		left join CO_TipoFacturacion tipo with(nolock) on cli.TipoFacturacion = tipo.TipoFacturacion 
+		inner join MA_ClienteVendedor cliven with(nolock) on cli.Cliente= cliven.Cliente and cliven.Vendedor = @Vendedor
 		left join FT_Vehiculo ftvehi with(nolock) on  cli.IdTransportista = ftvehi.IdTransportista
 		where EsCliente='S' and PersonaMast.Estado = 'A' and
 		(@Persona is null or @Persona='' or Persona = @Persona)
