@@ -368,7 +368,16 @@ namespace WsComercialApp.Controllers
 
             if (bean.TipoSelector == "Personas")
             {
-                ListaDirecciones = getDireccionCliente(resul);                
+                if (resul.Count > 0)
+                {
+                    ListaDirecciones = getDireccionCliente(resul);
+                }
+                else
+                {
+                    
+                }
+
+                            
                  
             }
             else if (bean.TipoSelector == "Vendedor")
