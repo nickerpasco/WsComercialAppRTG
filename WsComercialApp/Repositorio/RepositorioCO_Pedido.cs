@@ -9,6 +9,7 @@ using System.Linq;
 using System.Web;
 using WsComercialApp.Dao;
 using WsComercialApp.Models;
+using WsComercialApp.Models.Bd;
 using WsComercialApp.Utils;
 
 namespace WsComercialApp.Repositorio
@@ -96,8 +97,25 @@ namespace WsComercialApp.Repositorio
             var sqlquery = UtilsGlobal.ConvertLinesSqlXml("Query_CO_Pedido", "Miscelaneos.getTipoCambios");
             var ls = UtilsDAO.getDataByQuery<ModelMiscelaneos>(sqlquery);
             return ls;
-        }   
-       
+        }
+
+        internal List<CO_OperacionCanjeDetalle_Model> getLetrasDetalle(ModelTransac_CO_Documento request)
+        {
+
+            var numeroCanje = Convert.ToInt32(request.NumeroDocumento);
+             
+            List<SqlParameter> parametros = new List<SqlParameter>();
+            parametros.Add(new SqlParameter("@CompaniaSocio", request.CompaniaSocio));
+            parametros.Add(new SqlParameter("@OperacionCanjeNumero", numeroCanje)); 
+
+
+            var sqlString = UtilsGlobal.ConvertLinesSqlXml("Query_CO_Pedido", "Co_Documento.getLetrasDetalle");
+            var resultado = UtilsDAO.getDataByQueryWithParameters<CO_OperacionCanjeDetalle_Model>(sqlString, parametros);
+
+            return resultado;
+
+
+        }
 
         internal List<Model_CO_DocumentoDetalle> getDataDetalle(FiltroGenerico bean)
         {

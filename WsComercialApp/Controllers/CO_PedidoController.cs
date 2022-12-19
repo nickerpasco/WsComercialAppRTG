@@ -7,6 +7,7 @@ using WsComercialApp.Utils;
 using WsComercialApp.Repositorio;
 using WsComercialApp.Models;
 using System.Linq;
+using WsComercialApp.Models.Bd;
 
 namespace WsComercialApp.Controllers
 {
@@ -71,6 +72,16 @@ namespace WsComercialApp.Controllers
         {
             RepositorioCO_Pedido repositorio = new RepositorioCO_Pedido();
             var response = repositorio.SaveLetras(documento); // 
+            return response;
+        } 
+        
+        
+        [HttpPost]
+        [Route("api/getLetrasDetalle")]
+        public List<CO_OperacionCanjeDetalle_Model> getLetrasDetalle([FromBody] ModelTransac_CO_Documento documento)
+        {
+            RepositorioCO_Pedido repositorio = new RepositorioCO_Pedido();
+            var response = repositorio.getLetrasDetalle(documento); // 
             return response;
         }
 

@@ -126,6 +126,15 @@ where AplicacionCodigo='CO' and MaestroCodigo='PEDMOTIVO'
 		</Co_Documento.getReglasPrioridadesMotivos>
 
 
+	<Co_Documento.getLetrasDetalle>
+
+		select * from CO_OperacionCanjeDetalle
+		where CompaniaSocio = @CompaniaSocio
+		and OperacionCanjeNumero = @OperacionCanjeNumero
+
+	</Co_Documento.getLetrasDetalle>
+
+
 	<Co_Documento.CabeceraComprobante>
 
 		select
