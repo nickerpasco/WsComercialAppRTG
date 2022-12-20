@@ -442,6 +442,8 @@
           <Property Name="DOTEstado" Type="char" MaxLength="2" />
           <Property Name="FechaAprobPed" Type="datetime" />
           <Property Name="UsuarioAprobPed" Type="char" MaxLength="20" />
+          <Property Name="fechaaprobdoc" Type="datetime" />
+          <Property Name="usuarioaprobdoc" Type="char" MaxLength="20" />
         </EntityType>
         <EntityType Name="CO_DocumentoDespacho">
           <Key>
@@ -1512,41 +1514,7 @@
             <End Role="MA_FormadePagoDetalle" EntitySet="MA_FormadePagoDetalle" />
           </AssociationSet>
           <EntitySet Name="MA_ClienteVendedor" EntityType="RTGModel.MA_ClienteVendedor" />
-          <EntitySet Name="CO_OperacionCanje" EntityType="RTGModel.CO_OperacionCanje" />
           <EntitySet Name="CO_OperacionCanjeComentario" EntityType="RTGModel.CO_OperacionCanjeComentario" />
-          <EntitySet Name="CO_OperacionCanjeDetalle" EntityType="RTGModel.CO_OperacionCanjeDetalle" />
-          <AssociationSet Name="FK__CO_OperacionCanj__0076A3D1" Association="RTGModel.FK__CO_OperacionCanj__0076A3D1">
-            <End Role="CO_OperacionCanje" EntitySet="CO_OperacionCanje" />
-            <End Role="CO_OperacionCanjeDetalle" EntitySet="CO_OperacionCanjeDetalle" />
-          </AssociationSet>
-          <AssociationSet Name="FK__CO_OperacionCanj__1B49CA47" Association="RTGModel.FK__CO_OperacionCanj__1B49CA47">
-            <End Role="CO_OperacionCanje" EntitySet="CO_OperacionCanje" />
-            <End Role="CO_OperacionCanjeDetalle" EntitySet="CO_OperacionCanjeDetalle" />
-          </AssociationSet>
-          <AssociationSet Name="FK__CO_OperacionCanj__1C3DEE80" Association="RTGModel.FK__CO_OperacionCanj__1C3DEE80">
-            <End Role="CO_OperacionCanje" EntitySet="CO_OperacionCanje" />
-            <End Role="CO_OperacionCanjeDetalle" EntitySet="CO_OperacionCanjeDetalle" />
-          </AssociationSet>
-          <AssociationSet Name="FK__CO_OperacionCanj__1D3212B9" Association="RTGModel.FK__CO_OperacionCanj__1D3212B9">
-            <End Role="CO_OperacionCanje" EntitySet="CO_OperacionCanje" />
-            <End Role="CO_OperacionCanjeDetalle" EntitySet="CO_OperacionCanjeDetalle" />
-          </AssociationSet>
-          <AssociationSet Name="FK__CO_OperacionCanj__1E2636F2" Association="RTGModel.FK__CO_OperacionCanj__1E2636F2">
-            <End Role="CO_OperacionCanje" EntitySet="CO_OperacionCanje" />
-            <End Role="CO_OperacionCanjeDetalle" EntitySet="CO_OperacionCanjeDetalle" />
-          </AssociationSet>
-          <AssociationSet Name="FK__CO_OperacionCanj__7D9A3726" Association="RTGModel.FK__CO_OperacionCanj__7D9A3726">
-            <End Role="CO_OperacionCanje" EntitySet="CO_OperacionCanje" />
-            <End Role="CO_OperacionCanjeDetalle" EntitySet="CO_OperacionCanjeDetalle" />
-          </AssociationSet>
-          <AssociationSet Name="FK__CO_OperacionCanj__7E8E5B5F" Association="RTGModel.FK__CO_OperacionCanj__7E8E5B5F">
-            <End Role="CO_OperacionCanje" EntitySet="CO_OperacionCanje" />
-            <End Role="CO_OperacionCanjeDetalle" EntitySet="CO_OperacionCanjeDetalle" />
-          </AssociationSet>
-          <AssociationSet Name="FK__CO_OperacionCanj__7F827F98" Association="RTGModel.FK__CO_OperacionCanj__7F827F98">
-            <End Role="CO_OperacionCanje" EntitySet="CO_OperacionCanje" />
-            <End Role="CO_OperacionCanjeDetalle" EntitySet="CO_OperacionCanjeDetalle" />
-          </AssociationSet>
           <EntitySet Name="CO_Documento" EntityType="RTGModel.CO_Documento" />
           <AssociationSet Name="FK__CO_DocumentoDeta__5190CC5F" Association="RTGModel.FK__CO_DocumentoDeta__5190CC5F">
             <End Role="CO_Documento" EntitySet="CO_Documento" />
@@ -1583,6 +1551,40 @@
           <AssociationSet Name="FK_CO_DocumentoDetalleDespacho_CO_Documento" Association="RTGModel.FK_CO_DocumentoDetalleDespacho_CO_Documento">
             <End Role="CO_Documento" EntitySet="CO_Documento" />
             <End Role="CO_DocumentoDetalleDespacho" EntitySet="CO_DocumentoDetalleDespacho" />
+          </AssociationSet>
+          <EntitySet Name="CO_OperacionCanje" EntityType="RTGModel.CO_OperacionCanje" />
+          <EntitySet Name="CO_OperacionCanjeDetalle" EntityType="RTGModel.CO_OperacionCanjeDetalle" />
+          <AssociationSet Name="FK__CO_OperacionCanj__0076A3D1" Association="RTGModel.FK__CO_OperacionCanj__0076A3D1">
+            <End Role="CO_OperacionCanje" EntitySet="CO_OperacionCanje" />
+            <End Role="CO_OperacionCanjeDetalle" EntitySet="CO_OperacionCanjeDetalle" />
+          </AssociationSet>
+          <AssociationSet Name="FK__CO_OperacionCanj__1B49CA47" Association="RTGModel.FK__CO_OperacionCanj__1B49CA47">
+            <End Role="CO_OperacionCanje" EntitySet="CO_OperacionCanje" />
+            <End Role="CO_OperacionCanjeDetalle" EntitySet="CO_OperacionCanjeDetalle" />
+          </AssociationSet>
+          <AssociationSet Name="FK__CO_OperacionCanj__1C3DEE80" Association="RTGModel.FK__CO_OperacionCanj__1C3DEE80">
+            <End Role="CO_OperacionCanje" EntitySet="CO_OperacionCanje" />
+            <End Role="CO_OperacionCanjeDetalle" EntitySet="CO_OperacionCanjeDetalle" />
+          </AssociationSet>
+          <AssociationSet Name="FK__CO_OperacionCanj__1D3212B9" Association="RTGModel.FK__CO_OperacionCanj__1D3212B9">
+            <End Role="CO_OperacionCanje" EntitySet="CO_OperacionCanje" />
+            <End Role="CO_OperacionCanjeDetalle" EntitySet="CO_OperacionCanjeDetalle" />
+          </AssociationSet>
+          <AssociationSet Name="FK__CO_OperacionCanj__1E2636F2" Association="RTGModel.FK__CO_OperacionCanj__1E2636F2">
+            <End Role="CO_OperacionCanje" EntitySet="CO_OperacionCanje" />
+            <End Role="CO_OperacionCanjeDetalle" EntitySet="CO_OperacionCanjeDetalle" />
+          </AssociationSet>
+          <AssociationSet Name="FK__CO_OperacionCanj__7D9A3726" Association="RTGModel.FK__CO_OperacionCanj__7D9A3726">
+            <End Role="CO_OperacionCanje" EntitySet="CO_OperacionCanje" />
+            <End Role="CO_OperacionCanjeDetalle" EntitySet="CO_OperacionCanjeDetalle" />
+          </AssociationSet>
+          <AssociationSet Name="FK__CO_OperacionCanj__7E8E5B5F" Association="RTGModel.FK__CO_OperacionCanj__7E8E5B5F">
+            <End Role="CO_OperacionCanje" EntitySet="CO_OperacionCanje" />
+            <End Role="CO_OperacionCanjeDetalle" EntitySet="CO_OperacionCanjeDetalle" />
+          </AssociationSet>
+          <AssociationSet Name="FK__CO_OperacionCanj__7F827F98" Association="RTGModel.FK__CO_OperacionCanj__7F827F98">
+            <End Role="CO_OperacionCanje" EntitySet="CO_OperacionCanje" />
+            <End Role="CO_OperacionCanjeDetalle" EntitySet="CO_OperacionCanjeDetalle" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="ClienteMast">
@@ -2361,46 +2363,6 @@
           <Property Name="UltimoUsuario" Type="String" MaxLength="20" FixedLength="true" Unicode="false" />
           <Property Name="Linea" Type="String" MaxLength="6" FixedLength="true" Unicode="false" />
         </EntityType>
-        <EntityType Name="CO_OperacionCanje">
-          <Key>
-            <PropertyRef Name="CompaniaSocio" />
-            <PropertyRef Name="OperacionCanjeNumero" />
-          </Key>
-          <Property Name="CompaniaSocio" Type="String" Nullable="false" MaxLength="8" FixedLength="true" Unicode="false" />
-          <Property Name="OperacionCanjeNumero" Type="Int32" Nullable="false" />
-          <Property Name="Cliente" Type="Int32" />
-          <Property Name="PreparadoPor" Type="Int32" />
-          <Property Name="FechaPreparacion" Type="DateTime" Precision="3" />
-          <Property Name="VoucherPeriodo" Type="String" MaxLength="6" FixedLength="true" Unicode="false" />
-          <Property Name="VoucherNo" Type="String" MaxLength="6" FixedLength="true" Unicode="false" />
-          <Property Name="Estado" Type="String" MaxLength="2" FixedLength="true" Unicode="false" />
-          <Property Name="UltimoUsuario" Type="String" MaxLength="20" FixedLength="true" Unicode="false" />
-          <Property Name="UltimaFechaModif" Type="DateTime" Precision="3" />
-          <Property Name="Procedencia" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
-          <Property Name="DiasAdicionales" Type="Int32" />
-          <Property Name="FechaBase" Type="DateTime" Precision="3" />
-          <Property Name="DiasCanje" Type="Int32" />
-          <Property Name="FechaMaxima" Type="DateTime" Precision="3" />
-          <Property Name="NumeroSolicitud" Type="String" MaxLength="10" FixedLength="true" Unicode="false" />
-          <Property Name="TipoOperacion" Type="String" MaxLength="2" FixedLength="true" Unicode="false" />
-          <Property Name="ClienteCobrarA" Type="Int32" />
-          <Property Name="FinanciamientoNumeroDocumento" Type="String" MaxLength="4" FixedLength="true" Unicode="false" />
-          <Property Name="FinanciamientoTipoDocumento" Type="String" MaxLength="2" FixedLength="true" Unicode="false" />
-          <Property Name="ClienteDireccionSecuencia" Type="Int32" />
-          <Property Name="LetrasCantidad" Type="Int32" />
-          <Property Name="Comentarios" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="Vendedor" Type="Int32" />
-          <NavigationProperty Name="CO_OperacionCanjeDetalle" Relationship="RTGModel.FK__CO_OperacionCanj__0076A3D1" FromRole="CO_OperacionCanje" ToRole="CO_OperacionCanjeDetalle" />
-          <NavigationProperty Name="CO_OperacionCanjeDetalle1" Relationship="RTGModel.FK__CO_OperacionCanj__1B49CA47" FromRole="CO_OperacionCanje" ToRole="CO_OperacionCanjeDetalle" />
-          <NavigationProperty Name="CO_OperacionCanjeDetalle2" Relationship="RTGModel.FK__CO_OperacionCanj__1C3DEE80" FromRole="CO_OperacionCanje" ToRole="CO_OperacionCanjeDetalle" />
-          <NavigationProperty Name="CO_OperacionCanjeDetalle3" Relationship="RTGModel.FK__CO_OperacionCanj__1D3212B9" FromRole="CO_OperacionCanje" ToRole="CO_OperacionCanjeDetalle" />
-          <NavigationProperty Name="CO_OperacionCanjeDetalle4" Relationship="RTGModel.FK__CO_OperacionCanj__1E2636F2" FromRole="CO_OperacionCanje" ToRole="CO_OperacionCanjeDetalle" />
-          <NavigationProperty Name="CO_OperacionCanjeDetalle5" Relationship="RTGModel.FK__CO_OperacionCanj__7D9A3726" FromRole="CO_OperacionCanje" ToRole="CO_OperacionCanjeDetalle" />
-          <NavigationProperty Name="CO_OperacionCanjeDetalle6" Relationship="RTGModel.FK__CO_OperacionCanj__7E8E5B5F" FromRole="CO_OperacionCanje" ToRole="CO_OperacionCanjeDetalle" />
-          <NavigationProperty Name="CO_OperacionCanjeDetalle7" Relationship="RTGModel.FK__CO_OperacionCanj__7F827F98" FromRole="CO_OperacionCanje" ToRole="CO_OperacionCanjeDetalle" />
-          <Property Name="FormaPago" Type="String" MaxLength="4" FixedLength="true" Unicode="false" />
-          <Property Name="AutorizarDiasAdicFlag" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
-        </EntityType>
         <EntityType Name="CO_OperacionCanjeComentario">
           <Key>
             <PropertyRef Name="CompaniaSocio" />
@@ -2415,143 +2377,6 @@
           <Property Name="UltimoUsuario" Type="String" MaxLength="20" FixedLength="true" Unicode="false" />
           <Property Name="UltimaFechaModif" Type="DateTime" Precision="3" />
         </EntityType>
-        <EntityType Name="CO_OperacionCanjeDetalle">
-          <Key>
-            <PropertyRef Name="CompaniaSocio" />
-            <PropertyRef Name="OperacionCanjeNumero" />
-            <PropertyRef Name="Linea" />
-          </Key>
-          <Property Name="CompaniaSocio" Type="String" Nullable="false" MaxLength="8" FixedLength="true" Unicode="false" />
-          <Property Name="OperacionCanjeNumero" Type="Int32" Nullable="false" />
-          <Property Name="Linea" Type="Int32" Nullable="false" />
-          <Property Name="TipoDocumento" Type="String" MaxLength="2" FixedLength="true" Unicode="false" />
-          <Property Name="NumeroDocumento" Type="String" MaxLength="14" FixedLength="true" Unicode="false" />
-          <Property Name="Monto" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="InputOutputFlag" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
-          <Property Name="MontoComision" Type="Decimal" Precision="19" Scale="4" />
-          <NavigationProperty Name="CO_OperacionCanje" Relationship="RTGModel.FK__CO_OperacionCanj__0076A3D1" FromRole="CO_OperacionCanjeDetalle" ToRole="CO_OperacionCanje" />
-          <NavigationProperty Name="CO_OperacionCanje1" Relationship="RTGModel.FK__CO_OperacionCanj__1B49CA47" FromRole="CO_OperacionCanjeDetalle" ToRole="CO_OperacionCanje" />
-          <NavigationProperty Name="CO_OperacionCanje2" Relationship="RTGModel.FK__CO_OperacionCanj__1C3DEE80" FromRole="CO_OperacionCanjeDetalle" ToRole="CO_OperacionCanje" />
-          <NavigationProperty Name="CO_OperacionCanje3" Relationship="RTGModel.FK__CO_OperacionCanj__1D3212B9" FromRole="CO_OperacionCanjeDetalle" ToRole="CO_OperacionCanje" />
-          <NavigationProperty Name="CO_OperacionCanje4" Relationship="RTGModel.FK__CO_OperacionCanj__1E2636F2" FromRole="CO_OperacionCanjeDetalle" ToRole="CO_OperacionCanje" />
-          <NavigationProperty Name="CO_OperacionCanje5" Relationship="RTGModel.FK__CO_OperacionCanj__7D9A3726" FromRole="CO_OperacionCanjeDetalle" ToRole="CO_OperacionCanje" />
-          <NavigationProperty Name="CO_OperacionCanje6" Relationship="RTGModel.FK__CO_OperacionCanj__7E8E5B5F" FromRole="CO_OperacionCanjeDetalle" ToRole="CO_OperacionCanje" />
-          <NavigationProperty Name="CO_OperacionCanje7" Relationship="RTGModel.FK__CO_OperacionCanj__7F827F98" FromRole="CO_OperacionCanjeDetalle" ToRole="CO_OperacionCanje" />
-          <Property Name="Dias" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="FechaVencimiento" Type="DateTime" Precision="3" />
-        </EntityType>
-        <Association Name="FK__CO_OperacionCanj__0076A3D1">
-          <End Type="RTGModel.CO_OperacionCanje" Role="CO_OperacionCanje" Multiplicity="1" />
-          <End Type="RTGModel.CO_OperacionCanjeDetalle" Role="CO_OperacionCanjeDetalle" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="CO_OperacionCanje">
-              <PropertyRef Name="CompaniaSocio" />
-              <PropertyRef Name="OperacionCanjeNumero" />
-            </Principal>
-            <Dependent Role="CO_OperacionCanjeDetalle">
-              <PropertyRef Name="CompaniaSocio" />
-              <PropertyRef Name="OperacionCanjeNumero" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__CO_OperacionCanj__1B49CA47">
-          <End Type="RTGModel.CO_OperacionCanje" Role="CO_OperacionCanje" Multiplicity="1" />
-          <End Type="RTGModel.CO_OperacionCanjeDetalle" Role="CO_OperacionCanjeDetalle" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="CO_OperacionCanje">
-              <PropertyRef Name="CompaniaSocio" />
-              <PropertyRef Name="OperacionCanjeNumero" />
-            </Principal>
-            <Dependent Role="CO_OperacionCanjeDetalle">
-              <PropertyRef Name="CompaniaSocio" />
-              <PropertyRef Name="OperacionCanjeNumero" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__CO_OperacionCanj__1C3DEE80">
-          <End Type="RTGModel.CO_OperacionCanje" Role="CO_OperacionCanje" Multiplicity="1" />
-          <End Type="RTGModel.CO_OperacionCanjeDetalle" Role="CO_OperacionCanjeDetalle" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="CO_OperacionCanje">
-              <PropertyRef Name="CompaniaSocio" />
-              <PropertyRef Name="OperacionCanjeNumero" />
-            </Principal>
-            <Dependent Role="CO_OperacionCanjeDetalle">
-              <PropertyRef Name="CompaniaSocio" />
-              <PropertyRef Name="OperacionCanjeNumero" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__CO_OperacionCanj__1D3212B9">
-          <End Type="RTGModel.CO_OperacionCanje" Role="CO_OperacionCanje" Multiplicity="1" />
-          <End Type="RTGModel.CO_OperacionCanjeDetalle" Role="CO_OperacionCanjeDetalle" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="CO_OperacionCanje">
-              <PropertyRef Name="CompaniaSocio" />
-              <PropertyRef Name="OperacionCanjeNumero" />
-            </Principal>
-            <Dependent Role="CO_OperacionCanjeDetalle">
-              <PropertyRef Name="CompaniaSocio" />
-              <PropertyRef Name="OperacionCanjeNumero" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__CO_OperacionCanj__1E2636F2">
-          <End Type="RTGModel.CO_OperacionCanje" Role="CO_OperacionCanje" Multiplicity="1" />
-          <End Type="RTGModel.CO_OperacionCanjeDetalle" Role="CO_OperacionCanjeDetalle" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="CO_OperacionCanje">
-              <PropertyRef Name="CompaniaSocio" />
-              <PropertyRef Name="OperacionCanjeNumero" />
-            </Principal>
-            <Dependent Role="CO_OperacionCanjeDetalle">
-              <PropertyRef Name="CompaniaSocio" />
-              <PropertyRef Name="OperacionCanjeNumero" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__CO_OperacionCanj__7D9A3726">
-          <End Type="RTGModel.CO_OperacionCanje" Role="CO_OperacionCanje" Multiplicity="1" />
-          <End Type="RTGModel.CO_OperacionCanjeDetalle" Role="CO_OperacionCanjeDetalle" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="CO_OperacionCanje">
-              <PropertyRef Name="CompaniaSocio" />
-              <PropertyRef Name="OperacionCanjeNumero" />
-            </Principal>
-            <Dependent Role="CO_OperacionCanjeDetalle">
-              <PropertyRef Name="CompaniaSocio" />
-              <PropertyRef Name="OperacionCanjeNumero" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__CO_OperacionCanj__7E8E5B5F">
-          <End Type="RTGModel.CO_OperacionCanje" Role="CO_OperacionCanje" Multiplicity="1" />
-          <End Type="RTGModel.CO_OperacionCanjeDetalle" Role="CO_OperacionCanjeDetalle" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="CO_OperacionCanje">
-              <PropertyRef Name="CompaniaSocio" />
-              <PropertyRef Name="OperacionCanjeNumero" />
-            </Principal>
-            <Dependent Role="CO_OperacionCanjeDetalle">
-              <PropertyRef Name="CompaniaSocio" />
-              <PropertyRef Name="OperacionCanjeNumero" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__CO_OperacionCanj__7F827F98">
-          <End Type="RTGModel.CO_OperacionCanje" Role="CO_OperacionCanje" Multiplicity="1" />
-          <End Type="RTGModel.CO_OperacionCanjeDetalle" Role="CO_OperacionCanjeDetalle" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="CO_OperacionCanje">
-              <PropertyRef Name="CompaniaSocio" />
-              <PropertyRef Name="OperacionCanjeNumero" />
-            </Principal>
-            <Dependent Role="CO_OperacionCanjeDetalle">
-              <PropertyRef Name="CompaniaSocio" />
-              <PropertyRef Name="OperacionCanjeNumero" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="CO_Documento">
           <Key>
             <PropertyRef Name="CompaniaSocio" />
@@ -2846,6 +2671,8 @@
           <NavigationProperty Name="CO_DocumentoImpuesto2" Relationship="RTGModel.FK__CO_DocumentoImpu__548312FA" FromRole="CO_Documento" ToRole="CO_DocumentoImpuesto" />
           <NavigationProperty Name="CO_DocumentoImpuesto3" Relationship="RTGModel.FK__CO_DocumentoImpu__55773733" FromRole="CO_Documento" ToRole="CO_DocumentoImpuesto" />
           <NavigationProperty Name="CO_DocumentoDetalleDespacho" Relationship="RTGModel.FK_CO_DocumentoDetalleDespacho_CO_Documento" FromRole="CO_Documento" ToRole="CO_DocumentoDetalleDespacho" />
+          <Property Name="fechaaprobdoc" Type="DateTime" Precision="3" />
+          <Property Name="usuarioaprobdoc" Type="String" MaxLength="20" FixedLength="true" Unicode="false" />
         </EntityType>
         <Association Name="FK__CO_DocumentoDeta__5190CC5F">
           <End Type="RTGModel.CO_Documento" Role="CO_Documento" Multiplicity="1" />
@@ -2988,6 +2815,183 @@
               <PropertyRef Name="CompaniaSocio" />
               <PropertyRef Name="TipoDocumento" />
               <PropertyRef Name="NumeroDocumento" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="CO_OperacionCanje">
+          <Key>
+            <PropertyRef Name="CompaniaSocio" />
+            <PropertyRef Name="OperacionCanjeNumero" />
+          </Key>
+          <Property Name="CompaniaSocio" Type="String" Nullable="false" MaxLength="8" FixedLength="true" Unicode="false" />
+          <Property Name="OperacionCanjeNumero" Type="Int32" Nullable="false" />
+          <Property Name="Cliente" Type="Int32" />
+          <Property Name="PreparadoPor" Type="Int32" />
+          <Property Name="FechaPreparacion" Type="DateTime" Precision="3" />
+          <Property Name="VoucherPeriodo" Type="String" MaxLength="6" FixedLength="true" Unicode="false" />
+          <Property Name="VoucherNo" Type="String" MaxLength="6" FixedLength="true" Unicode="false" />
+          <Property Name="Estado" Type="String" MaxLength="2" FixedLength="true" Unicode="false" />
+          <Property Name="UltimoUsuario" Type="String" MaxLength="20" FixedLength="true" Unicode="false" />
+          <Property Name="UltimaFechaModif" Type="DateTime" Precision="3" />
+          <Property Name="Procedencia" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="DiasAdicionales" Type="Int32" />
+          <Property Name="FechaBase" Type="DateTime" Precision="3" />
+          <Property Name="DiasCanje" Type="Int32" />
+          <Property Name="FechaMaxima" Type="DateTime" Precision="3" />
+          <Property Name="NumeroSolicitud" Type="String" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="TipoOperacion" Type="String" MaxLength="2" FixedLength="true" Unicode="false" />
+          <Property Name="ClienteCobrarA" Type="Int32" />
+          <Property Name="FinanciamientoNumeroDocumento" Type="String" MaxLength="4" FixedLength="true" Unicode="false" />
+          <Property Name="FinanciamientoTipoDocumento" Type="String" MaxLength="2" FixedLength="true" Unicode="false" />
+          <Property Name="ClienteDireccionSecuencia" Type="Int32" />
+          <Property Name="LetrasCantidad" Type="Int32" />
+          <Property Name="Comentarios" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Vendedor" Type="Int32" />
+          <Property Name="FormaPago" Type="String" MaxLength="4" FixedLength="true" Unicode="false" />
+          <Property Name="AutorizarDiasAdicFlag" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <NavigationProperty Name="CO_OperacionCanjeDetalle" Relationship="RTGModel.FK__CO_OperacionCanj__0076A3D1" FromRole="CO_OperacionCanje" ToRole="CO_OperacionCanjeDetalle" />
+          <NavigationProperty Name="CO_OperacionCanjeDetalle1" Relationship="RTGModel.FK__CO_OperacionCanj__1B49CA47" FromRole="CO_OperacionCanje" ToRole="CO_OperacionCanjeDetalle" />
+          <NavigationProperty Name="CO_OperacionCanjeDetalle2" Relationship="RTGModel.FK__CO_OperacionCanj__1C3DEE80" FromRole="CO_OperacionCanje" ToRole="CO_OperacionCanjeDetalle" />
+          <NavigationProperty Name="CO_OperacionCanjeDetalle3" Relationship="RTGModel.FK__CO_OperacionCanj__1D3212B9" FromRole="CO_OperacionCanje" ToRole="CO_OperacionCanjeDetalle" />
+          <NavigationProperty Name="CO_OperacionCanjeDetalle4" Relationship="RTGModel.FK__CO_OperacionCanj__1E2636F2" FromRole="CO_OperacionCanje" ToRole="CO_OperacionCanjeDetalle" />
+          <NavigationProperty Name="CO_OperacionCanjeDetalle5" Relationship="RTGModel.FK__CO_OperacionCanj__7D9A3726" FromRole="CO_OperacionCanje" ToRole="CO_OperacionCanjeDetalle" />
+          <NavigationProperty Name="CO_OperacionCanjeDetalle6" Relationship="RTGModel.FK__CO_OperacionCanj__7E8E5B5F" FromRole="CO_OperacionCanje" ToRole="CO_OperacionCanjeDetalle" />
+          <NavigationProperty Name="CO_OperacionCanjeDetalle7" Relationship="RTGModel.FK__CO_OperacionCanj__7F827F98" FromRole="CO_OperacionCanje" ToRole="CO_OperacionCanjeDetalle" />
+        </EntityType>
+        <EntityType Name="CO_OperacionCanjeDetalle">
+          <Key>
+            <PropertyRef Name="CompaniaSocio" />
+            <PropertyRef Name="OperacionCanjeNumero" />
+            <PropertyRef Name="Linea" />
+          </Key>
+          <Property Name="CompaniaSocio" Type="String" Nullable="false" MaxLength="8" FixedLength="true" Unicode="false" />
+          <Property Name="OperacionCanjeNumero" Type="Int32" Nullable="false" />
+          <Property Name="Linea" Type="Int32" Nullable="false" />
+          <Property Name="TipoDocumento" Type="String" MaxLength="2" FixedLength="true" Unicode="false" />
+          <Property Name="NumeroDocumento" Type="String" MaxLength="14" FixedLength="true" Unicode="false" />
+          <Property Name="Monto" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="InputOutputFlag" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="MontoComision" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="Dias" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="FechaVencimiento" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="CO_OperacionCanje" Relationship="RTGModel.FK__CO_OperacionCanj__0076A3D1" FromRole="CO_OperacionCanjeDetalle" ToRole="CO_OperacionCanje" />
+          <NavigationProperty Name="CO_OperacionCanje1" Relationship="RTGModel.FK__CO_OperacionCanj__1B49CA47" FromRole="CO_OperacionCanjeDetalle" ToRole="CO_OperacionCanje" />
+          <NavigationProperty Name="CO_OperacionCanje2" Relationship="RTGModel.FK__CO_OperacionCanj__1C3DEE80" FromRole="CO_OperacionCanjeDetalle" ToRole="CO_OperacionCanje" />
+          <NavigationProperty Name="CO_OperacionCanje3" Relationship="RTGModel.FK__CO_OperacionCanj__1D3212B9" FromRole="CO_OperacionCanjeDetalle" ToRole="CO_OperacionCanje" />
+          <NavigationProperty Name="CO_OperacionCanje4" Relationship="RTGModel.FK__CO_OperacionCanj__1E2636F2" FromRole="CO_OperacionCanjeDetalle" ToRole="CO_OperacionCanje" />
+          <NavigationProperty Name="CO_OperacionCanje5" Relationship="RTGModel.FK__CO_OperacionCanj__7D9A3726" FromRole="CO_OperacionCanjeDetalle" ToRole="CO_OperacionCanje" />
+          <NavigationProperty Name="CO_OperacionCanje6" Relationship="RTGModel.FK__CO_OperacionCanj__7E8E5B5F" FromRole="CO_OperacionCanjeDetalle" ToRole="CO_OperacionCanje" />
+          <NavigationProperty Name="CO_OperacionCanje7" Relationship="RTGModel.FK__CO_OperacionCanj__7F827F98" FromRole="CO_OperacionCanjeDetalle" ToRole="CO_OperacionCanje" />
+        </EntityType>
+        <Association Name="FK__CO_OperacionCanj__0076A3D1">
+          <End Type="RTGModel.CO_OperacionCanje" Role="CO_OperacionCanje" Multiplicity="1" />
+          <End Type="RTGModel.CO_OperacionCanjeDetalle" Role="CO_OperacionCanjeDetalle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CO_OperacionCanje">
+              <PropertyRef Name="CompaniaSocio" />
+              <PropertyRef Name="OperacionCanjeNumero" />
+            </Principal>
+            <Dependent Role="CO_OperacionCanjeDetalle">
+              <PropertyRef Name="CompaniaSocio" />
+              <PropertyRef Name="OperacionCanjeNumero" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__CO_OperacionCanj__1B49CA47">
+          <End Type="RTGModel.CO_OperacionCanje" Role="CO_OperacionCanje" Multiplicity="1" />
+          <End Type="RTGModel.CO_OperacionCanjeDetalle" Role="CO_OperacionCanjeDetalle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CO_OperacionCanje">
+              <PropertyRef Name="CompaniaSocio" />
+              <PropertyRef Name="OperacionCanjeNumero" />
+            </Principal>
+            <Dependent Role="CO_OperacionCanjeDetalle">
+              <PropertyRef Name="CompaniaSocio" />
+              <PropertyRef Name="OperacionCanjeNumero" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__CO_OperacionCanj__1C3DEE80">
+          <End Type="RTGModel.CO_OperacionCanje" Role="CO_OperacionCanje" Multiplicity="1" />
+          <End Type="RTGModel.CO_OperacionCanjeDetalle" Role="CO_OperacionCanjeDetalle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CO_OperacionCanje">
+              <PropertyRef Name="CompaniaSocio" />
+              <PropertyRef Name="OperacionCanjeNumero" />
+            </Principal>
+            <Dependent Role="CO_OperacionCanjeDetalle">
+              <PropertyRef Name="CompaniaSocio" />
+              <PropertyRef Name="OperacionCanjeNumero" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__CO_OperacionCanj__1D3212B9">
+          <End Type="RTGModel.CO_OperacionCanje" Role="CO_OperacionCanje" Multiplicity="1" />
+          <End Type="RTGModel.CO_OperacionCanjeDetalle" Role="CO_OperacionCanjeDetalle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CO_OperacionCanje">
+              <PropertyRef Name="CompaniaSocio" />
+              <PropertyRef Name="OperacionCanjeNumero" />
+            </Principal>
+            <Dependent Role="CO_OperacionCanjeDetalle">
+              <PropertyRef Name="CompaniaSocio" />
+              <PropertyRef Name="OperacionCanjeNumero" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__CO_OperacionCanj__1E2636F2">
+          <End Type="RTGModel.CO_OperacionCanje" Role="CO_OperacionCanje" Multiplicity="1" />
+          <End Type="RTGModel.CO_OperacionCanjeDetalle" Role="CO_OperacionCanjeDetalle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CO_OperacionCanje">
+              <PropertyRef Name="CompaniaSocio" />
+              <PropertyRef Name="OperacionCanjeNumero" />
+            </Principal>
+            <Dependent Role="CO_OperacionCanjeDetalle">
+              <PropertyRef Name="CompaniaSocio" />
+              <PropertyRef Name="OperacionCanjeNumero" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__CO_OperacionCanj__7D9A3726">
+          <End Type="RTGModel.CO_OperacionCanje" Role="CO_OperacionCanje" Multiplicity="1" />
+          <End Type="RTGModel.CO_OperacionCanjeDetalle" Role="CO_OperacionCanjeDetalle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CO_OperacionCanje">
+              <PropertyRef Name="CompaniaSocio" />
+              <PropertyRef Name="OperacionCanjeNumero" />
+            </Principal>
+            <Dependent Role="CO_OperacionCanjeDetalle">
+              <PropertyRef Name="CompaniaSocio" />
+              <PropertyRef Name="OperacionCanjeNumero" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__CO_OperacionCanj__7E8E5B5F">
+          <End Type="RTGModel.CO_OperacionCanje" Role="CO_OperacionCanje" Multiplicity="1" />
+          <End Type="RTGModel.CO_OperacionCanjeDetalle" Role="CO_OperacionCanjeDetalle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CO_OperacionCanje">
+              <PropertyRef Name="CompaniaSocio" />
+              <PropertyRef Name="OperacionCanjeNumero" />
+            </Principal>
+            <Dependent Role="CO_OperacionCanjeDetalle">
+              <PropertyRef Name="CompaniaSocio" />
+              <PropertyRef Name="OperacionCanjeNumero" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__CO_OperacionCanj__7F827F98">
+          <End Type="RTGModel.CO_OperacionCanje" Role="CO_OperacionCanje" Multiplicity="1" />
+          <End Type="RTGModel.CO_OperacionCanjeDetalle" Role="CO_OperacionCanjeDetalle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CO_OperacionCanje">
+              <PropertyRef Name="CompaniaSocio" />
+              <PropertyRef Name="OperacionCanjeNumero" />
+            </Principal>
+            <Dependent Role="CO_OperacionCanjeDetalle">
+              <PropertyRef Name="CompaniaSocio" />
+              <PropertyRef Name="OperacionCanjeNumero" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -3687,38 +3691,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="CO_OperacionCanje">
-            <EntityTypeMapping TypeName="RTGModel.CO_OperacionCanje">
-              <MappingFragment StoreEntitySet="CO_OperacionCanje">
-                <ScalarProperty Name="AutorizarDiasAdicFlag" ColumnName="AutorizarDiasAdicFlag" />
-                <ScalarProperty Name="FormaPago" ColumnName="FormaPago" />
-                <ScalarProperty Name="Vendedor" ColumnName="Vendedor" />
-                <ScalarProperty Name="Comentarios" ColumnName="Comentarios" />
-                <ScalarProperty Name="LetrasCantidad" ColumnName="LetrasCantidad" />
-                <ScalarProperty Name="ClienteDireccionSecuencia" ColumnName="ClienteDireccionSecuencia" />
-                <ScalarProperty Name="FinanciamientoTipoDocumento" ColumnName="FinanciamientoTipoDocumento" />
-                <ScalarProperty Name="FinanciamientoNumeroDocumento" ColumnName="FinanciamientoNumeroDocumento" />
-                <ScalarProperty Name="ClienteCobrarA" ColumnName="ClienteCobrarA" />
-                <ScalarProperty Name="TipoOperacion" ColumnName="TipoOperacion" />
-                <ScalarProperty Name="NumeroSolicitud" ColumnName="NumeroSolicitud" />
-                <ScalarProperty Name="FechaMaxima" ColumnName="FechaMaxima" />
-                <ScalarProperty Name="DiasCanje" ColumnName="DiasCanje" />
-                <ScalarProperty Name="FechaBase" ColumnName="FechaBase" />
-                <ScalarProperty Name="DiasAdicionales" ColumnName="DiasAdicionales" />
-                <ScalarProperty Name="Procedencia" ColumnName="Procedencia" />
-                <ScalarProperty Name="UltimaFechaModif" ColumnName="UltimaFechaModif" />
-                <ScalarProperty Name="UltimoUsuario" ColumnName="UltimoUsuario" />
-                <ScalarProperty Name="Estado" ColumnName="Estado" />
-                <ScalarProperty Name="VoucherNo" ColumnName="VoucherNo" />
-                <ScalarProperty Name="VoucherPeriodo" ColumnName="VoucherPeriodo" />
-                <ScalarProperty Name="FechaPreparacion" ColumnName="FechaPreparacion" />
-                <ScalarProperty Name="PreparadoPor" ColumnName="PreparadoPor" />
-                <ScalarProperty Name="Cliente" ColumnName="Cliente" />
-                <ScalarProperty Name="OperacionCanjeNumero" ColumnName="OperacionCanjeNumero" />
-                <ScalarProperty Name="CompaniaSocio" ColumnName="CompaniaSocio" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="CO_OperacionCanjeComentario">
             <EntityTypeMapping TypeName="RTGModel.CO_OperacionCanjeComentario">
               <MappingFragment StoreEntitySet="CO_OperacionCanjeComentario">
@@ -3732,25 +3704,11 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="CO_OperacionCanjeDetalle">
-            <EntityTypeMapping TypeName="RTGModel.CO_OperacionCanjeDetalle">
-              <MappingFragment StoreEntitySet="CO_OperacionCanjeDetalle">
-                <ScalarProperty Name="FechaVencimiento" ColumnName="FechaVencimiento" />
-                <ScalarProperty Name="Dias" ColumnName="Dias" />
-                <ScalarProperty Name="MontoComision" ColumnName="MontoComision" />
-                <ScalarProperty Name="InputOutputFlag" ColumnName="InputOutputFlag" />
-                <ScalarProperty Name="Monto" ColumnName="Monto" />
-                <ScalarProperty Name="NumeroDocumento" ColumnName="NumeroDocumento" />
-                <ScalarProperty Name="TipoDocumento" ColumnName="TipoDocumento" />
-                <ScalarProperty Name="Linea" ColumnName="Linea" />
-                <ScalarProperty Name="OperacionCanjeNumero" ColumnName="OperacionCanjeNumero" />
-                <ScalarProperty Name="CompaniaSocio" ColumnName="CompaniaSocio" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="CO_Documento">
             <EntityTypeMapping TypeName="RTGModel.CO_Documento">
               <MappingFragment StoreEntitySet="CO_Documento">
+                <ScalarProperty Name="usuarioaprobdoc" ColumnName="usuarioaprobdoc" />
+                <ScalarProperty Name="fechaaprobdoc" ColumnName="fechaaprobdoc" />
                 <ScalarProperty Name="UsuarioAprobPed" ColumnName="UsuarioAprobPed" />
                 <ScalarProperty Name="FechaAprobPed" ColumnName="FechaAprobPed" />
                 <ScalarProperty Name="DOTEstado" ColumnName="DOTEstado" />
@@ -4029,6 +3987,54 @@
                 <ScalarProperty Name="EstablecimientoCodigo" ColumnName="EstablecimientoCodigo" />
                 <ScalarProperty Name="NumeroDocumento" ColumnName="NumeroDocumento" />
                 <ScalarProperty Name="TipoDocumento" ColumnName="TipoDocumento" />
+                <ScalarProperty Name="CompaniaSocio" ColumnName="CompaniaSocio" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CO_OperacionCanje">
+            <EntityTypeMapping TypeName="RTGModel.CO_OperacionCanje">
+              <MappingFragment StoreEntitySet="CO_OperacionCanje">
+                <ScalarProperty Name="AutorizarDiasAdicFlag" ColumnName="AutorizarDiasAdicFlag" />
+                <ScalarProperty Name="FormaPago" ColumnName="FormaPago" />
+                <ScalarProperty Name="Vendedor" ColumnName="Vendedor" />
+                <ScalarProperty Name="Comentarios" ColumnName="Comentarios" />
+                <ScalarProperty Name="LetrasCantidad" ColumnName="LetrasCantidad" />
+                <ScalarProperty Name="ClienteDireccionSecuencia" ColumnName="ClienteDireccionSecuencia" />
+                <ScalarProperty Name="FinanciamientoTipoDocumento" ColumnName="FinanciamientoTipoDocumento" />
+                <ScalarProperty Name="FinanciamientoNumeroDocumento" ColumnName="FinanciamientoNumeroDocumento" />
+                <ScalarProperty Name="ClienteCobrarA" ColumnName="ClienteCobrarA" />
+                <ScalarProperty Name="TipoOperacion" ColumnName="TipoOperacion" />
+                <ScalarProperty Name="NumeroSolicitud" ColumnName="NumeroSolicitud" />
+                <ScalarProperty Name="FechaMaxima" ColumnName="FechaMaxima" />
+                <ScalarProperty Name="DiasCanje" ColumnName="DiasCanje" />
+                <ScalarProperty Name="FechaBase" ColumnName="FechaBase" />
+                <ScalarProperty Name="DiasAdicionales" ColumnName="DiasAdicionales" />
+                <ScalarProperty Name="Procedencia" ColumnName="Procedencia" />
+                <ScalarProperty Name="UltimaFechaModif" ColumnName="UltimaFechaModif" />
+                <ScalarProperty Name="UltimoUsuario" ColumnName="UltimoUsuario" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="VoucherNo" ColumnName="VoucherNo" />
+                <ScalarProperty Name="VoucherPeriodo" ColumnName="VoucherPeriodo" />
+                <ScalarProperty Name="FechaPreparacion" ColumnName="FechaPreparacion" />
+                <ScalarProperty Name="PreparadoPor" ColumnName="PreparadoPor" />
+                <ScalarProperty Name="Cliente" ColumnName="Cliente" />
+                <ScalarProperty Name="OperacionCanjeNumero" ColumnName="OperacionCanjeNumero" />
+                <ScalarProperty Name="CompaniaSocio" ColumnName="CompaniaSocio" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CO_OperacionCanjeDetalle">
+            <EntityTypeMapping TypeName="RTGModel.CO_OperacionCanjeDetalle">
+              <MappingFragment StoreEntitySet="CO_OperacionCanjeDetalle">
+                <ScalarProperty Name="FechaVencimiento" ColumnName="FechaVencimiento" />
+                <ScalarProperty Name="Dias" ColumnName="Dias" />
+                <ScalarProperty Name="MontoComision" ColumnName="MontoComision" />
+                <ScalarProperty Name="InputOutputFlag" ColumnName="InputOutputFlag" />
+                <ScalarProperty Name="Monto" ColumnName="Monto" />
+                <ScalarProperty Name="NumeroDocumento" ColumnName="NumeroDocumento" />
+                <ScalarProperty Name="TipoDocumento" ColumnName="TipoDocumento" />
+                <ScalarProperty Name="Linea" ColumnName="Linea" />
+                <ScalarProperty Name="OperacionCanjeNumero" ColumnName="OperacionCanjeNumero" />
                 <ScalarProperty Name="CompaniaSocio" ColumnName="CompaniaSocio" />
               </MappingFragment>
             </EntityTypeMapping>

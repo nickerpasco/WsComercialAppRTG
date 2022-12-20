@@ -307,6 +307,8 @@ namespace WsComercialApp.Models.Bd
         public string DOTEstado { get; set; }
         public Nullable<System.DateTime> FechaAprobPed { get; set; }
         public string UsuarioAprobPed { get; set; }
+        public Nullable<System.DateTime> fechaaprobdoc { get; set; }
+        public string usuarioaprobdoc { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CO_DocumentoDetalle> CO_DocumentoDetalle { get; set; }

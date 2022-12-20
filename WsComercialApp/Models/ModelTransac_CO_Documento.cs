@@ -10,6 +10,7 @@ namespace WsComercialApp.Models
     {
 
         public string CompaniaSocio { get; set; }
+        public string AccionLetras { get; set; }
         public string TipoDocumento { get; set; }
         public string FlagEnEspera { get; set; }
         public string ItemDescuento { get; set; }
@@ -19,6 +20,7 @@ namespace WsComercialApp.Models
         public string Comentario { get; set; }
         public string Accion { get; set; }
         public Nullable<int> TransportistaProvincia { get; set; }
+        public int  OperacionCanjeNumero { get; set; }
       
         public string EstablecimientoCodigo { get; set; }
         public string FiltroUbigeo { get; set; }

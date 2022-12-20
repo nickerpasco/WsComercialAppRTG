@@ -114,8 +114,16 @@ namespace WsComercialApp.Dao
                 {
                     try
                     {
+                        if (c.AccionLetras == "Nuevo")
+                        {
+                            response = InsertarLetras(c, context);
+                        }
+                        else if (c.AccionLetras == "Editar")
+                        {
+                            response = ActualizarLetras(c, context);
+                        }
 
-                        response = InsertarLetras(c, context);
+                           
                         if (response.lstErrores.Count > 0)
                         {
                             dbContextTransaction.Rollback();
@@ -1105,6 +1113,146 @@ namespace WsComercialApp.Dao
 
                         OtablaDetalle.Linea = secuenciaId + 1;
                         OtablaDetalle.OperacionCanjeNumero = Convert.ToInt32(c.NumeroDocumento);
+                        OtablaDetalle.CompaniaSocio = c.CompaniaSocio;
+                        OtablaDetalle.InputOutputFlag = "O";
+                        //OtablaDetalle.NumeroDocumento = detalle.Descripcion;
+                        //OtablaDetalle.TipoDocumento = detalle.TipoDocumento;
+                        OtablaDetalle.Monto = (decimal)detalle.MontoTotalLetras;
+                        OtablaDetalle.MontoComision = (OtablaDetalle.Monto * FactorDivisor) / 100;
+
+                        context.CO_OperacionCanjeDetalle.Add(OtablaDetalle);
+                        context.SaveChanges();
+
+                    }
+
+                }
+
+            }
+            catch (DbEntityValidationException e)
+            {
+
+                foreach (var eve in e.EntityValidationErrors)
+                {
+                    foreach (var ve in eve.ValidationErrors)
+                    {
+                        error.CodigoError = 500;
+                        error.MensajeError = ve.ErrorMessage;
+
+                        response.lstErrores.Add(error);
+                    }
+
+                }
+
+                return response;
+
+            }
+            return response;
+        }
+        
+        private ModelTransac_CO_Documento ActualizarLetras(ModelTransac_CO_Documento c, BdEntityGenerico context)
+        {
+
+            ModelTransac_CO_Documento response = new ModelTransac_CO_Documento();
+            ErrorObj error = new ErrorObj();
+
+             
+
+            try
+            {
+
+                 
+
+                var Otabla = new CO_OperacionCanje();
+
+                var OperacionCanjeNumero = c.OperacionCanjeNumero;
+
+                Otabla = context.CO_OperacionCanje.Where(t => t.CompaniaSocio == c.CompaniaSocio  && t.OperacionCanjeNumero == OperacionCanjeNumero).FirstOrDefault();
+
+ 
+
+                //var cabecera = Newtonsoft.Json.JsonConvert.SerializeObject(CO_DOCUMENTO, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore });
+
+                // Otabla = (CO_OperacionCanje)Newtonsoft.Json.JsonConvert.DeserializeObject(cabecera, typeof(CO_OperacionCanje));
+
+                 
+                Otabla.LetrasCantidad = c.CantidadLetras;
+                Otabla.FechaBase = c.FechaBaseLetras;
+                Otabla.FechaMaxima = Convert.ToDateTime(c.FechaBaseLetras).AddDays((double)c.DiasCredito);
+                Otabla.DiasCanje = c.DiasCredito;
+                Otabla.Comentarios = c.Comentarios;  
+                Otabla.UltimaFechaModif = DateTime.Now;
+                Otabla.UltimoUsuario = c.UltimoUsuario;
+
+                //Otabla.CO_OperacionCanjeDetalle.Clear();
+                //Otabla.CO_OperacionCanjeDetalle1.Clear();
+                //Otabla.CO_OperacionCanjeDetalle2.Clear();
+                //Otabla.CO_OperacionCanjeDetalle3.Clear();
+                //Otabla.CO_OperacionCanjeDetalle4.Clear();
+                //Otabla.CO_OperacionCanjeDetalle5.Clear();
+                //Otabla.CO_OperacionCanjeDetalle6.Clear();
+                //Otabla.CO_OperacionCanjeDetalle7.Clear();
+
+                context.Entry(Otabla).State = System.Data.Entity.EntityState.Modified;
+
+                 
+                context.SaveChanges();
+
+
+                response = c;
+
+                var FactorDivisor = UtilsDAO.getValueDecimal("select Numero from ParametrosMast where ParametroClave = 'VENTA%VEN' and AplicacionCodigo='CO'", null);
+
+
+         
+
+                 
+               var  OtablaDetalleObBorrar = context.CO_OperacionCanjeDetalle.Where(t => t.CompaniaSocio == c.CompaniaSocio && t.OperacionCanjeNumero == OperacionCanjeNumero).ToList();
+                 
+                foreach (var detalle in OtablaDetalleObBorrar)
+                { 
+                    context.Entry(detalle).State = System.Data.Entity.EntityState.Deleted;
+                    context.SaveChanges();
+                }
+
+                if (c.Detalle != null)
+                {
+
+                    foreach (var detalle in c.Detalle)
+                    {
+
+                        var secuenciaId = context.CO_OperacionCanjeDetalle.Where(x => x.OperacionCanjeNumero == Otabla.OperacionCanjeNumero).DefaultIfEmpty().Max(t => t == null ? 0 : t.Linea);
+                        var OtablaDetalle = new CO_OperacionCanjeDetalle();
+
+
+                        OtablaDetalle.OperacionCanjeNumero = Otabla.OperacionCanjeNumero;
+                        OtablaDetalle.CompaniaSocio = c.CompaniaSocio;
+                        OtablaDetalle.Linea = secuenciaId + 1;
+                        OtablaDetalle.InputOutputFlag = "I";
+                        OtablaDetalle.NumeroDocumento = detalle.Descripcion;
+                        OtablaDetalle.TipoDocumento = detalle.TipoDocumento;
+                        OtablaDetalle.Monto = detalle.MontoFinal;
+                        OtablaDetalle.FechaVencimiento = FuncPrinc.ConvertDateFromString(detalle.FechaVencimiento);
+                        OtablaDetalle.MontoComision = (detalle.MontoFinal * FactorDivisor) / 100;
+
+                        context.CO_OperacionCanjeDetalle.Add(OtablaDetalle);
+                        context.SaveChanges();
+
+                    }
+
+                }
+
+                if (c.LstLetras != null)
+                {
+                    foreach (var detalle in c.LstLetras)
+                    {
+
+                         
+
+                        var secuenciaId = context.CO_OperacionCanjeDetalle.Where(x => x.OperacionCanjeNumero == Otabla.OperacionCanjeNumero).DefaultIfEmpty().Max(t => t == null ? 0 : t.Linea);
+                        var OtablaDetalle = new CO_OperacionCanjeDetalle();
+
+                        OtablaDetalle.Linea = secuenciaId + 1;
+                        OtablaDetalle.OperacionCanjeNumero = Otabla.OperacionCanjeNumero;
                         OtablaDetalle.CompaniaSocio = c.CompaniaSocio;
                         OtablaDetalle.InputOutputFlag = "O";
                         //OtablaDetalle.NumeroDocumento = detalle.Descripcion;
