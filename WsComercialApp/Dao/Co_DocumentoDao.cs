@@ -1072,7 +1072,7 @@ namespace WsComercialApp.Dao
                         OtablaDetalle.NumeroDocumento = detalle.Descripcion;
                         OtablaDetalle.TipoDocumento = detalle.TipoDocumento;
                         OtablaDetalle.Monto = detalle.MontoFinal;
-                        OtablaDetalle.FechaVencimiento = detalle.FechaDocumentoDate;
+                        OtablaDetalle.FechaVencimiento = FuncPrinc.ConvertDateFromString(detalle.FechaVencimiento);
                         OtablaDetalle.MontoComision = (detalle.MontoFinal * FactorDivisor) / 100;
 
                         context.CO_OperacionCanjeDetalle.Add(OtablaDetalle);

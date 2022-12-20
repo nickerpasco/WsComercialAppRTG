@@ -11,6 +11,7 @@ namespace WsComercialApp.Models
         public string TipoDocumento { get; set; }
         public string NumeroDocumento { get; set; }
         public int Linea { get; set; }
+        public string FechaVencimiento { get; set; }
         public string TipoDetalle { get; set; }
         public string ItemCodigo { get; set; }
         public string Lote { get; set; }

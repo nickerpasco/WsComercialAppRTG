@@ -648,5 +648,11 @@ namespace WsComercialApp
 
 
         }
+
+        internal static DateTime? ConvertDateFromString(string fechaVencimiento)
+        {
+            DateTime dateTime = DateTime.Parse(fechaVencimiento);
+            return dateTime;
+        }
     }
 }
