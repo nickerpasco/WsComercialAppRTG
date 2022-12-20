@@ -102,5 +102,6 @@ namespace WsComercialApp.Models
         public Nullable<decimal> PorcentajeDescuento01Original { get; set; }
 
         public string AlmacenCodigoDetalle { get; set; }
+        public DateTime? FechaDocumentoDate { get;   set; }
     }
 }
