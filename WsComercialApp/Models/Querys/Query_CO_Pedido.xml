@@ -128,8 +128,12 @@ where AplicacionCodigo='CO' and MaestroCodigo='PEDMOTIVO'
 
 	<Co_Documento.getLetrasDetalle>
 
-		select * from CO_OperacionCanjeDetalle
-		where CompaniaSocio = @CompaniaSocio
+		select documento.MonedaDocumento as Moneda, documento.FechaDocumento as FechaEmisionDocumento, operacion.CompaniaSocio,OperacionCanjeNumero,Linea,operacion.TipoDocumento,operacion.NumeroDocumento,Monto,InputOutputFlag
+		, operacion.MontoComision,Dias,operacion.FechaVencimiento from CO_OperacionCanjeDetalle  operacion
+		inner join CO_Documento  documento on documento.NumeroDocumento = operacion.NumeroDocumento
+		and   documento.TipoDocumento = operacion.TipoDocumento and documento.CompaniaSocio = operacion.CompaniaSocio
+		where
+		operacion.CompaniaSocio = @CompaniaSocio
 		and OperacionCanjeNumero = @OperacionCanjeNumero
 
 	</Co_Documento.getLetrasDetalle>
