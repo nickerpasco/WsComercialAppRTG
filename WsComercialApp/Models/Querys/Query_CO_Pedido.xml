@@ -536,6 +536,11 @@ and ( VW_CO_DescuentoEscalaVigente.monto <= @Cantidad and VW_CO_DescuentoEscalaV
 
 		select
 		CO_OperacionCanje.CompaniaSocio,
+		CO_OperacionCanje.ClienteDireccionSecuencia,
+		CO_OperacionCanje.LetrasCantidad as LetrasCantidadValorReal ,
+		CO_OperacionCanje.FechaBase,
+		FechaMaxima,
+		DiasCanje,
 		CASE CO_OperacionCanje.Estado
 		When 'CO' Then 'Provisionado'
 		When 'GE' Then 'Generado'
