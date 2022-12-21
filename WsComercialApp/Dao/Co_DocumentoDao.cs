@@ -114,6 +114,11 @@ namespace WsComercialApp.Dao
                 {
                     try
                     {
+
+
+                         
+
+
                         if (c.AccionLetras == "Nuevo")
                         {
                             response = InsertarLetras(c, context);
@@ -121,6 +126,9 @@ namespace WsComercialApp.Dao
                         else if (c.AccionLetras == "Editar")
                         {
                             response = ActualizarLetras(c, context);
+                        }else if(c.AccionLetras == "Anular")
+                        {
+                            response = AnularLetra(c, context);
                         }
 
                            
@@ -1266,6 +1274,70 @@ namespace WsComercialApp.Dao
                     }
 
                 }
+
+            }
+            catch (DbEntityValidationException e)
+            {
+
+                foreach (var eve in e.EntityValidationErrors)
+                {
+                    foreach (var ve in eve.ValidationErrors)
+                    {
+                        error.CodigoError = 500;
+                        error.MensajeError = ve.ErrorMessage;
+
+                        response.lstErrores.Add(error);
+                    }
+
+                }
+
+                return response;
+
+            }
+
+            //response.IdPersonaUsuario = 0;
+            return response;
+        } 
+        
+        private ModelTransac_CO_Documento AnularLetra(ModelTransac_CO_Documento c, BdEntityGenerico context)
+        {
+
+            ModelTransac_CO_Documento response = new ModelTransac_CO_Documento();
+            ErrorObj error = new ErrorObj();
+
+             
+
+            try
+            {
+
+                 
+
+                var Otabla = new CO_OperacionCanje();
+
+                var OperacionCanjeNumero = c.OperacionCanjeNumero;
+
+                Otabla = context.CO_OperacionCanje.Where(t => t.CompaniaSocio == c.CompaniaSocio  && t.OperacionCanjeNumero == OperacionCanjeNumero).FirstOrDefault();
+
+
+
+                //var cabecera = Newtonsoft.Json.JsonConvert.SerializeObject(CO_DOCUMENTO, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore });
+
+                // Otabla = (CO_OperacionCanje)Newtonsoft.Json.JsonConvert.DeserializeObject(cabecera, typeof(CO_OperacionCanje));
+
+
+                Otabla.Estado = "AN";
+                Otabla.UltimaFechaModif = DateTime.Now;
+                Otabla.UltimoUsuario = c.UltimoUsuario; 
+
+                context.Entry(Otabla).State = System.Data.Entity.EntityState.Modified;
+
+                 
+                context.SaveChanges();
+
+
+                response = c;
+ 
+                 
 
             }
             catch (DbEntityValidationException e)
