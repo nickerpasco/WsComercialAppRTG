@@ -25,5 +25,6 @@ namespace WsComercialApp.Models
 		public string Comentarios { get; set; }
 		public string Direccion { get; set; }
 		public string LetrasCantidad { get; set; }
+		public string MonedaDocumento { get; set; }
 	}
 }
