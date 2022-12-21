@@ -320,7 +320,10 @@ namespace WsComercialApp.Repositorio
 
 
             String queryArmado = sqlString + RetornoQueryLetras(request);
-            String queryArmadoCount = sqlStringcount + RetornoQueryLetrasCount(request); 
+
+            string query = sqlStringcount.Replace("---REEMPLAZO WHERE", RetornoQueryLetrasCount(request));
+
+            String queryArmadoCount = query; 
 
             var resultado = UtilsDAO.getDataByQuery<Model_LetrasCabecera>(queryArmado);
             var Resultado = UtilsDAO.getValueIntOnly(queryArmadoCount);

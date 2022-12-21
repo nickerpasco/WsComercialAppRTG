@@ -534,7 +534,10 @@ and ( VW_CO_DescuentoEscalaVigente.monto <= @Cantidad and VW_CO_DescuentoEscalaV
 	<Co_Documento.getLetrasCabecera>
 
 
+
 		select
+		distinct
+		documento.MonedaDocumento,
 		CO_OperacionCanje.CompaniaSocio,
 		CO_OperacionCanje.ClienteDireccionSecuencia,
 		CO_OperacionCanje.LetrasCantidad as LetrasCantidadValorReal ,
@@ -554,12 +557,12 @@ and ( VW_CO_DescuentoEscalaVigente.monto <= @Cantidad and VW_CO_DescuentoEscalaV
 		When 'PR' Then '#ff00b2'
 		ELSE '#23416d'  end AS ColorEstado,
 		CO_OperacionCanje.Estado as PedidoEstadoCodigo,
-		CASE DATEDIFF(day, FechaPreparacion, GETDATE())
+		CASE DATEDIFF(day, CO_OperacionCanje.FechaPreparacion, GETDATE())
 		When -1 Then 'Mañana'
 		When 1 Then 'Ayer'
 		When 0 Then 'Hoy'
-		ELSE  convert(varchar(20),FechaPreparacion,103) end AS LabelMes,
-		FORMAT(FechaPreparacion,'hh:mm tt')  AS LabelHora,
+		ELSE  convert(varchar(20),CO_OperacionCanje.FechaPreparacion,103) end AS LabelMes,
+		FORMAT(CO_OperacionCanje.FechaPreparacion,'hh:mm tt')  AS LabelHora,
 		Cliente.Persona as IdPersona,
 		Cliente.NombreCompleto,
 		CO_OperacionCanje.OperacionCanjeNumero,
@@ -571,17 +574,70 @@ and ( VW_CO_DescuentoEscalaVigente.monto <= @Cantidad and VW_CO_DescuentoEscalaV
 		left join Direccion on CO_OperacionCanje.Cliente=Direccion.Persona and
 		CO_OperacionCanje.ClienteDireccionSecuencia=Direccion.Secuencia
 
+		inner join CO_OperacionCanjeDetalle detalle on detalle.OperacionCanjeNumero = CO_OperacionCanje.OperacionCanjeNumero
+		and CO_OperacionCanje.CompaniaSocio = detalle.CompaniaSocio
+		inner join CO_Documento documento on documento.TipoDocumento = detalle.TipoDocumento and detalle.NumeroDocumento = documento.NumeroDocumento
+		and detalle.CompaniaSocio = documento.CompaniaSocio
 	</Co_Documento.getLetrasCabecera>
 
 
 	<Co_Documento.getLetrasCabeceraCount>
 
 
+
 		select
-		count(1)
+		COUNT(1) from
+
+		(
+
+		select
+		distinct
+		documento.MonedaDocumento,
+		CO_OperacionCanje.CompaniaSocio,
+		CO_OperacionCanje.ClienteDireccionSecuencia,
+		CO_OperacionCanje.LetrasCantidad as LetrasCantidadValorReal ,
+		CO_OperacionCanje.FechaBase,
+		FechaMaxima,
+		DiasCanje,
+		CASE CO_OperacionCanje.Estado
+		When 'CO' Then 'Provisionado'
+		When 'GE' Then 'Generado'
+		When 'AN' Then 'Anulado'
+		When 'PR' Then 'Pendiente'
+		ELSE 'Sin Estado en App'  end AS EstadoString,
+		CASE CO_OperacionCanje.Estado
+		When 'CO' Then '#10c105'
+		When 'GE' Then '#f3aa1e'
+		When 'AN' Then '#e01609'
+		When 'PR' Then '#ff00b2'
+		ELSE '#23416d'  end AS ColorEstado,
+		CO_OperacionCanje.Estado as PedidoEstadoCodigo,
+		CASE DATEDIFF(day, CO_OperacionCanje.FechaPreparacion, GETDATE())
+		When -1 Then 'Mañana'
+		When 1 Then 'Ayer'
+		When 0 Then 'Hoy'
+		ELSE  convert(varchar(20),CO_OperacionCanje.FechaPreparacion,103) end AS LabelMes,
+		FORMAT(CO_OperacionCanje.FechaPreparacion,'hh:mm tt')  AS LabelHora,
+		Cliente.Persona as IdPersona,
+		Cliente.NombreCompleto,
+		CO_OperacionCanje.OperacionCanjeNumero,
+		CO_OperacionCanje.Vendedor,
+		CO_OperacionCanje.Comentarios,
+		Direccion.Direccion,
+		CONVERT(varchar,CO_OperacionCanje.LetrasCantidad) + ' Letras' as LetrasCantidad
 		from CO_OperacionCanje inner join PersonaMast Cliente on CO_OperacionCanje.Cliente=Cliente.Persona
 		left join Direccion on CO_OperacionCanje.Cliente=Direccion.Persona and
 		CO_OperacionCanje.ClienteDireccionSecuencia=Direccion.Secuencia
+
+		inner join CO_OperacionCanjeDetalle detalle on detalle.OperacionCanjeNumero = CO_OperacionCanje.OperacionCanjeNumero
+		and CO_OperacionCanje.CompaniaSocio = detalle.CompaniaSocio
+		inner join CO_Documento documento on documento.TipoDocumento = detalle.TipoDocumento and detalle.NumeroDocumento = documento.NumeroDocumento
+		and detalle.CompaniaSocio = documento.CompaniaSocio
+
+
+		---REEMPLAZO WHERE
+		) a
+
 
 
 	</Co_Documento.getLetrasCabeceraCount>
