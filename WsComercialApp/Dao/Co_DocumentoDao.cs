@@ -1259,7 +1259,7 @@ namespace WsComercialApp.Dao
                         //OtablaDetalle.TipoDocumento = detalle.TipoDocumento;
                         OtablaDetalle.Monto = (decimal)detalle.MontoTotalLetras;
                         OtablaDetalle.MontoComision = (OtablaDetalle.Monto * FactorDivisor) / 100;
-                        OtablaDetalle.FechaVencimiento = detalle.FechaVencimiento;
+                        OtablaDetalle.FechaVencimiento = detalle.FechaVencimientoDate;
                         context.CO_OperacionCanjeDetalle.Add(OtablaDetalle);
                         context.SaveChanges();
 
