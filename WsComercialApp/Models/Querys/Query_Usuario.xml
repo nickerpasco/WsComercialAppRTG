@@ -128,6 +128,7 @@
 		<![CDATA[
 		
 		 select
+		 CO_Documento.MontoTotal,
 CO_Documento.NumeroDocumento,
 CO_Documento.FechaDocumento,
 CO_Documento.FechaVencimiento,

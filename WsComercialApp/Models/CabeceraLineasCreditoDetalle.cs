@@ -13,6 +13,7 @@ namespace WsComercialApp.Models
         public int? Dias { get; set; }
         public string FormaPago { get; set; }
         public decimal? Pendiente { get; set; }
+        public decimal? MontoTotal { get; set; }
         public string LetraNumeroUnico { get; set; }
     }
 }
