@@ -61,6 +61,99 @@
 
 
 	</Usuario.getMontoDashBorad>
+	
+	<Usuario.getLineaCreditosCabeceraLista>
+
+
+
+		--Cabecera
+		select
+		Persona,
+		NombreCompleto Cliente,
+		isNULL(CO_LineaCredito.Monto,0) Linea,
+
+		sum(CO_Documento.MontoTotal-CO_Documento.MontoPagado) Usado,
+		case when isNULL(CO_LineaCredito.Monto,0) - sum(CO_Documento.MontoTotal-CO_Documento.MontoPagado)>=0 then
+		isNULL(CO_LineaCredito.Monto,0) - sum(CO_Documento.MontoTotal-CO_Documento.MontoPagado) else 0 end Libre
+		from PersonaMast Cliente
+		left join CO_LineaCredito on
+		Cliente.Persona=CO_LineaCredito.ClienteNumero
+		left join CO_Documento on
+		CO_Documento.ClienteNumero=Cliente.Persona
+		left join CO_TipoDocumento on
+		CO_Documento.TipoDocumento=CO_TipoDocumento.TipoDocumento
+		inner join MA_ClienteVendedor on
+		Cliente.Persona=MA_ClienteVendedor.Cliente
+		where Cliente.escliente='S' and
+		CO_TipoDocumento.Clasificacion in ('DC','DP','LE') and
+		CO_Documento.Estado='PR' and
+		MA_ClienteVendedor.Vendedor=@Vendedor-- Según el vendedor loggeado
+		group by
+		Persona,
+		NombreCompleto,
+		CO_LineaCredito.Monto
+		order by 1 desc
+		OFFSET (@Index -1)* @PageSize  ROWS
+		FETCH NEXT @PageSize ROWS ONLY
+
+
+	</Usuario.getLineaCreditosCabeceraLista>
+
+	<Usuario.getLineaCreditosCabeceraListaCount>
+
+
+		select
+		COUNT(1)
+		from PersonaMast Cliente
+		left join CO_LineaCredito on
+		Cliente.Persona=CO_LineaCredito.ClienteNumero
+		left join CO_Documento on
+		CO_Documento.ClienteNumero=Cliente.Persona
+		left join CO_TipoDocumento on
+		CO_Documento.TipoDocumento=CO_TipoDocumento.TipoDocumento
+		inner join MA_ClienteVendedor on
+		Cliente.Persona=MA_ClienteVendedor.Cliente
+		where Cliente.escliente='S' and
+		CO_TipoDocumento.Clasificacion in ('DC','DP','LE') and
+		CO_Documento.Estado='PR' and
+		MA_ClienteVendedor.Vendedor=@Vendedor-- Según el vendedor loggeado
+
+
+	</Usuario.getLineaCreditosCabeceraListaCount>
+
+	<Usuario.getLineaCreditosCabeceraListaDetalle>
+
+
+		
+		<![CDATA[
+		
+		 select
+CO_Documento.NumeroDocumento,
+CO_Documento.FechaDocumento,
+CO_Documento.FechaVencimiento,
+Case when CONVERT(INT,GETDATE()-CO_Documento.FechaVencimiento)<0 then 0 else CONVERT(INT,GETDATE()-CO_Documento.FechaVencimiento) end Dias,
+MA_FormadePago.Descripcion as FormaPago,
+CO_Documento.MontoTotal-CO_Documento.MontoPagado Pendiente,
+CO_Documento.LetraNumeroUnico
+from PersonaMast Cliente
+left join CO_LineaCredito on
+Cliente.Persona=CO_LineaCredito.ClienteNumero
+left join CO_Documento on
+CO_Documento.ClienteNumero=Cliente.Persona
+left join CO_TipoDocumento on
+CO_Documento.TipoDocumento=CO_TipoDocumento.TipoDocumento
+left join MA_FormadePago on
+CO_Documento.FormadePago=MA_FormadePago.FormadePago
+where Cliente.escliente='S' and
+Cliente.Persona=@Persona and -- Dependiente del cliente seleccionado
+CO_TipoDocumento.Clasificacion in ('DC','DP','LE') and
+CO_Documento.Estado='PR'
+		
+		
+		]]>
+	 
+
+	</Usuario.getLineaCreditosCabeceraListaDetalle>
 
 
 

@@ -272,6 +272,8 @@
     <Compile Include="Models\Bd\Usuario.cs">
       <DependentUpon>BdEntityGenerico.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\CabeceraLineasCredito.cs" />
+    <Compile Include="Models\CabeceraLineasCreditoDetalle.cs" />
     <Compile Include="Models\CO_OperacionCanjeDetalle_Model.cs" />
     <Compile Include="Models\Model_Motivos.cs" />
     <Compile Include="Models\DescuentoModel.cs" />

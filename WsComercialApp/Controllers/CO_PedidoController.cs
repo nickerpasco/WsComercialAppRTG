@@ -73,9 +73,10 @@ namespace WsComercialApp.Controllers
             RepositorioCO_Pedido repositorio = new RepositorioCO_Pedido();
             var response = repositorio.SaveLetras(documento); // 
             return response;
-        } 
-        
-        
+        }
+
+
+
         [HttpPost]
         [Route("api/getLetrasDetalle")]
         public List<CO_OperacionCanjeDetalle_Model> getLetrasDetalle([FromBody] ModelTransac_CO_Documento documento)

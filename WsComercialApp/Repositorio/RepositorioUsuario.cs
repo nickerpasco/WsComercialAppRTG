@@ -146,7 +146,44 @@ namespace WsComercialApp.Controllers
 
 
         }
-        
+
+        internal List<CabeceraLineasCreditoDetalle> CabereceraLineaCreditoDetalle(ModelTransac_CO_Documento request)
+        {
+            List<SqlParameter> parametros = new List<SqlParameter>();
+            parametros.Add(new SqlParameter("@Persona", request.ClienteNumero)); 
+
+            var sqlString = UtilsGlobal.ConvertLinesSqlXml("Query_Usuario", "Usuario.getLineaCreditosCabeceraListaDetalle");
+
+            var resultado = UtilsDAO.getDataByQueryWithParameters<CabeceraLineasCreditoDetalle>(sqlString, parametros);
+            return resultado;
+        }
+
+        internal PaginacionGenerico CabereceraLineaCredito(FiltroGenerico request)
+        {
+            PaginacionGenerico response = new PaginacionGenerico();
+            List<SqlParameter> parametros = new List<SqlParameter>();
+            parametros.Add(new SqlParameter("@Vendedor", request.Vendedor));
+            parametros.Add(new SqlParameter("@Index", request.paginacion.page));
+            parametros.Add(new SqlParameter("@PageSize", request.paginacion.limit));
+            
+            List<SqlParameter> parametrosCOunt = new List<SqlParameter>();
+            parametrosCOunt.Add(new SqlParameter("@Vendedor", request.Vendedor)); 
+
+            var sqlString = UtilsGlobal.ConvertLinesSqlXml("Query_Usuario", "Usuario.getLineaCreditosCabeceraLista"); 
+            var sqlStringCount = UtilsGlobal.ConvertLinesSqlXml("Query_Usuario", "Usuario.getLineaCreditosCabeceraListaCount"); 
+
+            var resultado = UtilsDAO.getDataByQueryWithParameters<CabeceraLineasCredito>(sqlString, parametros);
+
+
+            var ResultadoCount = UtilsDAO.getValueInt(sqlStringCount, parametrosCOunt); 
+
+            response.LStCabeceraLineasCredito = resultado;
+            response.countBD = ResultadoCount;
+
+            return response;
+
+        }
+
         internal ReponseStoreLetras getDiasVencidoFacturas(Model_CO_Documento c)
         {
 

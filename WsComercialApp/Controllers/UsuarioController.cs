@@ -151,6 +151,25 @@ namespace WsComercialApp.Controllers
 
 
         [HttpPost]
+        [Route("api/CabereceraLineaCredito")]
+        public PaginacionGenerico CabereceraLineaCredito([FromBody] FiltroGenerico documento)
+        {
+            RepositorioUsuario repositorio = new RepositorioUsuario();
+            var response = repositorio.CabereceraLineaCredito(documento); // 
+            return response;
+        }  
+        
+        [HttpPost]
+        [Route("api/CabereceraLineaCreditoDetalle")]
+        public List<CabeceraLineasCreditoDetalle> CabereceraLineaCreditoDetalle([FromBody] ModelTransac_CO_Documento documento)
+        {
+            RepositorioUsuario repositorio = new RepositorioUsuario();
+            var response = repositorio.CabereceraLineaCreditoDetalle(documento); // 
+            return response;
+        }
+
+
+        [HttpPost]
         [Route("api/Usuario/getDetalleFacturasLinea")]
         public List<DetalleFacturasLinea> getDetalleFacturasLinea([FromBody] ModelUsuario bean)
         {
