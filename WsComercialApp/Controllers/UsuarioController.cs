@@ -234,7 +234,35 @@ namespace WsComercialApp.Controllers
         }
 
 
-        //Guardar Persona 
+        //REPORTES
+
+        [HttpPost]
+        [Route("api/DocumentosEmitidosByDay")]
+        public PaginacionGenerico DocumentosEmitidosByDay([FromBody] FiltroGenerico documento)
+        {
+            RepositorioUsuario repositorio = new RepositorioUsuario();
+            var response = repositorio.DocumentosEmitidosByDay(documento); // 
+            return response;
+        }
+
+
+         [HttpPost]
+        [Route("api/ReporteCobranzasByPeriodo")]
+        public PaginacionGenerico ReporteCobranzasByPeriodo([FromBody] FiltroGenerico documento)
+        {
+            RepositorioUsuario repositorio = new RepositorioUsuario();
+            var response = repositorio.ReporteCobranzasByPeriodo(documento); // 
+            return response;
+        }  
+        
+        [HttpPost]
+        [Route("api/ReporteRutasDespacho")]
+        public PaginacionGenerico ReporteRutasDespacho([FromBody] FiltroGenerico documento)
+        {
+            RepositorioUsuario repositorio = new RepositorioUsuario();
+            var response = repositorio.ReporteRutasDespacho(documento); // 
+            return response;
+        }
 
 
 

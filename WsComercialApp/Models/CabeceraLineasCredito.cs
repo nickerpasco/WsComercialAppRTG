@@ -8,6 +8,7 @@ namespace WsComercialApp.Models
     public class CabeceraLineasCredito
     {
         public string Cliente { get; set; }
+        public int CantidadDocumentosEmitidos { get; set; }
         public int Persona { get; set; }
         public decimal? Libre { get; set; }
         public decimal? Usado { get; set; }

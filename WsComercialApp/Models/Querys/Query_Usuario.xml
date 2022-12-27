@@ -1,43 +1,43 @@
 <?xml version="1.0" encoding ="utf-8" ?>
 <sql-query>
- 
-
-<Usuario.GetAllParameters>
 
 
-	select   per.Persona  as IdPersonaUsuario,  per.Busqueda, per.Telefono as Telefono   ,  per.Documento as Documento, per.FechaNacimiento as FechaNacimiento, em.CompaniaSocio as CompaniaSocio, em.Sucursal as Sucursal, em.UnidadNegocioAsignada ,
-	per.Persona as Persona , per.Direccion, vende.VentaEquipo,
-	Usuario as Usuario , u.Clave, u.Nombre, u.UsuarioPerfil, u.Estado, per.Nombres as PrimerNombre , em.CompaniaSocio
-	,(select count(*) as PuedeFacturar from SeguridadAutorizaciones where AplicacionCodigo='CO' and Grupo='SYSTEM' and Concepto='FACAPP' and  Usuario=@UserName) as PuedeFacturar,
-	(select count(*) as PuedeFacturar from SeguridadAutorizaciones where AplicacionCodigo='CO' and Grupo='SYSTEM' and Concepto='LISFAP' and  Usuario=@UserName) as PuedeVerFacturas,
-	(select count(1) as PuedeCambiarPrecio from SeguridadAutorizaciones where AplicacionCodigo='CO' and Grupo='SYSTEM' and Concepto='EDITPE' and  Usuario=@UserName) as PuedeCambiarPrecio,
-	(select count(1) as PuedeHacerDescuento from SeguridadAutorizaciones where AplicacionCodigo='CO' and Grupo='SYSTEM' and Concepto='DESESC' and  Usuario=@UserName) as PuedeHacerDescuento,
-	(select count(1) as PuedeHacerDescuento from SeguridadAutorizaciones where AplicacionCodigo='CO' and Grupo='SYSTEM' and Concepto='GENSOL' and  Usuario=@UserName) as PuedeVerLetras,
+	<Usuario.GetAllParameters>
 
 
-	(select count(1) as PuedeCrearCliente from SeguridadAutorizaciones where AplicacionCodigo='CO' and Grupo='SYSTEM' and Concepto='ADDCLI' and  Usuario=@UserName) as PuedeCrearCliente,
-	(select count(1) as PuedeModificarFormaPago from SeguridadAutorizaciones where AplicacionCodigo='CO' and Grupo='SYSTEM' and Concepto='MODFP' and  Usuario=@UserName) as PuedeModificarFormaPago,
-	(select count(1) as PuedeCambiarMoneda from SeguridadAutorizaciones where AplicacionCodigo='CO' and Grupo='SYSTEM' and Concepto='MODMON' and  Usuario=@UserName) as PuedeCambiarMoneda,
+		select   per.Persona  as IdPersonaUsuario,  per.Busqueda, per.Telefono as Telefono   ,  per.Documento as Documento, per.FechaNacimiento as FechaNacimiento, em.CompaniaSocio as CompaniaSocio, em.Sucursal as Sucursal, em.UnidadNegocioAsignada ,
+		per.Persona as Persona , per.Direccion, vende.VentaEquipo,
+		Usuario as Usuario , u.Clave, u.Nombre, u.UsuarioPerfil, u.Estado, per.Nombres as PrimerNombre , em.CompaniaSocio
+		,(select count(*) as PuedeFacturar from SeguridadAutorizaciones where AplicacionCodigo='CO' and Grupo='SYSTEM' and Concepto='FACAPP' and  Usuario=@UserName) as PuedeFacturar,
+		(select count(*) as PuedeFacturar from SeguridadAutorizaciones where AplicacionCodigo='CO' and Grupo='SYSTEM' and Concepto='LISFAP' and  Usuario=@UserName) as PuedeVerFacturas,
+		(select count(1) as PuedeCambiarPrecio from SeguridadAutorizaciones where AplicacionCodigo='CO' and Grupo='SYSTEM' and Concepto='EDITPE' and  Usuario=@UserName) as PuedeCambiarPrecio,
+		(select count(1) as PuedeHacerDescuento from SeguridadAutorizaciones where AplicacionCodigo='CO' and Grupo='SYSTEM' and Concepto='DESESC' and  Usuario=@UserName) as PuedeHacerDescuento,
+		(select count(1) as PuedeHacerDescuento from SeguridadAutorizaciones where AplicacionCodigo='CO' and Grupo='SYSTEM' and Concepto='GENSOL' and  Usuario=@UserName) as PuedeVerLetras,
 
 
-	(select count(1) as AccesoVentaRapida from SeguridadAutorizaciones where AplicacionCodigo='CO' and Grupo='SYSTEM' and Concepto='VENRAP' and  Usuario=@UserName) as AccesoVentaRapida,
-	(select count(1) as AccesoListaPedidos from SeguridadAutorizaciones where AplicacionCodigo='CO' and Grupo='SYSTEM' and Concepto='LISTAP' and  Usuario=@UserName) as AccesoListaPedidos,
-	(select count(1) as AccesoLineasCredito from SeguridadAutorizaciones where AplicacionCodigo='CO' and Grupo='SYSTEM' and Concepto='ESTAPP' and  Usuario=@UserName) as AccesoLineasCredito,
-	(select count(1) as AccesoClientes from SeguridadAutorizaciones where AplicacionCodigo='CO' and Grupo='SYSTEM' and Concepto='ACLAPP' and  Usuario=@UserName) as AccesoClientes,
-	(select count(1) as AccesoFacturacion from SeguridadAutorizaciones where AplicacionCodigo='CO' and Grupo='SYSTEM' and Concepto='LISFAP' and  Usuario=@UserName) as AccesoFacturacion,
-	(select count(1) as AccesoProductos from SeguridadAutorizaciones where AplicacionCodigo='CO' and Grupo='SYSTEM' and Concepto='CATIAP' and  Usuario=@UserName) as AccesoProductos,
+		(select count(1) as PuedeCrearCliente from SeguridadAutorizaciones where AplicacionCodigo='CO' and Grupo='SYSTEM' and Concepto='ADDCLI' and  Usuario=@UserName) as PuedeCrearCliente,
+		(select count(1) as PuedeModificarFormaPago from SeguridadAutorizaciones where AplicacionCodigo='CO' and Grupo='SYSTEM' and Concepto='MODFP' and  Usuario=@UserName) as PuedeModificarFormaPago,
+		(select count(1) as PuedeCambiarMoneda from SeguridadAutorizaciones where AplicacionCodigo='CO' and Grupo='SYSTEM' and Concepto='MODMON' and  Usuario=@UserName) as PuedeCambiarMoneda,
 
 
-	( select isnull(texto,'N') from ParametrosMast where ParametroClave='SETDIRPED' and AplicacionCodigo='CO' and CompaniaCodigo='999999') as BloquearDireccion
+		(select count(1) as AccesoVentaRapida from SeguridadAutorizaciones where AplicacionCodigo='CO' and Grupo='SYSTEM' and Concepto='VENRAP' and  Usuario=@UserName) as AccesoVentaRapida,
+		(select count(1) as AccesoListaPedidos from SeguridadAutorizaciones where AplicacionCodigo='CO' and Grupo='SYSTEM' and Concepto='LISTAP' and  Usuario=@UserName) as AccesoListaPedidos,
+		(select count(1) as AccesoLineasCredito from SeguridadAutorizaciones where AplicacionCodigo='CO' and Grupo='SYSTEM' and Concepto='ESTAPP' and  Usuario=@UserName) as AccesoLineasCredito,
+		(select count(1) as AccesoClientes from SeguridadAutorizaciones where AplicacionCodigo='CO' and Grupo='SYSTEM' and Concepto='ACLAPP' and  Usuario=@UserName) as AccesoClientes,
+		(select count(1) as AccesoFacturacion from SeguridadAutorizaciones where AplicacionCodigo='CO' and Grupo='SYSTEM' and Concepto='LISFAP' and  Usuario=@UserName) as AccesoFacturacion,
+		(select count(1) as AccesoProductos from SeguridadAutorizaciones where AplicacionCodigo='CO' and Grupo='SYSTEM' and Concepto='CATIAP' and  Usuario=@UserName) as AccesoProductos,
 
-	from Usuario u
-	inner join EmpleadoMast em on u.Usuario = em.CodigoUsuario
-	inner join PersonaMast per on per.Persona = em.Empleado
-	inner join CO_Vendedor vende on per.Persona = vende.Vendedor
-	where u.Usuario = @UserName AND em.FechaCese IS NULL
+
+		( select isnull(texto,'N') from ParametrosMast where ParametroClave='SETDIRPED' and AplicacionCodigo='CO' and CompaniaCodigo='999999') as BloquearDireccion
+
+		from Usuario u
+		inner join EmpleadoMast em on u.Usuario = em.CodigoUsuario
+		inner join PersonaMast per on per.Persona = em.Empleado
+		inner join CO_Vendedor vende on per.Persona = vende.Vendedor
+		where u.Usuario = @UserName AND em.FechaCese IS NULL
 
 
-</Usuario.GetAllParameters>
+	</Usuario.GetAllParameters>
 
 
 	<Usuario.getMontoDashBorad>
@@ -61,7 +61,7 @@
 
 
 	</Usuario.getMontoDashBorad>
-	
+
 	<Usuario.getLineaCreditosCabeceraLista>
 
 
@@ -124,7 +124,7 @@
 	<Usuario.getLineaCreditosCabeceraListaDetalle>
 
 
-		
+
 		<![CDATA[
 		
 		 select
@@ -152,7 +152,7 @@ CO_Documento.Estado='PR'
 		
 		
 		]]>
-	 
+
 
 	</Usuario.getLineaCreditosCabeceraListaDetalle>
 
@@ -195,8 +195,8 @@ CO_Documento.Estado='PR'
 		where Estado= 'A' and Usuario in	  (SELECT Perfil FROM seguridadperfilusuario WHERE USUARIO =@Usuario and Estado = 'A'))
 
 
-	</Usuario.GetAllParametersSeguridad>	
-	
+	</Usuario.GetAllParametersSeguridad>
+
 	<Usuario.getParametrosSistema>
 
 
@@ -235,9 +235,9 @@ CO_Documento.Estado='PR'
 		(select Concepto as AlmacenCodigo from SY_SeguridadAutorizaciones where AplicacionCodigo='SY' and Grupo='ALMACEN' and usuario=@Usuario)
 	</Usuario.getMiscelaneos>
 
- 
 
-	<Usuario.getvalidaUsuario> 
+
+	<Usuario.getvalidaUsuario>
 
 
 		select
@@ -249,7 +249,7 @@ CO_Documento.Estado='PR'
 
 	</Usuario.getvalidaUsuario>
 
-	 
+
 
 
 	<Usuario.UpdateSession>
@@ -280,7 +280,7 @@ CO_Documento.Estado='PR'
 
 
 
-		<!--PERSONASQUERY-->
+	<!--PERSONASQUERY-->
 
 	<Personas.getPersonasOnnline>
 
@@ -311,7 +311,166 @@ CO_Documento.Estado='PR'
 		FETCH NEXT @PageSize ROWS ONLY
 	</Personas.getPersonasOnnline>
 
+
+	<Personas.getCantidadDocumetosEmitidosFactura>
+
+		Select
+		Cliente.NombreCompleto Cliente,
+		count(CO_Documento.NumeroDocumento) as CantidadDocumentosEmitidos
+		from CO_Documento inner join PersonaMast cliente
+		ON CO_Documento.ClienteNumero=Cliente.Persona
+		inner join CO_TipoDocumento
+		ON CO_Documento.TipoDocumento=CO_TipoDocumento.TipoDocumento
+		inner join MA_ClienteVendedor on
+		Cliente.Persona=MA_ClienteVendedor.Cliente
+		where CO_TipoDocumento.Clasificacion in ('DC','DP') and
+		CO_Documento.FechaDocumento>=@FechaDocumento and -- Según el filtro del reporte
+		MA_ClienteVendedor.Vendedor=@Vendedor -- Según el vendedor loggeado
+		group by
+		Cliente.NombreCompleto
+		order by 2 desc
+		OFFSET (@Index -1)* @PageSize  ROWS
+		FETCH NEXT @PageSize ROWS ONLY
+
+
+	</Personas.getCantidadDocumetosEmitidosFactura>
+
+	<Personas.getCantidadDocumetosEmitidosFacturaCount>
+
+
+		select count(1) from
+
+		(
+
+		Select
+		Cliente.NombreCompleto Cliente,
+		count(CO_Documento.NumeroDocumento) as CantidadDocumentosEmitidos
+		from CO_Documento inner join PersonaMast cliente
+		ON CO_Documento.ClienteNumero=Cliente.Persona
+		inner join CO_TipoDocumento
+		ON CO_Documento.TipoDocumento=CO_TipoDocumento.TipoDocumento
+		inner join MA_ClienteVendedor on
+		Cliente.Persona=MA_ClienteVendedor.Cliente
+		where CO_TipoDocumento.Clasificacion in ('DC','DP') and
+		CO_Documento.FechaDocumento>=@FechaDocumento
+		and  MA_ClienteVendedor.Vendedor=@Vendedor -- Según el vendedor loggeado
+		group by
+		Cliente.NombreCompleto
+		)a
+
+	</Personas.getCantidadDocumetosEmitidosFacturaCount>
+
+
+	<Personas.getRutasDespacho>
+
+
+		select
+		Cliente.NombreCompleto as Cliente,
+		count(CO_Documento.NumeroDocumento) CantidadDocumentosEmitidos
+		from CO_Documento inner join PersonaMast Cliente
+		ON Cliente.Persona = CO_Documento.ClienteNumero
+		left join CO_TipoDocumento
+		ON CO_Documento.TipoDocumento = CO_TipoDocumento.TipoDocumento
+		left join CR_DOT
+		ON CO_Documento.DOTNumero=CR_DOT.DOTNumero
+		left join MA_ClienteVendedor
+		ON Cliente.Persona=MA_ClienteVendedor.Cliente
+		where
+		CO_Documento.DOTEstado in ('PE','IN','CE','AT','DE')
+		and CO_TipoDocumento.Clasificacion='DC'
+		and CR_DOT.FechaSalida>=@FechaDocumento
+		and MA_ClienteVendedor.Vendedor=@Vendedor -- Según el vendedor loggeado
+		group by
+		Cliente.NombreCompleto
+
+	</Personas.getRutasDespacho>
+
+	<Personas.getRutasDespachoCount>
+
+
+		select count(1) from
+
+		(
+		select
+		Cliente.NombreCompleto,
+		count(CO_Documento.NumeroDocumento) PendienteDesp
+		from CO_Documento inner join PersonaMast Cliente
+		ON Cliente.Persona = CO_Documento.ClienteNumero
+		left join CO_TipoDocumento
+		ON CO_Documento.TipoDocumento = CO_TipoDocumento.TipoDocumento
+		left join CR_DOT
+		ON CO_Documento.DOTNumero=CR_DOT.DOTNumero
+		left join MA_ClienteVendedor
+		ON Cliente.Persona=MA_ClienteVendedor.Cliente
+		where
+		CO_Documento.DOTEstado in ('PE','IN','CE','AT','DE')
+		and CO_TipoDocumento.Clasificacion='DC'
+		and CR_DOT.FechaSalida>=@FechaDocumento
+		and MA_ClienteVendedor.Vendedor=@Vendedor -- Según el vendedor loggeado
+		group by
+		Cliente.NombreCompleto
+		)a
+
+	</Personas.getRutasDespachoCount>
+
+
+	<Personas.getCobranzasEmitidadas>
+
+
+		<![CDATA[
+		
+		select
+		Cliente.NombreCompleto as Cliente,
+		count(CO_Cobranza.CobranzaNumero) CantidadDocumentosEmitidos
+		from CO_Cobranza inner join CO_DocumentoCobranza
+		ON CO_Cobranza.CompaniaSocio = CO_DocumentoCobranza.CompaniaSocio
+		and CO_Cobranza.UnidadReplicacion = CO_DocumentoCobranza.UnidadReplicacion
+		and CO_Cobranza.CobranzaNumero = CO_DocumentoCobranza.CobranzaNumero
+		inner join PersonaMast Cliente
+		ON CO_Cobranza.Cliente = Cliente.Persona
+		where CO_CObranza.Estado<>'AN' and
+		CONVERT (CHAR (6), CO_Cobranza.FechaCobranza, 112)=@Periodo -- Según el periodo filtrado
+		group by
+		Cliente.NombreCompleto
+		order by 2 desc
+		OFFSET (@Index -1)* @PageSize  ROWS
+		FETCH NEXT @PageSize ROWS ONLY
+		
+		]]>
+
+	</Personas.getCobranzasEmitidadas>
+
+
+	<Personas.getCobranzasEmitidadasCount>
+
+
+	<![CDATA[
 	
+	
+	
+		select count(1) from
+
+		(
+		select
+		Cliente.NombreCompleto as Cliente,
+		count(CO_Cobranza.CobranzaNumero) CantidadDocumentosEmitidos
+		from CO_Cobranza inner join CO_DocumentoCobranza
+		ON CO_Cobranza.CompaniaSocio = CO_DocumentoCobranza.CompaniaSocio
+		and CO_Cobranza.UnidadReplicacion = CO_DocumentoCobranza.UnidadReplicacion
+		and CO_Cobranza.CobranzaNumero = CO_DocumentoCobranza.CobranzaNumero
+		inner join PersonaMast Cliente
+		ON CO_Cobranza.Cliente = Cliente.Persona
+		where CO_CObranza.Estado<>'AN' and
+		CONVERT (CHAR (6), CO_Cobranza.FechaCobranza, 112)=@Periodo -- Según el periodo filtrado
+		group by
+		Cliente.NombreCompleto
+		)a
+	
+	]]>
+
+	</Personas.getCobranzasEmitidadasCount>
+
+
 	<Personas.DireccionByClienteAll>
 		select Persona,Secuencia,Direccion,ReferenciasDireccion , RutaDespacho from Direccion with(nolock)
 	</Personas.DireccionByClienteAll>
@@ -324,7 +483,7 @@ CO_Documento.Estado='PR'
 		COUNT(1)
 		from PersonaMast with(nolock)
 		inner join ClienteMast cli with(nolock) on PersonaMast.Persona= cli.Cliente
-		left join CO_TipoFacturacion tipo with(nolock) on cli.TipoFacturacion = tipo.TipoFacturacion 
+		left join CO_TipoFacturacion tipo with(nolock) on cli.TipoFacturacion = tipo.TipoFacturacion
 		inner join MA_ClienteVendedor cliven with(nolock) on cli.Cliente= cliven.Cliente and cliven.Vendedor = @Vendedor
 		left join FT_Vehiculo ftvehi with(nolock) on  cli.IdTransportista = ftvehi.IdTransportista
 		where EsCliente='S' and PersonaMast.Estado = 'A' and
@@ -373,7 +532,7 @@ CO_Documento.Estado='PR'
 	</PersonaMast.getDataValidacionDocumentosVencidos>
 
 
-	
+
 
 	<PersonaMast.getCentroCostosUser>
 		select CentroCosto from ClienteMast with(nolock) where cliente=@Persona
@@ -386,7 +545,7 @@ CO_Documento.Estado='PR'
 	<Configuracion.getParametroTextto>
 		select texto from ParametrosMast with(nolock)  where AplicacionCodigo='CO' and ParametroClave=@ParametroClave and CompaniaCodigo=@Compania
 	</Configuracion.getParametroTextto>
-	
+
 	<Configuracion.getParametroNumero>
 		select numero from ParametrosMast with(nolock)  where AplicacionCodigo='CO' and ParametroClave=@ParametroClave and CompaniaCodigo=@Compania
 	</Configuracion.getParametroNumero>
@@ -509,7 +668,7 @@ MA_FormadePago.CreditoFlag = 'S'
 		OFFSET (@Index -1)* @PageSize  ROWS
 		FETCH NEXT @PageSize ROWS ONLY
 
- 
+
 	</Personas.getVendedorOnnline>
 
 
@@ -522,13 +681,13 @@ MA_FormadePago.CreditoFlag = 'S'
 		left join PersonaMast persona on persona.Persona = vendedor.Vendedor
 		where (@Persona is null or @Persona='' or persona.Persona = @Persona)
 		AND (@Busqueda is null or @Busqueda='' or UPPER(CONVERT(VARCHAR ,persona.Persona)+persona.Busqueda+persona.Documento)like '%'+upper(@Busqueda)+'%')
-		 
+
 
 
 
 	</Personas.getVendedorOnnlineCount>
 
- 
+
 
 </sql-query>
 

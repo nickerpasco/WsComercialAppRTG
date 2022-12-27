@@ -183,6 +183,94 @@ namespace WsComercialApp.Controllers
             return response;
 
         }
+        
+        internal PaginacionGenerico DocumentosEmitidosByDay(FiltroGenerico request)
+        {
+            PaginacionGenerico response = new PaginacionGenerico();
+            List<SqlParameter> parametros = new List<SqlParameter>();
+            parametros.Add(new SqlParameter("@Vendedor", Convert.ToInt32(request.BusquedaAvanzada)));
+            parametros.Add(new SqlParameter("@FechaDocumento", request.FechaInicio));
+            parametros.Add(new SqlParameter("@Index", request.paginacion.page));
+            parametros.Add(new SqlParameter("@PageSize", request.paginacion.limit));
+            
+            List<SqlParameter> parametrosCOunt = new List<SqlParameter>();
+            parametrosCOunt.Add(new SqlParameter("@Vendedor", Convert.ToInt32(request.BusquedaAvanzada)));
+            parametrosCOunt.Add(new SqlParameter("@FechaDocumento", request.FechaInicio));
+
+            var sqlString = UtilsGlobal.ConvertLinesSqlXml("Query_Usuario", "Personas.getCobranzasEmitidadas"); 
+            var sqlStringCount = UtilsGlobal.ConvertLinesSqlXml("Query_Usuario", "Personas.getCobranzasEmitidadasCount"); 
+
+            var resultado = UtilsDAO.getDataByQueryWithParameters<CabeceraLineasCredito>(sqlString, parametros);
+             
+              
+            var ResultadoCount = UtilsDAO.getValueInt(sqlStringCount, parametrosCOunt); 
+
+            response.LStCabeceraLineasCredito = resultado;
+            response.countBD = ResultadoCount;
+
+            return response;
+
+        }
+
+
+        internal PaginacionGenerico ReporteCobranzasByPeriodo(FiltroGenerico request)
+        {
+            PaginacionGenerico response = new PaginacionGenerico();
+            List<SqlParameter> parametros = new List<SqlParameter>(); 
+
+            parametros.Add(new SqlParameter("@Periodo", request.Periodo));
+            parametros.Add(new SqlParameter("@Index", request.paginacion.page));
+            parametros.Add(new SqlParameter("@PageSize", request.paginacion.limit));
+
+            List<SqlParameter> parametrosCOunt = new List<SqlParameter>();
+            parametrosCOunt.Add(new SqlParameter("@Periodo", Convert.ToInt32(request.Periodo))); 
+
+            var sqlString = UtilsGlobal.ConvertLinesSqlXml("Query_Usuario", "Personas.getCobranzasEmitidadas");
+            var sqlStringCount = UtilsGlobal.ConvertLinesSqlXml("Query_Usuario", "Personas.getCobranzasEmitidadasCount");
+
+            var resultado = UtilsDAO.getDataByQueryWithParameters<CabeceraLineasCredito>(sqlString, parametros);
+
+
+            var ResultadoCount = UtilsDAO.getValueInt(sqlStringCount, parametrosCOunt);
+
+            response.LStCabeceraLineasCredito = resultado;
+            response.countBD = ResultadoCount;
+
+            return response;
+
+        }
+
+
+        internal PaginacionGenerico ReporteRutasDespacho(FiltroGenerico request)
+        {
+            PaginacionGenerico response = new PaginacionGenerico();
+            List<SqlParameter> parametros = new List<SqlParameter>();
+            parametros.Add(new SqlParameter("@Vendedor", Convert.ToInt32(request.BusquedaAvanzada)));
+            parametros.Add(new SqlParameter("@FechaDocumento", request.FechaInicio));
+            parametros.Add(new SqlParameter("@Index", request.paginacion.page));
+            parametros.Add(new SqlParameter("@PageSize", request.paginacion.limit));
+
+            List<SqlParameter> parametrosCOunt = new List<SqlParameter>();
+            parametrosCOunt.Add(new SqlParameter("@Vendedor", Convert.ToInt32(request.BusquedaAvanzada)));
+            parametrosCOunt.Add(new SqlParameter("@FechaDocumento", request.FechaInicio));
+
+
+            var sqlString = UtilsGlobal.ConvertLinesSqlXml("Query_Usuario", "Personas.getRutasDespacho");
+            var sqlStringCount = UtilsGlobal.ConvertLinesSqlXml("Query_Usuario", "Personas.getRutasDespachoCount");
+
+            var resultado = UtilsDAO.getDataByQueryWithParameters<CabeceraLineasCredito>(sqlString, parametros);
+
+
+            var ResultadoCount = UtilsDAO.getValueInt(sqlStringCount, parametrosCOunt);
+
+            response.LStCabeceraLineasCredito = resultado;
+            response.countBD = ResultadoCount;
+
+            return response;
+
+        }
+
+        
 
         internal ReponseStoreLetras getDiasVencidoFacturas(Model_CO_Documento c)
         {
