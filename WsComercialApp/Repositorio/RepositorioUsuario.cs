@@ -197,8 +197,8 @@ namespace WsComercialApp.Controllers
             parametrosCOunt.Add(new SqlParameter("@Vendedor", Convert.ToInt32(request.BusquedaAvanzada)));
             parametrosCOunt.Add(new SqlParameter("@FechaDocumento", request.FechaInicio));
 
-            var sqlString = UtilsGlobal.ConvertLinesSqlXml("Query_Usuario", "Personas.getCobranzasEmitidadas"); 
-            var sqlStringCount = UtilsGlobal.ConvertLinesSqlXml("Query_Usuario", "Personas.getCobranzasEmitidadasCount"); 
+            var sqlString = UtilsGlobal.ConvertLinesSqlXml("Query_Usuario", "Personas.getCantidadDocumetosEmitidosFactura"); 
+            var sqlStringCount = UtilsGlobal.ConvertLinesSqlXml("Query_Usuario", "Personas.getCantidadDocumetosEmitidosFacturaCount"); 
 
             var resultado = UtilsDAO.getDataByQueryWithParameters<CabeceraLineasCredito>(sqlString, parametros);
              
