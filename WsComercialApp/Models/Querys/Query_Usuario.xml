@@ -315,6 +315,7 @@ CO_Documento.Estado='PR'
 	<Personas.getCantidadDocumetosEmitidosFactura>
 
 		Select
+		Cliente.Persona,
 		Cliente.NombreCompleto Cliente,
 		count(CO_Documento.NumeroDocumento) as CantidadDocumentosEmitidos
 		from CO_Documento inner join PersonaMast cliente
@@ -327,6 +328,7 @@ CO_Documento.Estado='PR'
 		CO_Documento.FechaDocumento>=@FechaDocumento and -- Según el filtro del reporte
 		MA_ClienteVendedor.Vendedor=@Vendedor -- Según el vendedor loggeado
 		group by
+		Cliente.Persona,
 		Cliente.NombreCompleto
 		order by 2 desc
 		OFFSET (@Index -1)* @PageSize  ROWS
