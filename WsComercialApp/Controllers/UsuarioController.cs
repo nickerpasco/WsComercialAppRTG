@@ -270,8 +270,17 @@ namespace WsComercialApp.Controllers
             RepositorioUsuario repositorio = new RepositorioUsuario();
             var response = repositorio.ReporteCobranzasByPeriodo(documento); // 
             return response;
-        }  
-        
+        }
+
+        [HttpPost]
+        [Route("api/ReporteRutasDespachoDetalle")]
+        public List<ModelTransac_CO_Documento> ReporteRutasDespachoDetalle([FromBody] FiltroGenerico documento)
+        {
+            RepositorioUsuario repositorio = new RepositorioUsuario();
+            var response = repositorio.ReporteRutasDespachoDetalle(documento); // 
+            return response;
+        }
+
         [HttpPost]
         [Route("api/ReporteRutasDespacho")]
         public PaginacionGenerico ReporteRutasDespacho([FromBody] FiltroGenerico documento)
