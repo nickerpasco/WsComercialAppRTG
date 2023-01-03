@@ -244,9 +244,26 @@ namespace WsComercialApp.Controllers
             var response = repositorio.DocumentosEmitidosByDay(documento); // 
             return response;
         }
+        
+        [HttpPost]
+        [Route("api/DocumentosEmitidosByDayDetalle")]
+        public List<ModelTransac_CO_Documento> DocumentosEmitidosByDayDetalle([FromBody] FiltroGenerico documento)
+        {
+            RepositorioUsuario repositorio = new RepositorioUsuario();
+            var response = repositorio.DocumentosEmitidosByDayDetalle(documento); // 
+            return response;
+        }
 
+        [HttpPost]
+        [Route("api/ReporteCobranzasByPeriodoDetalle")]
+        public List<ModelTransac_CO_Documento> ReporteCobranzasByPeriodoDetalle([FromBody] FiltroGenerico documento)
+        {
+            RepositorioUsuario repositorio = new RepositorioUsuario();
+            var response = repositorio.ReporteCobranzasByPeriodoDetalle(documento); // 
+            return response;
+        }
 
-         [HttpPost]
+        [HttpPost]
         [Route("api/ReporteCobranzasByPeriodo")]
         public PaginacionGenerico ReporteCobranzasByPeriodo([FromBody] FiltroGenerico documento)
         {

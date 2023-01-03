@@ -360,8 +360,62 @@ CO_Documento.Estado='PR'
 		Cliente.NombreCompleto
 		)a
 
-	</Personas.getCantidadDocumetosEmitidosFacturaCount>
+	</Personas.getCantidadDocumetosEmitidosFacturaCount>	
+		
+	<Personas.getCantidadDocumetosEmitidosFacturaDetalle>
 
+ Select
+CO_Documento.NumeroDocumento,
+CO_Documento.FechaDocumento,
+CO_Documento.MontoTotal,
+CO_Documento.ComercialPedidoNumero,
+CO_Cobranza.FechaCobranza,
+CO_DocumentoCobranza.MontoPagado
+from CO_Documento inner join PersonaMast cliente
+ON CO_Documento.ClienteNumero=Cliente.Persona
+inner join CO_TipoDocumento
+ON CO_Documento.TipoDocumento=CO_TipoDocumento.TipoDocumento
+left join CO_DocumentoCobranza
+ON CO_Documento.CompaniaSocio=CO_DocumentoCobranza.CompaniaSocio
+and CO_Documento.TipoDocumento=CO_DocumentoCobranza.TipoDocumento
+and CO_Documento.NumeroDocumento=CO_DocumentoCobranza.NumeroDocumento
+left join CO_Cobranza
+ON CO_DocumentoCobranza.CompaniaSocio=CO_Cobranza.CompaniaSocio
+and CO_DocumentoCobranza.UnidadReplicacion=CO_CObranza.UnidadReplicacion
+and CO_DocumentoCobranza.CobranzaNumero=CO_Cobranza.CobranzaNumero
+where CO_TipoDocumento.Clasificacion in ('DC','DP') and
+CO_Documento.FechaDocumento>=@FechaDocumento
+and cliente.persona = @Persona
+
+	</Personas.getCantidadDocumetosEmitidosFacturaDetalle>
+
+
+	<Personas.getRutasDespachoDetalle>
+
+		select
+		CO_Documento.NumeroDocumento,
+		CR_DOT.FechaSalida FechaDespacho,
+		CO_Documento.MontoTotal,
+		Cliente.Telefono,
+		CR_DOT.Conductor,
+		Case CO_Documento.DOTEstado when 'PE' then 'Pendiente Despacho'
+		when 'IN' then 'En Ruta'
+		when 'CE' then 'Entregado'
+		when 'AT' then 'Con Retraso'
+		when 'DE' then 'Devuelto' end as EstadoDespacho
+		from CO_Documento inner join PersonaMast Cliente
+		ON Cliente.Persona = CO_Documento.ClienteNumero
+		inner join CO_TipoDocumento
+		ON CO_Documento.TipoDocumento = CO_TipoDocumento.TipoDocumento
+		inner join CR_DOT
+		ON CO_Documento.DOTNumero=CR_DOT.DOTNumero
+		where
+		CO_Documento.DOTEstado in ('PE','IN','CE','AT','DE') and
+		CO_TipoDocumento.Clasificacion='DC' and
+		CR_DOT.FechaEntrega>=@FechaEntrega and
+		Cliente.Persona=@Cliente --Según el cliente seleccionado
+
+	</Personas.getRutasDespachoDetalle>
 
 	<Personas.getRutasDespacho>
 
@@ -416,6 +470,36 @@ CO_Documento.Estado='PR'
 	</Personas.getRutasDespachoCount>
 
 
+	<Personas.getCobranzasEmitidadasDetalle>
+
+
+		<![CDATA[
+		
+	select
+CO_Documento.NumeroDocumento,
+CO_Documento.FechaDocumento,
+CO_DOcumento.FechaVencimiento,
+CO_Documento.MontoTotal,
+CO_Documento.MontoPagado
+from CO_Cobranza inner join CO_DocumentoCobranza
+ ON CO_Cobranza.CompaniaSocio = CO_DocumentoCobranza.CompaniaSocio
+  and CO_Cobranza.UnidadReplicacion = CO_DocumentoCobranza.UnidadReplicacion
+  and CO_Cobranza.CobranzaNumero = CO_DocumentoCobranza.CobranzaNumero
+  inner join PersonaMast Cliente
+  ON CO_Cobranza.Cliente = Cliente.Persona
+  inner join CO_Documento
+  ON CO_Documento.CompaniaSocio = CO_DocumentoCobranza.CompaniaSocio and
+  CO_Documento.TipoDocumento = CO_DocumentoCobranza.TipoDocumento and
+  CO_Documento.NumeroDocumento = CO_DocumentoCobranza.NumeroDocumento
+where CO_CObranza.Estado<>'AN' and
+ CONVERT (CHAR (6), CO_Cobranza.FechaCobranza, 112)='@FechaCobranza and-- Según el periodo filtrado
+ CO_Cobranza.Cliente=@Cliente -- Según el cliente seleccionado en la cabecera
+
+		
+		]]>
+
+	</Personas.getCobranzasEmitidadasDetalle>
+	
 	<Personas.getCobranzasEmitidadas>
 
 

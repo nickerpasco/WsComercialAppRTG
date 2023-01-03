@@ -38,6 +38,10 @@ namespace WsComercialApp.Models
         public Nullable<int> Index { get; set; }
         public Nullable<int> PageSize { get; set; }
         public Nullable<System.DateTime> FechaDocumento { get; set; }
+        public Nullable<System.DateTime> FechaDespacho { get; set; }
+        public String Telefono { get; set; }
+        public String Conductor { get; set; }
+        public String EstadoDespacho { get; set; }
         public Nullable<System.DateTime> FechaInicio { get; set; }
         public Nullable<System.DateTime> FechaFin { get; set; }
         public Nullable<System.DateTime> FechaVencimiento { get; set; }
@@ -64,6 +68,7 @@ namespace WsComercialApp.Models
         public Nullable<int> AprobadoPor { get; set; }
         public Nullable<System.DateTime> FechaPreparacion { get; set; }
         public Nullable<System.DateTime> FechaAprobacion { get; set; }
+        public Nullable<System.DateTime> FechaCobranza { get; set; }
         public string NotaCreditoDocumento { get; set; }
         public string TipoMotivo { get; set; }
         public string ComercialPedidoNumero { get; set; }

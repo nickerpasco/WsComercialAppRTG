@@ -213,6 +213,39 @@ namespace WsComercialApp.Controllers
         }
 
 
+        internal List<ModelTransac_CO_Documento> DocumentosEmitidosByDayDetalle(FiltroGenerico request)
+        {
+             
+            List<SqlParameter> parametros = new List<SqlParameter>();
+            parametros.Add(new SqlParameter("@Persona", Convert.ToInt32(request.Persona)));
+            parametros.Add(new SqlParameter("@FechaDocumento", request.FechaInicio));
+
+            var sqlString = UtilsGlobal.ConvertLinesSqlXml("Query_Usuario", "Personas.getCantidadDocumetosEmitidosFacturaDetalle");
+            var resultado = UtilsDAO.getDataByQueryWithParameters<ModelTransac_CO_Documento>(sqlString, parametros);
+             
+             
+
+            return resultado;
+
+        } 
+        
+        internal List<ModelTransac_CO_Documento> ReporteCobranzasByPeriodoDetalle(FiltroGenerico request)
+        {
+             
+            List<SqlParameter> parametros = new List<SqlParameter>();
+            parametros.Add(new SqlParameter("@Cliente", Convert.ToInt32(request.Persona)));
+            parametros.Add(new SqlParameter("@FechaCobranza", request.Periodo));
+
+            var sqlString = UtilsGlobal.ConvertLinesSqlXml("Query_Usuario", "Personas.getCobranzasEmitidadasDetalle");
+            var resultado = UtilsDAO.getDataByQueryWithParameters<ModelTransac_CO_Documento>(sqlString, parametros);
+             
+             
+
+            return resultado;
+
+        }
+
+
         internal PaginacionGenerico ReporteCobranzasByPeriodo(FiltroGenerico request)
         {
             PaginacionGenerico response = new PaginacionGenerico();
@@ -240,6 +273,21 @@ namespace WsComercialApp.Controllers
 
         }
 
+        internal List<ModelTransac_CO_Documento> ReporteRutasDespachoDetalle(FiltroGenerico request)
+        {
+
+            List<SqlParameter> parametros = new List<SqlParameter>();
+            parametros.Add(new SqlParameter("@Cliente", Convert.ToInt32(request.Persona)));
+            parametros.Add(new SqlParameter("@FechaEntrega", request.Periodo));
+
+            var sqlString = UtilsGlobal.ConvertLinesSqlXml("Query_Usuario", "Personas.getRutasDespachoDetalle");
+            var resultado = UtilsDAO.getDataByQueryWithParameters<ModelTransac_CO_Documento>(sqlString, parametros);
+
+
+
+            return resultado;
+
+        }
 
         internal PaginacionGenerico ReporteRutasDespacho(FiltroGenerico request)
         {
