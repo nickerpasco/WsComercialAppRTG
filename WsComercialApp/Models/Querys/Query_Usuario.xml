@@ -412,7 +412,7 @@ and cliente.persona = @Persona
 		where
 		CO_Documento.DOTEstado in ('PE','IN','CE','AT','DE') and
 		CO_TipoDocumento.Clasificacion='DC' and
-		CR_DOT.FechaEntrega>=@FechaEntrega and
+		CR_DOT.FechaSalida>=@FechaEntrega and
 		Cliente.Persona=@Cliente --Según el cliente seleccionado
 
 	</Personas.getRutasDespachoDetalle>
@@ -508,6 +508,7 @@ where CO_CObranza.Estado<>'AN' and
 		<![CDATA[
 		
 		select
+		Cliente.Persona,
 		Cliente.NombreCompleto as Cliente,
 		count(CO_Cobranza.CobranzaNumero) CantidadDocumentosEmitidos
 		from CO_Cobranza inner join CO_DocumentoCobranza
@@ -519,6 +520,7 @@ where CO_CObranza.Estado<>'AN' and
 		where CO_CObranza.Estado<>'AN' and
 		CONVERT (CHAR (6), CO_Cobranza.FechaCobranza, 112)=@Periodo -- Según el periodo filtrado
 		group by
+		Cliente.Persona,
 		Cliente.NombreCompleto
 		order by 2 desc
 		OFFSET (@Index -1)* @PageSize  ROWS

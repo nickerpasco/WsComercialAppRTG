@@ -278,7 +278,7 @@ namespace WsComercialApp.Controllers
 
             List<SqlParameter> parametros = new List<SqlParameter>();
             parametros.Add(new SqlParameter("@Cliente", Convert.ToInt32(request.Persona)));
-            parametros.Add(new SqlParameter("@FechaEntrega", request.Periodo));
+            parametros.Add(new SqlParameter("@FechaEntrega", request.FechaInicio));
 
             var sqlString = UtilsGlobal.ConvertLinesSqlXml("Query_Usuario", "Personas.getRutasDespachoDetalle");
             var resultado = UtilsDAO.getDataByQueryWithParameters<ModelTransac_CO_Documento>(sqlString, parametros);
