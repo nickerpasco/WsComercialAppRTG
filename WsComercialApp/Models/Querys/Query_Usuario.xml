@@ -419,7 +419,7 @@ and cliente.persona = @Persona
 
 	<Personas.getRutasDespacho>
 
-
+ 
 		select
 		Cliente.Persona,
 		Cliente.NombreCompleto as Cliente,
