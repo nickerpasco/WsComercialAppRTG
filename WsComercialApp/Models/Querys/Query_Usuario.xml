@@ -421,6 +421,7 @@ and cliente.persona = @Persona
 
 
 		select
+		Cliente.Persona,
 		Cliente.NombreCompleto as Cliente,
 		count(CO_Documento.NumeroDocumento) CantidadDocumentosEmitidos
 		from CO_Documento inner join PersonaMast Cliente
@@ -437,6 +438,7 @@ and cliente.persona = @Persona
 		and CR_DOT.FechaSalida>=@FechaDocumento
 		and MA_ClienteVendedor.Vendedor=@Vendedor -- Según el vendedor loggeado
 		group by
+		Cliente.Persona,
 		Cliente.NombreCompleto
 
 	</Personas.getRutasDespacho>
