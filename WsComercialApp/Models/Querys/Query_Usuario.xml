@@ -494,9 +494,8 @@ from CO_Cobranza inner join CO_DocumentoCobranza
   CO_Documento.TipoDocumento = CO_DocumentoCobranza.TipoDocumento and
   CO_Documento.NumeroDocumento = CO_DocumentoCobranza.NumeroDocumento
 where CO_CObranza.Estado<>'AN' and
- CONVERT (CHAR (6), CO_Cobranza.FechaCobranza, 112)='@FechaCobranza and-- Según el periodo filtrado
- CO_Cobranza.Cliente=@Cliente -- Según el cliente seleccionado en la cabecera
-
+ CONVERT (CHAR (6), CO_Cobranza.FechaCobranza, 112)=@FechaCobranza and 
+ CO_Cobranza.Cliente=@Cliente 
 		
 		]]>
 
