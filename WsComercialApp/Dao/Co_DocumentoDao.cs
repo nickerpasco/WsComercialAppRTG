@@ -677,7 +677,7 @@ namespace WsComercialApp.Dao
                 context.CO_Documento.Add(Otabla);
                 context.SaveChanges();
 
-                response.Estado = Otabla.Estado;
+                c.Estado = Otabla.Estado;
                 response = c;
 
 
