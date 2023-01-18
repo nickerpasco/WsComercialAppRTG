@@ -183,6 +183,15 @@ namespace WsComercialApp.Controllers
             RepositorioCO_Pedido repositorio = new RepositorioCO_Pedido();
             var response = repositorio.getItemAlmacen(documento); // 
             return response;
+        }   
+        
+        [HttpPost]
+        [Route("api/getUnidadesByItem")]
+        public List<ModelItemAlmacen> getUnidadesByItem([FromBody] FiltroGenerico documento)
+        {
+            RepositorioCO_Pedido repositorio = new RepositorioCO_Pedido();
+            var response = repositorio.getUnidadesByItem(documento); // 
+            return response;
         }
 
         [HttpPost]

@@ -275,6 +275,17 @@ namespace WsComercialApp.Repositorio
             var resultado = UtilsDAO.getDataByQueryWithParameters<ModelItemAlmacen>(sqlString, parametros);
 
             return resultado;
+        } 
+        
+        internal List<ModelItemAlmacen> getUnidadesByItem(FiltroGenerico documento)
+        {
+            List<SqlParameter> parametros = new List<SqlParameter>();  
+            parametros.Add(new SqlParameter("@ItemCodigo", documento.BusquedaAvanzada)); 
+
+            var sqlString = UtilsGlobal.ConvertLinesSqlXml("Query_CO_Pedido", "Co_Documento.getUnidadesByItem"); 
+            var resultado = UtilsDAO.getDataByQueryWithParameters<ModelItemAlmacen>(sqlString, parametros);
+
+            return resultado;
         }
 
         internal PaginacionGenerico getAgencias(FiltroGenerico request)

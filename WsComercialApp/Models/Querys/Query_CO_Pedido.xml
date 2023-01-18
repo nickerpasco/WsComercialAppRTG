@@ -531,6 +531,15 @@ and ( VW_CO_DescuentoEscalaVigente.monto <= @Cantidad and VW_CO_DescuentoEscalaV
 
 </Co_Documento.getItemAlmacen>
 
+	<Co_Documento.getUnidadesByItem>
+ 
+		select item.DescripcionLocal as AlmacenDescripcion,    TRIM(unidad.UnidadCodigo) +' - '+ TRIM(maestro.DescripcionCorta) as ItemDescripcion, unidad.FactorConversion as Stock  from WH_ItemUnidad unidad with(nolock)
+		join UnidadesMast maestro with(nolock) on maestro.UnidadCodigo = unidad.UnidadCodigo
+		join WH_ItemMast item with(nolock) on item.Item = unidad.Item
+		where unidad.item=@ItemCodigo
+
+	</Co_Documento.getUnidadesByItem>
+
 	<Co_Documento.getLetrasCabecera>
 
 
