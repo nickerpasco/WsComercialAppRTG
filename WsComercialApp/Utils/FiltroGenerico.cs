@@ -20,6 +20,7 @@ namespace WsComercialApp.Utils
         public string FechaFin { get; set; }
 
         public string BusquedaAvanzada { get; set; }
+        public string BusquedaAvanzadaCadena { get; set; }
         public string Estado { get; set; }
 
 

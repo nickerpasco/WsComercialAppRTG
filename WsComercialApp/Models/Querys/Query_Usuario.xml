@@ -327,6 +327,7 @@ CO_Documento.Estado='PR'
 		where CO_TipoDocumento.Clasificacion in ('DC','DP') and
 		CO_Documento.FechaDocumento>=@FechaDocumento and -- Según el filtro del reporte
 		MA_ClienteVendedor.Vendedor=@Vendedor -- Según el vendedor loggeado
+		AND (@Busqueda is null or @Busqueda='' or UPPER(CONVERT(VARCHAR ,Persona)+Busqueda+Documento)like '%'+upper(@Busqueda)+'%')
 		group by
 		Cliente.Persona,
 		Cliente.NombreCompleto
@@ -356,6 +357,7 @@ CO_Documento.Estado='PR'
 		where CO_TipoDocumento.Clasificacion in ('DC','DP') and
 		CO_Documento.FechaDocumento>=@FechaDocumento
 		and  MA_ClienteVendedor.Vendedor=@Vendedor -- Según el vendedor loggeado
+		AND (@Busqueda is null or @Busqueda='' or UPPER(CONVERT(VARCHAR ,Persona)+Busqueda+Documento)like '%'+upper(@Busqueda)+'%')
 		group by
 		Cliente.NombreCompleto
 		)a
