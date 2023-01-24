@@ -9,6 +9,7 @@ namespace WsComercialApp.Models
     {
 		public int? Vendedor { get; set; }
 		public string CompaniaSocio { get; set; }
+		public string ComentarioAprobacion { get; set; }
 		public string EstadoDocumento { get; set; }
 		public string TipoDocumento { get; set; }
 		public string NumeroDocumento { get; set; }
