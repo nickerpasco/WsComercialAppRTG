@@ -63,22 +63,42 @@ namespace WsComercialApp.Repositorio
         {
             var p = new PaginacionGenerico();
 
+            bean.Persona = bean.Vendedor;
 
 
-            String sqlString = "";
+            List<SqlParameter> parametros = new List<SqlParameter>();
+            parametros.Add(new SqlParameter("@CompaniaSocio", bean.CompaniaSocio));
+            parametros.Add(new SqlParameter("@MonedaDocumento", bean.MonedaDocumento));
+            parametros.Add(new SqlParameter("@ClienteNumero", bean.Persona));
+            parametros.Add(new SqlParameter("@BusquedaAvanzada", bean.BusquedaAvanzada));
+            parametros.Add(new SqlParameter("@FechaInicio", bean.FechaInicio));
+            parametros.Add(new SqlParameter("@FechaFin", bean.FechaFin));
+            parametros.Add(new SqlParameter("@page", bean.paginacion.page));
+            parametros.Add(new SqlParameter("@limit", bean.paginacion.limit));
 
-            sqlString = UtilsGlobal.ConvertLinesSqlXml("Query_CO_Pedido", "Co_Documento.Cabecera");
+            List<SqlParameter> parametrosCount = new List<SqlParameter>();
+            parametrosCount.Add(new SqlParameter("@CompaniaSocio", bean.CompaniaSocio));
+            parametrosCount.Add(new SqlParameter("@MonedaDocumento", bean.MonedaDocumento));
+            parametrosCount.Add(new SqlParameter("@ClienteNumero", bean.Persona));
+            parametrosCount.Add(new SqlParameter("@BusquedaAvanzada", bean.BusquedaAvanzada));
+            parametrosCount.Add(new SqlParameter("@FechaInicio", bean.FechaInicio));
+            parametrosCount.Add(new SqlParameter("@FechaFin", bean.FechaFin));
+            parametrosCount.Add(new SqlParameter("@page", bean.paginacion.page));
+            parametrosCount.Add(new SqlParameter("@limit", bean.paginacion.limit));
 
-            var sqlStringcount = UtilsGlobal.ConvertLinesSqlXml("Query_CO_Pedido", "Co_Documento.CabeceraCount");
-
-            bean.Periodo = DateTime.Now.ToString("yyyyMM", CultureInfo.InvariantCulture);
-
-            String queryArmado = sqlString + RetornoQueryFactura(bean);
-            String queryArmadoCount = sqlStringcount + RetornoQueryFacturaCount(bean);
 
 
-            var resul = UtilsDAO.getDataByQuery<Model_CO_Documento>(queryArmado);
-            var Resultado = UtilsDAO.getValueIntOnly(queryArmadoCount);
+            var sqlString = UtilsGlobal.ConvertLinesSqlXml("Query_CO_Pedido", "Co_Documento.CabeceraLetrasStore");
+
+            var sqlStringcount = UtilsGlobal.ConvertLinesSqlXml("Query_CO_Pedido", "Co_Documento.CabeceraLetrasStoreCount");
+
+            var resul = UtilsDAO.getDataByQueryWithParameters<Model_CO_Documento>(sqlString, parametros);
+
+            var Resultado = UtilsDAO.getValueInt(sqlStringcount, parametrosCount);
+
+           
+             
+           // var Resultado = UtilsDAO.getValueIntOnly(queryArmadoCount);
 
              
             p.countBD = Resultado;

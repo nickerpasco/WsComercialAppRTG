@@ -116,7 +116,25 @@
 
 
 
-		</Co_Documento.Cabecera>	
+		</Co_Documento.Cabecera>
+
+	<Co_Documento.CabeceraLetrasStore>
+
+
+		execute sp_obtener_doc_pendientes_letra_app
+		@CompaniaSocio,@MonedaDocumento,@ClienteNumero,
+		@BusquedaAvanzada,@FechaInicio,@FechaFin,@page,@limit
+
+	</Co_Documento.CabeceraLetrasStore>
+	
+	<Co_Documento.CabeceraLetrasStoreCount>
+
+
+		execute sp_obtener_doc_pendientes_letra_app_count
+		@CompaniaSocio,@MonedaDocumento,@ClienteNumero,
+		@BusquedaAvanzada,@FechaInicio,@FechaFin,@page,@limit
+
+	</Co_Documento.CabeceraLetrasStoreCount>	
 			
 			
 			<Co_Documento.getReglasPrioridadesMotivos>
