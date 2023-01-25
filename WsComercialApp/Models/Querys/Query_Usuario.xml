@@ -489,7 +489,7 @@ CO_Documento.NumeroDocumento,
 CO_Documento.FechaDocumento,
 CO_DOcumento.FechaVencimiento,
 CO_Documento.MontoTotal,
-CO_Documento.MontoPagado
+CO_Documento.MontoPagado as Pendiente
 from CO_Cobranza inner join CO_DocumentoCobranza
  ON CO_Cobranza.CompaniaSocio = CO_DocumentoCobranza.CompaniaSocio
   and CO_Cobranza.UnidadReplicacion = CO_DocumentoCobranza.UnidadReplicacion
