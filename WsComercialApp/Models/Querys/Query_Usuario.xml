@@ -513,17 +513,23 @@ where CO_CObranza.Estado<>'AN' and
 
 		<![CDATA[
 		
-		select
+		 
+		
+		
+			select
 		Cliente.Persona,
 		Cliente.NombreCompleto as Cliente,
-		count(CO_Cobranza.CobranzaNumero) CantidadDocumentosEmitidos
+		count(CO_Cobranza.CobranzaNumero) CantidadDocumentosEmitidos,
+		sum(CO_DocumentoCobranza.MontoPagado)  as MontoTotal
 		from CO_Cobranza inner join CO_DocumentoCobranza
 		ON CO_Cobranza.CompaniaSocio = CO_DocumentoCobranza.CompaniaSocio
 		and CO_Cobranza.UnidadReplicacion = CO_DocumentoCobranza.UnidadReplicacion
 		and CO_Cobranza.CobranzaNumero = CO_DocumentoCobranza.CobranzaNumero
 		inner join PersonaMast Cliente
 		ON CO_Cobranza.Cliente = Cliente.Persona
-		where CO_CObranza.Estado<>'AN' and
+		where 
+		Cliente.Persona = ISNULL(@Persona,Cliente.Persona) and
+		CO_CObranza.Estado<>'AN' and
 		CONVERT (CHAR (6), CO_Cobranza.FechaCobranza, 112)=@Periodo -- Según el periodo filtrado
 		group by
 		Cliente.Persona,
@@ -549,14 +555,17 @@ where CO_CObranza.Estado<>'AN' and
 		(
 		select
 		Cliente.NombreCompleto as Cliente,
-		count(CO_Cobranza.CobranzaNumero) CantidadDocumentosEmitidos
+		count(CO_Cobranza.CobranzaNumero) CantidadDocumentosEmitidos,
+				sum(CO_DocumentoCobranza.MontoPagado)  as MontoTotal
 		from CO_Cobranza inner join CO_DocumentoCobranza
 		ON CO_Cobranza.CompaniaSocio = CO_DocumentoCobranza.CompaniaSocio
 		and CO_Cobranza.UnidadReplicacion = CO_DocumentoCobranza.UnidadReplicacion
 		and CO_Cobranza.CobranzaNumero = CO_DocumentoCobranza.CobranzaNumero
 		inner join PersonaMast Cliente
 		ON CO_Cobranza.Cliente = Cliente.Persona
-		where CO_CObranza.Estado<>'AN' and
+		where 
+		Cliente.Persona = ISNULL(@Persona,Cliente.Persona) and
+		CO_CObranza.Estado<>'AN' and
 		CONVERT (CHAR (6), CO_Cobranza.FechaCobranza, 112)=@Periodo -- Según el periodo filtrado
 		group by
 		Cliente.NombreCompleto

@@ -13,6 +13,7 @@ using WsComercialApp.Utils;
 using WsComercialApp.Security;
 using System.Linq; 
 using WsComercialApp.Models.Bd;
+using System.Data.SqlTypes;
 
 namespace WsComercialApp.Controllers
 {
@@ -252,13 +253,27 @@ namespace WsComercialApp.Controllers
         {
             PaginacionGenerico response = new PaginacionGenerico();
             List<SqlParameter> parametros = new List<SqlParameter>(); 
+            List<SqlParameter> parametrosCOunt = new List<SqlParameter>();
 
             parametros.Add(new SqlParameter("@Periodo", request.Periodo));
+
+            if (request.PersonaNula == null)
+            { 
+                parametros.Add(new SqlParameter("@Persona", SqlInt32.Null));
+                parametrosCOunt.Add(new SqlParameter("@Persona", SqlInt32.Null)); 
+            }
+            else
+            {
+
+                parametrosCOunt.Add(new SqlParameter("@Persona", request.PersonaNula));
+                parametros.Add(new SqlParameter("@Persona", request.PersonaNula));
+            }
+
             parametros.Add(new SqlParameter("@Index", request.paginacion.page));
             parametros.Add(new SqlParameter("@PageSize", request.paginacion.limit));
 
-            List<SqlParameter> parametrosCOunt = new List<SqlParameter>();
-            parametrosCOunt.Add(new SqlParameter("@Periodo", Convert.ToInt32(request.Periodo))); 
+            parametrosCOunt.Add(new SqlParameter("@Periodo", Convert.ToInt32(request.Periodo)));
+
 
             var sqlString = UtilsGlobal.ConvertLinesSqlXml("Query_Usuario", "Personas.getCobranzasEmitidadas");
             var sqlStringCount = UtilsGlobal.ConvertLinesSqlXml("Query_Usuario", "Personas.getCobranzasEmitidadasCount");

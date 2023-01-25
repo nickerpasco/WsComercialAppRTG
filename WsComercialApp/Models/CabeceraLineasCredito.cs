@@ -11,6 +11,7 @@ namespace WsComercialApp.Models
         public int CantidadDocumentosEmitidos { get; set; }
         public int Persona { get; set; }
         public decimal? Libre { get; set; }
+        public decimal? MontoTotal { get; set; }
         public decimal? Usado { get; set; }
         public decimal? Linea { get; set; }
     }
