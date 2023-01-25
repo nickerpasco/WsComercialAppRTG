@@ -35,6 +35,7 @@ namespace WsComercialApp.Models
         public string ClienteDireccion { get; set; }
         public string ClienteReferencia { get; set; }
         public Nullable<int> ClienteCobrarA { get; set; }
+        public Nullable<int> Dias { get; set; }
         public Nullable<int> Index { get; set; }
         public Nullable<int> PageSize { get; set; }
         public Nullable<System.DateTime> FechaDocumento { get; set; }
@@ -53,6 +54,7 @@ namespace WsComercialApp.Models
         public string Criteria { get; set; }
         public Nullable<int> Vendedor { get; set; }
         public Nullable<decimal> TipodeCambio { get; set; }
+        public Nullable<decimal> Pendiente { get; set; }
         public Nullable<decimal> MontoTotalLetras { get; set; }
         public string MonedaDocumento { get; set; }
         public bool ResponseBoolean { get; set; }
