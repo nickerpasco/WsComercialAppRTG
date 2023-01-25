@@ -488,6 +488,7 @@ and cliente.persona = @Persona
 CO_Documento.NumeroDocumento,
 CO_Documento.FechaDocumento,
 CO_DOcumento.FechaVencimiento,
+ DATEDIFF(day, CO_Documento.FechaDocumento, CO_DOcumento.FechaVencimiento) AS Dias,
 CO_Documento.MontoTotal,
 CO_Documento.MontoPagado as Pendiente
 from CO_Cobranza inner join CO_DocumentoCobranza
