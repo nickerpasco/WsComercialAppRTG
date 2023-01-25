@@ -372,6 +372,7 @@ CO_Documento.Estado='PR'
 	<Personas.getCantidadDocumetosEmitidosFacturaDetalle>
 
 		Select
+		0 as DiasDiferencias,
 		0 as Pendiente,
 		'S' as MostrarComentarios,
 		NotaCredito= (select MAX(CO_Documento.TipoDocumento+'-'+CO_Documento.NumeroDocumento)

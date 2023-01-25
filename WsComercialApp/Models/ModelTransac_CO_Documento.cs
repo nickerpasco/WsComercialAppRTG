@@ -23,7 +23,7 @@ namespace WsComercialApp.Models
         public string Comentario { get; set; }
         public string Accion { get; set; }
         public Nullable<int> TransportistaProvincia { get; set; }
-        public int  OperacionCanjeNumero { get; set; }
+        public int?  OperacionCanjeNumero { get; set; }
       
         public string EstablecimientoCodigo { get; set; }
         public string FiltroUbigeo { get; set; }
@@ -263,7 +263,22 @@ namespace WsComercialApp.Models
         public string Procedencia { get; set; }
         public DateTime? FechaMaxima { get; set; }
         public DateTime? FechaBloj { get; set; }
-        public int DiasDiferencias { get;   set; }
+        public int? DiasDiferencias { get;   set; }
         public bool ValidacionDiasVencidoCanjeLetras { get;   set; }
+
+
+        //public int Pendiente { get; set; }
+        //public string MostrarComentarios { get; set; }
+        //public string NotaCredito { get; set; }
+        //public string ComentarioCambio { get; set; }
+        //public string NumeroDocumento { get; set; }
+        //public DateTime? FechaDocumento { get; set; }
+        //public decimal? MontoTotal { get; set; }
+        //public string ComercialPedidoNumero { get; set; }
+        //public DateTime? FechaCobranza { get; set; }
+        //public decimal? MontoPagado { get; set; }
+       
+
+
     }
 }
