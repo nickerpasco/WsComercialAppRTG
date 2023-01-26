@@ -1,6 +1,7 @@
 ﻿using CrystalDecisions.CrystalReports.Engine;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Diagnostics;
 using System.Globalization;
@@ -546,12 +547,31 @@ namespace WsComercialApp.Repositorio
             request.EquipoVenta = UtilsDAO.getValuString("select VentaEquipo from CO_Vendedor with(nolock) where vendedor=" + request.Vendedor + "", null);
 
 
+            if (request.TipoCliente == null)
+            {
+                request.TipoCliente = "$$";
+            }
+            if (request.ClienteNumero == null)
+            {
+                request.ClienteNumero = -1;
+            } 
+            
+            if (request.RecojoFlag == null)
+            {
+
+                parametros.Add(new SqlParameter("@Recojo", DBNull.Value));
+            }
+            else
+            {
+
+                parametros.Add(new SqlParameter("@Recojo", request.RecojoFlag));
+            }
+
             parametros.Add(new SqlParameter("@Compania", request.CompaniaSocio));
             parametros.Add(new SqlParameter("@TipoCliente", request.TipoCliente));
             parametros.Add(new SqlParameter("@Cliente", request.ClienteNumero));
             parametros.Add(new SqlParameter("@VentaEquipo", request.EquipoVenta));
             parametros.Add(new SqlParameter("@Sucursal", request.Sucursal));
-            parametros.Add(new SqlParameter("@Recojo", request.RecojoFlag));
             parametros.Add(new SqlParameter("@Item", request.ItemDescuento));
             parametros.Add(new SqlParameter("@Almacen", request.AlmacenItemDescuento)); 
 
