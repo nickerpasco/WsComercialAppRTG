@@ -163,15 +163,26 @@ namespace WsComercialApp.Controllers
         {
             PaginacionGenerico response = new PaginacionGenerico();
             List<SqlParameter> parametros = new List<SqlParameter>();
-            parametros.Add(new SqlParameter("@Vendedor", Convert.ToInt32(request.BusquedaAvanzada)));
-            parametros.Add(new SqlParameter("@Persona", request.PersonaNula));
+            parametros.Add(new SqlParameter("@Vendedor", Convert.ToInt32(request.BusquedaAvanzada))); 
             parametros.Add(new SqlParameter("@Index", request.paginacion.page));
             parametros.Add(new SqlParameter("@PageSize", request.paginacion.limit));
             
-            List<SqlParameter> parametrosCOunt = new List<SqlParameter>();
-            parametrosCOunt.Add(new SqlParameter("@Persona", request.PersonaNula));
+            List<SqlParameter> parametrosCOunt = new List<SqlParameter>(); 
             parametrosCOunt.Add(new SqlParameter("@Vendedor", Convert.ToInt32(request.BusquedaAvanzada)));
-            
+
+
+            if (request.PersonaNula == null)
+            {
+                parametros.Add(new SqlParameter("@Persona", SqlInt32.Null));
+                parametrosCOunt.Add(new SqlParameter("@Persona", SqlInt32.Null));
+            }
+            else
+            {
+
+                parametrosCOunt.Add(new SqlParameter("@Persona", request.PersonaNula));
+                parametros.Add(new SqlParameter("@Persona", request.PersonaNula));
+            }
+
             var sqlString = UtilsGlobal.ConvertLinesSqlXml("Query_Usuario", "Usuario.getLineaCreditosCabeceraLista"); 
             var sqlStringCount = UtilsGlobal.ConvertLinesSqlXml("Query_Usuario", "Usuario.getLineaCreditosCabeceraListaCount"); 
 
