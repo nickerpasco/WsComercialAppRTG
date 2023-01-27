@@ -371,6 +371,7 @@ CO_Documento.Estado='PR'
 		
 	<Personas.getCantidadDocumetosEmitidosFacturaDetalle>
 
+
 		Select
 		0 as DiasDiferencias,
 		0.0 as Pendiente,
@@ -378,28 +379,28 @@ CO_Documento.Estado='PR'
 		NotaCredito= (select MAX(CO_Documento.TipoDocumento+'-'+CO_Documento.NumeroDocumento)
 		from CO_Documento with(nolock)
 		where CO_Documento.CompaniaSocio=CO_Documento.CompaniaSocio and
-		CO_Documento.NotaCreditoDocumento=CO_Documento.TipoDocumento+'-'+CO_Documento.NumeroDocumento),
+		CO_Documento.NotaCreditoDocumento=documento.TipoDocumento+'-'+documento.NumeroDocumento),
 		ComentarioCambio,
-		CO_Documento.NumeroDocumento,
-		CO_Documento.FechaDocumento,
-		CO_Documento.MontoTotal,
-		CO_Documento.ComercialPedidoNumero,
+		documento.NumeroDocumento,
+		documento.FechaDocumento,
+		documento.MontoTotal,
+		documento.ComercialPedidoNumero,
 		CO_Cobranza.FechaCobranza,
 		isnull(CO_DocumentoCobranza.MontoPagado,0) as MontoPagado
-		from CO_Documento inner join PersonaMast cliente
-		ON CO_Documento.ClienteNumero=Cliente.Persona
+		from CO_Documento documento inner join PersonaMast cliente
+		ON documento.ClienteNumero=Cliente.Persona
 		inner join CO_TipoDocumento
-		ON CO_Documento.TipoDocumento=CO_TipoDocumento.TipoDocumento
+		ON documento.TipoDocumento=CO_TipoDocumento.TipoDocumento
 		left join CO_DocumentoCobranza
-		ON CO_Documento.CompaniaSocio=CO_DocumentoCobranza.CompaniaSocio
-		and CO_Documento.TipoDocumento=CO_DocumentoCobranza.TipoDocumento
-		and CO_Documento.NumeroDocumento=CO_DocumentoCobranza.NumeroDocumento
+		ON documento.CompaniaSocio=CO_DocumentoCobranza.CompaniaSocio
+		and documento.TipoDocumento=CO_DocumentoCobranza.TipoDocumento
+		and documento.NumeroDocumento=CO_DocumentoCobranza.NumeroDocumento
 		left join CO_Cobranza
 		ON CO_DocumentoCobranza.CompaniaSocio=CO_Cobranza.CompaniaSocio
 		and CO_DocumentoCobranza.UnidadReplicacion=CO_CObranza.UnidadReplicacion
 		and CO_DocumentoCobranza.CobranzaNumero=CO_Cobranza.CobranzaNumero
 		where CO_TipoDocumento.Clasificacion in ('DC','DP') and
-		CO_Documento.FechaDocumento>=@FechaDocumento
+		documento.FechaDocumento>=@FechaDocumento
 		and cliente.persona = @Persona
 
 	</Personas.getCantidadDocumetosEmitidosFacturaDetalle>
