@@ -88,6 +88,7 @@
 		CO_TipoDocumento.Clasificacion in ('DC','DP','LE') and
 		CO_Documento.Estado='PR' and
 		MA_ClienteVendedor.Vendedor=@Vendedor-- Según el vendedor loggeado
+		and (@Persona is null or @Persona = 0 or Cliente.Persona = @Persona)
 		group by
 		Persona,
 		NombreCompleto,
@@ -117,6 +118,7 @@
 		CO_TipoDocumento.Clasificacion in ('DC','DP','LE') and
 		CO_Documento.Estado='PR' and
 		MA_ClienteVendedor.Vendedor=@Vendedor-- Según el vendedor loggeado
+		and (@Persona is null or @Persona = 0 or Cliente.Persona = @Persona)
 
 
 	</Usuario.getLineaCreditosCabeceraListaCount>
@@ -138,7 +140,8 @@ CO_Documento.MontoTotal-CO_Documento.MontoPagado Pendiente,
 CO_Documento.LetraNumeroUnico
 from PersonaMast Cliente
 left join CO_LineaCredito on
-Cliente.Persona=CO_LineaCredito.ClienteNumero
+Cliente.Persona=CO_LineaCredito.ClienteNumero and
+CO_LineaCredito.Estado='A'
 left join CO_Documento on
 CO_Documento.ClienteNumero=Cliente.Persona
 left join CO_TipoDocumento on
