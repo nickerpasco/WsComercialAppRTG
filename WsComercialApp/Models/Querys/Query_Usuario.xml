@@ -411,12 +411,18 @@ CO_Documento.Estado='PR'
 
 	<Personas.getRutasDespachoDetalle>
 
+
 		select
+		0 as DiasDiferencias,
+		0.0 as Pendiente,
+		'S' as MostrarDatosRuta,
 		CO_Documento.NumeroDocumento,
 		CR_DOT.FechaSalida FechaDespacho,
 		CO_Documento.MontoTotal,
 		Cliente.Telefono,
 		CR_DOT.Conductor,
+		CR_DOT.FechaSalida,
+		Agencia.NombreCompleto Agencia,
 		Case CO_Documento.DOTEstado when 'PE' then 'Pendiente Despacho'
 		when 'IN' then 'En Ruta'
 		when 'CE' then 'Entregado'
@@ -428,6 +434,8 @@ CO_Documento.Estado='PR'
 		ON CO_Documento.TipoDocumento = CO_TipoDocumento.TipoDocumento
 		inner join CR_DOT
 		ON CO_Documento.DOTNumero=CR_DOT.DOTNumero
+		left join PersonaMast Agencia ON
+		CO_Documento.TransportistaProvincia = Agencia.Persona
 		where
 		CO_Documento.DOTEstado in ('PE','IN','CE','AT','DE') and
 		CO_TipoDocumento.Clasificacion='DC' and

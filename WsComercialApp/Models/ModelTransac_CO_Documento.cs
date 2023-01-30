@@ -268,6 +268,10 @@ namespace WsComercialApp.Models
         public bool ValidacionDiasVencidoCanjeLetras { get;   set; }
 
 
+        public string Agencia { get; set; } 
+        public DateTime? FechaSalida { get; set; }
+
+
         //public int Pendiente { get; set; }
         //public string MostrarComentarios { get; set; }
         //public string NotaCredito { get; set; }
@@ -278,7 +282,7 @@ namespace WsComercialApp.Models
         //public string ComercialPedidoNumero { get; set; }
         //public DateTime? FechaCobranza { get; set; }
         //public decimal? MontoPagado { get; set; }
-       
+
 
 
     }
