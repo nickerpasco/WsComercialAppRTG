@@ -11,7 +11,7 @@ namespace WsComercialApp.Models
 
         public string CompaniaSocio { get; set; }
         public string NotaCredito { get; set; }
-        public string ComentarioCambio { get; set; }
+        public string ComentarioCambio { get; set; } 
         public string LetraNumeroUnicoString { get; set; }
         public string MostrarComentarios { get; set; }
         public string AccionLetras { get; set; }

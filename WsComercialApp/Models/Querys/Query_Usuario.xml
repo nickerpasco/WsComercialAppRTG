@@ -438,7 +438,7 @@ CO_Documento.Estado='PR'
 
 	<Personas.getRutasDespacho>
 
- 
+
 		select
 		Cliente.Persona,
 		Cliente.NombreCompleto as Cliente,
@@ -454,6 +454,7 @@ CO_Documento.Estado='PR'
 		where
 		CO_Documento.DOTEstado in ('PE','IN','CE','AT','DE')
 		and CO_TipoDocumento.Clasificacion='DC'
+		AND(@Busqueda is null or @Busqueda = '' or UPPER(CONVERT(VARCHAR, Cliente.Persona) + Cliente.Busqueda + Cliente.Documento)like '%' + upper(@Busqueda) + '%')  
 		and CR_DOT.FechaSalida>=@FechaDocumento
 		and MA_ClienteVendedor.Vendedor=@Vendedor -- Según el vendedor loggeado
 		group by
@@ -482,6 +483,7 @@ CO_Documento.Estado='PR'
 		where
 		CO_Documento.DOTEstado in ('PE','IN','CE','AT','DE')
 		and CO_TipoDocumento.Clasificacion='DC'
+		AND(@Busqueda is null or @Busqueda = '' or UPPER(CONVERT(VARCHAR, Cliente.Persona) + Cliente.Busqueda + Cliente.Documento)like '%' + upper(@Busqueda) + '%')  
 		and CR_DOT.FechaSalida>=@FechaDocumento
 		and MA_ClienteVendedor.Vendedor=@Vendedor -- Según el vendedor loggeado
 		group by

@@ -324,6 +324,7 @@ namespace WsComercialApp.Controllers
             PaginacionGenerico response = new PaginacionGenerico();
             List<SqlParameter> parametros = new List<SqlParameter>();
             parametros.Add(new SqlParameter("@Vendedor", Convert.ToInt32(request.BusquedaAvanzada)));
+            parametros.Add(new SqlParameter("@Busqueda", request.BusquedaAvanzadaCadena));
             parametros.Add(new SqlParameter("@FechaDocumento", request.FechaInicio));
             parametros.Add(new SqlParameter("@Index", request.paginacion.page));
             parametros.Add(new SqlParameter("@PageSize", request.paginacion.limit));
@@ -331,7 +332,9 @@ namespace WsComercialApp.Controllers
             List<SqlParameter> parametrosCOunt = new List<SqlParameter>();
             parametrosCOunt.Add(new SqlParameter("@Vendedor", Convert.ToInt32(request.BusquedaAvanzada)));
             parametrosCOunt.Add(new SqlParameter("@FechaDocumento", request.FechaInicio));
+            parametrosCOunt.Add(new SqlParameter("@Busqueda", request.BusquedaAvanzadaCadena));
 
+ 
 
             var sqlString = UtilsGlobal.ConvertLinesSqlXml("Query_Usuario", "Personas.getRutasDespacho");
             var sqlStringCount = UtilsGlobal.ConvertLinesSqlXml("Query_Usuario", "Personas.getRutasDespachoCount");
