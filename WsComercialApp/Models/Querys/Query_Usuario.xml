@@ -415,6 +415,7 @@ CO_Documento.Estado='PR'
 		select
 		CO_Documento.NumeroDocumento,
 		CO_Documento.FechaDocumento,
+		CO_DOcumento.FechaVencimiento,
 		DATEDIFF(day, CO_Documento.FechaDocumento, CO_DOcumento.FechaVencimiento) AS DiasDiferencias,
 		0.0 as Pendiente,
 		'S' as MostrarDatosRuta,
