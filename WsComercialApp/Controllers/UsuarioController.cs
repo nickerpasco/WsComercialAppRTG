@@ -288,6 +288,15 @@ namespace WsComercialApp.Controllers
             RepositorioUsuario repositorio = new RepositorioUsuario();
             var response = repositorio.ReporteRutasDespacho(documento); // 
             return response;
+        } 
+        
+        [HttpPost]
+        [Route("api/DocumentosPendientesCanje")]
+        public PaginacionGenerico DocumentosPendientesCanje([FromBody] FiltroGenerico documento)
+        {
+            RepositorioUsuario repositorio = new RepositorioUsuario();
+            var response = repositorio.DocumentosPendientesCanje(documento); // 
+            return response;
         }
 
 
