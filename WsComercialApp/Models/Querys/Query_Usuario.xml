@@ -85,6 +85,7 @@
 		inner join MA_ClienteVendedor on
 		Cliente.Persona=MA_ClienteVendedor.Cliente
 		where Cliente.escliente='S' and
+		CO_LineaCredito.Estado = 'A' and
 		CO_TipoDocumento.Clasificacion in ('DC','DP','LE') and
 		CO_Documento.Estado='PR' and
 		MA_ClienteVendedor.Vendedor=@Vendedor-- Según el vendedor loggeado
@@ -115,6 +116,7 @@
 		inner join MA_ClienteVendedor on
 		Cliente.Persona=MA_ClienteVendedor.Cliente
 		where Cliente.escliente='S' and
+		CO_LineaCredito.Estado = 'A' and
 		CO_TipoDocumento.Clasificacion in ('DC','DP','LE') and
 		CO_Documento.Estado='PR' and
 		MA_ClienteVendedor.Vendedor=@Vendedor-- Según el vendedor loggeado
