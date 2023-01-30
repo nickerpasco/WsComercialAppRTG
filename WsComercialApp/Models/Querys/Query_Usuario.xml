@@ -376,10 +376,8 @@ CO_Documento.Estado='PR'
 		
 	<Personas.getCantidadDocumetosEmitidosFacturaDetalle>
 
-
 		Select
 		0 as DiasDiferencias,
-		0.0 as Pendiente,
 		'S' as MostrarComentarios,
 		NotaCredito= (select MAX(CO_Documento.TipoDocumento+'-'+CO_Documento.NumeroDocumento)
 		from CO_Documento with(nolock)
@@ -389,9 +387,9 @@ CO_Documento.Estado='PR'
 		documento.NumeroDocumento,
 		documento.FechaDocumento,
 		documento.MontoTotal,
-		documento.ComercialPedidoNumero,
-		CO_Cobranza.FechaCobranza,
-		isnull(CO_DocumentoCobranza.MontoPagado,0) as MontoPagado
+		documento.ComercialPedidoNumero as LetraNumeroUnicoString,
+		CO_Cobranza.FechaCobranza as FechaVencimiento,
+		isnull(CO_DocumentoCobranza.MontoPagado,0) as Pendiente
 		from CO_Documento documento inner join PersonaMast cliente
 		ON documento.ClienteNumero=Cliente.Persona
 		inner join CO_TipoDocumento
