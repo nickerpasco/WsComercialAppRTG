@@ -299,6 +299,14 @@ namespace WsComercialApp.Controllers
             return response;
         }
 
+        [HttpPost]
+        [Route("api/DocumentosPendientesCanjeDetalle")]
+        public List<ModelTransac_CO_Documento> DocumentosPendientesCanjeDetalle([FromBody] FiltroGenerico documento)
+        {
+            RepositorioUsuario repositorio = new RepositorioUsuario();
+            var response = repositorio.DocumentosPendientesCanjeDetalle(documento); // 
+            return response;
+        }
 
 
 

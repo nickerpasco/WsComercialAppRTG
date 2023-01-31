@@ -349,6 +349,22 @@ namespace WsComercialApp.Controllers
             return resultado;
 
         }
+        
+        internal List<ModelTransac_CO_Documento> DocumentosPendientesCanjeDetalle(FiltroGenerico request)
+        {
+
+            List<SqlParameter> parametros = new List<SqlParameter>();
+            parametros.Add(new SqlParameter("@Cliente", Convert.ToInt32(request.Persona)));
+            //parametros.Add(new SqlParameter("@FechaEntrega", request.FechaInicio));
+
+            var sqlString = UtilsGlobal.ConvertLinesSqlXml("Query_Usuario", "Personas.DocumentosPendientesCanjeDetalle");
+            var resultado = UtilsDAO.getDataByQueryWithParameters<ModelTransac_CO_Documento>(sqlString, parametros);
+
+
+
+            return resultado;
+
+        }
 
         internal PaginacionGenerico ReporteRutasDespacho(FiltroGenerico request)
         {

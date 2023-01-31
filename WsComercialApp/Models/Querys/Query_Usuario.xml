@@ -528,6 +528,33 @@ CO_Documento.Estado='PR'
 
 	</Personas.getDocumentosPendientesCanjeCount>
 
+	<Personas.DocumentosPendientesCanjeDetalle>
+
+
+		<![CDATA[
+		
+	 
+			select
+	0.0 as Pendiente,
+NumeroDocumento,
+FechaDocumento,
+FechaVencimiento,
+MontoTotal,
+ComercialPedidoNumero as LetraNumeroUnicoString,
+DATEDIFF(DAY,FechaDocumento,GETDATE()) DiasDiferencias
+from CO_Documento
+where
+CO_Documento.ClienteNumero = @Cliente and --Según el cliente consultado
+CO_Documento.TipoDocumento='FC' and
+convert(char(6),fechadocumento,112)<>convert(char(6),getdate(),112) and
+CO_Documento.formadepago='010' and
+CO_Documento.Estado='PR'
+		
+		]]>
+
+
+	</Personas.DocumentosPendientesCanjeDetalle>
+
 
 	<Personas.getRutasDespacho>
 
