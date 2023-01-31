@@ -453,36 +453,80 @@ CO_Documento.Estado='PR'
 
 		<![CDATA[
 		
-		Select
-		Cliente.Persona,
-		Cliente.NombreCompleto Cliente,
-		count(CO_Documento.NumeroDocumento) as CantidadDocumentosEmitidos
-		from CO_Documento inner join PersonaMast cliente
-		ON CO_Documento.ClienteNumero=Cliente.Persona
-		inner join CO_TipoDocumento
-		ON CO_Documento.TipoDocumento=CO_TipoDocumento.TipoDocumento
-		inner join MA_ClienteVendedor on
-		Cliente.Persona=MA_ClienteVendedor.Cliente
-		where CO_Documento.TipoDocumento='FC' and
+	
+			Select
+			Cliente.Persona,
+			Cliente.NombreCompleto Cliente,
+			count(CO_Documento.NumeroDocumento) as CantidadDocumentosEmitidos
+			from CO_Documento inner join PersonaMast cliente
+			ON CO_Documento.ClienteNumero=Cliente.Persona
+			inner join CO_TipoDocumento
+			ON CO_Documento.TipoDocumento=CO_TipoDocumento.TipoDocumento
+			inner join MA_ClienteVendedor on
+			Cliente.Persona=MA_ClienteVendedor.Cliente
+			where CO_Documento.TipoDocumento='FC' and
+			
+			convert(char(6),fechadocumento,112)<>convert(char(6),getdate(),112) and
+			CO_Documento.formadepago='010' and
+			CO_Documento.Estado='PR'-- and
 
-		convert(char(6),fechadocumento,112)<>convert(char(6),getdate(),112) and
-		CO_Documento.formadepago='010' and
-		CO_Documento.Estado='PR'-- and
+			--MA_ClienteVendedor.Vendedor=@Vendedor -- Según el vendedor loggeado
+			AND (@Busqueda is null or @Busqueda='' or UPPER(CONVERT(VARCHAR ,Persona)+Busqueda+Documento)like '%'+upper(@Busqueda)+'%')
+			group by
+			Cliente.Persona,
+			Cliente.NombreCompleto
+			order by 2 desc
+			OFFSET (@Index -1)* @PageSize  ROWS
+			FETCH NEXT @PageSize ROWS ONLY
 
-		--MA_ClienteVendedor.Vendedor=@Vendedor -- Según el vendedor loggeado
-		AND (@Busqueda is null or @Busqueda='' or UPPER(CONVERT(VARCHAR ,Persona)+Busqueda+Documento)like '%'+upper(@Busqueda)+'%')
-		group by
-		Cliente.Persona,
-		Cliente.NombreCompleto
-		order by 2 desc
-		OFFSET (@Index -1)* @PageSize  ROWS
-		FETCH NEXT @PageSize ROWS ONLY
-		
+
 		
 		]]>
 
 
 	</Personas.getDocumentosPendientesCanje>
+
+	<Personas.getDocumentosPendientesCanjeCount>
+
+
+		<![CDATA[
+		
+	
+	
+	select count(1) from
+
+		(
+		Select
+			Cliente.Persona,
+			Cliente.NombreCompleto Cliente,
+			count(CO_Documento.NumeroDocumento) as CantidadDocumentosEmitidos
+			from CO_Documento inner join PersonaMast cliente
+			ON CO_Documento.ClienteNumero=Cliente.Persona
+			inner join CO_TipoDocumento
+			ON CO_Documento.TipoDocumento=CO_TipoDocumento.TipoDocumento
+			inner join MA_ClienteVendedor on
+			Cliente.Persona=MA_ClienteVendedor.Cliente
+			where CO_Documento.TipoDocumento='FC' and
+			
+			convert(char(6),fechadocumento,112)<>convert(char(6),getdate(),112) and
+			CO_Documento.formadepago='010' and
+			CO_Documento.Estado='PR'-- and
+
+			--MA_ClienteVendedor.Vendedor=@Vendedor -- Según el vendedor loggeado
+			AND (@Busqueda is null or @Busqueda='' or UPPER(CONVERT(VARCHAR ,Persona)+Busqueda+Documento)like '%'+upper(@Busqueda)+'%')
+			group by
+			Cliente.Persona,
+			Cliente.NombreCompleto
+		)a
+	
+	
+			 
+
+		
+		]]>
+
+
+	</Personas.getDocumentosPendientesCanjeCount>
 
 
 	<Personas.getRutasDespacho>

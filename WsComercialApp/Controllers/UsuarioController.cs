@@ -295,7 +295,7 @@ namespace WsComercialApp.Controllers
         public PaginacionGenerico DocumentosPendientesCanje([FromBody] FiltroGenerico documento)
         {
             RepositorioUsuario repositorio = new RepositorioUsuario();
-            var response = repositorio.DocumentosPendientesCanje(documento); // 
+            var response = repositorio.DocumentosPedientesCanje(documento); // 
             return response;
         }
 
