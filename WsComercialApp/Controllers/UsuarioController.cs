@@ -309,6 +309,17 @@ namespace WsComercialApp.Controllers
         }
 
 
+        [HttpPost]
+        [Route("api/getPDFEstadoCuentaClientes")]
+        public ErrorObj getPDFEstadoCuentaClientes([FromBody] FiltroGenerico documento)
+        {
+            RepositorioUsuario repositorio = new RepositorioUsuario();
+            var response = repositorio.getPDFEstadoCuentaClientes(documento); // 
+            return response;
+        }
+
+
+
 
     }
 }

@@ -14,6 +14,8 @@ using WsComercialApp.Security;
 using System.Linq; 
 using WsComercialApp.Models.Bd;
 using System.Data.SqlTypes;
+using CrystalDecisions.CrystalReports.Engine;
+using System.Diagnostics;
 
 namespace WsComercialApp.Controllers
 {
@@ -363,6 +365,92 @@ namespace WsComercialApp.Controllers
 
 
             return resultado;
+
+        }
+        
+        internal ErrorObj getPDFEstadoCuentaClientes(FiltroGenerico request)
+        {
+
+
+            ErrorObj error = new ErrorObj();
+            List<SqlParameter> parametros = new List<SqlParameter>();
+            parametros.Add(new SqlParameter("@CompaniaSocio", request.CompaniaSocio));
+            parametros.Add(new SqlParameter("@ClienteNumero", request.Persona)); 
+            parametros.Add(new SqlParameter("@Vendedor", request.Vendedor)); 
+
+
+            var sqlString = UtilsGlobal.ConvertLinesSqlXml("Query_Usuario", "Personas.getPdfEstadoCuentaPersonas");
+            var resultado = UtilsDAO.getDataByQueryWithParameters<ReporteEstadoCuenta>(sqlString, parametros);
+
+
+
+            if (resultado.Count == 0)
+            {
+                error.CodigoError = 500;
+                error.MensajeError = "No se encotraron datos";
+                return error;
+            }
+            else
+            {
+                var montoUsado = resultado.Sum(x => x.MontoTotalDecimal);
+                var LineaCredito = resultado.FirstOrDefault().LineaCredito;
+                var MontoDisponible = (LineaCredito - montoUsado);
+
+
+                try
+                {
+
+                    ReportDocument rd = new ReportDocument();
+
+                    rd.Load(Path.Combine(System.Web.HttpContext.Current.Server.MapPath("~/Reportes"), "rpt_EstadoCuentaCliente.rpt"));
+                    rd.SetDataSource(resultado);
+                    rd.SetParameterValue("LineaCreditoTotal", LineaCredito);
+                    rd.SetParameterValue("MontoUsado", montoUsado);
+                    rd.SetParameterValue("MontoDisponible", MontoDisponible);
+
+                    System.Web.HttpContext.Current.Response.Buffer = false;
+                    System.Web.HttpContext.Current.Response.ClearContent();
+                    System.Web.HttpContext.Current.Response.ClearHeaders();
+                    String BASE = null;
+
+
+
+                    Stream stream = rd.ExportToStream(CrystalDecisions.Shared.ExportFormatType.PortableDocFormat);
+                    stream.Seek(0, SeekOrigin.Begin);
+                    var test = FuncPrinc.ReadFully(stream);
+                    String file = Convert.ToBase64String(test);
+                    BASE = file;
+
+
+                    error.CodigoError = 200;
+                    error.MensajeError = BASE;  
+
+                    return error;
+                }
+                catch (Exception e)
+                {
+
+                    var st = new StackTrace(e, true);
+                    // Get the top stack frame
+                    var frame = st.GetFrame(0);
+                    // Get the line number from the stack frame
+                    var line = frame.GetFileLineNumber();
+
+                    error.CodigoError = 500;
+                    error.MensajeError = "ERROR_GENRACION_rEPORTE   : " + e.Message + "   MÁS DATA :  " + e.StackTrace + "     MENSAJE EXACTO : " + e.InnerException;
+                    error.ValorDevolucion = "";
+                    error.LineaError = line;
+
+
+
+
+                    return error;
+                }
+
+
+            }
+
+            return null;
 
         }
 

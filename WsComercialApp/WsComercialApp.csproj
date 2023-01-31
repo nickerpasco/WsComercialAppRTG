@@ -304,6 +304,7 @@
     <Compile Include="Models\ObjErrorSpring.cs" />
     <Compile Include="Models\ObjToken.cs" />
     <Compile Include="Models\ReponseStoreLetras.cs" />
+    <Compile Include="Models\ReporteEstadoCuenta.cs" />
     <Compile Include="Models\ReportePedidoObj.cs" />
     <Compile Include="Models\SunatDataObject.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -315,6 +316,12 @@
     </Compile>
     <Compile Include="Reportes\rpt_ComprobanteVenta_UPC.cs">
       <DependentUpon>rpt_ComprobanteVenta_UPC.rpt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <SubType>Component</SubType>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Reportes\rpt_EstadoCuentaCliente.cs">
+      <DependentUpon>rpt_EstadoCuentaCliente.rpt</DependentUpon>
       <AutoGen>True</AutoGen>
       <SubType>Component</SubType>
       <DesignTime>True</DesignTime>
@@ -494,6 +501,10 @@
     <EmbeddedResource Include="Reportes\rpt_ComprobanteVenta_UPC.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>rpt_ComprobanteVenta_UPC.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\rpt_EstadoCuentaCliente.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>rpt_EstadoCuentaCliente.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Reportes\rpt_Pedido.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>

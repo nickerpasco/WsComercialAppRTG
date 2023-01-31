@@ -162,6 +162,102 @@ CO_Documento.Estado='PR'
 	</Usuario.getLineaCreditosCabeceraListaDetalle>
 
 
+	<Personas.getPdfEstadoCuentaPersonas>
+
+
+
+		<![CDATA[
+		
+		
+SELECT 
+(case when CO_TipoDocumento.Clasificacion = 'AD' then -MontoTotal else MontoTotal end) as "MontoTotalDecimal",
+'Fecha : ' + convert(varchar(20),GETDATE(),103)  +' '+convert(varchar(20),GETDATE(),108)  as ValorComodin1,
+CO_Documento.MonedaDocumento,
+CASE CO_Documento.MonedaDocumento
+		When 'LO' Then 'S/ ' 
+		When 'EX' Then '$ ' 
+		ELSE 'XX '   end AS MonedaDocumentoSimbolo,
+		 
+CO_Documento.CompaniaSocio, CO_Documento.TipoDocumento, 
+tipo.DescripcionLocal as TipoDocumentoDescripcion, CO_Documento.NumeroDocumento,
+convert(varchar(20),CO_Documento.FechaDocumento,103)   as FechaDocumento   ,  
+convert(varchar(20),CO_Documento.FechaVencimiento,103)  as FechaVencimiento  , 
+DATEDIFF(day, CO_Documento.FechaDocumento, CO_Documento.FechaVencimiento) as Dias,
+
+CO_Documento.ClienteNombre, CO_Documento.ClienteRUC,  CO_Documento.ConceptoFacturacion, CO_Documento.TipoVenta, CO_Documento.TipoFacturacion, CO_Documento.ClienteNumero,
+PersonaMast_a.Busqueda, SY_CampoCalculado.Codigo01, SY_CampoCalculado.Codigo02, CO_TipoDocumento.Clasificacion, PersonaMast_b.Documento, CO_Documento.Vendedor, CO_Documento.FormadePago, MA_FormadePago.Descripcion as FormadePagoDesc,
+CO_Documento.NumeroInterno, 
+(case when CO_TipoDocumento.Clasificacion = 'AD' then  FORMAT(-MontoAfecto, '#,##0.00')   else  FORMAT(MontoAfecto, '#,##0.00')  end) as "MontoAfecto", 
+(case when CO_TipoDocumento.Clasificacion = 'AD' then  FORMAT(-MontoNoAfecto, '#,##0.00')   else FORMAT(MontoNoAfecto, '#,##0.00')  end) as "MontoNoAfecto", 
+(case when CO_TipoDocumento.Clasificacion = 'AD' then  FORMAT(-MontoImpuestoVentas, '#,##0.00')  else  FORMAT(MontoImpuestoVentas, '#,##0.00')   end) as "MontoImpuestoVentas", 
+(case when CO_TipoDocumento.Clasificacion = 'AD' then   FORMAT(-MontoTotal, '#,##0.00') else  FORMAT(MontoTotal, '#,##0.00')   end) as "MontoTotal", 
+(case when CO_TipoDocumento.Clasificacion = 'AD' then  FORMAT(-MontoPagado, '#,##0.00')  else FORMAT(MontoPagado, '#,##0.00') end) as "MontoPagado", 
+(case when CO_TipoDocumento.Clasificacion = 'AD' then  FORMAT(-round(MontoTotal - Round(CO_Documento.MontoTotal - CO_Documento.MontoAdelantoSaldo,2),2), '#,##0.00')   else   FORMAT(round(MontoTotal - MontoPagado,2), '#,##0.00')    end) as "MontoPendiente", 
+isnull(CO_RutaDespacho.Cobrador,0) Cobrador,
+ convert(varchar(20),CO_Documento.siaf_fechapago,103)   as siaf_fechapago,
+'  ' as EstadoLetra,
+isnull(CO_Documento.LetraEstado,'') as LetraEstado,
+LineaCreditoMoneda = CO_LineaCredito.Moneda, LineaCredito =ISNULL( CO_LineaCredito.Monto,0), ClienteMast.Comentario, ClienteMast.ComentarioAdicional, ClienteMast.FormadePago as FormadePagoCliente, ClienteMast.PersonaContacto, LineaCreditoFechaVencimiento =  convert(varchar(20),CO_LineaCredito.FechaVigenciaHasta,103)  +' '+convert(varchar(20),CO_LineaCredito.FechaVigenciaHasta,108) ,
+ClienteMast.TipoCliente,
+MontoPercepcion = IsNull(CO_Documento.MontoPercepcion,0),
+CO_Documento.PercepcionDocumento, 
+
+convert(varchar(20),CO_Documento.ProcesoImportacionFecha,103)  +' '+convert(varchar(20),CO_Documento.ProcesoImportacionFecha,108) as ProcesoImportacionFecha,
+
+AC_Sucursal.DescripcionLocal as Sucursal,
+PersonaMast_b.DocumentoIdentidad,
+PersonaMast_b.Telefono,
+PersonaMast_b.Fax,
+PersonaMast_b.Direccion,
+Banco.DescripcionCorta,
+CO_Documento.LetraNumeroUnico,
+CO_Documento.notacreditodocumento,
+Departamento.DescripcionCorta Departamento,
+Provincia.DescripcionCorta Provincia,
+ZonaPostal.DescripcionCorta Distrito,
+ContactoCob.Telefono as TelefonoContactoCob ,
+ContactoVen.Telefono as ContactoVenTelefono,
+ContactoCob.Contacto,
+ContactoCob.CorreoElectronico
+FROM CO_Documento
+LEFT JOIN PersonaMast PersonaMast_a ON ( CO_Documento.Vendedor = PersonaMast_a.Persona) INNER JOIN CO_TipoDocumento      ON ( CO_Documento.TipoDocumento = CO_TipoDocumento.TipoDocumento ) INNER JOIN PersonaMast PersonaMast_b  ON ( CO_Documento.ClienteNumero = PersonaMast_b.Persona)
+LEFT JOIN ClienteMast  ON ( PersonaMast_b.Persona = ClienteMast.Cliente ) LEFT JOIN CO_RutaDespachoDetalle                ON ( CO_Documento.ClienteNumero = CO_RutaDespachoDetalle.Cliente)
+LEFT JOIN CO_RutaDespacho    ON ( CO_RutaDespacho.RutaDespacho = CO_RutaDespachoDetalle.RutaDespacho)
+INNER JOIN SY_CampoCalculado             ON ( SY_CampoCalculado.RegistroNumero = 1 )
+LEFT JOIN AC_Sucursal ON CO_Documento.Sucursal = AC_Sucursal.Sucursal
+LEFT JOIN CO_LineaCredito
+ON CO_LineaCredito.ClienteNumero = CO_Documento.ClienteNumero
+AND CO_LineaCredito.Estado='A'
+LEFT JOIN CuentaBancaria ON CuentaBancaria.CuentaBancaria = CO_Documento.LetraDescuentoCuentaBancaria
+LEFT JOIN Banco ON Banco.Banco = CuentaBancaria.Banco        LEFT JOIN MA_FormadePago ON CO_Documento.FormadePago = MA_FormadePago.FormadePago
+LEFT JOIN Departamento ON Departamento.Departamento = PersonaMast_b.Departamento
+LEFT JOIN Provincia ON Provincia.Departamento = PersonaMast_b.Departamento and
+Provincia.Provincia = PersonaMast_b.Provincia
+LEFT JOIN ZonaPostal ON ZonaPostal.Departamento = PersonaMast_b.Departamento and
+ZonaPostal.Provincia = PersonaMast_b.Provincia and
+ZonaPostal.CodigoPostal = PersonaMast_b.CodigoPostal
+LEFT JOIN MA_ClienteContacto ContactoCob ON PersonaMast_b.Persona=ContactoCob.Cliente and ContactoCob.FlagContactoCobranza='S'
+LEFT JOIN MA_ClienteContacto ContactoVen ON PersonaMast_b.Persona=ContactoVen.Cliente and ContactoVen.FlagContactoVenta='S'
+LEFT JOIN CO_TipoDocumento tipo ON tipo.TipoDocumento = CO_Documento.TipoDocumento  
+
+WHERE ( CO_Documento.TipoDocumento <> 'PE' ) AND
+( CO_Documento.TipoDocumento <> 'PK' ) AND
+( CO_Documento.Estado <> 'AN' )
+AND (CO_documento.CompaniaSocio = @CompaniaSocio)  
+and (CO_Documento.ClienteNumero =@ClienteNumero )   
+AND (CO_Documento.Vendedor =  @Vendedor  ) 
+AND (CO_Documento.Estado ='PR' ) 
+AND Round(CO_Documento.MontoTotal,2) <> Round(CO_Documento.MontoPagado,2)
+ORDER BY CO_Documento.CompaniaSocio ASC, CO_Documento.TipoDocumento ASC
+
+		
+		
+		]]>
+
+
+	</Personas.getPdfEstadoCuentaPersonas>
+
+
 
 	<Usuario.getNumerosDIasCredito>
 

@@ -225,7 +225,7 @@ namespace WsComercialApp.Repositorio
 
                     Stream stream = rd.ExportToStream(CrystalDecisions.Shared.ExportFormatType.PortableDocFormat);
                     stream.Seek(0, SeekOrigin.Begin);
-                    var test = ReadFully(stream);
+                    var test = FuncPrinc.ReadFully(stream);
                     String file = Convert.ToBase64String(test);
                     BASE = file;
 
@@ -443,7 +443,7 @@ namespace WsComercialApp.Repositorio
                 {
                     Stream stream = rd.ExportToStream(CrystalDecisions.Shared.ExportFormatType.PortableDocFormat);
                     stream.Seek(0, SeekOrigin.Begin);
-                    var test = ReadFully(stream);
+                    var test = FuncPrinc.ReadFully(stream);
                     String file = Convert.ToBase64String(test);
                     BASE = file;
 
@@ -585,19 +585,7 @@ namespace WsComercialApp.Repositorio
 
         }
 
-        public byte[] ReadFully(Stream input)
-        {
-            byte[] buffer = new byte[16 * 1024];
-            using (MemoryStream ms = new MemoryStream())
-            {
-                int read;
-                while ((read = input.Read(buffer, 0, buffer.Length)) > 0)
-                {
-                    ms.Write(buffer, 0, read);
-                }
-                return ms.ToArray();
-            }
-        }
+       
 
         private string RetornoQuery(FiltroGenerico bean)
         {
