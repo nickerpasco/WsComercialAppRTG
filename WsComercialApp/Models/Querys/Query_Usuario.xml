@@ -538,7 +538,7 @@ CO_Documento.Estado='PR'
 	0.0 as Pendiente,
 NumeroDocumento,
 FechaDocumento,
-GETDATE() as FechaVencimiento,,
+GETDATE() as FechaVencimiento,
 MontoTotal,
 ComercialPedidoNumero as LetraNumeroUnicoString,
 DATEDIFF(DAY,FechaDocumento,GETDATE()) Dias
