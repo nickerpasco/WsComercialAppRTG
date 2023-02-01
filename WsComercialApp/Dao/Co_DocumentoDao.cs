@@ -1057,7 +1057,7 @@ namespace WsComercialApp.Dao
                 Otabla.VoucherPeriodo = dateString;
                 Otabla.Procedencia = c.Procedencia;
                 Otabla.VoucherNo = null;
-                Otabla.DiasAdicionales = null;
+                //Otabla.DiasAdicionales = null;
                 Otabla.NumeroSolicitud = null;
                 Otabla.TipoOperacion = null;
                 Otabla.FinanciamientoNumeroDocumento = null;
