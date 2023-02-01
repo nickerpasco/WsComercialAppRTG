@@ -1188,7 +1188,8 @@ namespace WsComercialApp.Dao
                 Otabla.FechaBase = c.FechaBaseLetras;
                 Otabla.FechaMaxima = Convert.ToDateTime(c.FechaBaseLetras).AddDays((double)c.DiasCredito);
                 Otabla.DiasCanje = c.DiasCredito;
-                Otabla.Comentarios = c.Comentarios;  
+                Otabla.Comentarios = c.Comentarios;
+                Otabla.DiasAdicionales = c.DiasAdicionales;
                 Otabla.UltimaFechaModif = DateTime.Now;
                 Otabla.UltimoUsuario = c.UltimoUsuario;
 
