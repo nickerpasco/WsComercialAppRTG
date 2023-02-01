@@ -393,8 +393,31 @@ namespace WsComercialApp.Controllers
             else
             {
                 var montoUsado = resultado.Sum(x => x.MontoTotalDecimal);
+                var MontoaCobrar = resultado.Sum(x => x.MontoPendienteDecimal);
                 var LineaCredito = resultado.FirstOrDefault().LineaCredito;
                 var MontoDisponible = (LineaCredito - montoUsado);
+
+                  
+                //var groupedCustomerList = resultado.GroupBy(u => u.TipoDocumento) .Select(grp => grp.ToList()) .ToList();
+
+                List<ReporteEstadoCuenta> lstGrupos = resultado.GroupBy(p => p.TipoDocumento)  .Select(g => g.First())  .ToList();
+
+                foreach(var item in lstGrupos)
+                {
+
+                    var FiltroPorTipo = resultado.Where(x => x.TipoDocumento == item.TipoDocumento).ToList();
+                    var SumaPendientePorGrupo = resultado.Where(x => x.TipoDocumento == item.TipoDocumento).ToList().Sum(x=> x.MontoPendienteDecimal);
+                     
+                    foreach (var data in FiltroPorTipo)
+                    {
+                        data.ValorComodin3 = FuncPrinc.FormatearMontoString((double)SumaPendientePorGrupo);
+                    }
+
+
+
+                }
+
+                
 
 
                 try
@@ -407,6 +430,7 @@ namespace WsComercialApp.Controllers
                     rd.SetParameterValue("LineaCreditoTotal", LineaCredito);
                     rd.SetParameterValue("MontoUsado", montoUsado);
                     rd.SetParameterValue("MontoDisponible", MontoDisponible);
+                    rd.SetParameterValue("MontoaCobrar", MontoaCobrar);
 
                     System.Web.HttpContext.Current.Response.Buffer = false;
                     System.Web.HttpContext.Current.Response.ClearContent();
@@ -439,10 +463,7 @@ namespace WsComercialApp.Controllers
                     error.CodigoError = 500;
                     error.MensajeError = "ERROR_GENRACION_rEPORTE   : " + e.Message + "   MÁS DATA :  " + e.StackTrace + "     MENSAJE EXACTO : " + e.InnerException;
                     error.ValorDevolucion = "";
-                    error.LineaError = line;
-
-
-
+                    error.LineaError = line; 
 
                     return error;
                 }

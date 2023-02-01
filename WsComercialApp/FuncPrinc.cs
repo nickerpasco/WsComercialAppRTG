@@ -28,6 +28,14 @@ namespace WsComercialApp
             return newlist;
         }
 
+        public static string FormatearMontoString(double monto)
+        {
+            String montoString = monto.ToString("#,##0.00");
+            return montoString;
+
+
+        }
+
         public static byte[] ReadFully(Stream input)
         {
             byte[] buffer = new byte[16 * 1024];

@@ -37,6 +37,7 @@ namespace WsComercialApp.Models
 		public decimal MontoTotalDecimal { get; set; }
 		public string MontoPagado { get; set; }
 		public string MontoPendiente { get; set; }
+		public decimal MontoPendienteDecimal { get; set; }
 		public int Cobrador { get; set; }
 		public string siaf_fechapago { get; set; }
 		public string EstadoLetra { get; set; }

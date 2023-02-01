@@ -16,7 +16,7 @@ namespace WsComercialApp.Models
         public string MostrarDatosRuta { get; set; }
 
 
-
+        public Nullable<int> DiasAdicionales { get; set; }
 
         public string MostrarComentarios { get; set; }
         public string AccionLetras { get; set; }

@@ -1051,6 +1051,7 @@ namespace WsComercialApp.Dao
                 Otabla.PreparadoPor = c.IdPersonaUsuario;
                 Otabla.FechaPreparacion = DateTime.Now;
                 Otabla.UltimaFechaModif = Otabla.FechaPreparacion;
+                Otabla.DiasAdicionales = c.DiasAdicionales;
                 Otabla.UltimoUsuario = c.UltimoUsuario;
                 string dateString = DateTime.Now.ToString("yyyyMM", CultureInfo.InvariantCulture);
                 Otabla.VoucherPeriodo = dateString;

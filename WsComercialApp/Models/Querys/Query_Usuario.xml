@@ -171,6 +171,10 @@ CO_Documento.Estado='PR'
 		
 SELECT 
 (case when CO_TipoDocumento.Clasificacion = 'AD' then -MontoTotal else MontoTotal end) as "MontoTotalDecimal",
+
+
+(case when CO_TipoDocumento.Clasificacion = 'AD' then -round(MontoTotal - Round(CO_Documento.MontoTotal - CO_Documento.MontoAdelantoSaldo,2),2) else round(MontoTotal - MontoPagado,2) end) as "MontoPendienteDecimal",
+
 'Fecha : ' + convert(varchar(20),GETDATE(),103)  +' '+convert(varchar(20),GETDATE(),108)  as ValorComodin1,
 CO_Documento.MonedaDocumento,
 CASE CO_Documento.MonedaDocumento
