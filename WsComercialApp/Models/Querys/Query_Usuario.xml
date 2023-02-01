@@ -182,7 +182,7 @@ CO_Documento.CompaniaSocio, CO_Documento.TipoDocumento,
 tipo.DescripcionLocal as TipoDocumentoDescripcion, CO_Documento.NumeroDocumento,
 convert(varchar(20),CO_Documento.FechaDocumento,103)   as FechaDocumento   ,  
 convert(varchar(20),CO_Documento.FechaVencimiento,103)  as FechaVencimiento  , 
-DATEDIFF(day, CO_Documento.FechaDocumento, CO_Documento.FechaVencimiento) as Dias,
+ISNULL(DATEDIFF(day, CO_Documento.FechaDocumento, CO_Documento.FechaVencimiento),0) as Dias,
 
 CO_Documento.ClienteNombre, CO_Documento.ClienteRUC,  CO_Documento.ConceptoFacturacion, CO_Documento.TipoVenta, CO_Documento.TipoFacturacion, CO_Documento.ClienteNumero,
 PersonaMast_a.Busqueda, SY_CampoCalculado.Codigo01, SY_CampoCalculado.Codigo02, CO_TipoDocumento.Clasificacion, PersonaMast_b.Documento, CO_Documento.Vendedor, CO_Documento.FormadePago, MA_FormadePago.Descripcion as FormadePagoDesc,
