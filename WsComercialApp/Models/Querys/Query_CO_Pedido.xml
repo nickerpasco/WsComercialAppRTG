@@ -127,6 +127,18 @@
 		@BusquedaAvanzada,@FechaInicio,@FechaFin,@page,@limit
 
 	</Co_Documento.CabeceraLetrasStore>
+
+	<Co_Documento.getLetrasGeneradas>
+
+
+		select Linea as SecuenciaLetras,
+		CONVERT(varchar,OperacionCanjeNumero) as NumeroDocumento,
+		CompaniaSocio,Monto   as MontoTotalLetras ,
+		convert(varchar(20),FechaVencimiento,103)  +' '+convert(varchar(20),FechaVencimiento,108) as FechaVencimiento
+		from CO_OperacionCanjeDetalle where
+		OperacionCanjeNumero =@OperacionCanjeNumero
+		and InputOutputFlag ='O'
+	</Co_Documento.getLetrasGeneradas>
 	
 	<Co_Documento.CabeceraLetrasStoreCount>
 

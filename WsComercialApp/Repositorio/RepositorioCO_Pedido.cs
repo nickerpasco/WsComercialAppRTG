@@ -583,6 +583,23 @@ namespace WsComercialApp.Repositorio
             return resultado;
              
 
+        } 
+        
+        
+        internal List<Model_CO_Documento> getLetrasGeneradas(ModelTransac_CO_Documento request)
+        {
+
+            ModelTransac_CO_Pedido error = new ModelTransac_CO_Pedido();
+            List<SqlParameter> parametros = new List<SqlParameter>();
+             
+            parametros.Add(new SqlParameter("@OperacionCanjeNumero ", request.OperacionCanjeNumero)); 
+
+            var sqlString = UtilsGlobal.ConvertLinesSqlXml("Query_CO_Pedido", "Co_Documento.getLetrasGeneradas");
+            var resultado = UtilsDAO.getDataByQueryWithParameters<Model_CO_Documento>(sqlString, parametros);
+             
+            return resultado;
+             
+
         }
 
        

@@ -165,8 +165,18 @@ namespace WsComercialApp.Controllers
             RepositorioCO_Pedido repositorio = new RepositorioCO_Pedido();
             var response = repositorio.getDescuentosReglas(documento); // 
             return response;
-        }  
-          
+        }
+
+        [HttpPost]
+        [Route("api/getLetrasGeneradas")]
+        public List<Model_CO_Documento> getLetrasGeneradas([FromBody] ModelTransac_CO_Documento documento)
+        {
+            RepositorioCO_Pedido repositorio = new RepositorioCO_Pedido();
+            var response = repositorio.getLetrasGeneradas(documento); // 
+            return response;
+        }
+
+
         [HttpPost]
         [Route("api/getAgencias")]
         public PaginacionGenerico getAgencias([FromBody] FiltroGenerico documento)
