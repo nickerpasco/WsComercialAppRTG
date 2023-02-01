@@ -131,7 +131,7 @@
 	<Co_Documento.getLetrasGeneradas>
 
 
-		select Linea as SecuenciaLetras,
+		select Linea as SecuenciaLetras, getdate() as FechaDocumentoDate,
 		CONVERT(varchar,OperacionCanjeNumero) as NumeroDocumento,
 		CompaniaSocio,Monto   as MontoTotalLetras ,
 		convert(varchar(20),FechaVencimiento,103)  +' '+convert(varchar(20),FechaVencimiento,108) as FechaVencimiento

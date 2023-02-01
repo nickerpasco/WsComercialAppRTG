@@ -15,6 +15,8 @@ namespace WsComercialApp.Models
 		public string NumeroDocumento { get; set; }
 		public string FlagEnEspera { get; set; }
 		public int? ClienteNumero { get; set; }
+
+		public DateTime FechaDocumentoDate { get; set; }
 		public string ClienteRUC { get; set; }
 		public string EstadoPendienteComentario { get; set; }
 		public string TipoFacturacionNoAfectoFlag { get; set; }
