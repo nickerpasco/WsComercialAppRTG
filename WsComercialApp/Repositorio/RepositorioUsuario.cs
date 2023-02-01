@@ -421,7 +421,7 @@ namespace WsComercialApp.Controllers
 
 
                 try
-                {
+                { 
 
                     ReportDocument rd = new ReportDocument();
 
