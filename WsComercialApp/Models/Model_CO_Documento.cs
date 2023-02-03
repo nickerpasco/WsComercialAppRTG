@@ -7,6 +7,12 @@ namespace WsComercialApp.Models
 {
     public class Model_CO_Documento
     {
+
+		public int SecuenciaLetras { get; set; }
+		public string MontoTotalLetrasString { get; set; }
+		public double MontoTotalLetras { get; set; }
+		public string FechaVencimiento { get; set; }
+
 		public int? Vendedor { get; set; }
 		public string CompaniaSocio { get; set; }
 		public string ComentarioAprobacion { get; set; }
@@ -16,7 +22,7 @@ namespace WsComercialApp.Models
 		public string FlagEnEspera { get; set; }
 		public int? ClienteNumero { get; set; }
 
-		public DateTime FechaDocumentoDate { get; set; }
+		//public DateTime FechaDocumentoDate { get; set; }
 		public string ClienteRUC { get; set; }
 		public string EstadoPendienteComentario { get; set; }
 		public string TipoFacturacionNoAfectoFlag { get; set; }
@@ -54,7 +60,7 @@ namespace WsComercialApp.Models
 		public string CanalVenta { get; set; }
 		public string ComercialPedidoFechaRequeridaString { get; set; }
 		public string Estado { get; set; }
-		public string FechaVencimiento { get; set; }
+		//public string FechaVencimiento { get; set; }
 		public decimal? MontoDescuentos { get; set; }
 		public string RutaDespacho { get; set; } 
 		public string TipoDocumentoVentaDescripcion { get; set; }
