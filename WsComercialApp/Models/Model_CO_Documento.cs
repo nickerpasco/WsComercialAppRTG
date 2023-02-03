@@ -10,7 +10,7 @@ namespace WsComercialApp.Models
 
 		public int SecuenciaLetras { get; set; }
 		public string MontoTotalLetrasString { get; set; }
-		public double MontoTotalLetras { get; set; }
+		public decimal MontoTotalLetras { get; set; }
 		public string FechaVencimiento { get; set; }
 
 		public int? Vendedor { get; set; }
