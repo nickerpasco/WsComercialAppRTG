@@ -676,5 +676,22 @@ namespace WsComercialApp
             DateTime dateTime = DateTime.Parse(fechaVencimiento);
             return dateTime;
         }
+
+        internal static string ArmarQueryConParametros(String text,  Dictionary<string, object> myDictionary)
+        {
+
+            foreach (var item in myDictionary)
+            {
+                string key= item.Key;
+                object Value = item.Value;
+                var valorString = Value.ToString();
+                text = text.Replace(key, (string)valorString);
+            }
+
+         
+
+
+            return text;
+        }
     }
 }

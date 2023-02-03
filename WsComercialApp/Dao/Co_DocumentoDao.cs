@@ -1123,6 +1123,7 @@ namespace WsComercialApp.Dao
                         OtablaDetalle.Linea = secuenciaId + 1;
                         OtablaDetalle.OperacionCanjeNumero = Convert.ToInt32(c.NumeroDocumento);
                         OtablaDetalle.CompaniaSocio = c.CompaniaSocio;
+                        OtablaDetalle.FechaVencimiento = detalle.FechaVencimientoDate;
                         OtablaDetalle.InputOutputFlag = "O";
                         //OtablaDetalle.NumeroDocumento = detalle.Descripcion;
                         //OtablaDetalle.TipoDocumento = detalle.TipoDocumento;

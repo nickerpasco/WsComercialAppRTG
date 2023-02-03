@@ -132,6 +132,7 @@
 
 
 		select Linea as SecuenciaLetras, getdate() as FechaDocumentoDate,
+		FechaVencimiento as FechaVencimientoDate ,
 		CONVERT(varchar,OperacionCanjeNumero) as NumeroDocumento,
 		CompaniaSocio,Monto   as MontoTotalLetras ,
 		convert(varchar(20),FechaVencimiento,103)  +' '+convert(varchar(20),FechaVencimiento,108) as FechaVencimiento
@@ -577,6 +578,7 @@ and ( VW_CO_DescuentoEscalaVigente.monto <= @Cantidad and VW_CO_DescuentoEscalaV
 
 		select
 		distinct
+		ISNULL(CO_OperacionCanje.DiasAdicionales,0) as DiasAdicionales,
 		documento.MonedaDocumento,
 		CO_OperacionCanje.CompaniaSocio,
 		CO_OperacionCanje.ClienteDireccionSecuencia,

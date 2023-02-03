@@ -14,6 +14,7 @@ namespace WsComercialApp.Models
 		public string LabelMes { get; set; }
 		public string LabelHora { get; set; }
 		public int IdPersona { get; set; }
+		public int DiasAdicionales { get; set; }
 		public int ClienteDireccionSecuencia { get; set; }
 		public int DiasCanje { get; set; }
 		public int LetrasCantidadValorReal { get; set; }

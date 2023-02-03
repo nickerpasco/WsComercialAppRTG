@@ -7,18 +7,22 @@ namespace WsComercialApp.Models
 {
     public class Model_CO_Documento
     {
-
 		public int SecuenciaLetras { get; set; }
-		public string MontoTotalLetrasString { get; set; }
-		public decimal MontoTotalLetras { get; set; }
-		public string FechaVencimiento { get; set; }
-
-		public int? Vendedor { get; set; }
+		public DateTime FechaDocumentoDate { get; set; }
+		public string NumeroDocumento { get; set; }
 		public string CompaniaSocio { get; set; }
+		public decimal? MontoTotalLetras { get; set; }
+		public string FechaVencimiento { get; set; }
+		public int OperacionCanjeNumero { get; set; }
+		public DateTime? FechaVencimientoDate { get; set; }
+
+
+		public string MontoTotalLetrasString { get; set; } 
+
+		public int? Vendedor { get; set; } 
 		public string ComentarioAprobacion { get; set; }
 		public string EstadoDocumento { get; set; }
-		public string TipoDocumento { get; set; }
-		public string NumeroDocumento { get; set; }
+		public string TipoDocumento { get; set; } 
 		public string FlagEnEspera { get; set; }
 		public int? ClienteNumero { get; set; }
 
@@ -103,8 +107,7 @@ namespace WsComercialApp.Models
 		public string AfectoPercepcionIGVFlag { get; set; }
 		public string FlagImpresionPercepcionCampo { get; set; }
 		public string MonedaString { get; set; }
-		public string EstadoString { get; set; }
-		public DateTime? FechaDocumentoDate { get; set; }
+		public string EstadoString { get; set; } 
 
 		public string LabelMes { get; set; }
 		public string LabelHora { get; set; }

@@ -15,7 +15,7 @@ namespace WsComercialApp.Models
         public string LetraNumeroUnicoString { get; set; }
         public string MostrarDatosRuta { get; set; }
 
-
+        //public DateTime? FechaVencimientoDate { get; set; }
         public Nullable<int> DiasAdicionales { get; set; }
 
         public string MostrarComentarios { get; set; }
@@ -55,6 +55,7 @@ namespace WsComercialApp.Models
         public Nullable<System.DateTime> FechaInicio { get; set; }
         public Nullable<System.DateTime> FechaFin { get; set; }
         public Nullable<System.DateTime> FechaVencimiento { get; set; }
+        public String FechaVencimientoString { get; set; }
         public Nullable<System.DateTime> FechaVencimientoDate { get; set; }
         public string TipoFacturacion { get; set; }
         public string TipoVenta { get; set; }
