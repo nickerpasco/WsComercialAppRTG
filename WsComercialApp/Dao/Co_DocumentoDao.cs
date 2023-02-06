@@ -37,7 +37,29 @@ namespace WsComercialApp.Dao
                         }
                         else
                         {
-                            response = InsertarPedido(c, context);
+                           
+                            var  listAlmacenes = c.Detalle.GroupBy(p => p.AlmacenCodigoDetalle).Select(g => g.First()).ToList();
+
+
+                            foreach (var item in listAlmacenes.ToList())
+                            {
+                                var lstDetalle = c.Detalle.Where(x => x.AlmacenCodigoDetalle == item.AlmacenCodigoDetalle).ToList();
+
+
+                                c.AlmacenCodigo = item.AlmacenCodigoDetalle;
+                                c.Detalle = lstDetalle;
+                                response = InsertarPedido(c, context);
+
+                                if (response.lstErrores.Count > 0)
+                                {
+                                    dbContextTransaction.Rollback();
+                                    return response;
+                                }
+
+
+                            }
+
+                            
                         }
 
 

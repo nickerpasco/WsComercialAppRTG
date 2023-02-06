@@ -276,6 +276,22 @@ ORDER BY CO_Documento.CompaniaSocio ASC, CO_Documento.TipoDocumento ASC
 
 	</Usuario.getNumerosDIasCredito>
 
+	<PersonaMast.getUbigeoByCliente>
+
+
+		 
+
+
+		select Case When Provincia.UnidadNegocio ='LIMA' then'L' when Provincia.UnidadNegocio='PROV' then'P' else '' end
+		from Direccion inner join Departamento on Direccion.Departamento=Departamento.Departamento
+		inner join Provincia on Direccion.Departamento=Provincia.Departamento and
+		Direccion.Provincia=Provincia.Provincia
+		where persona=@Persona
+		and secuencia=@Secuencia
+
+
+	</PersonaMast.getUbigeoByCliente>
+
 
 	<Usuario.getTipoCredito>
 

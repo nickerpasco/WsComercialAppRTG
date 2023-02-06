@@ -135,15 +135,64 @@ namespace WsComercialApp.Controllers
         internal ReponseStoreLetras getValidarDiasPendientesFactura(Model_CO_Documento c)
         {
 
-            //var sqlString4 = UtilsGlobal.ConvertLinesSqlXml("Query_Usuario", "PersonaMast.getDataValidacionDocumentosVencidos");
-            //List<SqlParameter> parametros4 = new List<SqlParameter>();
-            //parametros4.Add(new SqlParameter("@ClienteNumero", c.ClienteNumero));
-            //parametros4.Add(new SqlParameter("@CompaniaSocio", c.CompaniaSocio));
+            var sqlString = UtilsGlobal.ConvertLinesSqlXml("Query_Usuario", "PersonaMast.getUbigeoByCliente");
+            List<SqlParameter> parametros4 = new List<SqlParameter>();
+            parametros4.Add(new SqlParameter("@Persona", c.ClienteNumero));
+            parametros4.Add(new SqlParameter("@Secuencia", c.ClienteDireccionDespacho));
 
-            var sqlString4 = "execute usp_co_consulta_Letras_pend '"+ c.CompaniaSocio + "', "+ c.ClienteNumero + "";
 
-             
-           ReponseStoreLetras obj2 = (ReponseStoreLetras)UtilsDAO.getDataByQuery<ReponseStoreLetras>(sqlString4).FirstOrDefault();
+            var Response = UtilsDAO.getValuString(sqlString, parametros4);
+
+            var respuesta = FuncPrinc.trimValor(Response);
+            var diaToday = DateTime.Now.Day;
+            ReponseStoreLetras obj2 = new ReponseStoreLetras();
+            Boolean ejecutarStore = false; ;
+            if(respuesta != "")
+            {
+                if (respuesta == "L")
+                {
+                    var valorNumero = UtilsDAO.getValueDecimal("select Numero as Lima from ParametrosMast where CompaniaCodigo='999999' and AplicacionCodigo='CO' and ParametroClave='VALIDIALIM'", null);
+
+                    if(diaToday> valorNumero)
+                    {
+                        // ES DE LIMA
+
+                        ejecutarStore = true;
+                    }
+                    else
+                    {
+
+                    }
+
+
+                }else if(respuesta == "P")
+                {
+                    var valorNumero = UtilsDAO.getValueDecimal("select Numero as Lima from ParametrosMast where CompaniaCodigo='999999' and AplicacionCodigo='CO' and ParametroClave='VALIDIAPRO'", null);
+
+                    if (diaToday > valorNumero)
+                    {
+                        // ES DE PROVINCIA
+                        ejecutarStore = true;
+                    }
+                    else
+                    {
+
+                    }
+                }
+            }
+
+            if (ejecutarStore)
+            {
+                var sqlString4 = "execute usp_co_consulta_Letras_pend '" + c.CompaniaSocio + "', " + c.ClienteNumero + "";
+                 
+                  obj2 = (ReponseStoreLetras)UtilsDAO.getDataByQuery<ReponseStoreLetras>(sqlString4).FirstOrDefault();
+
+            }
+            else
+            {
+                obj2.cnt = 0;
+            }
+
 
             return obj2;
 
