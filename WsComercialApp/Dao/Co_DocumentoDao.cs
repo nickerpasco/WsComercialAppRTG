@@ -24,6 +24,7 @@ namespace WsComercialApp.Dao
             String TipoMotivo = "";
 
             ModelTransac_CO_Documento response = new ModelTransac_CO_Documento();
+            List<ModelTransac_CO_DocumentoDetalle> lstDetalleTotal = new List<ModelTransac_CO_DocumentoDetalle>();
             using (var context = new BdEntityGenerico())
             {
                 using (var dbContextTransaction = context.Database.BeginTransaction())
@@ -37,13 +38,13 @@ namespace WsComercialApp.Dao
                         }
                         else
                         {
-                           
-                            var  listAlmacenes = c.Detalle.GroupBy(p => p.AlmacenCodigoDetalle).Select(g => g.First()).ToList();
-
+                              lstDetalleTotal = c.Detalle;
+                            var  listAlmacenes = lstDetalleTotal.GroupBy(p => p.AlmacenCodigoDetalle).Select(g => g.First()).ToList();
+                            
 
                             foreach (var item in listAlmacenes.ToList())
                             {
-                                var lstDetalle = c.Detalle.Where(x => x.AlmacenCodigoDetalle == item.AlmacenCodigoDetalle).ToList();
+                                var lstDetalle = lstDetalleTotal.Where(x => x.AlmacenCodigoDetalle == item.AlmacenCodigoDetalle).ToList();
 
 
                                 c.AlmacenCodigo = item.AlmacenCodigoDetalle;
@@ -78,7 +79,7 @@ namespace WsComercialApp.Dao
 
                         var retorno = UtilsDAO.ExecuteQueryResponse(sqlString, parametros);
 
-                        StokCompromentidoStart(c.Detalle, c.AlmacenCodigo);
+                        StokCompromentidoStart(lstDetalleTotal, c.AlmacenCodigo);
 
 
                         //Co_Documento.StoreActualiza_Costos_Margenes
@@ -201,8 +202,8 @@ namespace WsComercialApp.Dao
                     List<SqlParameter> parametros = new List<SqlParameter>();
                     parametros.Add(new SqlParameter("@Item", item.ItemCodigo.Trim()));
                     parametros.Add(new SqlParameter("@Cantidad", item.CantidadPedida));
-                    parametros.Add(new SqlParameter("@Almacen", Almacen));
-                    parametros.Add(new SqlParameter("@Lote", getLote(item.ItemCodigo, Almacen, item.CantidadPedida)));
+                    parametros.Add(new SqlParameter("@Almacen", item.AlmacenCodigoDetalle));
+                    parametros.Add(new SqlParameter("@Lote", getLote(item.ItemCodigo, item.AlmacenCodigoDetalle, item.CantidadPedida)));
 
                     var retorno = UtilsDAO.ExecuteQueryResponse(sqlString, parametros);
                 }
